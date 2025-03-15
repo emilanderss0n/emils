@@ -21,3 +21,8 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+.DS_Store
+.env.testing
+.env.dusk.local
+/storage/app/analytics/service-account-credentials.json
+*.log
