@@ -27,6 +27,9 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+        <!-- ScrollReveal -->
+        <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js" defer></script>
+
         <!-- Styles / Scripts -->
         @vite(['resources/css/dashxe.css', 'resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -73,7 +76,6 @@
         <footer>
             @include('partials.main-footer')
         </footer>
-        <script src="https://unpkg.com/scrollreveal"></script>
         @stack('scripts')
     </body>
 </html>
