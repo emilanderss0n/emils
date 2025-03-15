@@ -1,0 +1,50 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+/* User Settings Styles */
+.user-settings-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-settings-form button.fi-btn {
+    margin-top: 3rem;
+    width: fit-content;
+}
+
+.birthdays-list-admin {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.birthday-item-admin {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.birthdays-widget-admin .birthdays-list-admin img {
+    max-width: 100px;
+    border-radius: 50%;
+}
+
+.birthday-item-details-admin {
+    text-align: center;
+}
+
+.birthday-item-icon-admin {
+    width: 20px;
+    height: 20px;
+}
+
+.birthday-item-details-admin-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
