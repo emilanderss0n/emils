@@ -1165,7 +1165,7 @@ footer h3 {
 .blog-post-header {
     max-width: 1140px;
     width: 100%;
-    margin: 1rem auto 5rem;
+    margin: 2rem auto 5rem;
     display: inline-block;
     border-radius: var(--br-xxl);
     position: relative;
