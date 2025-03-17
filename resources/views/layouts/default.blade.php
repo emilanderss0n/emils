@@ -32,25 +32,28 @@
 
         <!-- Styles / Scripts -->
         @vite(['resources/css/dashxe.css', 'resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7E0BQC6XX"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7E0BQC6XX');
+        </script>
     </head>
     <body>
         <header>
             <div class="header-cont">
                 <div class="header-title">
-                    <a href="/"><img height="35" width="68" src="{{ asset('images/logo-2x.png') }}" alt="Emil Andersson logotype"></a>
+                    <a class="logo" href="/"><img class="logo-img" height="35" width="68" src="{{ asset('images/logo-2x.png') }}" alt="Emil Andersson logotype"></a>
                 </div>
                 <div class="flex-row-reverse gap-1">
                     <div class="top-search">
-                        <form action="{{ route('search') }}" method="GET" class="search-form">
-                            <div class="search-input-wrapper">
-                                <i class="bi bi-search search-icon"></i>
-                                <input type="text" 
-                                    name="q" 
-                                    placeholder="Search..." 
-                                    value="{{ request('q') }}"
-                                    class="search-input">
-                            </div>
-                        </form>
+                        <button type="button" id="search-trigger" class="search-button">
+                            <i class="bi bi-search"></i>
+                        </button>
                     </div>
                     <nav id="main-menu">
                         <div class="main-menu-container">
@@ -76,6 +79,9 @@
         <footer>
             @include('partials.main-footer')
         </footer>
+        
+        @include('partials.search-overlay')
+        
         @stack('scripts')
     </body>
 </html>

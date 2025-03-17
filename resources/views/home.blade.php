@@ -3,15 +3,20 @@
 @section('main-content')
 <section class="hero-section">
     <div class="content-container">
-        <div class="presentation">
-            <h1>I have been busy<br><span class="gradient-text">creating my own virtual universe</span></h1>
-            <p>
-            Hello, my name is Emil Andersson. I'm a passionate Graphic Designer, Web Developer, 3D Artist and Video Editor from Sweden. Scroll down to see what services I can help you with.
-            </p>
-        </div>
-        <div class="hero-actions">
-            <a class="btn" href="{{ route('work') }}" data-pan="work-button-front">Portfolio</a>
-            <a class="btn second" href="https://emils.graphics/profile" data-pan="profile-button-front">Profile</a>
+        <div class="hero-content">
+            <div class="presentation">
+                <h1>I have been busy<br><span class="gradient-text">creating my own virtual universe</span></h1>
+                <p>
+                Hello, my name is Emil Andersson. I'm a passionate Graphic Designer, Web Developer, 3D Artist and Video Editor from Sweden. Scroll down to see what services I can help you with.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn" href="{{ route('work') }}" data-pan="work-button-front">Portfolio</a>
+                    <a class="btn second" href="{{ route('about') }}" data-pan="profile-button-front">Profile</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="{{ asset('images/presentationImage.png') }}" alt="Emil Andersson" />
+            </div>
         </div>
     </div>
 </section>
@@ -57,69 +62,69 @@
 <section class="services">
     <div class="content-container">
         <div class="services-grid">
-            <div class="service-item">
+            <div class="service-item" aria-label="Web Development" tabindex="0" role="button">
                 <div class="service-icon gradient-icon">
                     <i class="bi bi-code-square"></i>
                     <h3>Web Development</h3>
                 </div>
                 <p class="pretty-wrap">Experience a comprehensive web development process where engineering is integrated at every stage. Employing a holistic approach, I ensure the creation of reliable and intuitive web applications tailored to elevate your business.</p>
                 <div class="service-skills tags">
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>Front-end</span>
-                    </div>
-                    <div class="tag-gradient">
+                    </div>              
+                    <div class="tag">
                         <span>CSS / LESS</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>Javascript</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>PHP</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>Back-end</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>SQL</span>
                     </div>
                 </div>
             </div>
 
-            <div class="service-item">
+            <div class="service-item" aria-label="Graphic Design" tabindex="0" role="button">
                 <div class="service-icon gradient-icon">
                     <i class="bi bi-palette"></i>
                     <h3>Graphic Design</h3>
                 </div>
                 <p class="pretty-wrap">With 16 years of graphic design prowess, I deliver meticulously crafted and original designs optimized for diverse devices. My toolset primarily includes Adobe Photoshop and Illustrator, ensuring stunning visuals across various mediums.</p>
                 <div class="service-skills tags">
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>User interface</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>Websites</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>Mobile apps</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>Software</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>Graphics</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>Physical print</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>Brand identity</span>
                     </div>
-                    <div class="tag-gradient">
+                    <div class="tag">
                         <span>Media</span>
                     </div>
                 </div>
             </div>
 
-            <div class="service-item">
+            <div class="service-item" aria-label="3D Design" tabindex="0" role="button">
                 <div class="service-icon gradient-icon">
                     <i class="bi bi-box"></i>
                     <h3>3D Design</h3>
@@ -127,7 +132,7 @@
                 <p class="pretty-wrap">Transforming concepts into captivating realities, I specialize in creating breathtaking 3D visualizations for architecture and game textures. Utilizing tools like Blender, Substance Painter, and Photoshop, I bring visions to life with unparalleled realism.</p>
             </div>
 
-            <div class="service-item">
+            <div class="service-item" aria-label="Motion Design" tabindex="0" role="button">
                 <div class="service-icon gradient-icon">
                     <i class="bi bi-film"></i>
                     <h3>Motion Design</h3>

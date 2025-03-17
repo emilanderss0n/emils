@@ -21,12 +21,13 @@
     --header-bg-color: #fff;
     --header-bg-color-semi: hsl(0deg 0% 100% / 67%);
     --content-box-bg: #fff;
-    --breakpoint-xs: 0;
-    --breakpoint-sm: 576px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 992px;
-    --breakpoint-xl: 1200px;
-    --max-width: 1280px;
+    --padding-ssm: 1rem;
+    --padding-sm: 2rem;
+    --padding-md: 3rem;
+    --padding-lg: 4rem;
+    --padding-xl: 5rem;
+    --padding-xxl: 6rem;
+    --max-width: 1380px;
     --font-size-base: 1rem;
     --font-size-lg: 1.25rem;
     --font-size-sm: 0.875rem;
@@ -105,6 +106,7 @@ h4,
 h5,
 h6 {
     font-family: 'Montserrat', sans-serif;
+    color: var(--heading-color);
     margin-top: 0;
     margin-bottom: 0.5rem;
     letter-spacing: -0.015em;
@@ -257,7 +259,7 @@ pre {
     margin-bottom: 2rem;
 }
 
-img {
+img:not(.logo-img) {
     max-width: 100%;
     height: auto;
 }
@@ -577,7 +579,6 @@ img {
 
 .social-links>a {
     color: var(--medium-contrast-color);
-    border-radius: 50%;
     font-size: 1.6rem;
     display: inline-block;
 }

@@ -13,7 +13,13 @@
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>{{ route('blog') }}</loc>
+        <loc>{{ route('about') }}</loc>
+        <lastmod>{{ Carbon\Carbon::now()->toIso8601String() }}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{{ route('blog.index') }}</loc>
         <lastmod>{{ Carbon\Carbon::now()->toIso8601String() }}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>

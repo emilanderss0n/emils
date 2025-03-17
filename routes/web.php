@@ -16,7 +16,12 @@ Route::get('/work/{work}', [WorkController::class, 'show'])->name('work.show');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{blog}', [BlogController::class, 'show'])->name('blog.show');
 
-Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/api/search', [SearchController::class, 'ajaxSearch'])->name('search.ajax');
+
+// About page route
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
 Route::get('/contact', function () {
     return view('contact');
