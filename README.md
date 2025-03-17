@@ -1,6 +1,6 @@
 # Emil's Portfolio - Digital Art Creator
 
-A personal portfolio website for Emil Andersson showcasing digital art, graphic design, web development, 3D art, and video editing works.
+A personal portfolio website for Emil Andersson showcasing digital art, graphic design, web development, 3D art, and video editing works. Website: https://emilandersson.com
 
 ## 🚀 Overview
 
