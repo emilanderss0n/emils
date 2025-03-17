@@ -6,8 +6,7 @@ const sr = ScrollReveal({
     origin: 'bottom',
     distance: '50px',
     duration: 1000,
-    reset: false,
-    viewFactor: 0.25,
+    reset: false
 })
 
 sr.reveal('.presentation h1', {})
