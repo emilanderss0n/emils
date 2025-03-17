@@ -394,6 +394,93 @@ img:not(.logo-img) {
     transition-timing-function: linear;
 }
 
+.framer {
+    --border-bottom-width: 1px;
+    --border-color: var(--framer-color-border);
+    --border-left-width: 1px;
+    --border-right-width: 1px;
+    --border-style: solid;
+    --border-top-width: 1px;
+    place-content: flex-start flex-end;
+    align-items: flex-start;
+    place-self: start;
+    background-color: var(--framer-color-bg);
+    border-radius: 10px;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    height: 100%;
+    overflow: hidden;
+    padding: 2rem;
+    position: relative;
+    width: 100%;
+    will-change: transform;
+}
+
+.framer.pink {
+    --framer-color-border: #ff0088;
+    --framer-color-bg: #ff0088;
+}
+
+.framer.purple {
+    --framer-color-border: #9911ff;
+    --framer-color-bg: #7700ff;
+}
+
+.framer.blue {
+    --framer-color-border: #0d63f8;
+    --framer-color-bg: #0d63f8;
+}
+
+.framer.cyan {
+    --framer-color-border: #4ff0b7;
+    --framer-color-bg: #4ff0b7;
+}
+
+.framer::after {
+    content: "";
+    border-width: var(--border-top-width, 0) var(--border-right-width, 0) var(--border-bottom-width, 0) var(--border-left-width, 0);
+    border-color: var(--border-color, none);
+    border-style: var(--border-style, none);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    box-sizing: border-box;
+    left: 0px;
+    top: 0px;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.framer .framer-content {
+    position: relative;
+    z-index: 2;
+}
+
+.framer .framer-inner-1 {
+    background-image: radial-gradient(transparent 1px, var(--content-bg-dark) 1px);
+    background-size: 10px 10px;
+    border-radius: 9px;
+    inset: 1px;
+    flex: 0 0 auto;
+    overflow: hidden;
+    position: absolute;
+    will-change: transform;
+    z-index: 1;
+}
+
+.framer .framer-inner-2 {
+    background-color: var(--content-bg-dark);
+    border-radius: 10px;
+    inset: 1px;
+    flex: 0 0 auto;
+    mask: radial-gradient(120% 100% at 107.1% -9.2%, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+    overflow: hidden;
+    position: absolute;
+    will-change: transform;
+    z-index: 1;
+}
+
 .tags {
     display: flex;
     gap: 0.5rem;

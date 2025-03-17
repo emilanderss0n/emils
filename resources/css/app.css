@@ -22,7 +22,6 @@ header .header-cont {
 }
 
 header .header-title a {
-    font-size: 26px;
     font-weight: bold;
     display: inline-block;
     color: var(--heading-color);
@@ -99,6 +98,7 @@ header nav {
     row-gap: 5px;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-end;
     height: 100%;
     max-height: 100%;
     width: 46px;
@@ -109,8 +109,8 @@ header nav {
     background-color: var(--medium-contrast-color);
     width: 100%;
     display: block;
-    height: 4px;
-    border-radius: 4px;
+    height: 3px;
+    border-radius: 3px;
 }
 
 #nav-mobile .line-1 {
@@ -197,11 +197,11 @@ header nav {
 .mobile-nav {
     width: 100%;
     position: fixed;
-    top: 73px;
+    top: 60px;
     right: -100%;
     background: rgba(0, 0, 0, 0.95);
     min-height: 100vh;
-    height: calc(100vh - 67px);
+    height: 100vh;
     z-index: 99999;
     display: block;
     overflow-y: auto;
@@ -323,41 +323,49 @@ main {
 }
 
 .hero-section {
-    padding: 16vh 0;
+    --framer-color-bg: var(--primary-color);
+    padding: 23vh 0;
     position: relative;
     display: inline-block;
     width: 100%;
+    background-color: var(--framer-color-bg);
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    will-change: transform;
+    top: -80px;
 }
 
-.hero-section::before {
-    content: '';
+.hero-section .framer-inner-1 {
+    background-image: radial-gradient(transparent 1px, var(--content-bg-dark) 1px);
+    background-size: 10px 10px;
+    inset: 0;
+    flex: 0 0 auto;
+    overflow: hidden;
     position: absolute;
-    top: -120px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    --s: 200px;
-    /* control the size */
-    --c1: #5a616b;
-    --c2: #2a2b30;
-    --c3: #444c5c;
+    will-change: transform;
+    z-index: 1;
+}
 
-    background: repeating-conic-gradient(from 30deg,
-            #0000 0 120deg,
-            var(--c3) 0 180deg) calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577),
-        repeating-conic-gradient(from 30deg,
-            var(--c1) 0 60deg,
-            var(--c2) 0 120deg,
-            var(--c3) 0 180deg);
-    background-size: var(--s) calc(var(--s) * 0.577);
-    mask-image: linear-gradient(180deg, #000 10%, rgba(0, 0, 0, 0) 100%);
-    mix-blend-mode: hard-light;
+.hero-section .framer-inner-2 {
+    background-color: var(--content-bg-dark);
+    border-radius: 0;
+    inset: 0;
+    flex: 0 0 auto;
+    mask: radial-gradient(120% 100% at 107.1% -9.2%, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+    overflow: hidden;
+    position: absolute;
+    will-change: transform;
+    z-index: 1;
 }
 
 .hero-content {
     display: flex;
     gap: 1rem;
     align-items: center;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-section .presentation {
@@ -401,10 +409,29 @@ main {
 
 .hero-content .hero-image {
     min-width: 900px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content .hero-image .fill {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: calc(100% - 115px);
+    height: calc(100% - 94px);
+    background: linear-gradient(202deg, rgb(46 57 93) 0%, rgba(0, 0, 0, 0) 100%);
+    z-index: 1;
+    filter: blur(50px);
+    border-radius: 1.2rem;
+}
+
+.hero-content .hero-image img {
+    position: relative;
+    z-index: 2;
 }
 
 .front-portfolio {
-    padding: 5rem 0 8rem;
+    padding: 3rem 0 8rem;
 }
 
 .front-portfolio-top {
@@ -867,13 +894,6 @@ main {
     gap: 3rem;
 }
 
-.service-item {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(153, 153, 153, 0) 100%);
-    border-radius: var(--br-xxl);
-    position: relative;
-    padding: 2rem 3rem;
-}
-
 .services-grid.revealed .service-item {
     animation: upIn 0.6s forwards;
     opacity: 0;
@@ -896,20 +916,6 @@ main {
     animation-delay: 1.2s;
 }
 
-.service-item::before {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: -1px;
-    pointer-events: none;
-    content: "";
-    border: 1.5px solid rgba(255, 255, 255, .12);
-    border-radius: inherit;
-    mask-image: linear-gradient(180deg, #fff 0%, transparent 50%);
-}
-
 .service-icon {
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
@@ -924,7 +930,7 @@ main {
     padding: 0.8rem;
     line-height: 0;
     border-radius: 0.4rem;
-    background-color: var(--heading-color);
+    background-color: var(--framer-color-bg);
     color: #000;
     font-size: 2rem;
 }
@@ -939,9 +945,13 @@ main {
 }
 
 .service-item p {
-    color: rgba(255, 255, 255, 0.8);
-    margin: 2rem 0 3rem;
+    color: var(--heading-color);
+    margin: 2rem 0 0;
     line-height: 1.6;
+}
+
+.service-skills {
+    margin-top: 2rem;
 }
 
 .call-to-action {
@@ -1524,10 +1534,6 @@ footer h3 {
         margin-bottom: 2rem;
     }
 
-    .hero-section {
-        padding: 14vh 0;
-    }
-
     .side-profile {
         min-width: 220px;
     }
@@ -1560,6 +1566,14 @@ footer h3 {
         font-size: 2.8rem;
     }
 
+    .front-portfolio {
+        padding: 0rem 0 3rem;
+    }
+
+    .services {
+        padding: 4rem 0;
+    }
+
     .services-grid {
         grid-template-columns: repeat(1, 1fr);
     }
@@ -1580,6 +1594,10 @@ footer h3 {
 
     .service-item h3 {
         font-size: 1.5rem;
+    }
+
+    .front-blog {
+        padding: 5rem 0;
     }
 
     .about-section {
@@ -1685,6 +1703,16 @@ footer h3 {
     header .header-cont {
         padding-left: 2rem;
         padding-right: 2rem;
+        max-height: 60px;
+    }
+
+    header .header-title {
+        transform: scale(0.8);
+        transform-origin: left;
+    }
+
+    header .flex-row-reverse {
+        flex-direction: row;
     }
 
     .content-container {
