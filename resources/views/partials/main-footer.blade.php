@@ -18,9 +18,7 @@
             <h3><span class="title-deco">::</span>Other</h3>
             <div class="nav-footer">
                 <a href="{{ route('sitemap', ['format' => 'html']) }}">Sitemap</a>
-                <a href="#">privacy</a>
-                <a href="#">profile</a>
-                <a href="/admin" target="_blank">login</a>
+                <a href="{{ route('privacy') }}">Privacy</a>
             </div>
         </div>
         <div class="right">

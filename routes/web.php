@@ -7,7 +7,6 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
-// Your existing routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/work', [WorkController::class, 'index'])->name('work');
@@ -18,7 +17,6 @@ Route::get('/blog/{blog}', [BlogController::class, 'show'])->name('blog.show');
 
 Route::get('/api/search', [SearchController::class, 'ajaxSearch'])->name('search.ajax');
 
-// About page route
 Route::get('/about', function () {
     return view('about');
 })->name('about');
@@ -26,6 +24,10 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::get('/privacy', function () {
+    return view('pages.gdpr');
+})->name('privacy');
 
 Route::post('/contact/submit', [ContactController::class, 'submit'])
     ->name('contact.submit')
