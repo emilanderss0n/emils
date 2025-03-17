@@ -4,7 +4,7 @@
 <section class="blog-section">
     <div class="content-container">
         <div class="blog-header">
-            <h1>Blog</h1>
+            <h1><i class="bi bi-journal-text"></i> Blog</h1>
             <p class="blog-presentation">Exploring the intersection of design & technology through web, games, motion, and 3D.</p>
         </div>
         
@@ -22,7 +22,7 @@
                                 <span class="blog-date">{{ $post->created_at->format('M d, Y') }}</span>
                             </div>
                             <h2>{{ $post->title }}</h2>
-                            <p>{{ Str::limit($post->excerpt, 120) }}</p>
+                            <p>{!! Str::limit($post->excerpt, 120) !!}</p>
                         </div>
                     </a>
                 </div>

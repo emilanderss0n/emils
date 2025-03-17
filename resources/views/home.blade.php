@@ -208,6 +208,8 @@
             </a>
         </div>
     </div>
+    <div class="framer-inner-1"></div>
+    <div class="framer-inner-2"></div>
 </div>
 
 @endsection

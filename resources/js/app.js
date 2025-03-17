@@ -21,7 +21,7 @@ sr.reveal('.services-grid', { beforeReveal: revealDone })
 
 sr.reveal('.front-blog-top', { delay: 0 })
 sr.reveal('.front-blog-list', { delay: 200 })
-sr.reveal('.call-content', { delay: 400 })
+sr.reveal('.call-content', { delay: 0 })
 
 sr.reveal('.portfolio-top', { delay: 0 })
 sr.reveal('.portfolio-grid', { delay: 200 })

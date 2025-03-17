@@ -6,10 +6,21 @@
         <div class="portfolio-top">
             <h2 class="dec-title"><span><i class="bi bi-suitcase-lg"></i></span> Portfolio</h2>
             <div class="category-filter">
-                <a href="{{ route('work') }}" class="btn-Fx filter-item {{ !request('category') ? 'active' : '' }}"><span>All Work</span></a>
+                <a href="{{ route('work') }}" class="btn-Fx filter-item {{ !request('category') ? 'active' : '' }}"><i class="bi bi-eye"></i><span>All</span></a>
                 @foreach($categories as $category)
                     <a href="{{ route('work', ['category' => $category->slug]) }}" 
                        class="btn-Fx filter-item {{ request('category') == $category->slug ? 'active' : '' }}">
+                       @if($category->name == 'Web Development')
+                        <i class="bi bi-laptop"></i>
+                        @elseif($category->name == 'Software Development')
+                        <i class="bi bi-code-slash"></i>
+                        @elseif($category->name == 'Graphic Design')
+                        <i class="bi bi-palette"></i>
+                        @elseif($category->name == '3D Visualization')
+                        <i class="bi bi-box"></i>
+                        @elseif($category->name == 'Other')
+                        <i class="bi bi-tags-fill"></i>
+                       @endif
                         <span>{{ $category->name }}</span>
                     </a>
                 @endforeach
