@@ -33,15 +33,17 @@
         <!-- Styles / Scripts -->
         @vite(['resources/css/dashxe.css', 'resources/css/app.css', 'resources/js/app.js'])
 
+        @if(app()->environment('production') && env('GOOGLE_ANALYTICS_ID'))
         <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7E0BQC6XX"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_ANALYTICS_ID') }}"></script>
         <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'G-Q7E0BQC6XX');
+        gtag('config', '{{ env('GOOGLE_ANALYTICS_ID') }}');
         </script>
+        @endif
     </head>
     <body>
         <header>
