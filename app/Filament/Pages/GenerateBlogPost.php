@@ -16,9 +16,10 @@ use Illuminate\Support\Facades\Log;
 class GenerateBlogPost extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-sparkles';
-    protected static ?string $navigationLabel = 'Generate Blog Post';
+    protected static ?string $navigationLabel = 'Generate Post';
+    protected static ?string $navigationGroup = 'Blog';
     protected static ?string $title = 'AI Blog Generator';
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
     protected static string $view = 'filament.pages.generate-blog-post';
     
     public ?array $data = [];

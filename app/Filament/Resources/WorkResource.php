@@ -73,7 +73,10 @@ class WorkResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('thumbnail'),
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->width(80)
+                    ->height(60)
+                    ->extraImgAttributes(['class' => 'rounded-md']),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),

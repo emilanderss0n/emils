@@ -17,6 +17,9 @@ class BlogResource extends Resource
 {
     protected static ?string $model = Blog::class;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationGroup = 'Blog';
+    protected static ?string $navigationLabel = 'Posts';
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -76,8 +79,9 @@ class BlogResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('thumbnail')
-                    ->square()
-                    ->size(40),
+                    ->width(80)
+                    ->height(50)
+                    ->extraImgAttributes(['class' => 'rounded-md']),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('author')
@@ -88,8 +92,20 @@ class BlogResource extends Resource
                     ->dateTime()
                     ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                Tables\Filters\Filter::make('featured'),
+                Tables\Filters\TernaryFilter::make('featured')
+                    ->label('Featured Status')
+                    ->options([
+                        '1' => 'Featured',
+                        '0' => 'Not Featured',
+                    ])
+                    ->placeholder('All')
+                    ->queries(
+                        true: fn ($query) => $query->where('featured', true),
+                        false: fn ($query) => $query->where('featured', false),
+                        blank: fn ($query) => $query,
+                    ),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

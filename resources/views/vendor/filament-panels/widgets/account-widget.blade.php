@@ -14,9 +14,9 @@
                     {{ __('filament-panels::widgets/account-widget.welcome', ['app' => config('app.name')]) }}
                 </h2>
 
-                <p class="text-sm text-gray-500 dark:text-gray-400">
+                <a href="admin/user-settings" class="text-sm font-bold text-primary-400">
                     {{ filament()->getUserName($user) }}
-                </p>
+                </a>
             </div>
 
             <form

@@ -36,7 +36,7 @@ return [
     ],
 
     'sessions' => [
-        'filament_dashboard' => true,
+        'filament_dashboard' => false,
         'global' => false,
     ],
 
@@ -46,7 +46,7 @@ return [
     ],
 
     'sessions_by_country' => [
-        'filament_dashboard' => true,
+        'filament_dashboard' => false,
         'global' => false,
     ],
 
