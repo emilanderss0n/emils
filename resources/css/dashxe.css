@@ -1,4 +1,5 @@
 :root {
+    interpolate-size: allow-keywords;
     --primary-color: #3e66f9;
     --secondary-color: #6c757d;
     --success-color: #346649;
@@ -68,6 +69,29 @@
         --paragraph-color: #c6ccd4;
         --content-bg-dark: #070b13;
     }
+}
+
+@starting-style {
+    dialog[open] {
+        translate: 0 100px;
+        opacity: 0;
+    }
+
+    .card-animate {
+        opacity: 0;
+        translate: 0 50px;
+    }
+}
+
+dialog[open] {
+    translate: 0 0;
+    opacity: 1;
+}
+
+.card-animate {
+    opacity: 1;
+    translate: 0 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 body,
@@ -264,6 +288,15 @@ img:not(.logo-img) {
     height: auto;
 }
 
+button {
+    border: none;
+    cursor: pointer;
+    background-color: var(--content-box-bg);
+    appearance: none;
+    padding: 0.7rem 1.3rem;
+    font-size: 1.1rem;
+}
+
 .btn {
     background-color: var(--content-box-bg);
     display: inline-block;
@@ -274,9 +307,9 @@ img:not(.logo-img) {
     height: auto;
     color: var(--white);
     cursor: pointer;
-    font-size: 17px;
+    font-size: 1.1rem;
     font-weight: 700;
-    padding: 0.7rem 1.25rem;
+    padding: 0.7rem 1.3rem;
     text-align: center;
     z-index: 1;
     text-decoration: none;
@@ -596,7 +629,7 @@ img:not(.logo-img) {
     align-items: center;
 
     .filter-item {
-        padding: 0.5rem 1rem;
+        padding: 0.7rem 1.1rem;
         color: var(--medium-contrast-color);
         transition: all 0.3s ease;
         font-size: 0.8rem;

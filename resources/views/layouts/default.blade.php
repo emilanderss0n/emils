@@ -44,6 +44,8 @@
         gtag('config', '{{ env('GOOGLE_ANALYTICS_ID') }}');
         </script>
         @endif
+
+        @livewireStyles
     </head>
     <body>
         <header>
@@ -85,5 +87,8 @@
         @include('partials.search-overlay')
         
         @stack('scripts')
+
+        @livewireScripts
+        
     </body>
 </html>

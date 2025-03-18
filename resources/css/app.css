@@ -1029,7 +1029,7 @@ main {
     margin-bottom: 2rem;
 }
 
-.portfolio-top .category-filter a i {
+.portfolio-top .category-filter button i {
     display: none;
 }
 
@@ -1570,10 +1570,6 @@ footer h3 {
     grid-auto-flow: row dense;
     gap: 2rem;
     margin-bottom: 4rem;
-}
-
-.blog-item {
-    transition: transform 0.3s ease;
 }
 
 .blog-thumbnail {

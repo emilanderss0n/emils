@@ -15,19 +15,68 @@ sr.reveal('.hero-actions', { delay: 400 })
 sr.reveal('.hero-image', {})
 
 sr.reveal('.front-portfolio-top', {})
-sr.reveal('.front-portfolio-list', { delay: 200 })
+
+const frontWorkItems = document.querySelectorAll('.front-portfolio-item');
+frontWorkItems.forEach((item, index) => {
+    sr.reveal(item, {
+        delay: 200 + (index * 100),
+        distance: '50px',
+        origin: 'bottom',
+        opacity: 0,
+        duration: 600,
+        reset: false,
+        mobile: true
+    });
+});
 
 sr.reveal('.services-grid', { beforeReveal: revealDone })
 
 sr.reveal('.front-blog-top', { delay: 0 })
-sr.reveal('.front-blog-list', { delay: 200 })
+
+const frontBlogItems = document.querySelectorAll('.front-blog-item');
+frontBlogItems.forEach((item, index) => {
+    sr.reveal(item, {
+        delay: 200 + (index * 100),
+        distance: '50px',
+        origin: 'bottom',
+        opacity: 0,
+        duration: 600,
+        reset: false,
+        mobile: true
+    });
+});
+
 sr.reveal('.call-content', { delay: 0 })
 
 sr.reveal('.portfolio-top', { delay: 0 })
-sr.reveal('.portfolio-grid', { delay: 200 })
+
+const workItems = document.querySelectorAll('.portfolio-grid-item');
+workItems.forEach((item, index) => {
+    sr.reveal(item, {
+        delay: 400 + (index * 100),
+        distance: '50px',
+        origin: 'bottom',
+        opacity: 0,
+        duration: 600,
+        reset: false,
+        mobile: true
+    });
+});
 
 sr.reveal('.blog-header', { delay: 0 })
-sr.reveal('.blog-grid', { delay: 200 })
+
+const blogItems = document.querySelectorAll('.blog-grid .blog-item');
+blogItems.forEach((item, index) => {
+    sr.reveal(item, {
+        delay: 200 + (index * 100),
+        distance: '50px',
+        origin: 'bottom',
+        opacity: 0,
+        duration: 600,
+        reset: false,
+        mobile: true
+    });
+});
 
 sr.reveal('.contact-layout', { delay: 0 })
 
@@ -45,7 +94,38 @@ function revealDone(el) {
     el.classList.add('revealed');
 }
 
-// Search Overlay Functionality
+// Portfolio animation function
+window.reinitializePortfolioAnimation = function () {
+    if (typeof sr === 'undefined') return;
+
+    sr.clean('.portfolio-grid');
+    sr.clean('.portfolio-grid-item');
+
+    sr.reveal('.portfolio-grid', {
+        delay: 0,
+        distance: '50px',
+        duration: 800,
+        opacity: 0,
+        easing: 'ease-out',
+        reset: true,
+        mobile: true,
+        beforeReveal: revealDone
+    });
+
+    const items = document.querySelectorAll('.portfolio-grid-item');
+    items.forEach((item, index) => {
+        sr.reveal(item, {
+            delay: 200 + (index * 100),
+            distance: '50px',
+            origin: 'bottom',
+            opacity: 0,
+            duration: 600,
+            reset: false,
+            mobile: true
+        });
+    });
+};
+
 document.addEventListener('DOMContentLoaded', function () {
     const searchTrigger = document.getElementById('search-trigger');
     const searchClose = document.getElementById('search-close');
@@ -53,6 +133,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('dynamic-search-input');
     const searchResults = document.getElementById('search-results');
     let searchTimeout;
+
+    const mobileNavTrigger = document.getElementById('nav-mobile');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const mobileNavContainer = document.querySelector('.mobile-nav-container');
 
     // Open search overlay
     if (searchTrigger) {
@@ -171,13 +255,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         searchResults.innerHTML = html;
     }
-});
-
-// Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function () {
-    const mobileNavTrigger = document.getElementById('nav-mobile');
-    const mobileNav = document.querySelector('.mobile-nav');
-    const mobileNavContainer = document.querySelector('.mobile-nav-container');
 
     mobileNavTrigger.addEventListener('click', function () {
         if (mobileNav.classList.contains('open')) {
@@ -201,4 +278,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Remove the previous event listener for Livewire
+    // document.addEventListener('livewire:portfolioFiltered', function () {...});
 });
