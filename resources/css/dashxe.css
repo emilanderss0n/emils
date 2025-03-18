@@ -204,12 +204,8 @@ ol {
 
 ul li,
 ol li {
-    color: var(--paragraph-color);
     margin-bottom: 1.5rem;
-}
-
-ul li,
-ol li {
+    text-wrap: pretty;
     list-style-type: '👉';
     padding-inline-start: 1ch;
     color: var(--medium-contrast-color);
