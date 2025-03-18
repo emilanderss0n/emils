@@ -306,11 +306,12 @@ pre {
 }
 
 code {
-    padding: 0.4rem 0.6rem;
+    padding: 0.1rem .4rem;
     background-color: var(--header-bg-color);
-    font-size: 0.9rem;
+    font-size: .8rem;
     color: var(--medium-contrast-color);
     border-radius: var(--br-md);
+    display: inline-block;
 }
 
 strong {
