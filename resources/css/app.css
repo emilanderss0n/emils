@@ -1619,7 +1619,6 @@ footer h3 {
     position: relative;
     width: 100%;
     z-index: 1;
-    mix-blend-mode: exclusion;
 }
 
 .blog-post-header h1 {
@@ -1677,6 +1676,9 @@ footer h3 {
 .blog-post .blog-content h5,
 .blog-post .blog-content h6 {
     margin: 2rem 0;
+    display: inline-block;
+    width: 100%;
+    font-weight: bold;
 }
 
 .blog-post .blog-content p {
@@ -1684,23 +1686,16 @@ footer h3 {
     display: inline-block;
 }
 
-.blog-post .blog-content ul,
-.blog-post .blog-content ol {
-    margin-bottom: 3rem;
+.blog-post .blog-content p:first-child {
+    color: var(--heading-color);
+    font-weight: bold;
 }
 
-.blog-post .blog-content ul li,
-.blog-post .blog-content ol li {
-    margin-bottom: 1rem;
-}
-
-.blog-post .blog-content blockquote {
+.blog-post .blog-content p:last-child {
     margin: 2rem 0;
-    padding: 1rem;
-    background-color: var(--content-box-bg);
-    border-radius: var(--br-xxl);
-    font-size: 0.9rem;
+    padding: 0.3rem 1rem 0.3rem 1.8rem;
     font-style: italic;
+    border-left: 3px solid var(--primary-color);
 }
 
 .blog-post .blog-content img {
