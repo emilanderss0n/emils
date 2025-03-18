@@ -53,7 +53,7 @@ sr.reveal('.portfolio-top', { delay: 0 })
 const workItems = document.querySelectorAll('.portfolio-grid-item');
 workItems.forEach((item, index) => {
     sr.reveal(item, {
-        delay: 400 + (index * 100),
+        delay: 200 + (index * 100),
         distance: '50px',
         origin: 'bottom',
         opacity: 0,

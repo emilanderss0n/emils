@@ -1122,7 +1122,8 @@ main {
     width: 100%;
     color: var(--heading-color);
     font-size: 1.2rem;
-    line-height: 1.8;
+    line-height: 1.6;
+    font-weight: 500;
 }
 
 .work-content p {
@@ -1173,9 +1174,43 @@ main {
     bottom: 20px;
 }
 
+.work-content-body p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.work-content-body p.opening {
+    margin-bottom: 3rem;
+    font-size: 1.3rem;
+}
+
+.work-content-body p.opening strong {
+    font-weight: 500;
+}
+
 .work-content-body img {
     margin-bottom: 2rem;
     border-radius: var(--br-xxl);
+}
+
+.work-content-body h1,
+.work-content-body h2,
+.work-content-body h3 {
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.work-content-body .feature-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 2rem;
+    margin: 6rem 0;
+}
+
+.work-content-body .tech {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 2rem;
 }
 
 .services {
@@ -1666,7 +1701,7 @@ footer h3 {
     margin: 0 auto;
     color: var(--heading-color);
     font-size: 1.2rem;
-    line-height: 1.8;
+    line-height: 1.6;
 }
 
 .blog-post .blog-content h1,
@@ -1899,6 +1934,18 @@ footer h3 {
         }
     }
 
+    .work-detail {
+        padding: 5rem 0;
+    }
+
+    .work-detail-header {
+        grid-template-columns: 1fr;
+    }
+
+    .work-meta {
+        margin-bottom: 3rem;
+    }
+
     .side-profile {
         min-width: 220px;
     }
@@ -2074,7 +2121,7 @@ footer h3 {
     }
 
     .work-detail-header {
-        margin: 0;
+        margin: 0 0 2rem;
         display: flex;
         flex-direction: column;
         gap: 2rem;
@@ -2086,6 +2133,7 @@ footer h3 {
 
     .work-meta {
         min-width: 100%;
+        margin-bottom: 1rem;
     }
 
     .meta-items {
@@ -2095,6 +2143,19 @@ footer h3 {
     .work-content-body,
     .work-images {
         margin-top: 2rem;
+    }
+
+    .work-content-body .feature-items {
+        display: inline-block;
+        margin: 2rem 0;
+    }
+
+    .work-content-body .tech {
+        display: inline-block;
+    }
+
+    .work-content-body .tech img {
+        margin-bottom: 5rem;
     }
 
     .blog-header {

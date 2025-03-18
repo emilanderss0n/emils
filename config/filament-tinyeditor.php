@@ -46,14 +46,14 @@ return [
         ],
 
         'full' => [
-            'plugins' => 'accordion autoresize codesample directionality advlist autolink link image lists charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media table emoticons help',
+            'plugins' => 'accordion autoresize codesample directionality advlist autolink link image lists charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media table emoticons help',
             'toolbar' => 'undo redo removeformat | fontfamily fontsize fontsizeinput font_size_formats styles | bold italic underline | rtl ltr | alignjustify alignright aligncenter alignleft | numlist bullist outdent indent accordion | forecolor backcolor | blockquote table toc hr | image link anchor media codesample emoticons | visualblocks print preview wordcount fullscreen help',
             'upload_directory' => null,
         ],
 
         'custom' => [
-            'plugins' => 'accordion autoresize codesample advlist link image lists preview pagebreak searchreplace code fullscreen insertdatetime media emoticons',
-            'toolbar' => 'undo redo removeformat | styles | bold italic underline | alignjustify alignleft aligncenter alignright | numlist bullist outdent indent | blockquote | image link media | fullscreen',
+            'plugins' => 'accordion autoresize advlist link image lists preview pagebreak searchreplace code fullscreen insertdatetime media emoticons codesample visualblocks',
+            'toolbar' => 'undo redo removeformat | styles | bold italic underline | alignjustify alignleft aligncenter alignright | numlist bullist outdent indent | blockquote codesample | image link media | code visualblocks fullscreen',
             'upload_directory' => 'works/content',
             'skin' => 'tinymce-5',
             'content_css' => 'dark',
