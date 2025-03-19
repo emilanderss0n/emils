@@ -46,6 +46,7 @@
     --br-xxl: 0.8rem;
     --shadow-button: 0px 18px 20px rgb(153 172 243 / 8%), 0px 10px 14px rgb(178 187 207 / 6%), 0px 8px 9px rgb(213 213 213 / 4%);
     --image-overlay: #444d6e;
+    --image-overlay-strong: var(--primary-color);
     --image-hover-bg: rgb(22 32 70 / 37%);
     --smooth-timing: cubic-bezier(0, .56, .46, 1);
     --paragraph-color: #111;
