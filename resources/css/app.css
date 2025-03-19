@@ -1869,10 +1869,27 @@ footer h3 {
         display: none;
     }
 
+    .front-portfolio-item-thumbnail {
+        background-color: transparent;
+    }
+
     .front-portfolio-item-category.mobile-only,
     .front-portfolio-item-title.mobile-only {
         display: inline-block;
         width: 100%;
+        color: var(--medium-contrast-color);
+        margin-top: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .front-portfolio-item-title.mobile-only {
+        margin-top: 0;
+    }
+
+    .front-portfolio-item-title.mobile-only h2 {
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-wrap: unset;
     }
 
     .front-blog-list {
