@@ -54,8 +54,8 @@ class AdminPanelProvider extends PanelProvider
                     600 => '149, 158, 167',
                     700 => '120, 130, 140',
                     800 => '31, 35, 42',
-                    900 => '24, 28, 35',
-                    950 => '13, 18, 23',
+                    900 => '21, 26, 37',
+                    950 => '10, 15, 25',
                 ],
                 'info' => Color::Blue,
                 'primary' => Color::Indigo,
@@ -64,7 +64,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->font('Inter')
-            ->brandName('DASH.XE')
+            ->brandLogo(asset('images/dashxeLogo1.png'))
+            ->brandLogoHeight('2rem')
             ->favicon(asset('images/favicon/favicon-32x32.png'))
             ->spa()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

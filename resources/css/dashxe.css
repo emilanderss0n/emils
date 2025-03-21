@@ -15,10 +15,10 @@
     --dark-bg-color: #1a1a1a;
     --dark-text-color: #e5e5e5;
     --dark-border-color: #2d2d2d;
-    --low-contrast-color: #b0b0b0;
-    --medium-contrast-color: #808080;
-    --heading-color: #000;
-    --main-bg-color: #f8f9fa;
+    --low-contrast-color: #858b9c;
+    --medium-contrast-color: #4d515e;
+    --heading-color: #050c2a;
+    --main-bg-color: #f2f5f7;
     --header-bg-color: #fff;
     --header-bg-color-semi: hsl(0deg 0% 100% / 67%);
     --content-box-bg: #fff;
@@ -49,16 +49,29 @@
     --image-overlay-strong: var(--primary-color);
     --image-hover-bg: rgb(22 32 70 / 37%);
     --smooth-timing: cubic-bezier(0, .56, .46, 1);
-    --paragraph-color: #111;
-    --content-bg-dark: #f8f9fa;
+    --paragraph-color: #33363a;
+    --content-bg-dark: #e7eaed;
+    --opacity-1-bg-color: rgba(0, 0, 0, 0.1);
+    --opacity-2-bg-color: rgba(0, 0, 0, 0.2);
+    --opacity-3-bg-color: rgba(0, 0, 0, 0.3);
+    --opacity-4-bg-color: rgba(0, 0, 0, 0.4);
+    --opacity-5-bg-color: rgba(0, 0, 0, 0.5);
+    --opacity-6-bg-color: rgba(0, 0, 0, 0.6);
+    --opacity-7-bg-color: rgba(0, 0, 0, 0.7);
+    --opacity-8-bg-color: rgba(0, 0, 0, 0.8);
+    --opacity-9-bg-color: rgba(0, 0, 0, 0.9);
+    --active-text: #fff;
+    --invert-filter: invert(0);
+    --overlay-bg: rgb(195 207 255 / 29%);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
+        interpolate-size: allow-keywords;
         --light-color: var(--dark-bg-color);
         --gray-dark-color: var(--dark-text-color);
         --border-color: var(--dark-border-color);
-        --low-contrast-color: #414956;
+        --low-contrast-color: #525b69;
         --medium-contrast-color: #8e94a9;
         --main-bg-color: #0d111c;
         --header-bg-color: #000;
@@ -69,6 +82,17 @@
         --border-color: #1b2029;
         --paragraph-color: #c6ccd4;
         --content-bg-dark: #070b13;
+        --opacity-1-bg-color: rgba(255, 255, 255, 0.1);
+        --opacity-2-bg-color: rgba(255, 255, 255, 0.2);
+        --opacity-3-bg-color: rgba(255, 255, 255, 0.3);
+        --opacity-4-bg-color: rgba(255, 255, 255, 0.4);
+        --opacity-5-bg-color: rgba(255, 255, 255, 0.5);
+        --opacity-6-bg-color: rgba(255, 255, 255, 0.6);
+        --opacity-7-bg-color: rgba(255, 255, 255, 0.7);
+        --opacity-8-bg-color: rgba(255, 255, 255, 0.8);
+        --opacity-9-bg-color: rgba(255, 255, 255, 0.9);
+        --invert-filter: invert(1);
+        --overlay-bg: rgb(25 29 48 / 63%);
     }
 }
 
@@ -321,6 +345,12 @@ img:not(.logo-img) {
     height: auto;
 }
 
+.scroller-stick {
+    position: sticky;
+    top: 7rem;
+    z-index: 3;
+}
+
 button {
     border: none;
     cursor: pointer;
@@ -350,7 +380,7 @@ button {
 }
 
 .btn:hover {
-    color: var(--heading-color);
+    color: var(--active-text);
     background-color: var(--primary-color);
     outline-color: var(--content-box-bg);
 }
@@ -483,24 +513,40 @@ button {
     will-change: transform;
 }
 
-.framer.pink {
+.framer.pink,
+.framer.csharp {
     --framer-color-border: #ff0088;
     --framer-color-bg: #ff0088;
 }
 
-.framer.purple {
+.framer.purple,
+.framer.PHP {
     --framer-color-border: #9911ff;
     --framer-color-bg: #7700ff;
 }
 
-.framer.blue {
+.framer.blue,
+.framer.TypeScript {
     --framer-color-border: #0d63f8;
     --framer-color-bg: #0d63f8;
 }
 
-.framer.cyan {
+.framer.cyan,
+.framer.JavaScript {
     --framer-color-border: #4ff0b7;
     --framer-color-bg: #4ff0b7;
+}
+
+.framer.yellow,
+.framer.CSS {
+    --framer-color-border: #f2b456;
+    --framer-color-bg: #f2b456;
+}
+
+.framer.orange,
+.framer.Misc {
+    --framer-color-border: #e44141;
+    --framer-color-bg: #e44141;
 }
 
 .framer::after {
@@ -554,18 +600,18 @@ button {
 }
 
 .tag {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--opacity-1-bg-color);
     padding: 0.3rem 0.8rem;
     border-radius: 1rem;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--paragraph-color);
 }
 
 .tag-gradient {
     padding: 1px;
     border-radius: 1rem;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--paragraph-color);
     position: relative;
     background-size: 120% 120%;
     background-position: center;
@@ -589,6 +635,10 @@ button {
     background-color: var(--content-bg-dark);
     display: inline-block;
     position: relative;
+}
+
+.tag.sm {
+    font-size: 0.7rem;
 }
 
 .loader {
@@ -622,31 +672,30 @@ button {
 
 .form-group {
     margin-bottom: 1.5rem;
+}
 
-    label {
-        display: block;
-        color: var(--heading-color);
-        font-size: 0.9rem;
-        font-weight: bold;
-    }
+label {
+    display: block;
+    color: var(--heading-color);
+    font-size: 0.9rem;
+    font-weight: bold;
+}
 
-    input,
-    textarea {
-        width: 100%;
-        padding: 0.8rem;
-        border: 1px solid var(--border-color);
-        border-radius: 0.5rem;
-        background: rgba(0, 0, 0, 0.14);
-        color: var(--heading-color);
-        font-size: 1rem;
-    }
+input,
+textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: var(--br-lg);
+    background-color: var(--header-bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--heading-color);
+    font-size: 1rem;
+}
 
-    input:focus,
-    textarea:focus {
-        outline: none;
-        border-color: var(--primary-color);
-    }
-
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
 .form-group textarea {
@@ -668,11 +717,11 @@ button {
         font-size: 0.8rem;
 
         &:hover {
-            color: var(--heading-color);
+            color: var(--active-text);
         }
 
         &.active {
-            color: var(--heading-color);
+            color: var(--active-text);
             background: var(--primary-color);
         }
     }
@@ -740,6 +789,83 @@ button {
     color: var(--primary-color);
 }
 
+.github-component {
+    margin-top: 3rem;
+    height: auto;
+}
+
+#githubContent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.github-header {
+    grid-column: span 2;
+    padding: 0.6rem 1rem;
+    background-color: var(--content-box-bg);
+    border-radius: var(--br-lg);
+}
+
+.github-header .github-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.github-header .github-brand a {
+    color: var(--heading-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.github-header .user-badge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.github-header .user-badge .bi-github {
+    font-size: 1.7rem;
+}
+
+.github-header .user-badge .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.github-header .github-link {
+    color: var(--primary-color);
+}
+
+.github-component .repo-item {
+    display: inline-block;
+}
+
+.github-component .repo-item .repo-content {
+    position: relative;
+    z-index: 2;
+}
+
+.github-component .repo-item h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.github-component .repo-item h4 a {
+    color: var(--heading-color);
+}
+
+.github-component .repo-item p {
+    margin: 0.5rem 0;
+    font-size: 0.8rem;
+    line-height: 1.1rem;
+    color: var(--paragraph-color);
+}
+
 @keyframes upIn {
     0% {
         transform: translateY(20px);
@@ -778,5 +904,22 @@ button {
     .category-filter {
         flex-wrap: wrap;
         justify-content: center;
+    }
+
+    .github-component {
+        margin-top: 5rem;
+    }
+
+    #githubContent {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1.5rem;
+    }
+
+    .github-header {
+        grid-column: span 1;
+        padding: 0.6rem 1rem;
+        background-color: var(--content-box-bg);
+        border-radius: var(--br-lg);
     }
 }

@@ -5,23 +5,25 @@
     <div class="content-container">
         <div class="header-profile">
             <div class="side-profile">
-                <div class="image-profile">
-                    <img src="{{ asset('images/emil-andersson.jpg') }}" alt="Emil Andersson" />
-                    <div class="social-profile">
-                        <a href="https://twitter.com/bobemil_sw13" target="_blank"><i class="bi bi-twitter"></i></a>
-                        <a href="https://github.com/emilanderss0n" target="_blank"><i class="bi bi-github"></i></a>
-                        <a href="https://dribbble.com/emilandersson" target="_blank"><i class="bi bi-dribbble"></i></a>
-                        <a href="https://www.instagram.com/emil_andersson89/" target="_blank"><i class="bi bi-instagram"></i></a>
+                <div class="scroller-stick">
+                    <div class="image-profile">
+                        <img src="{{ asset('images/emil-andersson.jpg') }}" alt="Emil Andersson" />
+                        <div class="social-profile">
+                            <a href="https://twitter.com/bobemil_sw13" target="_blank"><i class="bi bi-twitter"></i></a>
+                            <a href="https://github.com/emilanderss0n" target="_blank"><i class="bi bi-github"></i></a>
+                            <a href="https://dribbble.com/emilandersson" target="_blank"><i class="bi bi-dribbble"></i></a>
+                            <a href="https://www.instagram.com/emil_andersson89/" target="_blank"><i class="bi bi-instagram"></i></a>
+                        </div>
                     </div>
-                </div>
-                <div class="toolset">
-                    <h3>Preferred Toolset</h3>
-                    <div class="icons">
-                        <div class="blender">Blender</div>
-                        <div class="photoshop">Photoshop</div>
-                        <div class="vscode">VS Code</div>
-                        <div class="chrome">Chrome</div>
-                        <div class="github">GitHub</div>
+                    <div class="toolset">
+                        <h3>Preferred Toolset</h3>
+                        <div class="icons">
+                            <div class="blender">Blender</div>
+                            <div class="photoshop">Photoshop</div>
+                            <div class="vscode">VS Code</div>
+                            <div class="chrome">Chrome</div>
+                            <div class="github">GitHub</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,6 +39,9 @@
                     <br><br>
                     Now, at 35, I'm on the lookout for creative opportunities or a chance to join your creative team. Proficient in web development, graphic design, video editing, and 3D art, I'm poised to make a meaningful impact. If you're interested, <a href="{{ route('contact') }}">drop me a line</a>!
                 </p>
+                <div class="github-component">
+                    <div id="githubContent"></div>
+                </div>
             </div>
         </div>
     </div>
