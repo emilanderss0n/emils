@@ -20,6 +20,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use BezhanSalleh\FilamentGoogleAnalytics\FilamentGoogleAnalyticsPlugin;
 use Illuminate\Support\Facades\App;
+use App\Filament\Pages\Auth\Login;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -40,7 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(Login::class)
             ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'danger' => Color::Rose,
