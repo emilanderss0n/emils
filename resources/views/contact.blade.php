@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('main-content')
-<section class="contact-section">
+<section class="contact-section framer blue page">
     <div class="content-container">
         <div class="contact-layout">
             <div class="contact-title">
@@ -76,5 +76,7 @@
             </div><!-- contact-form-container -->
         </div><!-- contact-layout -->
     </div><!-- content-container -->
+    <div class="framer-inner-1"></div>
+    <div class="framer-inner-2"></div>
 </section>
 @endsection

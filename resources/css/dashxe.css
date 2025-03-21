@@ -146,6 +146,7 @@ body {
 a {
     color: var(--primary-color);
     text-decoration: none;
+    font-weight: 600;
 }
 
 h1,
@@ -584,6 +585,37 @@ button {
     background-color: var(--content-bg-dark);
     border-radius: 10px;
     inset: 1px;
+    flex: 0 0 auto;
+    mask: radial-gradient(120% 100% at 107.1% -9.2%, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+    overflow: hidden;
+    position: absolute;
+    will-change: transform;
+    z-index: 1;
+}
+
+.framer.page {
+    border: none;
+    border-radius: 0;
+    --framer-color-border: var(--border-color);
+    --framer-color-bg: var(--primary-color);
+}
+
+.framer.page .framer-inner-1 {
+    background-image: radial-gradient(transparent 1px, var(--content-bg-dark) 1px);
+    background-size: 10px 10px;
+    border-radius: 0;
+    inset: 0;
+    flex: 0 0 auto;
+    overflow: hidden;
+    position: absolute;
+    will-change: transform;
+    z-index: 1;
+}
+
+.framer.page .framer-inner-2 {
+    background-color: var(--content-bg-dark);
+    border-radius: 0;
+    inset: 0;
     flex: 0 0 auto;
     mask: radial-gradient(120% 100% at 107.1% -9.2%, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
     overflow: hidden;

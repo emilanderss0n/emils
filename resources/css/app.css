@@ -82,8 +82,8 @@ header nav {
 }
 
 .main-menu-container a {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 600;
     padding: 0.5rem;
     color: var(--heading-color);
     display: inline-block;
@@ -1554,7 +1554,7 @@ main {
 }
 
 .contact-section {
-    padding: 5rem 0;
+    padding: 9rem 0;
 }
 
 .contact-layout {
@@ -1562,6 +1562,8 @@ main {
     justify-content: space-between;
     align-items: center;
     gap: 4rem;
+    position: relative;
+    z-index: 2;
 }
 
 .contact-header {
@@ -1583,10 +1585,11 @@ main {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    max-width: 600px;
 }
 
 .contact-title h1 {
-    font-size: 49px;
+    font-size: 2rem;
     font-weight: 600;
     line-height: 1.2;
 }
@@ -1600,9 +1603,9 @@ main {
 }
 
 .contact-form-container {
-    max-width: 100%;
-    min-width: 600px;
-    margin: 0 auto;
+    max-width: 500px;
+    min-width: 400px;
+    width: 100%;
 }
 
 .gdpr-section {

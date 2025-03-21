@@ -1,3 +1,3 @@
 <a href="{{ route('sitemap', ['format' => 'html']) }}">Sitemap</a>
 <span>/</span>
-<a href="{{ route('privacy') }}">Privacy</a>
+<a href="{{ route('privacy') }}">Privacy Policy</a>
