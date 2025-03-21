@@ -635,7 +635,6 @@ main {
     flex: 0 0 auto;
     overflow: hidden;
     position: absolute;
-    will-change: transform;
     z-index: 1;
 }
 
@@ -648,7 +647,6 @@ main {
     mask: radial-gradient(120% 100% at 107.1% -9.2%, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
     overflow: hidden;
     position: absolute;
-    will-change: transform;
     z-index: 1;
 }
 
@@ -1081,12 +1079,17 @@ main {
 }
 
 .portfolio-item-thumbnail .portfolio-item-hover .portfolio-item-title {
-    font-weight: bold;
-    font-size: 1.8rem;
-    line-height: 1.2;
-    color: var(--heading-color);
     margin-bottom: 0.4rem;
 }
+
+.portfolio-item-thumbnail .portfolio-item-hover .portfolio-item-title h2 {
+    font-weight: bold;
+    font-size: 1.7rem;
+    line-height: 1.2;
+    color: var(--heading-color);
+    margin: 0;
+}
+
 
 .portfolio-item-thumbnail .portfolio-item-hover .portfolio-item-category {
     font-size: 0.9rem;

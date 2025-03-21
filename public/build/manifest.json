@@ -1,0 +1,43 @@
+{
+  "public/images/icon-blender.png": {
+    "file": "assets/icon-blender-DE8IlMqm.png",
+    "src": "public/images/icon-blender.png"
+  },
+  "public/images/icon-chrome.png": {
+    "file": "assets/icon-chrome-yqISe8gk.png",
+    "src": "public/images/icon-chrome.png"
+  },
+  "public/images/icon-code.png": {
+    "file": "assets/icon-code-CBXQjSfJ.png",
+    "src": "public/images/icon-code.png"
+  },
+  "public/images/icon-github.png": {
+    "file": "assets/icon-github-DRh9GtWB.png",
+    "src": "public/images/icon-github.png"
+  },
+  "public/images/icon-photoshop.png": {
+    "file": "assets/icon-photoshop-B9rhYgUG.png",
+    "src": "public/images/icon-photoshop.png"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-kC2Qj-bK.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/dashxe.css": {
+    "file": "assets/dashxe-ZgAvDGw1.css",
+    "src": "resources/css/dashxe.css",
+    "isEntry": true
+  },
+  "resources/css/filament/admin/theme.css": {
+    "file": "assets/theme-DHZxFUPS.css",
+    "src": "resources/css/filament/admin/theme.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DTJ3J1z_.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}

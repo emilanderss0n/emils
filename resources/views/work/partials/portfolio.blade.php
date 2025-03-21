@@ -7,10 +7,10 @@
                         <img src="{{ asset('storage/' . $work->thumbnail) }}" alt="{{ $work->name }}">
                     @endif
                     <div class="portfolio-item-hover">
-                        <span class="portfolio-item-title">{{ $work->name }}</span>
-                        @if($work->categories->count())
-                            <span class="portfolio-item-category">{{ $work->categories->pluck('name')->join(', ') }}</span>
-                        @endif
+                    @if($work->categories->count())
+                        <span class="portfolio-item-category">{{ $work->categories->pluck('name')->join(', ') }}</span>
+                    @endif
+                        <span class="portfolio-item-title"><h2>{{ $work->name }}</h2></span>
                     </div>
                 </div>
             </a>
