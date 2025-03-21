@@ -401,6 +401,7 @@ button {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    width: max-content;
 }
 
 .btn.animate-arrow:hover .arrow-icon {
@@ -596,8 +597,6 @@ button {
 .framer.page {
     border: none;
     border-radius: 0;
-    --framer-color-border: var(--border-color);
-    --framer-color-bg: var(--primary-color);
 }
 
 .framer.page .framer-inner-1 {
@@ -802,6 +801,40 @@ textarea:focus {
 
 .content-container-max {
     max-width: calc(var(--max-width) + 200px);
+}
+
+.error-page-section {
+    padding: 5rem 0 7rem;
+}
+
+.error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.error-page-section h1 {
+    font-size: 20rem;
+    font-weight: 700;
+    color: #70003c;
+    line-height: 1;
+    margin: 0;
+}
+
+.error-page-section h3 {
+    font-weight: 600;
+}
+
+.error-page-section p {
+    color: var(--medium-contrast-color);
+}
+
+.error-page-section .btn {
+    margin-top: 3rem;
 }
 
 .social-links {
