@@ -14,18 +14,12 @@
                 </div>
             </div>
         </div>
-        <div class="center">
-            <h3><span class="title-deco">::</span>Other</h3>
-            <div class="nav-footer">
-                <a href="{{ route('sitemap', ['format' => 'html']) }}">Sitemap</a>
-                <a href="{{ route('privacy') }}">Privacy</a>
-            </div>
-        </div>
         <div class="right">
-            <h3><span class="title-deco">::</span>Main</h3>
             <div class="nav-footer">
             @include('partials.main-nav')
-                    
+            </div>
+            <div class="nav-footer">
+            @include('partials.misc-nav')
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
             <div class="presentation">
                 <h1>I have been busy<br><span class="gradient-text">creating my own virtual universe</span></h1>
                 <p>
-                Hello, my name is Emil Andersson. I'm a passionate Graphic Designer, Web Developer, 3D Artist and Video Editor from Sweden. Scroll down to see what services I can help you with.
+                Hello, my name is <strong>Emil Andersson</strong>. I'm a passionate Graphic Designer, Web Developer, 3D Artist and Video Editor from Sweden. Scroll down to see what services I can help you with.
                 </p>
                 <div class="hero-actions">
                     <a class="btn" href="{{ route('work') }}" data-pan="work-button-front">Portfolio</a>

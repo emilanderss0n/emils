@@ -12,6 +12,10 @@
             <div class="sitemap-main-nav">
                 @include('partials.main-nav')
             </div>
+            <h2>Misc Pages</h2>
+            <div class="sitemap-main-nav">
+                @include('partials.misc-nav')
+            </div>
         </div>
 
         <div class="sitemap-section">

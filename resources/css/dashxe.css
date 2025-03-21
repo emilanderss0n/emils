@@ -229,9 +229,8 @@ ol {
 
 ul li,
 ol li {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.8rem;
     text-wrap: pretty;
-    list-style-type: '👉';
     padding-inline-start: 1ch;
     color: var(--medium-contrast-color);
 }

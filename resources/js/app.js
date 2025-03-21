@@ -266,6 +266,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const mobileNav = document.querySelector('.mobile-nav');
     const mobileNavContainer = document.querySelector('.mobile-nav-container');
 
+    // Add header scroll functionality
+    const header = document.querySelector('header');
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', function () {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+            // Scrolling down & past threshold
+            header.classList.add('header-hidden');
+        } else {
+            // Scrolling up
+            header.classList.remove('header-hidden');
+        }
+
+        lastScrollTop = scrollTop;
+    });
+
     // Load GitHub repositories if we're on the about page
     const githubReposContainer = document.querySelector('#githubContent');
     if (githubReposContainer) {
