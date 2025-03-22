@@ -907,6 +907,8 @@ main {
     transition: all 1s ease-out;
     border-radius: inherit;
     box-shadow: var(--box-shadow-border);
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .article-blog:hover .article__thumbnail {
