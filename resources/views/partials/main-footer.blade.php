@@ -16,10 +16,10 @@
         </div>
         <div class="right">
             <div class="nav-footer">
-            @include('partials.main-nav')
+            @include('partials.main-nav', ['isFooter' => true])
             </div>
             <div class="nav-footer">
-            @include('partials.misc-nav')
+            @include('partials.misc-nav', ['isFooter' => true])
             </div>
         </div>
     </div>

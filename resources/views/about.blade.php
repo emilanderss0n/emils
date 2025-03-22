@@ -37,7 +37,7 @@
                     But after a few years, we both felt the need to move on. I wanted to explore the world of 3D art and game development. So I did. I've now worked with people from all over the world. Mostly on web design and game development projects. It's so fun meeting people with 
                     different backgrounds and ideas. It's like a never-ending source of inspiration.
                     <br><br>
-                    Now, at 35, I'm on the lookout for creative opportunities or a chance to join your creative team. Proficient in web development, graphic design, video editing, and 3D art, I'm poised to make a meaningful impact. If you're interested, <a href="{{ route('contact') }}">drop me a line</a>!
+                    Now, at 35, I'm on the lookout for creative opportunities or a chance to join your creative team. Proficient in web development, graphic design, video editing, and 3D art, I'm poised to make a meaningful impact. If you're interested, <a href="{{ route('contact') }}" class="line-ani">drop me a line</a>
                 </p>
                 <div class="github-component">
                     <div id="githubContent"></div>

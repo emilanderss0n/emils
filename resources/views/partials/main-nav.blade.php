@@ -1,9 +1,9 @@
-<a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}" data-pan="header-nav-home">Home</a>
+<a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}{{ isset($isFooter) ? ' line-ani' : '' }}">Home</a>
 <span>/</span>
-<a href="{{ route('work') }}" class="{{ request()->routeIs('work') ? 'active' : '' }}" data-pan="header-nav-work">Work</a>
+<a href="{{ route('work') }}" class="{{ request()->routeIs('work') ? 'active' : '' }}{{ isset($isFooter) ? ' line-ani' : '' }}">Work</a>
 <span>/</span>
-<a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}" data-pan="header-nav-about">About</a>
+<a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}{{ isset($isFooter) ? ' line-ani' : '' }}">About</a>
 <span>/</span>
-<a href="{{ route('blog.index') }}" class="{{ request()->routeIs('blog.*') ? 'active' : '' }}" data-pan="header-nav-blog">Blog</a>
+<a href="{{ route('blog.index') }}" class="{{ request()->routeIs('blog.*') ? 'active' : '' }}{{ isset($isFooter) ? ' line-ani' : '' }}">Blog</a>
 <span>/</span>
-<a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}" data-pan="header-nav-contact">Contact</a>
+<a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}{{ isset($isFooter) ? ' line-ani' : '' }}">Contact</a>

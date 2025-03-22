@@ -147,6 +147,35 @@ a {
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+a.line-ani {
+    display: inline-block;
+    position: relative;
+    transition: none;
+}
+
+a.line-ani::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+a.line-ani:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
 h1,

@@ -95,6 +95,7 @@ header nav {
 
 .main-menu-container span {
     color: var(--low-contrast-color);
+    user-select: none;
 }
 
 #nav-mobile {
@@ -866,6 +867,7 @@ main {
 .front-blog-list {
     display: flex;
     justify-content: space-between;
+    gap: 2rem;
 }
 
 .front-blog-top {
@@ -890,11 +892,8 @@ main {
     overflow: hidden;
     position: relative;
     width: 100%;
-    max-width: 400px;
-    height: 400px;
-    box-shadow: var(--shadow-box);
-    transition: opacity 0.4s, box-shadow 0.4s;
-    border-radius: 10px;
+    height: 330px;
+    border-radius: var(--br-xl);
 }
 
 .article__thumbnail {
@@ -903,9 +902,15 @@ main {
     width: 100%;
     background-size: cover;
     background-position-x: center;
-    background-blend-mode: normal;
-    opacity: 1;
+    background-color: #2151b1;
+    background-blend-mode: lighten;
+    opacity: 0.5;
     transition: all 1s ease-out;
+}
+
+.article-blog:hover .article__thumbnail {
+    opacity: 1;
+    background-color: transparent;
 }
 
 .article__body {
@@ -917,7 +922,13 @@ main {
     padding: 20px;
     background-color: var(--content-box-bg);
     transition: all 0.4s;
+    z-index: 2;
     overflow: hidden;
+}
+
+.article-blog:hover .article__body {
+    background-color: var(--image-hover-bg);
+    backdrop-filter: blur(50px);
 }
 
 .article__category {
@@ -930,17 +941,12 @@ main {
 
 .article__title {
     padding-bottom: 20px;
-    margin: 0;
-}
-
-.article__title>a {
-    display: block;
     max-height: 65px;
     overflow: hidden;
     font-weight: bold;
     font-size: 1.3rem;
     line-height: 1.4;
-    color: var(--heading-color);
+    margin: 0;
 }
 
 .article__excerpt {
@@ -991,14 +997,12 @@ main {
     transition: fill 0.4s;
 }
 
-.article-blog:hover .footer__readmore-text {
-    transform: translateY(-2px);
+.article-blog:hover {
+    color: var(--medium-contrast-color);
 }
 
-.article-blog:hover .article__thumbnail {
-    background-color: #2151b1;
-    background-blend-mode: lighten;
-    opacity: 0.7;
+.article-blog:hover .footer__readmore-text {
+    transform: translateY(-2px);
 }
 
 .article-blog:hover .article__body {
@@ -1426,6 +1430,7 @@ main {
 
 .nav-footer span {
     color: var(--medium-contrast-color);
+    user-select: none;
 }
 
 #footer-title a {
@@ -1944,7 +1949,6 @@ main {
 
     .front-blog-list {
         flex-direction: column;
-        gap: 2rem;
     }
 
     .article-blog {

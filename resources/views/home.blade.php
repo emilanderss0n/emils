@@ -170,27 +170,27 @@
         </div>
         <div class="front-blog-list">
             @foreach($latestPosts as $post)
-                <div class="front-blog-item article-blog">
-                        <div class="front-blog-item-thumbnail article__thumbnail" style="background-image: url('{{ asset('storage/' . $post->thumbnail) }}')">
+                <a class="front-blog-item article-blog" href="{{ route('blog.show', $post->slug) }}" aria-label="{{ $post->title }}">
+                    <div class="front-blog-item-thumbnail article__thumbnail" style="background-image: url('{{ asset('storage/' . $post->thumbnail) }}')">
+                    </div>
+                    <div class="front-blog-item-content article__body">
+                        <div>
+                            <h3 class="article__title">{{ $post->title }}</h3>
                         </div>
-                        <div class="front-blog-item-content article__body">
-                            <div>
-                                <h3 class="article__title"><a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a></h3>
-                            </div>
-                            <div class="article__excerpt">
-                                <p>{{ Str::limit(strip_tags($post->content), 160) }}</p>
-                            </div>
-                            <footer class="article__footer">
-                                <span class="article__date">{{ $post->created_at->format('M d, Y') }}</span>
-                                <div class="footer__readmore">
-                                    <a href="{{ route('blog.show', $post->slug) }}" class="footer__readmore-text" title="Read more">Read more</a>
-                                    <span class="footer__readmore-arrow">
-                                        <i class="bi bi-arrow-right"></i>
-                                    </span>
-                                </div>
-                            </footer>
+                        <div class="article__excerpt">
+                            <p>{{ Str::limit(html_entity_decode(strip_tags($post->content)), 160) }}</p>
                         </div>
-                </div>
+                        <footer class="article__footer">
+                            <span class="article__date">{{ $post->created_at->format('M d, Y') }}</span>
+                            <div class="footer__readmore">
+                                <span class="footer__readmore-text">Read more</span>
+                                <span class="footer__readmore-arrow">
+                                    <i class="bi bi-arrow-right"></i>
+                                </span>
+                            </div>
+                        </footer>
+                    </div>
+                </a>
             @endforeach
         </div>
     </div>

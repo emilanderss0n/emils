@@ -266,6 +266,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const mobileNav = document.querySelector('.mobile-nav');
     const mobileNavContainer = document.querySelector('.mobile-nav-container');
 
+    const blogLinks = document.querySelectorAll('.blog-content a');
+
     // Add header scroll functionality
     const header = document.querySelector('header');
     let lastScrollTop = 0;
@@ -430,6 +432,14 @@ document.addEventListener('DOMContentLoaded', function () {
             mobileNav.classList.add('open');
             mobileNavContainer.classList.add('animateIn');
             document.body.classList.add('no-scroll');
+        }
+    });
+
+    // Loop through each link
+    blogLinks.forEach(link => {
+        // Check if the link contains only text (no other HTML elements)
+        if (link.childElementCount === 0) {
+            link.classList.add('line-ani');
         }
     });
 });
