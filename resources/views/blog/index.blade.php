@@ -15,14 +15,14 @@
                         @if($post->thumbnail)
                             <div class="blog-thumbnail">
                                 <img src="{{ asset('storage/' . $post->thumbnail) }}" loading="lazy" alt="{{ $post->title }}">
+                                <div class="blog-meta">
+                                    <span class="blog-date"><i class="bi bi-clock"></i> {{ $post->created_at->format('M d, Y') }}</span>
+                                </div>
                             </div>
                         @endif
                         <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date">{{ $post->created_at->format('M d, Y') }}</span>
-                            </div>
                             <h2>{{ $post->title }}</h2>
-                            <p>{!! Str::limit($post->excerpt, 120) !!}</p>
+                            <p>{!! Str::limit($post->excerpt, 220) !!}</p>
                         </div>
                     </a>
                 </div>

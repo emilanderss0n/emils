@@ -26,7 +26,8 @@
     <div class="info-footer">
         <div class="left">
             <img src="{{ asset('images/logo-2x.png') }}" alt="Emil Andersson logo">
-            <p>Copyright © 2025 Emil Andersson</p>                </div>
+            <p>Copyright © 2025<br>Emil Andersson</p>
+        </div>
         <div class="right">
         Built on Laravel, Filament, Vite
         </div>
