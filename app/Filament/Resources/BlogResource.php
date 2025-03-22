@@ -33,6 +33,7 @@ class BlogResource extends Resource
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('thumbnail')
                     ->image()
+                    ->optimize('webp')
                     ->directory('blog-thumbnails')
                     ->columnSpanFull(),
                 TinyEditor::make('content')

@@ -14,7 +14,7 @@
                     <a href="{{ route('blog.show', $post) }}">
                         @if($post->thumbnail)
                             <div class="blog-thumbnail">
-                                <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="{{ $post->title }}">
+                                <img src="{{ asset('storage/' . $post->thumbnail) }}" loading="lazy" alt="{{ $post->title }}">
                             </div>
                         @endif
                         <div class="blog-content">

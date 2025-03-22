@@ -13,6 +13,7 @@
         "filament/forms": "3.3",
         "filament/support": "3.3",
         "filament/tables": "3.3",
+        "joshembling/image-optimizer": "^1.6",
         "laravel/framework": "^12.0",
         "laravel/jetstream": "^5.3",
         "laravel/tinker": "^2.10.1",

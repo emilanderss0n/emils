@@ -36,7 +36,7 @@
                     <a href="{{ route('work.show', $work) }}">
                         <div class="front-portfolio-item-thumbnail">
                             @if($work->thumbnail)
-                                <img src="{{ asset('storage/' . $work->thumbnail) }}" alt="{{ $work->name }}">
+                                <img src="{{ asset('storage/' . $work->thumbnail) }}" loading="lazy" alt="{{ $work->name }}">
                             @endif
                             <div class="portfolio-item-hover desktop-only">
                                 <span class="portfolio-item-category">

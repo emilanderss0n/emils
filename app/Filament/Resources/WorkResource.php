@@ -37,6 +37,7 @@ class WorkResource extends Resource
                     ]),
                 Forms\Components\FileUpload::make('thumbnail')
                     ->image()
+                    ->optimize('webp')
                     ->required()
                     ->directory('works/thumbnails')
                     ->panelAspectRatio('2:1'),
