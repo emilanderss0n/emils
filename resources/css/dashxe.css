@@ -48,6 +48,7 @@
     --image-overlay: #444d6e;
     --image-overlay-strong: var(--primary-color);
     --image-hover-bg: rgb(22 32 70 / 37%);
+    --image-hover-bg-2: rgb(255 255 255 / 60%);
     --smooth-timing: cubic-bezier(0, .56, .46, 1);
     --paragraph-color: #33363a;
     --content-bg-dark: #e7eaed;
@@ -63,6 +64,7 @@
     --active-text: #fff;
     --invert-filter: invert(0);
     --overlay-bg: rgb(195 207 255 / 29%);
+    --box-shadow-border: inset 0 0 0 2px rgb(42 53 111 / 10%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -93,6 +95,8 @@
         --opacity-9-bg-color: rgba(255, 255, 255, 0.9);
         --invert-filter: invert(1);
         --overlay-bg: rgb(25 29 48 / 63%);
+        --image-hover-bg-2: rgb(22 32 70 / 37%);
+        --box-shadow-border: inset 0 0 0 2px rgb(255 255 255 / 5%);
     }
 }
 

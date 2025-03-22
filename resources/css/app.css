@@ -889,7 +889,6 @@ main {
 
 .article-blog {
     color: var(--medium-contrast-color);
-    overflow: hidden;
     position: relative;
     width: 100%;
     height: 330px;
@@ -906,6 +905,8 @@ main {
     background-blend-mode: lighten;
     opacity: 0.5;
     transition: all 1s ease-out;
+    border-radius: inherit;
+    box-shadow: var(--box-shadow-border);
 }
 
 .article-blog:hover .article__thumbnail {
@@ -924,11 +925,16 @@ main {
     transition: all 0.4s;
     z-index: 2;
     overflow: hidden;
+    border-radius: inherit;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: var(--box-shadow-border);
 }
 
 .article-blog:hover .article__body {
-    background-color: var(--image-hover-bg);
+    background-color: var(--image-hover-bg-2);
     backdrop-filter: blur(50px);
+    height: 250px;
 }
 
 .article__category {
@@ -1003,10 +1009,6 @@ main {
 
 .article-blog:hover .footer__readmore-text {
     transform: translateY(-2px);
-}
-
-.article-blog:hover .article__body {
-    height: 250px;
 }
 
 .article-blog:hover .article__excerpt {
