@@ -262,7 +262,7 @@ ol li {
     margin-bottom: 0.8rem;
     text-wrap: pretty;
     padding-inline-start: 1ch;
-    color: var(--medium-contrast-color);
+    color: var(--paragraph-color);
 }
 
 ul.special {
