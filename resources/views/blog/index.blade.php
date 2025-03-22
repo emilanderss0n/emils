@@ -4,7 +4,7 @@
 <section class="blog-section">
     <div class="content-container">
         <div class="blog-header">
-            <h1><i class="bi bi-journal-text"></i> Blog</h1>
+            <h1 class="page-title"><i class="bi bi-journal-text"></i> Blog</h1>
             <p class="blog-presentation">Exploring the intersection of design & technology through web, games, motion, and 3D.</p>
         </div>
         

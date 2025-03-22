@@ -13,12 +13,15 @@ use Prism\Prism\Prism;
 use Prism\Prism\Enums\Provider;
 use Illuminate\Support\Facades\Log;
 
+use Filament\Forms\Components\Placeholder;
+use Illuminate\Support\HtmlString;
+
 class GenerateBlogPost extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-sparkles';
     protected static ?string $navigationLabel = 'Generate Post';
     protected static ?string $navigationGroup = 'Blog';
-    protected static ?string $title = 'AI Blog Generator';
+    protected static ?string $title = 'AI Article Generator';
     protected static ?int $navigationSort = 2;
     protected static string $view = 'filament.pages.generate-blog-post';
     
@@ -33,21 +36,15 @@ class GenerateBlogPost extends Page
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Blog Details')
+                Forms\Components\Section::make('Post Details')
                     ->schema([
                         Forms\Components\TextInput::make('title')
-                            ->label('Blog Title')
-                            ->placeholder('Enter a title for your blog post')
+                            ->label('Post Title')
                             ->required(),
                         Forms\Components\TextInput::make('author')
                             ->label('Author')
-                            ->default('AI Assistant')
-                            ->required(),
-                        Forms\Components\Textarea::make('prompt')
-                            ->label('Prompt for AI')
-                            ->placeholder('Describe what you want the AI to write about...')
-                            ->required()
-                            ->rows(4),
+                            ->default('Moxo')
+                            ->hidden(),
                         Forms\Components\Select::make('tone')
                             ->label('Writing Tone')
                             ->options([
@@ -57,11 +54,23 @@ class GenerateBlogPost extends Page
                                 'educational' => 'Educational',
                                 'technical' => 'Technical',
                             ])
-                            ->default('professional')
-                            ->required(),
+                            ->default('professional'),
                         Forms\Components\TextInput::make('tags')
                             ->label('Tags (comma-separated)')
-                            ->placeholder('ai, technology, blog'),
+                            ->required(),
+                        Forms\Components\Select::make('model')
+                            ->label('AI Model')
+                            ->options([
+                                'gpt-4o-mini' => 'GPT-4o Mini (Balanced)',
+                                'gpt-4o' => 'GPT-4o (High Quality)',
+                            ])
+                            ->default('gpt-4o-mini'),
+                        Forms\Components\Textarea::make('prompt')
+                            ->label('Prompt for AI')
+                            ->required()
+                            ->rows(4),
+                        Placeholder::make('Model Pricing')
+                            ->content(new HtmlString('Per 1M tokens:<ul><li>GPT-4o Mini - Input: $0.15 - Output: $0.60</li><li>GPT-4o - Input: $2.50 - Output: $10.00</li></ul>')),
                     ])
                     ->columns(2),
             ])
@@ -88,7 +97,9 @@ class GenerateBlogPost extends Page
                       "Start directly with the introduction paragraph wrapped in <p> tags, followed by sections with <h2> headings.\n" .
                       "Write a comprehensive blog post with at least 3 sections, each with its own <h2> heading.";
             
-            Log::info('Sending prompt to OpenAI', ['prompt' => $prompt]);
+            // Get the selected model or default to gpt-4o-mini if not set
+            $model = $data['model'] ?? 'gpt-4o-mini';
+            Log::info('Sending prompt to OpenAI', ['prompt' => $prompt, 'model' => $model]);
             
             // Add a loading notification
             Notification::make()
@@ -97,10 +108,10 @@ class GenerateBlogPost extends Page
                 ->info()
                 ->send();
                 
-            // Generate content using Prism with retry logic
+            // Generate content using Prism with retry logic and selected model
             $response = $this->generateWithRetry(
                 Provider::OpenAI, 
-                'gpt-4o-mini',
+                $model,
                 "You are a professional blog writer. Your task is to create engaging, well-structured blog posts. Do not include any HTML doctype, head, body tags, or h1 headings in your response.",
                 $prompt
             );
@@ -125,7 +136,7 @@ class GenerateBlogPost extends Page
             $blog = Blog::create([
                 'title' => $data['title'],
                 'content' => $content,
-                'author' => $data['author'],
+                'author' => $data['author'] ?? 'Moxo', // Add default value when author is not in the form data
                 'featured' => false,
                 'tags' => $tags,
             ]);

@@ -3,7 +3,7 @@
     x-init="$wire.on('portfolioUpdated', () => setTimeout(() => window.reinitializePortfolioAnimation(), 100))"
 >
     <div class="portfolio-top">
-        <h2 class="dec-title"><span><i class="bi bi-suitcase-lg"></i></span> Portfolio</h2>
+        <h2 class="dec-title page-title"><span><i class="bi bi-suitcase-lg"></i></span> Portfolio</h2>
         <div class="category-filter">
             <button wire:click="filterByCategory()" 
                     class="btn-Fx filter-item {{ !$selectedCategory ? 'active' : '' }}">

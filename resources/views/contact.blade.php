@@ -1,7 +1,16 @@
 @extends('layouts.default')
 
 @section('main-content')
-<section class="contact-section framer blue page">
+<section class="contact-section">
+    <div id="threeGradient">
+        <div id="gradient" data-url="https://www.shadergradient.co/customize?animate=on&amp;axesHelper=off&amp;bgColor1=%23000000&amp;bgColor2=%23000000&amp;brightness=0.6&amp;cAzimuthAngle=250&amp;cDistance=1.5&amp;cPolarAngle=140&amp;cameraZoom=12.5&amp;color1=%239e0b68&amp;color2=%231f0059&amp;color3=%235b00b8&amp;embedMode=off&amp;envPreset=city&amp;fov=45&amp;gizmoHelper=hide&amp;grain=off&amp;lightType=3d&amp;pixelDensity=1.1&amp;positionX=0&amp;positionY=0&amp;positionZ=0&amp;range=disabled&amp;reflection=0.5&amp;rotationX=0&amp;rotationY=0&amp;rotationZ=140&amp;shader=defaults&amp;type=sphere&amp;uAmplitude=2.3&amp;uDensity=1.4&amp;uFrequency=5.5&amp;uSpeed=0.05&amp;uStrength=1.2&amp;uTime=0&amp;wireframe=false">
+            <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                <div style="width: 100%; height: 100%;">
+                    <canvas style="display: block; width: 1429px; height: 804px; touch-action: none; user-select: none;" data-engine="three.js r150" width="1429" height="804" data-camera-controls-version="2.9.0"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="content-container">
         <div class="contact-layout">
             <div class="contact-title">
@@ -52,18 +61,15 @@
                 <form action="{{ route('contact.submit') }}" method="POST" class="contact-form">
                     @csrf
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name" placeholder="Name" value="{{ old('name') }}" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="6" required></textarea>
+                        <textarea id="message" name="message" rows="6" placeholder="Message" required>{{ old('message') }}</textarea>
                     </div>
                     
                     <button type="submit" class="btn animate-arrow">
@@ -76,7 +82,6 @@
             </div><!-- contact-form-container -->
         </div><!-- contact-layout -->
     </div><!-- content-container -->
-    <div class="framer-inner-1"></div>
     <div class="framer-inner-2"></div>
 </section>
 @endsection

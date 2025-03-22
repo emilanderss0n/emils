@@ -303,7 +303,17 @@ header nav {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Search button */
+.page-title {
+    font-size: 2rem;
+    margin-bottom: 0;
+    color: var(--medium-contrast-color);
+    font-weight: bold;
+}
+
+.page-title .bi {
+    color: var(--low-contrast-color);
+}
+
 .search-button {
     background: none;
     border: none;
@@ -317,7 +327,6 @@ header nav {
     transition: all 0.3s ease;
 }
 
-/* Search overlay */
 .search-overlay {
     position: fixed;
     top: 0;
@@ -617,6 +626,23 @@ main {
     display: none;
 }
 
+#threeGradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+    /* Ensure no overflow */
+}
+
+#gradient canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
 .hero-section {
     --framer-color-bg: var(--primary-color);
     padding: 23vh 0;
@@ -632,7 +658,10 @@ main {
     top: -80px;
 }
 
-.hero-section .framer-inner-1,
+.hero-section {
+    background-color: transparent !important;
+}
+
 .call-to-action .framer-inner-1 {
     background-image: radial-gradient(transparent 1px, var(--content-bg-dark) 1px);
     background-size: 10px 10px;
@@ -643,8 +672,19 @@ main {
     z-index: 1;
 }
 
+.hero-section .framer-inner-1 {
+    background-image: radial-gradient(transparent 2px, var(--content-bg-dark) 2px);
+    background-size: 10px 10px;
+    inset: 0;
+    flex: 0 0 auto;
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+}
+
 .hero-section .framer-inner-2,
-.call-to-action .framer-inner-2 {
+.call-to-action .framer-inner-2,
+.contact-section .framer-inner-2 {
     background-color: var(--content-bg-dark);
     border-radius: 0;
     inset: 0;
@@ -714,7 +754,7 @@ main {
     right: 2px;
     width: calc(100% - 115px);
     height: calc(100% - 94px);
-    background: rgb(4 4 20 / 86%);
+    background: rgb(4 4 20 / 47%);
     z-index: 1;
     border-radius: 1.2rem;
 }
@@ -1569,8 +1609,13 @@ main {
     background-image: url(../../public/images/icon-github.png);
 }
 
+.contact-section #gradient canvas {
+    transform: scale(2);
+}
+
 .contact-section {
     padding: 9rem 0;
+    position: relative;
 }
 
 .contact-layout {
@@ -1659,12 +1704,6 @@ main {
     justify-content: space-between;
     align-items: center;
     gap: 2rem
-}
-
-.blog-header h1 {
-    font-size: 2rem;
-    margin-bottom: 0;
-    color: var(--heading-color);
 }
 
 .blog-header p {
@@ -1862,6 +1901,11 @@ main {
 
     .hero-content .hero-image {
         min-width: 700px;
+    }
+
+    .hero-content .hero-image .fill {
+        width: calc(100% - 92px);
+        height: calc(100% - 78px);
     }
 }
 
@@ -2372,6 +2416,21 @@ main {
 }
 
 @media (max-width: 480px) {
+    .hero-section {
+        padding: 15vh 0;
+
+        .presentation {
+            & h1 {
+                font-size: 2.4rem;
+            }
+
+            & p {
+                font-size: 18px;
+                line-height: 1.7;
+                width: 100%;
+            }
+        }
+    }
 
     .front-portfolio-top .dec-title,
     .front-blog-title.dec-title {

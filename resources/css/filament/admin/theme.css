@@ -22,17 +22,17 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
 }
 
 .birthdays-widget-admin .birthdays-list-admin img {
-    max-width: 100px;
-    border-radius: 50%;
+    max-width: 60px;
+    border-radius: 10px;
 }
 
 .birthday-item-details-admin {
-    text-align: center;
+    text-align: left;
 }
 
 .birthday-item-icon-admin {
@@ -44,7 +44,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    justify-content: center;
+    justify-content: flex-start;
     font-size: 1.2rem;
     font-weight: bold;
 }

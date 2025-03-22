@@ -1,4 +1,6 @@
 import './bootstrap';
+import { initThree } from './three';
+import { initShaderGradient } from './shaderGradient';
 
 // Scroll Reveal
 
@@ -441,5 +443,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (link.childElementCount === 0) {
             link.classList.add('line-ani');
         }
+    });
+
+    // Example usage with custom colors
+    initShaderGradient('threeGradient', {
+        color1: '#de139e',  // Red
+        color2: '#000a88',  // Green
+        color3: '#1636ab'   // Blue
     });
 });

@@ -20,27 +20,32 @@ class ContactResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\Hidden::make('user_id')
-                    ->default(auth()->id()),
-                Forms\Components\TextInput::make('full_name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('birthday'),
-                Forms\Components\FileUpload::make('contact_image')
-                    ->image()
-                    ->imageEditor()
-                    ->directory('contacts')
-                    ->maxSize(2048) // 2MB in kilobytes
-                    ->imageCropAspectRatio('1:1')
-                    ->rules(['dimensions:min_width=200,min_height=200']),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->maxLength(255),
-            ]);
+        ->schema([
+            Forms\Components\Section::make('Contact Details')
+                ->schema([
+                    Forms\Components\Hidden::make('user_id')
+                        ->default(auth()->id()),
+                    Forms\Components\FileUpload::make('contact_image')
+                        ->image()
+                        ->imageEditor()
+                        ->directory('contacts')
+                        ->maxSize(2048) // 2MB in kilobytes
+                        ->imageCropAspectRatio('1:1')
+                        ->columnSpanFull()
+                        ->rules(['dimensions:min_width=200,min_height=200']),
+                    Forms\Components\TextInput::make('full_name')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('email')
+                        ->email()
+                        ->maxLength(255),
+                    Forms\Components\DatePicker::make('birthday'),
+                    Forms\Components\TextInput::make('phone')
+                        ->tel()
+                        ->maxLength(255),
+                ])
+                ->columns(2),
+        ]);
     }
 
     public static function table(Table $table): Table

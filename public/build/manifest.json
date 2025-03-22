@@ -20,24 +20,36 @@
     "src": "public/images/icon-photoshop.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Bo12Xk1g.css",
+    "file": "assets/app-Bn3GZQUR.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/dashxe.css": {
-    "file": "assets/dashxe-BGI_iDMm.css",
+    "file": "assets/dashxe-gJEXSMde.css",
     "src": "resources/css/dashxe.css",
     "isEntry": true
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-DE7v0FOa.css",
+    "file": "assets/theme-Ccyrz7GI.css",
     "src": "resources/css/filament/admin/theme.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-DdLCidXc.js",
+    "file": "assets/app-uOftLYP-.js",
     "name": "app",
     "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/shaderGradient.js": {
+    "file": "assets/shaderGradient-l0sNRNKZ.js",
+    "name": "shaderGradient",
+    "src": "resources/js/shaderGradient.js",
+    "isEntry": true
+  },
+  "resources/js/three.js": {
+    "file": "assets/three-l0sNRNKZ.js",
+    "name": "three",
+    "src": "resources/js/three.js",
     "isEntry": true
   }
 }

@@ -24,7 +24,7 @@ class ContactController extends Controller
 
         try {
             Mail::to('hello@emils.graphics')->send(new ContactFormMail($request->all()));
-            return redirect()->back()->with('success', 'Thank you for your message. We will get back to you soon!');
+            return redirect()->back()->with('success', 'Thank you for your message. I will get back to you soon!');
         } catch (\Exception $e) {
             Log::error('Contact form error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Sorry, there was an error sending your message.')->withInput();

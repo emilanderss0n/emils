@@ -56,12 +56,12 @@ return [
     ],
 
     'most_visited_pages' => [
-        'filament_dashboard' => true,
+        'filament_dashboard' => false,
         'global' => false,
     ],
 
     'top_referrers_list' => [
-        'filament_dashboard' => true,
+        'filament_dashboard' => false,
         'global' => false,
     ],
 
