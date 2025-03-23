@@ -24,8 +24,16 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="{{ asset('images/presentationImage.png') }}" alt="Emil Andersson" />
+
+
+                <img src="{{ asset('images/presentationImagev2.png') }}" alt="Emil Andersson" />
                 <div class="fill"></div>
+
+                <dotlottie-player src="{{ asset('images/animated/flying-ui-animation.lottie') }}" autoplay loop id="uiAni" ></dotlottie-player>
+
+                <div id="desktopAni">
+                    <dotlottie-player src="{{ asset('images/animated/ui-desktop-animation-2.lottie') }}" autoplay loop class="zoomOut" ></dotlottie-player>
+                </div>
             </div>
         </div>
     </div>

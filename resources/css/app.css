@@ -704,6 +704,9 @@ main {
 }
 
 .hero-section .presentation {
+    position: relative;
+    z-index: 3;
+
     & h1 {
         margin-bottom: 30px;
         font-size: 3.3em;
@@ -757,6 +760,35 @@ main {
     background: rgb(4 4 20 / 47%);
     z-index: 1;
     border-radius: 1.2rem;
+    display: none;
+}
+
+#uiAni {
+    position: absolute;
+    top: -6rem;
+    left: -20rem;
+    width: 1000px;
+    height: 1000px;
+    background: transparent;
+    z-index: 2;
+    filter: drop-shadow(0px 20px 20px #04040f69);
+    mix-blend-mode: hard-light;
+}
+
+#desktopAni {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: calc(100% - 115px);
+    height: calc(100% - 94px);
+    background: rgb(4 4 20 / 47%);
+    z-index: 1;
+    border-radius: 1.2rem;
+    overflow: hidden;
+}
+
+#desktopAni .zoomOut {
+    transform: scale(0.8);
 }
 
 .hero-content .hero-image img {
@@ -1903,9 +1935,16 @@ main {
         min-width: 700px;
     }
 
-    .hero-content .hero-image .fill {
+    .hero-content .hero-image .fill,
+    #desktopAni {
         width: calc(100% - 92px);
         height: calc(100% - 78px);
+    }
+
+    #uiAni {
+        left: -15rem;
+        width: 800px;
+        height: 800px;
     }
 }
 
@@ -1971,6 +2010,10 @@ main {
 }
 
 @media screen and (max-width: 1240px) {
+    dotlottie-player {
+        display: none;
+    }
+
     .header-profile {
         gap: 3rem;
     }

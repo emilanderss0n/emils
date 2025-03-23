@@ -88,6 +88,16 @@
         
         @stack('scripts')
 
+        <script>
+            // Only load dotlottie-player script on desktop devices
+            if (window.matchMedia("(min-width: 1240px)").matches) {
+                const script = document.createElement('script');
+                script.src = "https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs";
+                script.type = "module";
+                document.head.appendChild(script);
+            }
+        </script>
+
         @livewireScripts
         
     </body>

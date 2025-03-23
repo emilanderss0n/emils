@@ -18,10 +18,6 @@ export function initShaderGradient(containerId, options = {}) {
     // Parse URL parameters
     const urlParams = new URLSearchParams(dataUrl.split('?')[1]);
 
-    // Debug the data-url
-    console.log('Raw data-url:', dataUrl);
-    console.log('All URL parameters:', Array.from(urlParams.entries()));
-
     // Setup renderer
     const renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -180,7 +176,6 @@ export function initShaderGradient(containerId, options = {}) {
     function hexToRgb(hex) {
         // Handle missing or invalid hex values
         if (!hex || typeof hex !== 'string') {
-            console.warn('Invalid hex color:', hex);
             return new THREE.Vector3(1, 0, 1); // Default to magenta for visibility
         }
 
@@ -189,7 +184,6 @@ export function initShaderGradient(containerId, options = {}) {
 
         // Ensure hex is a valid format
         if (!/^[0-9A-Fa-f]{6}$/.test(hex)) {
-            console.warn('Invalid hex format:', hex);
             return new THREE.Vector3(1, 0, 1); // Default to magenta
         }
 
@@ -201,7 +195,6 @@ export function initShaderGradient(containerId, options = {}) {
 
             return new THREE.Vector3(r, g, b);
         } catch (error) {
-            console.error('Error parsing color:', hex, error);
             return new THREE.Vector3(1, 0, 1); // Default to magenta
         }
     }
@@ -227,22 +220,9 @@ export function initShaderGradient(containerId, options = {}) {
     if (containerParams.has('color2')) colorParam2 = containerParams.get('color2');
     if (containerParams.has('color3')) colorParam3 = containerParams.get('color3');
 
-    console.log('Function options:', options);
-    console.log('Final color parameters:', {
-        colorParam1,
-        colorParam2,
-        colorParam3
-    });
-
     const color1 = hexToRgb(colorParam1);
     const color2 = hexToRgb(colorParam2);
     const color3 = hexToRgb(colorParam3);
-
-    console.log('Parsed RGB colors:', {
-        color1: { r: color1.x, g: color1.y, b: color1.z },
-        color2: { r: color2.x, g: color2.y, b: color2.z },
-        color3: { r: color3.x, g: color3.y, b: color3.z }
-    });
 
     // Setup uniforms based on parameters
     const uniforms = {
