@@ -346,6 +346,8 @@ img {
 svg {
     overflow: hidden;
     vertical-align: middle;
+    width: 1rem;
+    height: 1rem;
 }
 
 label {
@@ -660,6 +662,62 @@ button {
     position: absolute;
     will-change: transform;
     z-index: 1;
+}
+
+.pagination {
+    margin-top: 1rem;
+}
+
+.pagination-inner {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.pagination-links {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    border-radius: var(--br-lg);
+    background-color: var(--content-box-bg);
+    box-shadow: var(--shadow-button);
+}
+
+.pagination-links>a,
+.pagination-links>span {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.pagination-links>a {
+    color: var(--heading-color);
+    font-weight: 600;
+}
+
+.pagination-links>span.current-page {
+    background-color: var(--overlay-bg);
+    color: var(--medium-contrast-color);
+}
+
+.pagination-links .prev-page-first {
+    color: var(--medium-contrast-color);
+}
+
+.pagination-links .next-page-last {
+    color: var(--medium-contrast-color);
+}
+
+.pagination-summary {
+    color: var(--medium-contrast-color);
+    font-size: 0.9rem;
 }
 
 .tags {
