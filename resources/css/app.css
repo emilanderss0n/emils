@@ -1784,17 +1784,19 @@ main {
 
 .blog-thumbnail img {
     width: 100%;
+    max-width: 240px;
     min-width: 240px;
     object-fit: cover;
     border-radius: 1rem;
 }
 
-.blog-meta {
+.blog-item .blog-meta {
     color: var(--medium-contrast-color);
     margin-top: 0.5rem;
+    font-size: 0.8rem;
 }
 
-.blog-meta .bi {
+.blog-item .blog-meta .bi {
     color: var(--low-contrast-color);
     margin-right: 0.1rem;
     margin-left: 0.2rem;
@@ -1864,6 +1866,7 @@ main {
 
 .blog-post-header .blog-thumbnail img {
     width: 100%;
+    max-width: max-content;
     height: 420px;
     filter: blur(80px);
     -o-object-fit: cover;
@@ -2422,6 +2425,10 @@ main {
 
     .blog-post-header h1 {
         font-size: clamp(3rem, 3vw, 3rem);
+    }
+
+    .blog-thumbnail img {
+        max-width: 100%;
     }
 
     .blog-footer {

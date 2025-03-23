@@ -55,7 +55,7 @@ sr.reveal('.portfolio-top', { delay: 0 })
 const workItems = document.querySelectorAll('.portfolio-grid-item');
 workItems.forEach((item, index) => {
     sr.reveal(item, {
-        delay: 200 + (index * 100),
+        delay: 0 + (index * 100),
         distance: '50px',
         origin: 'bottom',
         opacity: 0,
@@ -70,7 +70,7 @@ sr.reveal('.blog-header', { delay: 0 })
 const blogItems = document.querySelectorAll('.blog-grid .blog-item');
 blogItems.forEach((item, index) => {
     sr.reveal(item, {
-        delay: 200 + (index * 100),
+        delay: 0 + (index * 100),
         distance: '50px',
         origin: 'bottom',
         opacity: 0,
@@ -79,6 +79,8 @@ blogItems.forEach((item, index) => {
         mobile: true
     });
 });
+
+sr.reveal('.pagination', { delay: 200 })
 
 sr.reveal('.contact-layout', { delay: 0 })
 
