@@ -20,12 +20,12 @@
     "src": "public/images/icon-photoshop.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app--JKwYM95.css",
+    "file": "assets/app-1sKAtomb.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/dashxe.css": {
-    "file": "assets/dashxe-CXdEgiui.css",
+    "file": "assets/dashxe-BKHby5Ra.css",
     "src": "resources/css/dashxe.css",
     "isEntry": true
   },
@@ -35,7 +35,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-CitxcnA_.js",
+    "file": "assets/app-Ch7n4dYd.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

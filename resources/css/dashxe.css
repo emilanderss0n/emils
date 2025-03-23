@@ -29,6 +29,7 @@
     --padding-xl: 5rem;
     --padding-xxl: 6rem;
     --max-width: 1380px;
+    --blog-width: 900px;
     --font-size-base: 1rem;
     --font-size-lg: 1.25rem;
     --font-size-sm: 0.875rem;
@@ -73,16 +74,15 @@
         interpolate-size: allow-keywords;
         --light-color: var(--dark-bg-color);
         --gray-dark-color: var(--dark-text-color);
-        --border-color: var(--dark-border-color);
         --low-contrast-color: #525b69;
         --medium-contrast-color: #8e94a9;
         --main-bg-color: #0d111c;
         --header-bg-color: #000;
         --header-bg-color-semi: hsl(220deg 46.15% 5.1% / 83.14%);
         --heading-color: #fff;
-        --content-box-bg: #1f2634;
+        --content-box-bg: #1e283c;
         --shadow-button: none;
-        --border-color: #1b2029;
+        --border-color: oklch(0.28 0.04 263.62 / 0.82);
         --paragraph-color: #c6ccd4;
         --content-bg-dark: #070b13;
         --opacity-1-bg-color: rgba(255, 255, 255, 0.1);
@@ -97,8 +97,8 @@
         --invert-filter: invert(1);
         --overlay-bg: rgb(25 29 48 / 63%);
         --image-hover-bg-2: rgb(22 32 70 / 37%);
-        --box-shadow-border: inset 0 0 0 2px rgb(255 255 255 / 5%);
-        --box-shadow-border-sm: inset 0 0 0 1px rgb(255 255 255 / 5%);
+        --box-shadow-border: inset 0 0 0 2px oklch(0.28 0.04 263.62 / 0.45);
+        --box-shadow-border-sm: inset 0 0 0 1px oklch(0.28 0.04 263.62 / 0.45);
     }
 }
 
@@ -970,8 +970,8 @@ textarea {
 
 .github-header .github-brand a {
     color: var(--heading-color);
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 .github-header .user-badge {
@@ -997,6 +997,9 @@ textarea {
 
 .github-component .repo-item {
     display: inline-block;
+    padding: 1rem;
+    box-shadow: var(--box-shadow-border);
+    border-radius: var(--br-xl);
 }
 
 .github-component .repo-item .repo-content {
