@@ -268,6 +268,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const mobileNavContainer = document.querySelector('.mobile-nav-container');
 
     const blogLinks = document.querySelectorAll('.blog-content a');
+    const blogItems = document.querySelectorAll(".front-blog-item");
+
+    blogItems.forEach(item => {
+        item.addEventListener("mouseenter", () => {
+            blogItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.querySelector(".article__thumbnail").style.opacity = "0.5";
+                }
+            });
+        });
+
+        item.addEventListener("mouseleave", () => {
+            blogItems.forEach(otherItem => {
+                otherItem.querySelector(".article__thumbnail").style.opacity = "1";
+            });
+        });
+    });
 
     // Add header scroll functionality
     const header = document.querySelector('header');
