@@ -10,6 +10,11 @@
         @endif
         <div class="sidebar">
             <div class="sidebar-inner">
+                @if($blog->thumbnail)
+                <div class="post-thumb">
+                    <img src="{{ asset('storage/' . $blog->thumbnail) }}" alt="{{ $blog->title }}">
+                </div>
+                @endif
                 <div class="blog-author widget">
                     <div class="widget-inner">
                         <p><i class="bi bi-pen"></i> {{ $blog->author }}</p>

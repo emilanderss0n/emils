@@ -1863,6 +1863,16 @@ main {
     color: var(--medium-contrast-color);
 }
 
+.sidebar .post-thumb {
+    width: 100%;
+    border-radius: var(--br-xxl);
+    margin-bottom: 2rem;
+}
+
+.sidebar .post-thumb img {
+    border-radius: inherit;
+}
+
 .blog-post .main-container {
     width: 100%;
     border-radius: var(--br-xxl);
