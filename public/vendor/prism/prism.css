@@ -1,5 +1,5 @@
 @media (prefers-color-scheme: dark) {
-    :root {
+    .blog-content pre>code {
         --primary-color: #cd98ff !important;
         --secondary-color: #7bf8ee !important;
         --success-color: #47d683 !important;
