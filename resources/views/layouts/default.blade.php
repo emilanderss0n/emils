@@ -92,6 +92,7 @@
         @include('partials.search-overlay')
         
         @stack('scripts')
+        <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script> 
 
         @if(Request::is('/'))
         <script>

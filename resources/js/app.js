@@ -599,4 +599,13 @@ document.addEventListener('DOMContentLoaded', function () {
         color2: '#000a88',  // Green
         color3: '#1636ab'   // Blue
     });
+
+    // Initialize Lenis
+    const lenis = new Lenis();
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
 });
