@@ -3,8 +3,19 @@
 @section('main-content')
 <div class="content-container">
     <article class="blog-post">
+        @if($blog->thumbnail)
+        <div class="blog-thumbnail">
+            <img src="{{ asset('storage/' . $blog->thumbnail) }}" alt="{{ $blog->title }}">
+        </div>
+        @endif
         <div class="sidebar">
             <div class="sidebar-inner">
+                <div class="blog-author widget">
+                    <div class="widget-inner">
+                        <p><i class="bi bi-pen"></i> {{ $blog->author }}</p>
+                        <p><i class="bi bi-clock"></i> {{ $blog->created_at->format('M d, Y') }}</p>
+                    </div>
+                </div>
                 <div class="blog-toc">
                     <h3>Table of Contents</h3>
                     <div class="toc-container">
@@ -18,16 +29,7 @@
             <div class="blog-post-header">
                 <div class="blog-fancy-heading">
                     <h1>{{ $blog->title }}</h1>
-                    <div class="blog-meta">
-                        <span class="blog-date">Author: {{ $blog->author }},</span>
-                        <span class="blog-date">{{ $blog->created_at->format('M d, Y') }}</span>
-                    </div>
                 </div>
-                @if($blog->thumbnail)
-                    <div class="blog-thumbnail">
-                        <img src="{{ asset('storage/' . $blog->thumbnail) }}" alt="{{ $blog->title }}">
-                    </div>
-                @endif
             </div>
 
             <div class="blog-content">

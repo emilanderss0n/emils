@@ -1821,19 +1821,50 @@ main {
     padding: 7rem 0;
     position: relative;
     display: flex;
-    gap: 5rem;
+    gap: 3rem;
 }
 
 .blog-post .sidebar {
     min-width: 400px;
     width: 400px;
-    position: relative;
     border-radius: var(--br-xxl);
 }
 
 .blog-post .sidebar .sidebar-inner {
-    position: sticky;
-    top: 100px;
+    height: 100%;
+}
+
+.blog-post .sidebar .widget {
+    width: 100%;
+    border-radius: var(--br-xxl);
+    box-shadow: var(--box-shadow-border);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--content-box-bg-variant);
+}
+
+.blog-post .sidebar .widget-inner {
+    display: flex;
+    gap: 1rem;
+}
+
+.blog-post .sidebar .widget-inner p {
+    margin: 0;
+    color: var(--heading-color);
+    font-weight: 600;
+}
+
+.blog-post .sidebar .widget-inner .bi {
+    margin-right: 0.2rem;
+    color: var(--medium-contrast-color);
+}
+
+.blog-post .main-container {
+    width: 100%;
+    border-radius: var(--br-xxl);
+    box-shadow: var(--box-shadow-border);
+    padding: 4rem;
+    background-color: var(--content-box-bg-variant);
 }
 
 .blog-post-header {
@@ -1850,7 +1881,7 @@ main {
 }
 
 .blog-post-header h1 {
-    font-size: 6ch;
+    font-size: 5ch;
     color: var(--heading-color);
     line-height: 1;
     font-weight: bold;
@@ -1868,22 +1899,22 @@ main {
     font-style: italic;
 }
 
-.blog-post-header .blog-thumbnail {
+.blog-post .blog-thumbnail {
     margin-bottom: 0;
     position: absolute;
-    right: 10rem;
     top: -14rem;
     overflow: visible;
+    z-index: 0;
+    width: 100%;
+    mix-blend-mode: plus-lighter;
 }
 
-.blog-post-header .blog-thumbnail img {
+.blog-post .blog-thumbnail img {
     width: 100%;
-    max-width: max-content;
+    min-width: 100%;
     height: 420px;
     filter: blur(80px);
-    -o-object-fit: cover;
     object-fit: cover;
-    mix-blend-mode: difference;
     opacity: .2;
 }
 
@@ -1905,17 +1936,18 @@ main {
     display: inline-block;
     width: 100%;
     font-weight: bold;
+    font-size: 1.8rem;
 }
 
 .blog-post .blog-content p {
-    margin-bottom: 2rem;
     display: inline-block;
+    font-size: 1rem;
+    line-height: 1.9;
 }
 
 .blog-post .blog-content p:first-child {
     color: var(--heading-color);
     font-weight: bold;
-    line-height: 1.8;
 }
 
 .blog-post .blog-content p:last-child {
@@ -1925,10 +1957,17 @@ main {
     border-left: 3px solid var(--primary-color);
 }
 
+.blog-post .blog-content ul,
+.blog-post .blog-content ol {
+    margin: 0 0 2rem;
+}
+
 .blog-post .blog-content ul li,
 .blog-post .blog-content ol li {
     list-style-type: '👉';
-    margin-bottom: 1.5rem;
+    margin: 1rem 0;
+    font-size: 1rem;
+    line-height: 1.9;
 }
 
 .blog-post .blog-content img {
@@ -1950,34 +1989,27 @@ main {
     color: var(--medium-contrast-color);
 }
 
-/* Table of contents styling */
 .blog-toc {
     width: 100%;
-    border-radius: var(--br-xxl);
-    box-shadow: var(--box-shadow-border);
+    position: sticky;
+    top: 100px;
 }
 
 .blog-toc h3 {
     color: var(--heading-color);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    padding: 1rem;
+    padding: 1rem 0.8rem;
     margin: 0;
-    border-bottom: 2px solid var(--border-color);
 }
 
 .blog-toc .toc-links a {
     color: var(--medium-contrast-color);
-    text-decoration: none;
     transition: color 0.2s ease;
     display: block;
-    padding: 0.5rem 0.8rem;
-    border-bottom: 2px solid var(--border-color);
-}
-
-.blog-toc .toc-links a:last-child {
-    border-bottom: none;
-    padding-bottom: 0.9rem;
+    font-size: 0.9rem;
+    padding: 0.65rem 0.8rem;
+    border-radius: var(--br-lg);
 }
 
 .blog-toc .toc-links a:hover {
@@ -1985,17 +2017,9 @@ main {
 }
 
 .blog-toc .toc-links a.active {
-    color: #fff;
+    color: var(--heading-color);
     background-color: var(--border-color);
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-    border-bottom: none;
 }
-
-.blog-toc .toc-links a:last-child.active {
-    border-bottom-right-radius: var(--br-xxl);
-    border-bottom-left-radius: var(--br-xxl);
-}
-
 
 .blog-content h1,
 .blog-content h2,

@@ -67,6 +67,7 @@
     --overlay-bg: rgb(195 207 255 / 29%);
     --box-shadow-border: inset 0 0 0 2px rgb(42 53 111 / 10%);
     --box-shadow-border-sm: inset 0 0 0 1px rgb(42 53 111 / 10%);
+    --content-box-bg-variant: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -99,6 +100,7 @@
         --image-hover-bg-2: rgb(22 32 70 / 37%);
         --box-shadow-border: inset 0 0 0 2px oklch(0.28 0.04 263.62 / 0.45);
         --box-shadow-border-sm: inset 0 0 0 1px oklch(0.28 0.04 263.62 / 0.45);
+        --content-box-bg-variant: #0d131f;
     }
 }
 
