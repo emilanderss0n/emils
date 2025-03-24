@@ -359,19 +359,17 @@ label {
 
 pre {
     padding: 1rem;
-    background-color: var(--header-bg-color);
+    background-color: var(--content-bg-dark);
     border-radius: var(--br-xxl);
     overflow-x: auto;
     font-size: 0.9rem;
-    color: var(--medium-contrast-color);
     margin-bottom: 2rem;
 }
 
 code {
     padding: 0.1rem .4rem;
-    background-color: var(--header-bg-color);
+    background-color: var(--content-bg-dark);
     font-size: .8rem;
-    color: var(--medium-contrast-color);
     border-radius: var(--br-md);
     display: inline-block;
 }
