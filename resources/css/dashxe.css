@@ -68,6 +68,7 @@
     --box-shadow-border: inset 0 0 0 2px rgb(42 53 111 / 10%);
     --box-shadow-border-sm: inset 0 0 0 1px rgb(42 53 111 / 10%);
     --content-box-bg-variant: #ffffff;
+    --scroll-bar-color: var(--low-contrast-color);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -101,6 +102,7 @@
         --box-shadow-border: inset 0 0 0 2px oklch(0.28 0.04 263.62 / 0.45);
         --box-shadow-border-sm: inset 0 0 0 1px oklch(0.28 0.04 263.62 / 0.45);
         --content-box-bg-variant: #0d131f;
+        --scroll-bar-color: rgba(255, 255, 255, 0.2) transparent;
     }
 }
 
@@ -135,7 +137,7 @@ html {
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    scrollbar-color: var(--scroll-bar-color);
 }
 
 *:not(dialog) {
@@ -358,7 +360,7 @@ label {
 }
 
 pre {
-    background-color: var(--content-bg-dark) !important;
+    background-color: var(--content-bg-dark);
     border-radius: var(--br-xxl);
     font-size: .9rem !important;
     margin-bottom: 2rem !important;
