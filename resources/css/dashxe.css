@@ -372,6 +372,7 @@ code {
     font-size: .8rem;
     border-radius: var(--br-md);
     display: inline-block;
+    text-wrap: auto;
 }
 
 strong {
