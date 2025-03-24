@@ -30,6 +30,11 @@
         <!-- ScrollReveal -->
         <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js" defer></script>
 
+        @if(Request::is('blog/*'))
+        <link href="{{ asset('vendor/prism/prism.css') }}" rel="stylesheet">
+        <script src="{{ asset('vendor/prism/prism.js') }}" defer></script>
+        @endif
+
         <!-- Styles / Scripts -->
         @vite(['resources/css/dashxe.css', 'resources/css/app.css', 'resources/js/app.js'])
 
@@ -88,8 +93,9 @@
         
         @stack('scripts')
 
+        @if(Request::is('/'))
         <script>
-            // Only load dotlottie-player script on desktop devices
+            // Only load dotlottie-player script on desktop devices and home page
             if (window.matchMedia("(min-width: 1240px)").matches) {
                 const script = document.createElement('script');
                 script.src = "https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs";
@@ -97,6 +103,7 @@
                 document.head.appendChild(script);
             }
         </script>
+        @endif
 
         @livewireScripts
         
