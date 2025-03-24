@@ -372,7 +372,13 @@ code {
     font-size: .8rem;
     border-radius: var(--br-md);
     display: inline-block;
+}
+
+pre>code {
     text-wrap: auto;
+    max-height: 500px;
+    overflow-y: scroll;
+    width: 100%;
 }
 
 strong {
