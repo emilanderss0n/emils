@@ -733,6 +733,7 @@ main {
         font-size: 3.3em;
         font-weight: 700;
         line-height: 1.0;
+        visibility: hidden;
 
         & .gradient-text {
             --gradient-text: linear-gradient(280.8deg, #E37AC2 15.21%, #5C29F1 56.5%, var(--primary-color) 85.53%);
@@ -754,6 +755,7 @@ main {
         width: 94%;
         margin-top: 0.5rem;
         display: inline-block;
+        visibility: hidden;
     }
 
     & .hero-actions {
@@ -763,6 +765,7 @@ main {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 1rem;
+        visibility: hidden;
     }
 }
 
@@ -770,6 +773,7 @@ main {
     min-width: 900px;
     position: relative;
     z-index: 1;
+    visibility: hidden;
 }
 
 .hero-content .hero-image .fill {
@@ -2535,6 +2539,12 @@ main {
         font-size: 4ch;
     }
 
+    .blog-post .main-container {
+        padding: 0;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
     .blog-thumbnail img {
         max-width: 100%;
     }
@@ -2599,7 +2609,7 @@ main {
 
 @media (max-width: 480px) {
     .hero-section {
-        padding: 15vh 0;
+        padding: 22vh 0 20vh;
 
         .presentation {
             & h1 {

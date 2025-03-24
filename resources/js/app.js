@@ -14,7 +14,7 @@ const sr = ScrollReveal({
 sr.reveal('.presentation h1', {})
 sr.reveal('.presentation p', { delay: 200 })
 sr.reveal('.hero-actions', { delay: 400 })
-sr.reveal('.hero-image', {})
+sr.reveal('.hero-image', { delay: 600 })
 
 sr.reveal('.front-portfolio-top', {})
 
