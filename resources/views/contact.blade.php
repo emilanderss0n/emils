@@ -86,7 +86,7 @@
 </section>
 <section class="reason-contact-page">
     <div class="content-container">
-        <div class="grid">
+        <div class="grid-300-gap-5 grid">
             <div>
                 <img src="{{ asset('images/icons/9.png') }}" loading="lazy" width="50" alt="" class="landing-callout_icon">
                 <h3 class="h4">15+ Years of Expertise in Web Development & Graphic Design</h3>

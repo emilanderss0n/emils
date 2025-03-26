@@ -1854,15 +1854,6 @@ footer {
     padding: 7rem 0;
 }
 
-.reason-contact-page .grid {
-    grid-column-gap: 5rem;
-    grid-row-gap: 5rem;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    grid-auto-columns: 1fr;
-    display: grid;
-}
-
 .reason-contact-page .landing-callout_icon {
     width: 80px;
     margin-bottom: 20px;

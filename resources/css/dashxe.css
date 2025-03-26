@@ -658,6 +658,42 @@ button {
     z-index: 1;
 }
 
+.grid-300-gap-5 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 5rem;
+}
+
+.grid-300-gap-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.grid-400-gap-5 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 5rem;
+}
+
+.grid-400-gap-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.grid-500-gap-5 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 5rem;
+}
+
+.grid-500-gap-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 3rem;
+}
+
 .pagination {
     margin-top: 1rem;
 }
@@ -1072,6 +1108,30 @@ textarea {
 }
 
 @media (max-width: 768px) {
+    .grid-300-gap-5 {
+        gap: 3rem;
+    }
+
+    .grid-300-gap-3 {
+        gap: 2rem;
+    }
+
+    .grid-400-gap-5 {
+        gap: 3rem;
+    }
+
+    .grid-400-gap-3 {
+        gap: 2rem;
+    }
+
+    .grid-500-gap-5 {
+        gap: 3rem;
+    }
+
+    .grid-500-gap-3 {
+        gap: 2rem;
+    }
+
     .category-filter {
         flex-wrap: wrap;
         justify-content: center;
