@@ -2363,6 +2363,15 @@ footer {
         display: none;
     }
 
+    .call-to-action .scroller-start .scroller-start-wrapper {
+        background-position: left;
+    }
+
+    .call-to-action .scroller-start .scroller-start-wrapper .scroller-start-content {
+        padding: 3rem 0 0 3rem;
+        width: 50%;
+    }
+
     .article__title {
         max-height: fit-content;
     }
@@ -2437,6 +2446,19 @@ footer {
     .call-to-action h1 {
         text-align: center;
         margin-bottom: 2rem;
+    }
+
+    .call-to-action .scroller-start .scroller-start-wrapper {
+        height: 400px;
+    }
+
+    .call-to-action .scroller-start .scroller-start-wrapper .scroller-start-content {
+        width: 60%;
+    }
+
+    .call-to-action .scroller-start .scroller-start-wrapper .scroller-start-content h1 {
+        text-align: left;
+        font-size: 2rem;
     }
 
     .work-detail {
@@ -2673,6 +2695,22 @@ footer {
 
     .front-blog {
         padding: 5rem 0;
+    }
+
+    .call-to-action .scroller-start .scroller-start-wrapper {
+        background-position: right;
+    }
+
+    .call-to-action .scroller-start .scroller-start-wrapper .scroller-start-content {
+        display: none;
+    }
+
+    .contact-me .call-content {
+        padding: 3rem;
+    }
+
+    .contact-me .call-content h1 {
+        font-size: 2rem;
     }
 
     .about-section {
