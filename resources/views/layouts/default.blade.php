@@ -92,10 +92,7 @@
         @include('partials.search-overlay')
         
         @stack('scripts')
-        <script src="{{ asset('vendor/gsap/gsap.min.js') }}"></script> 
-        <script src="{{ asset('vendor/gsap/ScrollTrigger.min.js') }}"></script>
-        <script src="{{ asset('vendor/gsap/ScrollToPlugin.min.js') }}"></script>
-        <script src="{{ asset('vendor/lenis/lenis.min.js') }}"></script> 
+        <script src="{{ asset('vendor/lenis/lenis.min.js') }}"></script>
 
         @if(Request::is('/'))
         <script>
@@ -106,6 +103,70 @@
                 script.type = "module";
                 document.head.appendChild(script);
             }
+        </script>
+
+        <script src="{{ asset('vendor/gsap/gsap.min.js') }}"></script> 
+        <script src="{{ asset('vendor/gsap/ScrollTrigger.min.js') }}"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+
+
+            ScrollTrigger.create({
+                start: 'top -400',
+                end: 99999,
+                toggleClass: { className: 'scrolled', targets: '.hero-content' }
+            });
+
+            // Hide scroller-start when contact-me comes into view
+            ScrollTrigger.create({
+                trigger: '.contact-me',
+                start: 'top bottom',
+                onEnter: () => {
+                    gsap.to('.scroller-start', {
+                        opacity: 0,
+                        duration: 0.5,
+                        display: 'none'
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to('.scroller-start', {
+                        opacity: 1,
+                        duration: 0.5,
+                        display: 'block'
+                    });
+                }
+            });
+
+            // Pin sections for proper scroll behavior
+            ScrollTrigger.create({
+                trigger: '.scroller-start',
+                start: 'top top',
+                pin: true,
+                pinSpacing: false
+            });
+
+            ScrollTrigger.create({
+                trigger: '.portfolio-grid-scroller',
+                start: 'top top',
+                pin: true,
+                pinSpacing: true
+            });
+
+            ScrollTrigger.create({
+                trigger: '.contact-me',
+                start: 'bottom bottom',
+                end: 'bottom bottom',
+                pin: true,
+                pinSpacing: true
+            });
+
+            ScrollTrigger.create({
+                trigger: '.contact-me',
+                start: 'bottom bottom',
+                toggleClass: { targets: '.portfolio-grid-wrapper', className: "scrolled" }
+            });
+        });
         </script>
         @endif
 

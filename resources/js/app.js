@@ -608,68 +608,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     requestAnimationFrame(raf);
 
-    // Tell ScrollTrigger to work with Lenis
-    lenis.on("scroll", () => {
-        ScrollTrigger.update();
-    });
-
-    ScrollTrigger.create({
-        start: 'top -400',
-        end: 99999,
-        toggleClass: { className: 'scrolled', targets: '.hero-content' }
-    });
-
-
-
-    // Hide scroller-start when contact-me comes into view
-    ScrollTrigger.create({
-        trigger: '.contact-me',
-        start: 'top bottom',
-        onEnter: () => {
-            gsap.to('.scroller-start', {
-                opacity: 0,
-                duration: 0.5,
-                display: 'none'
-            });
-        },
-        onLeaveBack: () => {
-            gsap.to('.scroller-start', {
-                opacity: 1,
-                duration: 0.5,
-                display: 'block'
-            });
-        }
-    });
-
-    // Pin sections for proper scroll behavior
-    ScrollTrigger.create({
-        trigger: '.scroller-start',
-        start: 'top top',
-        pin: true,
-        pinSpacing: false
-    });
-
-    ScrollTrigger.create({
-        trigger: '.portfolio-grid-scroller',
-        start: 'top top',
-        pin: true,
-        pinSpacing: true
-    });
-
-    ScrollTrigger.create({
-        trigger: '.contact-me',
-        start: 'bottom bottom',
-        end: 'bottom bottom',
-        pin: true,
-        pinSpacing: true
-    });
-
-    ScrollTrigger.create({
-        trigger: '.contact-me',
-        start: 'bottom bottom',
-        toggleClass: { targets: '.portfolio-grid-wrapper', className: "scrolled" }
-    });
-
     function infiniteScrollAnimation() {
         const scroller = document.querySelector('.portfolio-grid-scroller');
         const scrollerInner = document.querySelector('.portfolio-grid-wrapper');

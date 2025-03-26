@@ -662,17 +662,6 @@ main {
     background-color: transparent !important;
 }
 
-.call-to-action .framer-inner-1 {
-    background-image: radial-gradient(transparent 1px, var(--content-bg-dark) 1px);
-    background-size: 10px 10px;
-    inset: 0;
-    flex: 0 0 auto;
-    overflow: hidden;
-    position: absolute;
-    z-index: 1;
-}
-
-.call-to-action .framer-inner-2,
 .contact-section .framer-inner-2 {
     background-color: var(--content-bg-dark);
     border-radius: 0;
@@ -2029,7 +2018,7 @@ footer {
 }
 
 .blog-post {
-    padding: 7rem 0;
+    padding: 6rem 0;
     position: relative;
     display: flex;
     gap: 3rem;
@@ -2295,18 +2284,20 @@ footer {
 
     .article-blog {
         height: auto;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
     }
 
     .article__body {
         position: relative;
         height: min-content;
+        background-color: transparent;
+        box-shadow: none;
+        padding: 1rem 0 0;
     }
 
     .article-blog:hover .article__body {
         height: min-content;
+        backdrop-filter: none;
+        background-color: transparent;
     }
 
     .article-blog:hover .article__excerpt {
@@ -2315,14 +2306,17 @@ footer {
 
     .article__thumbnail {
         height: 140px;
+        border-radius: var(--br-xl);
+        background-blend-mode: normal;
     }
 
-    .article__excerpt {
+    .article__excerpt,
+    .article__footer .footer__readmore {
         display: none;
     }
 
     .article__title {
-        padding-bottom: 0;
+        max-height: fit-content;
     }
 
     .article__footer {
@@ -2370,10 +2364,6 @@ footer {
     .call-to-action .scroller-start .scroller-start-wrapper .scroller-start-content {
         padding: 3rem 0 0 3rem;
         width: 50%;
-    }
-
-    .article__title {
-        max-height: fit-content;
     }
 
     .blog-grid {
@@ -2561,19 +2551,7 @@ footer {
     }
 
     .article__thumbnail {
-        height: 220px;
-        background-position: bottom;
-    }
-
-    .article__body {
-        position: absolute;
-        background-color: var(--image-hover-bg-2);
-        backdrop-filter: blur(50px);
-    }
-
-    .article-blog:hover .article__thumbnail {
-        opacity: 0.5;
-        background-color: #2151b1;
+        height: 210px;
     }
 
     .portfolio-grid {
@@ -2668,7 +2646,7 @@ footer {
     }
 
     .services {
-        padding: 4rem 0;
+        padding: 5rem 0;
     }
 
     .services-grid {
@@ -2697,11 +2675,7 @@ footer {
         padding: 5rem 0;
     }
 
-    .call-to-action .scroller-start .scroller-start-wrapper {
-        background-position: right;
-    }
-
-    .call-to-action .scroller-start .scroller-start-wrapper .scroller-start-content {
+    .call-to-action {
         display: none;
     }
 
@@ -2811,6 +2785,10 @@ footer {
 
     .blog-grid {
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .blog-post {
+        padding: 4rem 0;
     }
 
     .blog-post-header h1 {
