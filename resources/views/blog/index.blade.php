@@ -13,13 +13,15 @@
                 <div class="blog-item">
                     <a href="{{ route('blog.show', $post) }}">
                         @if($post->thumbnail)
+                        <div class="blog-thumbnail-wrapper">
                             <div class="blog-thumbnail">
                                 <img src="{{ asset('storage/' . $post->thumbnail) }}" loading="lazy" alt="{{ $post->title }}">
-                                <div class="blog-meta">
-                                    <span class="blog-date"><i class="bi bi-clock"></i> {{ $post->created_at->format('M d, Y') }}</span>
-                                </div>
                             </div>
+                        </div>
                         @endif
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="bi bi-clock"></i> {{ $post->created_at->format('M d, Y') }}</span>
+                        </div>
                         <div class="blog-content">
                             <h2>{{ $post->title }}</h2>
                             <p>{!! Str::limit($post->excerpt, 220) !!}</p>

@@ -7,7 +7,7 @@
         <div class="category-filter">
             <button wire:click="filterByCategory()" 
                     class="btn-Fx filter-item {{ !$selectedCategory ? 'active' : '' }}">
-                <i class="bi bi-eye"></i><span>All</span>
+                <i class="bi bi-eye"></i><span>All Work</span>
             </button>
             @foreach($categories as $category)
                 <button wire:click="filterByCategory('{{ $category->slug }}')" 
@@ -33,16 +33,17 @@
         @foreach($works as $work)
             <div class="portfolio-grid-item">
                 <a href="{{ route('work.show', $work) }}" class="portfolio-item-link">
+                    @if($work->thumbnail)
                     <div class="portfolio-item-thumbnail">
-                        @if($work->thumbnail)
-                            <img src="{{ asset('storage/' . $work->thumbnail) }}" alt="{{ $work->name }}">
-                        @endif
-                        <div class="portfolio-item-hover">
-                            <span class="portfolio-item-title"><h2>{{ $work->name }}</h2></span>
-                            @if($work->categories->count())
-                                <span class="portfolio-item-category">{{ $work->categories->pluck('name')->join(', ') }}</span>
-                            @endif
-                        </div>
+                        <img src="{{ asset('storage/' . $work->thumbnail) }}" alt="{{ $work->name }}">       
+                    </div>
+                    @endif
+                    <div class="portfolio-item-content">
+                    @if($work->categories->count())
+                        <span class="portfolio-item-category">{{ $work->categories->pluck('name')->join(', ') }}</span>
+                    @endif
+                        <h2 class="portfolio-item-title">{{ $work->name }}</h2>
+                        <p>{!! Str::limit($work->description, 160) !!}</p>
                     </div>
                 </a>
             </div>

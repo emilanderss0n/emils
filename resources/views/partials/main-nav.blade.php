@@ -1,6 +1,6 @@
 <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}{{ isset($isFooter) ? ' line-ani' : '' }}">Home</a>
 <span>/</span>
-<a href="{{ route('work') }}" class="{{ request()->routeIs('work') ? 'active' : '' }}{{ isset($isFooter) ? ' line-ani' : '' }}">Work</a>
+<a href="{{ route('work') }}" class="{{ request()->routeIs('work.*') || request()->routeIs('work') ? 'active' : '' }}{{ isset($isFooter) ? ' line-ani' : '' }}">Work</a>
 <span>/</span>
 <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}{{ isset($isFooter) ? ' line-ani' : '' }}">About</a>
 <span>/</span>

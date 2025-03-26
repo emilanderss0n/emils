@@ -92,7 +92,10 @@
         @include('partials.search-overlay')
         
         @stack('scripts')
-        <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script> 
+        <script src="{{ asset('vendor/gsap/gsap.min.js') }}"></script> 
+        <script src="{{ asset('vendor/gsap/ScrollTrigger.min.js') }}"></script>
+        <script src="{{ asset('vendor/gsap/ScrollToPlugin.min.js') }}"></script>
+        <script src="{{ asset('vendor/lenis/lenis.min.js') }}"></script> 
 
         @if(Request::is('/'))
         <script>

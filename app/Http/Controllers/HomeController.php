@@ -16,8 +16,14 @@ class HomeController extends Controller
         ->take(4)
         ->get();
 
+        $latestWorksGrid = Work::with('categories')
+        ->latest('project_date')
+        ->take(12)
+        ->get();
+
         return view('home', [
             'latestWorks' => $latestWorks,
+            'latestWorksGrid' => $latestWorksGrid,
             'latestPosts' => Post::latest()->take(3)->get(),
         ]);
     }
