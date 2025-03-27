@@ -1298,8 +1298,8 @@ body.no-scroll {
 }
 
 .work-content-body p.opening {
-    margin-bottom: 3rem;
     font-size: 1.3rem;
+    margin: 6rem;
 }
 
 .work-content-body p.opening strong {
@@ -1353,6 +1353,7 @@ body.no-scroll {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     gap: 3rem;
+    padding: 0 6rem;
 }
 
 .services {
@@ -2333,6 +2334,11 @@ footer {
         min-width: 320px;
         width: 320px;
     }
+
+    .work-content-body .tech {
+        padding: 0;
+        gap: 0;
+    }
 }
 
 @media screen and (max-width: 1240px) {
@@ -2447,12 +2453,12 @@ footer {
         font-size: 2rem;
     }
 
-    .work-detail {
-        padding: 5rem 0;
-    }
-
     .work-detail-header {
         grid-template-columns: 1fr;
+    }
+
+    .work-content-body p.opening {
+        margin: 6rem 3rem;
     }
 
     .work-meta {
@@ -2750,6 +2756,10 @@ footer {
 
     .work-detail-header h1 {
         font-size: 2.5rem;
+    }
+
+    .work-content-body p.opening {
+        margin: 3rem 0 5rem;
     }
 
     .work-meta {
