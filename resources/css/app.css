@@ -2785,10 +2785,6 @@ footer {
         display: inline-block;
     }
 
-    .work-content-body .tech img {
-        margin-bottom: 5rem;
-    }
-
     .blog-section {
         padding: var(--padding-main-section-sm);
     }
