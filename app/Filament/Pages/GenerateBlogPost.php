@@ -91,11 +91,14 @@ class GenerateBlogPost extends Page
                       "- Use <h2> tags for section headings\n" .
                       "- Use <p> tags for paragraphs\n" .
                       "- Use <ul> and <li> tags for lists\n" .
+                      "- If you need to share longer code, the blog use prismjs for code blocks: <pre> tag with class language-[code language] followed by a <code> tag \n" .
+                      "- Use <code> tags for short code inline in the text \n" .
                       "- Use <strong> or <em> tags for emphasis\n\n" .
                       "Do NOT include any HTML document structure tags (no <!DOCTYPE>, <html>, <head>, <body>, etc).\n" .
-                      "Do NOT include the title as an <h1> heading - the title is handled separately.\n" .
+                      "Do NOT include the main title as an <h1> heading - the title is handled separately.\n" .
                       "Start directly with the introduction paragraph wrapped in <p> tags, followed by sections with <h2> headings.\n" .
-                      "Write a comprehensive blog post with at least 3 sections, each with its own <h2> heading.";
+                      "Randomize to some extent how you structure the article. For example, you don't need to use lists in every article.\n" .
+                      "Write a comprehensive blog post with at least 3 sections (can be more), each with its own <h2> heading.";
             
             // Get the selected model or default to gpt-4o-mini if not set
             $model = $data['model'] ?? 'gpt-4o-mini';
