@@ -37,6 +37,13 @@ header nav {
     align-items: center;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-x: clip;
+}
+
 .search-form {
     display: flex;
     align-items: center;
@@ -601,12 +608,8 @@ body.no-scroll {
     display: none;
 }
 
-main {
-    padding-top: 74px;
-}
-
 .generic-page {
-    padding: 5rem 0;
+    padding: var(--padding-main-section);
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -645,21 +648,17 @@ main {
 
 .hero-section {
     --framer-color-bg: var(--primary-color);
-    padding: 23vh 0;
+    padding: 26vh 0 23vh;
     position: relative;
     display: inline-block;
     width: 100%;
-    background-color: var(--framer-color-bg);
+    background-color: transparent;
     height: 100%;
     overflow: hidden;
     position: relative;
     width: 100%;
     will-change: transform;
     top: -80px;
-}
-
-.hero-section {
-    background-color: transparent !important;
 }
 
 .contact-section .framer-inner-2 {
@@ -1107,7 +1106,7 @@ main {
 }
 
 .work-main {
-    padding: 5rem 0;
+    padding: var(--padding-main-section);
 }
 
 .portfolio-top {
@@ -1202,7 +1201,7 @@ main {
 
 /* Work Detail Page */
 .work-detail {
-    padding: 8rem 0;
+    padding: var(--padding-main-section);
 }
 
 .work-detail-header {
@@ -1431,8 +1430,8 @@ main {
     font-family: 'Montserrat', sans-serif;
     font-size: 99px;
     font-weight: bold;
-    background: linear-gradient(180deg, var(--content-box-bg) 0%, var(--content-bg-dark) 100%);
-    overflow: clip;
+    background: linear-gradient(180deg, var(--header-bg-color) 40%, var(--glass-bg) 100%);
+    overflow-x: clip;
 }
 
 #scrollAnimateMain {
@@ -1440,37 +1439,42 @@ main {
     position: relative;
     display: flex;
     flex-direction: column;
-    background-color: var(--header-bg-color);
 }
 
 .call-to-action .scroller-start {
     width: 100%;
     position: relative;
     z-index: 4;
+    height: 100vh;
 }
 
 .call-to-action .scroller-start .scroller-start-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 500px;
-    background-image: url(../../public/images/NHLPLAY.webp);
+    background-image: url(http://[::1]:4000/public/images/NHLPLAY.webp);
     background-size: cover;
     background-position: right;
     background-repeat: no-repeat;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    border-radius: var(--br-xxl);
+    transform: translateY(100px);
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .call-to-action .scroller-start .scroller-start-wrapper .scroller-start-content {
-    padding: 8rem 0 0 5rem;
-    width: 45%;
+    padding-left: 5rem;
+    width: 48%;
 }
 
 .call-to-action .scroller-start .scroller-start-wrapper .scroller-start-content h1 {
-    font-size: 2.3rem;
-    line-height: 1.4;
     font-weight: 500;
-    opacity: 0.7;
     text-wrap: pretty;
     color: #fff;
+    font-size: 2rem;
 }
 
 .call-to-action .portfolio-grid-scroller {
@@ -1482,7 +1486,6 @@ main {
     align-items: center;
     z-index: 3;
     flex-direction: column;
-    background-color: var(--header-bg-color);
     justify-content: center;
 }
 
@@ -1497,27 +1500,11 @@ main {
     transform-style: preserve-3d;
 }
 
-
-.call-to-action .portfolio-grid-wrapper.scrolled .portfolio-item {
-    transform: none;
-    animation-name: downWards;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease;
-    animation-iteration-count: 1;
-    animation-delay: 1s;
-}
-
-@keyframes downWards {
-    to {
-        transform: translateY(470px);
-    }
-}
-
 .call-to-action .portfolio-grid-wrapper .portfolio-item {
     width: 380px;
     min-width: 380px;
     flex-shrink: 0;
+    transform: translateY(470px);
 }
 
 .call-to-action .portfolio-grid-wrapper .portfolio-item img {
@@ -1659,7 +1646,7 @@ footer {
 }
 
 .about-section {
-    padding: 8rem 0;
+    padding: var(--padding-main-section);
 }
 
 .header-profile {
@@ -1780,7 +1767,7 @@ footer {
 }
 
 .contact-section {
-    padding: 9rem 0;
+    padding: var(--padding-main-section);
     position: relative;
 }
 
@@ -1843,6 +1830,10 @@ footer {
     padding: 7rem 0;
 }
 
+.reason-contact-page.about {
+    background-color: var(--glass-bg);
+}
+
 .reason-contact-page .landing-callout_icon {
     width: 80px;
     margin-bottom: 20px;
@@ -1865,7 +1856,7 @@ footer {
 }
 
 .gdpr-section {
-    padding: 5rem 0;
+    padding: var(--padding-main-section);
 }
 
 .gdpr-section .last-updated {
@@ -1890,7 +1881,7 @@ footer {
 }
 
 .blog-section {
-    padding: 5rem 0;
+    padding: var(--padding-main-section);
 }
 
 .blog-header {
@@ -2018,7 +2009,7 @@ footer {
 }
 
 .blog-post {
-    padding: 6rem 0;
+    padding: var(--padding-main-section);
     position: relative;
     display: flex;
     gap: 3rem;
@@ -2357,8 +2348,13 @@ footer {
         display: none;
     }
 
+    .call-to-action {
+        background: linear-gradient(180deg, transparent 40%, var(--glass-bg) 100%);
+    }
+
     .call-to-action .scroller-start .scroller-start-wrapper {
         background-position: left;
+        border-radius: 0;
     }
 
     .call-to-action .scroller-start .scroller-start-wrapper .scroller-start-content {
@@ -2624,8 +2620,8 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    main {
-        padding-top: 60px;
+    .hero-section {
+        padding: 14rem 0 6rem;
     }
 
     .hero-content {
@@ -2672,7 +2668,7 @@ footer {
     }
 
     .front-blog {
-        padding: 5rem 0;
+        padding: var(--padding-main-section-sm);
     }
 
     .call-to-action {
@@ -2688,7 +2684,7 @@ footer {
     }
 
     .about-section {
-        padding: 5rem 0;
+        padding: var(--padding-main-section-sm);
     }
 
     .side-profile {
@@ -2709,7 +2705,7 @@ footer {
     }
 
     .contact-section {
-        padding: 5rem 0;
+        padding: var(--padding-main-section-sm);
     }
 
     .contact-layout {
@@ -2738,11 +2734,11 @@ footer {
     }
 
     .work-main {
-        padding: 4rem 0;
+        padding: var(--padding-main-section-sm);
     }
 
     .work-detail {
-        padding: 4rem 0;
+        padding: var(--padding-main-section-sm);
     }
 
     .work-detail-header {
@@ -2783,12 +2779,16 @@ footer {
         margin-bottom: 5rem;
     }
 
+    .blog-section {
+        padding: var(--padding-main-section-sm);
+    }
+
     .blog-grid {
         grid-template-columns: repeat(1, 1fr);
     }
 
     .blog-post {
-        padding: 4rem 0;
+        padding: var(--padding-main-section-sm);
     }
 
     .blog-post-header h1 {
@@ -2901,7 +2901,6 @@ footer {
 
 @media (max-width: 480px) {
     .hero-section {
-        padding: 22vh 0 20vh;
 
         .presentation {
             & h1 {

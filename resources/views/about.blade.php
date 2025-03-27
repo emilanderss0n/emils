@@ -39,9 +39,42 @@
                     <br><br>
                     Now, at 35, I'm on the lookout for creative opportunities or a chance to join your creative team. Proficient in web development, graphic design, video editing, and 3D art, I'm poised to make a meaningful impact. If you're interested, <a href="{{ route('contact') }}" class="line-ani">drop me a line</a>
                 </p>
-                <div class="github-component">
-                    <div id="githubContent"></div>
-                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="reason-contact-page about">
+    <div class="content-container">
+        <div class="grid-300-gap-5 grid">
+            <div>
+                <img src="{{ asset('images/icons/9.png') }}" loading="lazy" width="50" alt="" class="landing-callout_icon">
+                <h3 class="h4">15+ Years of Expertise in Web Development & Graphic Design</h3>
+                <div>With years of experience comes deep industry knowledge and adaptability. No project is too big or complex, I take pride in delivering exceptional results in any environment.</div>
+            </div>
+            <div>
+                <img src="{{ asset('images/icons/15.png') }}" loading="lazy" width="50" alt="" class="landing-callout_icon">
+                <h3 class="h4">A Thriving Client Base & Outstanding Customer Support</h3>
+                <div>I've built lasting relationships with dozens of active clients by focusing on quality and satisfaction. My job isn't done until you're completely happy with the results.</div>
+            </div>
+            <div>
+                <img src="{{ asset('images/icons/12.png') }}" loading="lazy" width="50" alt="" class="landing-callout_icon">
+                <h3 class="h4">Performance & Security: The Foundation of Every Project</h3>
+                <div>Slow, vulnerable websites are not an option. I write optimized, secure PHP code using the latest best practices, including PDO for SQL security and robust performance enhancements.</div>
+            </div>
+            <div>
+                <img src="{{ asset('images/icons/14.png') }}" loading="lazy" width="50" alt="" class="landing-callout_icon">
+                <h3 class="h4">Seamless Web Management & Premium Execution</h3>
+                <div>From ongoing content updates to promotional pages and graphic enhancements, I provide top-tier web management services to keep your online presence fresh and engaging.</div>
+            </div>
+            <div>
+                <img src="{{ asset('images/icons/13.png') }}" loading="lazy" width="50" alt="" class="landing-callout_icon">
+                <h3 class="h4">SEO-Optimized Development for Maximum Visibility</h3>
+                <div>SEO isn't an afterthought—it's embedded into every page I create. From structured metadata to social media previews, I ensure your website ranks well and looks great when shared.</div>
+            </div>
+            <div>
+                <img src="{{ asset('images/icons/11.png') }}" loading="lazy" width="50" alt="" class="landing-callout_icon">
+                <h3 class="h4">Have a Unique Request? Feel Free to Ask</h3>
+                <div>Whether it's web development, graphic design, or video production, I can handle a wide range of digital needs. If I can't deliver exactly what you need, I'll be upfront about it—no false promises.</div>
             </div>
         </div>
     </div>

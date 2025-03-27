@@ -1,8 +1,4 @@
 {
-  "public/images/NHLPLAY.webp": {
-    "file": "assets/NHLPLAY-CoZXdxXa.webp",
-    "src": "public/images/NHLPLAY.webp"
-  },
   "public/images/icon-blender.png": {
     "file": "assets/icon-blender-DE8IlMqm.png",
     "src": "public/images/icon-blender.png"
@@ -24,12 +20,12 @@
     "src": "public/images/icon-photoshop.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-DWd2IyqA.css",
+    "file": "assets/app-cCQm6hRP.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/dashxe.css": {
-    "file": "assets/dashxe-CyQfaR6C.css",
+    "file": "assets/dashxe-BYI-tAc5.css",
     "src": "resources/css/dashxe.css",
     "isEntry": true
   },
@@ -39,10 +35,20 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-B46F6kr9.js",
+    "file": "assets/app-DcXs-Glk.js",
     "name": "app",
     "src": "resources/js/app.js",
-    "isEntry": true
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/modules/githubRepositories.js",
+      "resources/js/shaderGradient.js"
+    ]
+  },
+  "resources/js/modules/githubRepositories.js": {
+    "file": "assets/githubRepositories-BvMqYIec.js",
+    "name": "githubRepositories",
+    "src": "resources/js/modules/githubRepositories.js",
+    "isDynamicEntry": true
   },
   "resources/js/shaderGradient.js": {
     "file": "assets/shaderGradient-l0sNRNKZ.js",

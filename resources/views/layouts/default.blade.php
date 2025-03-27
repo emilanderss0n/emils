@@ -111,7 +111,6 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
 
-
             ScrollTrigger.create({
                 start: 'top -400',
                 end: 99999,
@@ -123,17 +122,15 @@
                 trigger: '.contact-me',
                 start: 'top bottom',
                 onEnter: () => {
-                    gsap.to('.scroller-start', {
-                        opacity: 0,
-                        duration: 0.5,
-                        display: 'none'
+                    gsap.to('.scroller-start-wrapper', {
+                        y: -200,
+                        duration: 1
                     });
                 },
                 onLeaveBack: () => {
-                    gsap.to('.scroller-start', {
-                        opacity: 1,
-                        duration: 0.5,
-                        display: 'block'
+                    gsap.to('.scroller-start-wrapper', {
+                        y: 100,
+                        duration: 1,
                     });
                 }
             });
@@ -149,8 +146,7 @@
             ScrollTrigger.create({
                 trigger: '.portfolio-grid-scroller',
                 start: 'top top',
-                pin: true,
-                pinSpacing: true
+                pin: false,
             });
 
             ScrollTrigger.create({
