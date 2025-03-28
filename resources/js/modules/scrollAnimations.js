@@ -78,12 +78,18 @@ export function initScrollReveal() {
 
     sr.reveal('.pagination', { delay: 200 });
     sr.reveal('.contact-layout', { delay: 0 });
+    sr.reveal('.reason-contact-page .grid', { delay: 200 });
     sr.reveal('.work-detail-header', { delay: 0 });
     sr.reveal('.work-content-body', { delay: 200 });
     sr.reveal('.work-images', { delay: 200 });
+    sr.reveal('#githubContent', { delay: 0 });
     sr.reveal('.blog-post', { delay: 0 });
     sr.reveal('.blog-footer', { delay: 0 });
     sr.reveal('.header-profile', { delay: 0 });
+    sr.reveal('footer .container', { delay: 200 });
+    sr.reveal('footer .info-footer', { delay: 300 });
+
+
 
     // Make sr available for other functions
     window.sr = sr;

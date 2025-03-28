@@ -714,9 +714,7 @@ button {
     font-weight: 600;
     display: flex;
     align-items: center;
-    border-radius: var(--br-lg);
-    background-color: var(--content-box-bg);
-    box-shadow: var(--shadow-button);
+    gap: 0.5rem;
 }
 
 .pagination-links>a,
@@ -727,6 +725,8 @@ button {
     align-items: center;
     justify-content: center;
     line-height: 1;
+    border-radius: var(--br-xxl);
+    background-color: var(--content-box-bg);
 }
 
 .pagination-links>a {
@@ -735,8 +735,8 @@ button {
 }
 
 .pagination-links>span.current-page {
-    background-color: var(--overlay-bg);
-    color: var(--medium-contrast-color);
+    background-color: var(--primary-color);
+    color: var(--active-text);
 }
 
 .pagination-links .prev-page-first {

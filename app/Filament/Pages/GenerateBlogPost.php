@@ -91,8 +91,8 @@ class GenerateBlogPost extends Page
                       "- Use <h2> tags for section headings\n" .
                       "- Use <p> tags for paragraphs\n" .
                       "- Use <ul> and <li> tags for lists\n" .
-                      "- If you need to share longer code, the blog use prismjs for code blocks: <pre> tag with class language-[code language] followed by a <code> tag \n" .
-                      "- Use <code> tags for short code inline in the text \n" .
+                      "- If you need to share longer code, the blog use prismjs for code blocks: <pre> tag with class language-[code language] followed by a <code> tag with no class\n" .
+                      "- Use <code> tags for short code inline in the text\n" .
                       "- Use <strong> or <em> tags for emphasis\n\n" .
                       "Do NOT include any HTML document structure tags (no <!DOCTYPE>, <html>, <head>, <body>, etc).\n" .
                       "Do NOT include the main title as an <h1> heading - the title is handled separately.\n" .

@@ -3,11 +3,6 @@
 @section('main-content')
 <div class="content-container">
     <article class="blog-post">
-        @if($blog->thumbnail)
-        <div class="blog-thumbnail">
-            <img src="{{ asset('storage/' . $blog->thumbnail) }}" alt="{{ $blog->title }}">
-        </div>
-        @endif
         <div class="sidebar">
             <div class="sidebar-inner">
                 @if($blog->thumbnail)
