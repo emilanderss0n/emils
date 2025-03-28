@@ -1453,7 +1453,7 @@ body.no-scroll {
     display: flex;
     flex-direction: row;
     height: 500px;
-    background-image: url(http://[::1]:4000/public/images/NHLPLAY.webp);
+    background-image: url(/public/images/NHLPLAY.webp);
     background-size: cover;
     background-position: right;
     background-repeat: no-repeat;

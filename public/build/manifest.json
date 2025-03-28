@@ -1,4 +1,8 @@
 {
+  "public/images/NHLPLAY.webp": {
+    "file": "assets/NHLPLAY-CoZXdxXa.webp",
+    "src": "public/images/NHLPLAY.webp"
+  },
   "public/images/icon-blender.png": {
     "file": "assets/icon-blender-DE8IlMqm.png",
     "src": "public/images/icon-blender.png"
@@ -20,7 +24,7 @@
     "src": "public/images/icon-photoshop.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Dx4k4R-A.css",
+    "file": "assets/app-DIhjfgbq.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
