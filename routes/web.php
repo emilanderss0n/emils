@@ -34,5 +34,25 @@ Route::post('/contact/submit', [ContactController::class, 'submit'])
     ->name('contact.submit')
     ->middleware(['throttle:contact-form']);
 
+Route::post('/blog/subscribe', [BlogController::class, 'subscribe'])
+    ->name('blog.subscribe')
+    ->middleware(['web']);
+
 Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.xml');
 Route::get('sitemap', [SitemapController::class, 'index'])->defaults('format', 'html')->name('sitemap');
+
+Route::get('/unsubscribe/{email}', function($email) {
+    try {
+        $email = base64_decode($email);
+        $subscriber = \App\Models\Subscriber::where('email', $email)->first();
+        
+        if ($subscriber) {
+            $subscriber->update(['is_active' => false]);
+            return redirect()->route('blog.index')->with('success', 'You have been unsubscribed successfully.');
+        }
+        
+        return redirect()->route('blog.index')->with('error', 'Unable to unsubscribe. Please contact support.');
+    } catch(\Exception $e) {
+        return redirect()->route('blog.index')->with('error', 'Invalid unsubscribe link.');
+    }
+})->name('unsubscribe');
