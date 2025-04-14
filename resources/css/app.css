@@ -1990,7 +1990,7 @@ footer {
 
 .blog-grid .blog-thumbnail {
     display: flex;
-    height: 160px;
+    height: 200px;
     padding: 0;
     position: relative;
     border-radius: var(--br-xxl);
