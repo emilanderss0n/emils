@@ -629,98 +629,83 @@ body.no-scroll {
     display: none;
 }
 
-#threeGradient {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    overflow: hidden;
-    /* Ensure no overflow */
-}
-
-#gradient canvas {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-}
-
 .hero-section {
-    --framer-color-bg: var(--primary-color);
-    padding: 26vh 0 23vh;
-    position: relative;
-    display: inline-block;
+    --stripe-color: #fff;
     width: 100%;
-    background-color: transparent;
+    height: auto;
+    position: relative;
+}
+
+.hero-bg {
+    width: 100%;
     height: 100%;
-    overflow: hidden;
+    min-height: 100vh;
     position: relative;
-    width: 100%;
-    will-change: transform;
-    top: -80px;
-}
+    display: flex;
+    place-content: center;
+    place-items: center;
+    --stripes: repeating-linear-gradient(
+        100deg,
+        var(--stripe-color) 0%,
+        var(--stripe-color) 7%,
+        transparent 10%,
+        transparent 12%,
+        var(--stripe-color) 16%
+    );
 
-.contact-section .framer-inner-2 {
-    background-color: var(--content-bg-dark);
-    border-radius: 0;
-    inset: 0;
-    flex: 0 0 auto;
-    mask: radial-gradient(120% 100% at 107.1% -9.2%, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
-    overflow: hidden;
-    position: absolute;
-    z-index: 1;
-}
+    --rainbow: repeating-linear-gradient(
+        100deg,
+        #60a5fa 10%,
+        #e879f9 15%,
+        #60a5fa 20%,
+        #5eead4 25%,
+        #60a5fa 30%
+    );
+    background-image: var(--stripes), var(--rainbow);
+    background-size: 300%, 200%;
+    background-position: 50% 50%, 50% 50%;
 
-.hero-section .framer-inner-2 {
-    background-color: var(--content-bg-dark);
-    border-radius: 0;
-    inset: 0;
-    flex: 0 0 auto;
-    mask: radial-gradient(120% 100% at 107.1% -9.2%, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
-    overflow: hidden;
-    position: absolute;
-    z-index: 1;
-}
+    filter: blur(10px) invert(100%);
 
-#desktopAni .framer-inner-1 {
-    background-image: radial-gradient(transparent 2px, #8ea6ff4a 2px);
-    background-size: 5px 5px;
-    inset: 0;
-    flex: 0 0 auto;
-    overflow: hidden;
-    position: absolute;
-    z-index: 1;
-}
-
-#desktopAni .framer-inner-2 {
-    background-color: hsl(224.29deg 100% 50% / 45%);
-    border-radius: 0;
-    inset: 0;
-    flex: 0 0 auto;
-    mask: radial-gradient(140% 120% at 100.1% -3.2%, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
-    overflow: hidden;
-    position: absolute;
-    z-index: 2;
+    mask-image: radial-gradient(ellipse at 100% 0%, black 40%, transparent 70%);
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: var(--stripes), var(--rainbow);
+        background-size: 200%, 100%;
+        animation: smoothBg 60s linear infinite;
+        background-attachment: fixed;
+        mix-blend-mode: difference;
+    }
 }
 
 .hero-content {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
-    gap: 1rem;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-    transition: all 0.6s ease;
+    place-content: center;
+    flex-flow: column;
+    gap: 4.5%;
 }
 
-.hero-content.scrolled {
-    transform: translateY(100px);
-    opacity: 0;
+@media (prefers-color-scheme: dark) {
+    .hero-section {
+        --stripe-color: #000;
+    }
+
+    .hero-bg {
+        filter: blur(10px) opacity(50%) saturate(200%);
+    }
 }
 
 .hero-section .presentation {
     position: relative;
-    z-index: 3;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    width: 100%;
 
     & h1 {
         margin-bottom: 30px;
@@ -728,19 +713,31 @@ body.no-scroll {
         font-weight: 700;
         line-height: 1.0;
         visibility: hidden;
+        color: #fff;
+        mix-blend-mode: difference;
 
-        & .gradient-text {
-            --gradient-text: linear-gradient(280.8deg, #E37AC2 15.21%, #5C29F1 56.5%, var(--primary-color) 85.53%);
-            display: inline;
-            background: var(--gradient-text);
+
+        &::before {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            background: white;
+            text-shadow: 0 0 1px #ffffff;
             background-clip: text;
-            color: transparent;
-            box-decoration-break: clone;
+            -webkit-text-fill-color: transparent;
+            background-color: white;
+            mask: linear-gradient(#000 0 0) luminance, alpha;
+            backdrop-filter: blur(19px) brightness(12.5);
+            -webkit-text-stroke: 1px white;
+            display: flex;
+            margin: auto;
+            z-index: 1;
+            pointer-events: none;
         }
     }
 
     & p {
-        color: var(--heading-color);
+        color: var(--paragraph-color);
         font-family: 'Montserrat', sans-serif;
         font-size: 21px;
         line-height: 1.7;
@@ -758,6 +755,15 @@ body.no-scroll {
         flex-wrap: wrap;
         gap: 1rem;
         visibility: hidden;
+    }
+
+    & .hero-actions .btn:first-child {
+        background-color: var(--primary-color);
+        color: #fff;
+    }
+
+    & .hero-actions .btn:first-child:hover {
+        background-color: oklch(from var(--primary-color) calc(1 - 0.35) c h);
     }
 }
 
@@ -1121,29 +1127,62 @@ body.no-scroll {
 }
 
 .portfolio-grid {
+    --gap: 1px;
+    --line-offset: calc(var(--gap) / 2);
+    --line-thickness: 1px;
+    --line-color: var(--border-color);
     width: 100%;
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     grid-auto-rows: minmax(100px, auto);
     grid-auto-flow: row dense;
-    gap: 2rem;
     margin-top: 3rem;
     margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--br-xl);
+    overflow: hidden;
+}
+
+.portfolio-grid-item {
+    position: relative;
+}
+
+.portfolio-grid-item::before,
+.portfolio-grid-item::after {
+    content: "";
+    position: absolute;
+    background-color: var(--line-color);
+    z-index: 1;
+}
+
+.portfolio-grid-item:not(:nth-child(n+2):nth-child(odd))::before {
+    inline-size: var(--line-thickness);
+    block-size: 100%;
+    top: 0;
+    left: calc(var(--line-offset) * -1);
+}
+
+.portfolio-grid-item:not(:nth-child(-n + 1))::after {
+    inline-size: 100%;
+    block-size: var(--line-thickness);
+    top: calc(var(--line-offset) * -1);
+    left: 0;
+}
+
+.portfolio-grid-item:first-child {
+    left: -1px;
 }
 
 .portfolio-grid-item a.portfolio-item-link {
-    border-radius: var(--br-xxl);
     display: flex;
     gap: 2rem;
-    padding: 2rem;
-    scale: 1;
-    will-change: transform;
+    padding: 3rem;
+    min-height: 100%;
 }
 
 .portfolio-grid-item a.portfolio-item-link:hover {
-    box-shadow: var(--box-shadow-border);
-    scale: 1.03;
+    background-color: var(--content-box-bg-variant);
 }
 
 .portfolio-grid .portfolio-item-thumbnail {
@@ -2250,6 +2289,15 @@ footer {
     scroll-margin-top: 100px;
 }
 
+@keyframes smoothBg {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
 @media (max-width: 1440px) {
     .content-container {
         padding-left: 3rem;
@@ -2394,7 +2442,11 @@ footer {
     }
 
     .portfolio-grid-item a.portfolio-item-link {
-        padding: 1rem;
+        padding: 1.5rem;
+    }
+
+    .portfolio-grid .portfolio-item-thumbnail {
+        max-width: 200px;
     }
 }
 
@@ -2884,8 +2936,14 @@ footer {
     }
 
     .portfolio-grid {
+        --line-color: transparent;
         display: flex;
         flex-direction: column;
+        border: none;
+    }
+
+    .portfolio-grid-item:first-child {
+        left: 0;
     }
 
     .portfolio-grid-item a.portfolio-item-link {
@@ -2906,14 +2964,22 @@ footer {
         opacity: 1;
     }
 
-    .portfolio-grid .portfolio-item-content p {
-        display: none;
+    .portfolio-grid-item a.portfolio-item-link:hover {
+        background-color: transparent;
     }
 
     .portfolio-grid .portfolio-item-content {
         display: flex;
         flex-direction: column-reverse;
         gap: 0.5rem;
+    }
+
+    .portfolio-grid .portfolio-item-content p {
+        display: none;
+    }
+
+    .portfolio-grid .portfolio-item-thumbnail {
+        max-width: 100%;
     }
 }
 

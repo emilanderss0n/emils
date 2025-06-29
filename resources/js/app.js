@@ -87,20 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(updateActiveTocItem, 500);
     }
 
-    // Conditionally initialize shader gradient only on home and contact pages
-    if (currentPath === '/' || currentPath === '/contact') {
-        // Dynamically import the shaderGradient module only when needed
-        import('./shaderGradient').then(({ initShaderGradient }) => {
-            initShaderGradient('threeGradient', {
-                color1: '#de139e',  // Red
-                color2: '#000a88',  // Green
-                color3: '#1636ab'   // Blue
-            });
-        }).catch(err => {
-            console.warn('Could not load shader gradient:', err);
-        });
-    }
-
     // Initialize Lenis smooth scrolling
     const lenis = new Lenis();
     function raf(time) {

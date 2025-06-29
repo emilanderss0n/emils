@@ -2,44 +2,26 @@
 
 @section('main-content')
 <section class="hero-section">
-    <div id="threeGradient">
-        <div id="gradient" data-url="https://www.shadergradient.co/customize?animate=on&amp;axesHelper=off&amp;bgColor1=%23000000&amp;bgColor2=%23000000&amp;brightness=0.6&amp;cAzimuthAngle=250&amp;cDistance=1.5&amp;cPolarAngle=140&amp;cameraZoom=12.5&amp;color1=%239e0b68&amp;color2=%231f0059&amp;color3=%235b00b8&amp;embedMode=off&amp;envPreset=city&amp;fov=45&amp;gizmoHelper=hide&amp;grain=off&amp;lightType=3d&amp;pixelDensity=1.1&amp;positionX=0&amp;positionY=0&amp;positionZ=0&amp;range=disabled&amp;reflection=0.5&amp;rotationX=0&amp;rotationY=0&amp;rotationZ=140&amp;shader=defaults&amp;type=sphere&amp;uAmplitude=2.3&amp;uDensity=1.4&amp;uFrequency=5.5&amp;uSpeed=0.05&amp;uStrength=1.2&amp;uTime=0&amp;wireframe=false">
-            <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <div style="width: 100%; height: 100%;">
-                    <canvas style="display: block; width: 1429px; height: 804px; touch-action: none; user-select: none;" data-engine="three.js r150" width="1429" height="804" data-camera-controls-version="2.9.0"></canvas>
-                </div>
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <div class="presentation">
+            <h1 data-text="I'm busy creating my own virtual universe">I'm busy creating my own virtual universe</h1>
+            <p>
+            Hello, my name is <strong>Emil Andersson</strong>. I'm a passionate Graphic Designer, Web Developer, 3D Artist and Video Editor from Sweden. Scroll down to see what services I can help you with.
+            </p>
+            <div class="hero-actions">
+                <a class="btn" href="{{ route('work') }}" data-pan="work-button-front">
+                    <span class="text">Portfolio</span>
+                </a>
+                <a class="btn animate-arrow second" href="{{ route('about') }}" data-pan="profile-button-front">
+                    <span class="text">Profile</span>
+                    <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path fill="currentColor" d="M7.28033 3.21967C6.98744 2.92678 6.51256 2.92678 6.21967 3.21967C5.92678 3.51256 5.92678 3.98744 6.21967 4.28033L7.28033 3.21967ZM11 8L11.5303 8.53033C11.8232 8.23744 11.8232 7.76256 11.5303 7.46967L11 8ZM6.21967 11.7197C5.92678 12.0126 5.92678 12.4874 6.21967 12.7803C6.51256 13.0732 6.98744 13.0732 7.28033 12.7803L6.21967 11.7197ZM6.21967 4.28033L10.4697 8.53033L11.5303 7.46967L7.28033 3.21967L6.21967 4.28033ZM10.4697 7.46967L6.21967 11.7197L7.28033 12.7803L11.5303 8.53033L10.4697 7.46967Z"></path><path class="arrow-icon-stem" stroke="currentColor" d="M1.75 8H11" stroke-width="1.5" stroke-linecap="round"></path>
+                    </svg>
+                </a>
             </div>
         </div>
     </div>
-    <div class="content-container">
-        <div class="hero-content">
-            <div class="presentation">
-                <h1>I have been busy<br><span class="gradient-text">creating my own virtual universe</span></h1>
-                <p>
-                Hello, my name is <strong>Emil Andersson</strong>. I'm a passionate Graphic Designer, Web Developer, 3D Artist and Video Editor from Sweden. Scroll down to see what services I can help you with.
-                </p>
-                <div class="hero-actions">
-                    <a class="btn" href="{{ route('work') }}" data-pan="work-button-front">Portfolio</a>
-                    <a class="btn second" href="{{ route('about') }}" data-pan="profile-button-front">Profile</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="{{ asset('images/presentationImagev2.png') }}" alt="Emil Andersson" />
-
-                <dotlottie-player src="{{ asset('images/animated/flying-ui-animation.lottie') }}" autoplay loop id="uiAni" ></dotlottie-player>
-
-                <div id="desktopAni" class="framer">
-                    <div class="framer-content">
-                    <dotlottie-player src="{{ asset('images/animated/ui-desktop-animation-2.lottie') }}" autoplay loop class="zoomOut" ></dotlottie-player>
-                    </div>
-                    <div class="framer-inner-1"></div>
-                    <div class="framer-inner-2"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- <div class="framer-inner-1"></div> -->
-    <div class="framer-inner-2"></div>
 </section>
 
 <section class="front-portfolio">
@@ -159,7 +141,7 @@
                         <i class="bi bi-box"></i>
                         <h3>3D Design</h3>
                     </div>
-                    <p class="pretty-wrap">Transforming concepts into captivating realities, I specialize in creating breathtaking 3D visualizations for architecture and game textures. Utilizing tools like Blender, Substance Painter, and Photoshop, I bring visions to life with unparalleled realism.</p>
+                    <p class="pretty-wrap">Transforming concepts into captivating realities, I specialize in creating breathtaking 3D visualizations for architecture designers and game companies. Utilizing tools like Blender, Substance Painter, and Photoshop, I bring visions to life with unparalleled realism.</p>
                 </div>
                 <div class="framer-inner-1"></div>
                 <div class="framer-inner-2"></div>

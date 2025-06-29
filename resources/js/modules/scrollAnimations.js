@@ -48,18 +48,7 @@ export function initScrollReveal() {
 
     sr.reveal('.portfolio-top', { delay: 0 });
 
-    const workItems = document.querySelectorAll('.portfolio-grid-item');
-    workItems.forEach((item, index) => {
-        sr.reveal(item, {
-            delay: 0 + (index * 100),
-            distance: '50px',
-            origin: 'bottom',
-            opacity: 0,
-            duration: 600,
-            reset: false,
-            mobile: true
-        });
-    });
+    sr.reveal('.portfolio-grid', { delay: 250 });
 
     sr.reveal('.blog-header', { delay: 0 });
 
