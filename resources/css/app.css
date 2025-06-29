@@ -2314,23 +2314,9 @@ footer {
         padding-right: 3rem;
     }
 
-    .hero-content .hero-image {
-        min-width: 700px;
-    }
-
-    .hero-content .hero-image .fill,
-    #desktopAni {
-        width: calc(100% - 90px);
-        height: calc(100% - 70px);
-        border-radius: 1rem;
-        top: 0;
-        right: 1px;
-    }
-
-    #uiAni {
-        left: -15rem;
-        width: 800px;
-        height: 800px;
+    .hero-section .presentation {
+        padding-left: 3rem;
+        padding-right: 3rem;
     }
 }
 
@@ -2693,10 +2679,6 @@ footer {
     .dynamic-search-results .work-grid,
     .dynamic-search-results .blog-grid {
         grid-template-columns: 1fr;
-    }
-
-    .hero-section {
-        padding: 14rem 0 6rem;
     }
 
     .hero-content {
