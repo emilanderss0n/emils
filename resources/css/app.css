@@ -1810,6 +1810,7 @@ footer {
 
 .contact-section {
     padding: var(--padding-main-section);
+    background-color: var(--content-box-bg-variant);
     position: relative;
 }
 
@@ -2088,7 +2089,7 @@ footer {
     padding: var(--padding-main-section);
     position: relative;
     display: flex;
-    gap: 8rem;
+    gap: 6rem;
 }
 
 .blog-post .sidebar {
@@ -2138,6 +2139,9 @@ footer {
 
 .blog-post .main-container {
     width: 100%;
+    padding: 3rem;
+    border-radius: var(--br-xxl);
+    border: 1px solid var(--border-color);
 }
 
 .blog-post-header {
@@ -2154,7 +2158,6 @@ footer {
 }
 
 .blog-post-header h1 {
-    font-size: 5ch;
     color: var(--heading-color);
     line-height: 1;
     font-weight: bold;
@@ -2856,6 +2859,7 @@ footer {
         padding: 0;
         background-color: transparent;
         box-shadow: none;
+        border: none;
     }
 
     .blog-thumbnail img {

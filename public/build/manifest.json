@@ -24,7 +24,7 @@
     "src": "public/images/icon-photoshop.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Ce_Lssy9.css",
+    "file": "assets/app-CK5m2PUZ.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -39,13 +39,12 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-DgUjpgrb.js",
+    "file": "assets/app-DADiRwH_.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
-      "resources/js/modules/githubRepositories.js",
-      "resources/js/shaderGradient.js"
+      "resources/js/modules/githubRepositories.js"
     ]
   },
   "resources/js/modules/githubRepositories.js": {
@@ -53,12 +52,6 @@
     "name": "githubRepositories",
     "src": "resources/js/modules/githubRepositories.js",
     "isDynamicEntry": true
-  },
-  "resources/js/shaderGradient.js": {
-    "file": "assets/shaderGradient-l0sNRNKZ.js",
-    "name": "shaderGradient",
-    "src": "resources/js/shaderGradient.js",
-    "isEntry": true
   },
   "resources/js/three.js": {
     "file": "assets/three-l0sNRNKZ.js",
