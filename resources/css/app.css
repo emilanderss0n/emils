@@ -1804,6 +1804,14 @@ footer {
     background-image: url(../../public/images/icon-github.png);
 }
 
+#contactForm {
+    position: relative;
+}
+
+.grecaptcha-badge {
+    right: 0 !important;
+}
+
 .contact-section #gradient canvas {
     transform: scale(2);
 }
