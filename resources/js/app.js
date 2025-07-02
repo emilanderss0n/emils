@@ -12,24 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize navigation
     initNavigation();
 
-    // Add blog item hover effects
-    const blogItems = document.querySelectorAll(".front-blog-item");
-    blogItems.forEach(item => {
-        item.addEventListener("mouseenter", () => {
-            blogItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.querySelector(".article__thumbnail").style.opacity = "0.5";
-                }
-            });
-        });
-
-        item.addEventListener("mouseleave", () => {
-            blogItems.forEach(otherItem => {
-                otherItem.querySelector(".article__thumbnail").style.opacity = "1";
-            });
-        });
-    });
-
     // Add header scroll functionality
     const header = document.querySelector('header');
     let lastScrollTop = 0;
@@ -49,15 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Update active TOC item on scroll
         updateActiveTocItem();
-    });
-
-    // Add line animation to blog links
-    const blogLinks = document.querySelectorAll('.blog-content a');
-    blogLinks.forEach(link => {
-        // Check if the link contains only text (no other HTML elements)
-        if (link.childElementCount === 0) {
-            link.classList.add('line-ani');
-        }
     });
 
     // Conditionally load GitHub repositories only on work page

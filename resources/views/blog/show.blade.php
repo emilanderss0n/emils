@@ -1,7 +1,11 @@
 @extends('layouts.default')
 
 @section('main-content')
+
 <div class="content-container">
+    <div class="blog-post-header">
+        <h1 class="blog-title">{{ $blog->title }}</h1>
+    </div>
     <article class="blog-post">
         <div class="sidebar">
             <div class="sidebar-inner">
@@ -26,11 +30,6 @@
             </div>
         </div>
         <div class="main-container">
-            <div class="blog-post-header">
-                <div class="blog-fancy-heading">
-                    <h1>{{ $blog->title }}</h1>
-                </div>
-            </div>
 
             <div class="blog-content">
                 {!! $blog->content !!}

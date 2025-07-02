@@ -52,18 +52,7 @@ export function initScrollReveal() {
 
     sr.reveal('.blog-header', { delay: 0 });
 
-    const blogItems = document.querySelectorAll('.blog-grid .blog-item');
-    blogItems.forEach((item, index) => {
-        sr.reveal(item, {
-            delay: 0 + (index * 100),
-            distance: '50px',
-            origin: 'bottom',
-            opacity: 0,
-            duration: 600,
-            reset: false,
-            mobile: true
-        });
-    });
+    sr.reveal('.blog-grid', { delay: 250 });
 
     sr.reveal('.pagination', { delay: 200 });
     sr.reveal('.contact-layout', { delay: 0 });
