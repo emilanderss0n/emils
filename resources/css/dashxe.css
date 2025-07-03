@@ -30,7 +30,7 @@
     --br-lg: 0.4rem;
     --br-xl: 0.6rem;
     --br-xxl: 0.8rem;
-    --shadow-button: 0px 18px 20px rgb(153 172 243 / 8%), 0px 10px 14px rgb(178 187 207 / 6%), 0px 8px 9px rgb(213 213 213 / 4%);
+    --shadow-button: 0px 18px 20px rgb(153 172 243 / 5%), 0px 7px 9px rgb(178 187 207 / 8%), 0px 5px 6px rgb(213 213 213 / 9%);
     --image-overlay: #444d6e;
     --image-overlay-strong: var(--primary-color);
     --image-hover-bg: rgb(22 32 70 / 37%);
@@ -54,7 +54,7 @@
     --box-shadow-border-sm: inset 0 0 0 1px rgb(42 53 111 / 10%);
     --content-box-bg-variant: #ffffff;
     --scroll-bar-color: var(--low-contrast-color);
-    --fancy-input-bg: #ffffff7d;
+    --fancy-input-bg: #fff;
     --white-bd-trans: #fff;
     --glass-bg: rgb(229 234 255 / 83%);
     --padding-main-section: 10rem 0 8rem;
@@ -93,7 +93,7 @@
         --box-shadow-border-sm: inset 0 0 0 1px oklch(0.28 0.04 263.62 / 0.45);
         --content-box-bg-variant: #101725;
         --scroll-bar-color: rgba(255, 255, 255, 0.2) transparent;
-        --fancy-input-bg: #ffffff0d;
+        --fancy-input-bg: #07090ecc;
         --white-bd-trans: transparent;
         --glass-bg: var(--image-hover-bg);
     }
@@ -419,6 +419,7 @@ button {
     text-align: center;
     z-index: 1;
     text-decoration: none;
+    box-shadow: var(--shadow-button);
     transition: all 0.2s ease-out;
 }
 
@@ -854,7 +855,7 @@ textarea.fancy {
     background-color: var(--fancy-input-bg);
     border-radius: var(--br-lg);
     padding: 1rem 1.2rem;
-    box-shadow: none;
+    box-shadow: var(--shadow-button);
 }
 
 input.fancy:focus,

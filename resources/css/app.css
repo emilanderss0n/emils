@@ -543,17 +543,14 @@ main {
     font-size: 0.9rem;
 }
 
-/* Remove previous search form */
 .top-search .search-form {
     display: none;
 }
 
-/* Body no-scroll class */
 body.no-scroll {
     overflow: hidden;
 }
 
-/* Clickable work and blog cards in search results */
 .work-card-link,
 .blog-card-link {
     display: block;
@@ -597,7 +594,6 @@ body.no-scroll {
     transform: translateX(0);
 }
 
-/* Override previous styles that aren't needed anymore */
 .dynamic-search-results .work-card:hover,
 .dynamic-search-results .blog-card:hover {
     transform: none;
@@ -677,6 +673,21 @@ body.no-scroll {
         animation: smoothBg 60s linear infinite;
         background-attachment: fixed;
         mix-blend-mode: difference;
+    }
+}
+
+.hero-section.contact {
+    overflow: hidden;
+}
+
+.hero-bg.contact {
+    position: absolute;
+    left: 0;
+    top: 0;
+    mask-image: radial-gradient(ellipse at 0% 0%, black 10%, transparent 60%);
+
+    &::after {
+        opacity: 0.9;
     }
 }
 
@@ -1818,12 +1829,8 @@ footer {
     }
 }
 
-.contact-section #gradient canvas {
-    transform: scale(2);
-}
-
 .contact-section {
-    padding: var(--padding-main-section);
+    padding: 0;
     background-color: var(--content-box-bg-variant);
     position: relative;
 }
@@ -1835,6 +1842,7 @@ footer {
     gap: 4rem;
     position: relative;
     z-index: 2;
+    margin: 10rem 0;
 }
 
 .contact-header {
@@ -2809,10 +2817,6 @@ footer {
 
     .info-profile h2 {
         font-size: 1.4rem;
-    }
-
-    .contact-section {
-        padding: var(--padding-main-section-sm);
     }
 
     .contact-layout {
