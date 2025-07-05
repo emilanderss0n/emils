@@ -2,6 +2,7 @@
 
 @section('main-content')
 
+<div class="top-bg"></div>
 <div class="content-container">
     <div class="blog-post-header">
         <h1 class="blog-title">{{ $blog->title }}</h1>

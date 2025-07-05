@@ -1053,13 +1053,13 @@ textarea {
 .github-component .repo-item {
     display: inline-block;
     padding: 1rem;
-    box-shadow: var(--box-shadow-border);
     border-radius: var(--br-xl);
     will-change: transform;
+    border: 1px solid var(--border-color);
 }
 
 .github-component .repo-item:hover {
-    transform: scale(1.05);
+    background-color: var(--content-box-bg-variant);
 }
 
 .github-component .repo-item .repo-content {
