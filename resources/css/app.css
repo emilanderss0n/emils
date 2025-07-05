@@ -1995,6 +1995,17 @@ footer {
     margin: 0;
 }
 
+.top-bg {
+    background: linear-gradient(45deg, black, white);
+    background-size: 1em 1em;
+    width: 100%;
+    height: 800px;
+    position: absolute;
+    mask: linear-gradient(172deg, #000, hsl(0deg 0% 0% / 0%) 60%);
+    mix-blend-mode: hard-light;
+    opacity: 0.3;
+}
+
 .blog-grid {
     --gap: 1px;
     --line-offset: calc(var(--gap) / 2);
