@@ -2155,7 +2155,8 @@ footer {
 
 .blog-post-header h1 {
     font-weight: 600;
-    font-size: 4em;
+    font-size: 6em;
+    line-height: 1.2;
 }
 
 .blog-post {
