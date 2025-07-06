@@ -2278,6 +2278,16 @@ footer {
     border-radius: var(--br-xxl);
 }
 
+.blog-post .blog-content :not(pre)>code[class*="language-"], pre[class*="language-"] {
+    background: var(--content-bg-dark);
+    box-shadow: var(--box-shadow-border);
+}
+
+.blog-post .blog-content pre>code {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
 .blog-footer {
     width: 100%;
     margin: 4rem 0 0;
