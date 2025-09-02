@@ -2244,7 +2244,7 @@ footer {
 
 .blog-post .blog-content p {
     display: inline-block;
-    font-size: 1.1rem;
+    font-size: 1.1rem; /* new */
     line-height: 1.7;
     width: 100%;
 }
