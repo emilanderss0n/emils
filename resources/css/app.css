@@ -2244,15 +2244,15 @@ footer {
 
 .blog-post .blog-content p {
     display: inline-block;
-    font-size: 1rem;
-    line-height: 1.9;
+    font-size: 1.1rem;
+    line-height: 1.7;
     width: 100%;
 }
 
 .blog-post .blog-content p:first-child {
     color: var(--heading-color);
-    line-height: 2.1;
-    font-size: 1.2rem;
+    line-height: 1.7;
+    font-size: 1.4rem;
 }
 
 .blog-post .blog-content p:last-child {
@@ -2270,7 +2270,7 @@ footer {
 .blog-post .blog-content ul li,
 .blog-post .blog-content ol li {
     margin: 1rem 0;
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 .blog-post .blog-content img {
