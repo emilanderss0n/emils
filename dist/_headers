@@ -1,0 +1,23 @@
+# Cache static assets aggressively (hashed filenames, never change)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML pages — cache for 1 day, revalidate
+/
+  Cache-Control: public, max-age=86400, must-revalidate
+/about
+  Cache-Control: public, max-age=86400, must-revalidate
+/posts
+  Cache-Control: public, max-age=86400, must-revalidate
+/codepen
+  Cache-Control: public, max-age=86400, must-revalidate
+
+# Images — cache for a week
+/*.png
+  Cache-Control: public, max-age=604800
+/*.jpg
+  Cache-Control: public, max-age=604800
+/*.svg
+  Cache-Control: public, max-age=604800
+/*.webp
+  Cache-Control: public, max-age=604800
