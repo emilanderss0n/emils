@@ -101,11 +101,10 @@ body::after {
   backdrop-filter: blur(20px);
   border: 1px solid var(--color-border);
   border-radius: 16px;
-  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  transition: border-color 0.3s, transform 0.3s;
 }
 .glass-card:hover {
   border-color: var(--color-border-hover);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(129,140,248,0.08);
 }
 
 /* ── Gradient text ─────────────────────────────────── */
@@ -118,10 +117,18 @@ body::after {
 
 /* ── Badge ─────────────────────────────────────────── */
 .badge {
-  @apply inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full;
+  @apply inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full;
   background: rgba(129,140,248,0.1);
   border: 1px solid rgba(129,140,248,0.2);
   color: var(--color-accent);
+  line-height: 1.1;
+}
+
+/* Muted variant for secondary info like star counts */
+.badge--muted {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--color-text-muted);
 }
 
 /* ── Accent glow underline ─────────────────────────── */
@@ -181,6 +188,33 @@ body::after {
 .card-entering:not(.card-entering),
 .card-exiting:not(.card-exiting) {
   will-change: auto;
+}
+
+/* ── Filter-group heading animations ── */
+[data-filter-group] {
+  transition: opacity 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+              max-height 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@keyframes group-exit {
+  0%   { opacity: 1; transform: translateY(0) translateZ(0); }
+  100% { opacity: 0; transform: translateY(-12px) translateZ(0); }
+}
+@keyframes group-enter {
+  0%   { opacity: 0; transform: translateY(-12px) translateZ(0); }
+  100% { opacity: 1; transform: translateY(0) translateZ(0); }
+}
+
+.group-exiting {
+  animation: group-exit 0.28s ease-out both;
+  pointer-events: none;
+}
+.group-entering {
+  animation: group-enter 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
 /* ── CollectionFilter buttons (must be global — buttons are created by JS) ── */

@@ -12,7 +12,7 @@ const { repo } = Astro.props;
 <article class="repo-card glass-card p-6 flex flex-col" data-lang={repo.data.language} data-category={repo.data.category}>
   <div class="flex items-start justify-between mb-3">
     <span class="badge">{repo.data.language}</span>
-    <span class="text-xs text-[var(--color-text-muted)]">{repo.data.stars} ★</span>
+    <span class="badge badge--muted">★ {repo.data.stars}</span>
   </div>
   <h3 class="text-base font-semibold mb-2 leading-snug">
     <a href={repo.data.url} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text)] hover:text-[var(--color-accent)] no-underline transition-colors">

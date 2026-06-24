@@ -122,26 +122,57 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
             }, { once: true });
           });
 
-          // 3. No-match state + hide empty category groups
+          // 3. No-match state + animate category group headings in/out
           if (noMatch) {
             const anyVisible = cards.some((c) => !c.classList.contains('filter-hidden'));
             noMatch.classList.toggle('hidden', anyVisible);
           }
 
-          // Hide category group headings whose grids are entirely empty
-          const groupWrappers = document.querySelectorAll('[data-filter-group]');
+          const groupWrappers = document.querySelectorAll<HTMLElement>('[data-filter-group]');
+          const groupExitPromises: Promise<void>[] = [];
+
+          // Find groups that need to be hidden (no visible cards after this filter)
           groupWrappers.forEach((wrapper) => {
-            const visibleCards = wrapper.querySelectorAll(`${targetSelector} [${attr}]:not(.filter-hidden)`);
-            (wrapper as HTMLElement).classList.toggle('hidden', visibleCards.length === 0);
+            const visibleCards = wrapper.querySelectorAll<HTMLElement>(`${targetSelector} [${attr}]:not(.filter-hidden)`);
+            const shouldHide = visibleCards.length === 0;
+            const isAlreadyHidden = wrapper.style.display === 'none';
+
+            if (shouldHide && !isAlreadyHidden) {
+              // Exit animation, then collapse
+              const promise = new Promise<void>((resolve) => {
+                wrapper.classList.add('group-exiting');
+                wrapper.addEventListener('animationend', () => {
+                  wrapper.classList.remove('group-exiting');
+                  wrapper.style.display = 'none';
+                  resolve();
+                }, { once: true });
+              });
+              groupExitPromises.push(promise);
+            } else if (!shouldHide && isAlreadyHidden) {
+              // Reveal with enter animation
+              wrapper.style.display = '';
+              wrapper.style.opacity = '0';
+              wrapper.classList.add('group-entering');
+              wrapper.addEventListener('animationend', () => {
+                wrapper.classList.remove('group-entering');
+                wrapper.style.removeProperty('opacity');
+              }, { once: true });
+            }
           });
 
-          // Unlock after enters complete
-          const maxDelay = entering.length > 0 ? (entering.length - 1) * 55 + 450 : 0;
-          if (maxDelay > 0) {
-            setTimeout(() => { animating = false; }, maxDelay);
-          } else {
-            animating = false;
-          }
+          // Unlock after all exits + card enters complete
+          const cardEnterDelay = entering.length > 0 ? (entering.length - 1) * 55 + 450 : 0;
+          const groupExitDelay = groupExitPromises.length > 0 ? 350 : 0; // match group-exit 0.28s + buffer
+          const maxDelay = Math.max(cardEnterDelay, groupExitDelay);
+          
+          // Wait for group exits, then finalize
+          Promise.all(groupExitPromises).then(() => {
+            if (maxDelay > 0) {
+              setTimeout(() => { animating = false; }, maxDelay);
+            } else {
+              animating = false;
+            }
+          });
         });
       });
     }
