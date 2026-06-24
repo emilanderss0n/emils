@@ -1,6 +1,5 @@
 // CardSlider — horizontal slider with JS-driven fade mask.
 // Attached to any element with [data-slider] attribute.
-// Usage: <div data-slider="true"> ... </div>
 
 export function initCardSlider(root: HTMLElement | Document = document) {
   const tracks = root.querySelectorAll<HTMLElement>('[data-slider]');
@@ -13,7 +12,6 @@ export function initCardSlider(root: HTMLElement | Document = document) {
     let scrollLeft = 0;
 
     function update() {
-      // Batch all reads first to avoid forced reflow
       const sl = track.scrollLeft;
       const cw = track.clientWidth;
       const sw = track.scrollWidth;

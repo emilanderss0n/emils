@@ -13,11 +13,11 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
 
 <BaseLayout title="About" description="Emil Andersson — UI Designer, Web Developer, 3D Artist, Video Editor">
   <section class="py-16 md:py-20">
-    <div class="glass-card p-8 md:p-10 max-w-3xl mx-auto">
+    <div class="glass-card p-8 md:p-10 max-w-3xl mx-auto anim-fade-up">
 
       <!-- ── Header: photo + name ──────────────── -->
       <div class="flex flex-col sm:flex-row gap-8 items-start mb-6">
-        <div class="shrink-0 flex flex-col">
+        <div class="shrink-0 flex flex-col anim-slide-left" style="--anim-delay: 100ms">
           <div class="relative bg-gradient-to-br from-[var(--color-accent)]/20 via-[var(--color-accent)]/10 to-[var(--color-accent-2)]/10 rounded-2xl p-1">
             <div class="relative w-42 h-52 rounded-xl overflow-hidden">
               <img src="/emil-andersson.jpg" alt="Emil Andersson" class="w-full h-full object-cover" />
@@ -43,11 +43,11 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
           </div>
         </div>
 
-        <div>
+        <div class="anim-slide-right" style="--anim-delay: 180ms">
           <h1 class="text-3xl font-extrabold tracking-tight mb-1">Emil Andersson</h1>
           <p class="gradient-text font-semibold text-lg">UI Designer / Web Developer / 3D Artist / Video Editor</p>
 
-          <div class="mt-5 space-y-4 text-[var(--color-text-muted)] leading-relaxed">
+          <div class="mt-5 space-y-4 text-[var(--color-text-muted)] leading-relaxed anim-fade-in" style="--anim-delay: 300ms">
             <p>
               Hello, I was born in Sweden 1989 in a small town named <strong class="text-[var(--color-text)]">Skänninge</strong>.
               I'm a simple guy that loves to be creative. There is something very fullfilling with writing code or creating art. Sometimes you help people with your creations, without even realizing it.
@@ -77,7 +77,7 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
       </div>
 
       <!-- ── Toolset ──────────────────────────── -->
-      <div class="border-t border-[var(--color-border)] pt-8">
+      <div class="border-t border-[var(--color-border)] pt-8 anim-fade-up" style="--anim-delay: 400ms">
         <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-4">Preferred Toolset</h2>
         <div class="flex flex-wrap gap-3">
           {tools.map((tool) => (

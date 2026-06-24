@@ -28,7 +28,16 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
 
 <script>
   class CollectionFilter extends HTMLElement {
+    #lock = false;
+
     connectedCallback() {
+      // Remove stale buttons if reconnected (View Transition back-navigation)
+      this.querySelector('nav')
+        ?.querySelectorAll<HTMLButtonElement>('button[data-filter]:not([data-filter=""])')
+        .forEach((b) => b.remove());
+      this.querySelector<HTMLButtonElement>('button[data-filter=""]')
+        ?.classList.add('filter-btn--active');
+
       const targetSelector = this.dataset.target;
       const filterKey = this.dataset.filterKey;
       if (!targetSelector || !filterKey) return;
@@ -49,7 +58,7 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
         .filter(Boolean)
         .sort((a, b) => a.localeCompare(b));
 
-      // ── Build buttons (batch via fragment to avoid forced reflows) ──
+      // ── Build buttons (batch via fragment) ──
       const btns = new Map<string, HTMLButtonElement>();
       btns.set('', allBtn);
       const fragment = document.createDocumentFragment();
@@ -67,53 +76,49 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
       nav.appendChild(fragment);
 
       // ── Click handler ───────────────────────
-      let animating = false;
-
       btns.forEach((btn, val) => {
         btn.addEventListener('click', async () => {
-          if (animating) return;
+          if (this.#lock) return;
+          this.#lock = true;
 
           // Update active button
           btns.forEach((b) => b.classList.remove('filter-btn--active'));
           btn.classList.add('filter-btn--active');
 
-          // Sort cards: exiting first, then entering
           const exiting: HTMLElement[] = [];
           const entering: HTMLElement[] = [];
-          const staying: HTMLElement[] = []; // cards that don't change (no flicker)
 
           cards.forEach((card) => {
             const match = !val || card.getAttribute(attr) === val;
             const isHidden = card.classList.contains('filter-hidden');
             if (match && isHidden) entering.push(card);
             else if (!match && !isHidden) exiting.push(card);
-            else if (match && !isHidden) staying.push(card);
-            // else: !match && isHidden → already hidden, ignore
           });
 
-          // Skip animation if nothing changes
-          if (exiting.length === 0 && entering.length === 0) return;
+          if (exiting.length === 0 && entering.length === 0) {
+            this.#lock = false;
+            return;
+          }
 
-          animating = true;
+          // 1. Exit
+          const exitPromises = exiting.map(
+            (card) =>
+              new Promise<void>((resolve) => {
+                card.classList.remove('anim-fade-up', 'anim-fade-down', 'anim-fade-in', 'anim-scale-in', 'anim-slide-left', 'anim-slide-right');
+                card.classList.add('card-exiting');
+                card.addEventListener('animationend', () => {
+                  card.classList.add('filter-hidden');
+                  card.classList.remove('card-exiting');
+                  resolve();
+                }, { once: true });
+              })
+          );
 
-          // 1. Animate exiting cards out
-          const exitPromises = exiting.map((card) => {
-            return new Promise<void>((resolve) => {
-              card.classList.add('card-exiting');
-              card.addEventListener('animationend', () => {
-                card.classList.add('filter-hidden');
-                card.classList.remove('card-exiting');
-                resolve();
-              }, { once: true });
-            });
-          });
-
-          // Wait for exits to finish
           await Promise.all(exitPromises);
 
-          // 2. Reveal entering cards with stagger
+          // 2. Enter with stagger
           entering.forEach((card, i) => {
-            // Set opacity:0 before removing filter-hidden to prevent paint flash
+            card.classList.remove('anim-fade-up', 'anim-fade-down', 'anim-fade-in', 'anim-scale-in', 'anim-slide-left', 'anim-slide-right');
             card.style.opacity = '0';
             card.classList.remove('filter-hidden');
             card.style.setProperty('--enter-delay', `${i * 55}ms`);
@@ -125,34 +130,35 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
             }, { once: true });
           });
 
-          // 3. No-match state + animate category group headings in/out
+          // 3. No-match state
           if (noMatch) {
             const anyVisible = cards.some((c) => !c.classList.contains('filter-hidden'));
             noMatch.classList.toggle('hidden', anyVisible);
           }
 
+          // 4. Category group headings
           const groupWrappers = document.querySelectorAll<HTMLElement>('[data-filter-group]');
           const groupExitPromises: Promise<void>[] = [];
 
-          // Find groups that need to be hidden (no visible cards after this filter)
           groupWrappers.forEach((wrapper) => {
-            const visibleCards = wrapper.querySelectorAll<HTMLElement>(`${targetSelector} [${attr}]:not(.filter-hidden)`);
+            const visibleCards = wrapper.querySelectorAll<HTMLElement>(
+              `${targetSelector} [${attr}]:not(.filter-hidden)`
+            );
             const shouldHide = visibleCards.length === 0;
             const isAlreadyHidden = wrapper.style.display === 'none';
 
             if (shouldHide && !isAlreadyHidden) {
-              // Exit animation, then collapse
-              const promise = new Promise<void>((resolve) => {
-                wrapper.classList.add('group-exiting');
-                wrapper.addEventListener('animationend', () => {
-                  wrapper.classList.remove('group-exiting');
-                  wrapper.style.display = 'none';
-                  resolve();
-                }, { once: true });
-              });
-              groupExitPromises.push(promise);
+              groupExitPromises.push(
+                new Promise<void>((resolve) => {
+                  wrapper.classList.add('group-exiting');
+                  wrapper.addEventListener('animationend', () => {
+                    wrapper.classList.remove('group-exiting');
+                    wrapper.style.display = 'none';
+                    resolve();
+                  }, { once: true });
+                })
+              );
             } else if (!shouldHide && isAlreadyHidden) {
-              // Reveal with enter animation
               wrapper.style.display = '';
               wrapper.style.opacity = '0';
               wrapper.classList.add('group-entering');
@@ -163,17 +169,15 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
             }
           });
 
-          // Unlock after all exits + card enters complete
           const cardEnterDelay = entering.length > 0 ? (entering.length - 1) * 55 + 450 : 0;
-          const groupExitDelay = groupExitPromises.length > 0 ? 350 : 0; // match group-exit 0.28s + buffer
+          const groupExitDelay = groupExitPromises.length > 0 ? 350 : 0;
           const maxDelay = Math.max(cardEnterDelay, groupExitDelay);
-          
-          // Wait for group exits, then finalize
+
           Promise.all(groupExitPromises).then(() => {
             if (maxDelay > 0) {
-              setTimeout(() => { animating = false; }, maxDelay);
+              setTimeout(() => { this.#lock = false; }, maxDelay);
             } else {
-              animating = false;
+              this.#lock = false;
             }
           });
         });

@@ -13,21 +13,21 @@ const posts = allPosts
 
 <BaseLayout title="Posts" description="Portfolio posts by Emil Andersson — web dev, 3D art, and creative coding.">
   <section class="py-16 md:py-20">
-    <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-2">
+    <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-2 anim-fade-down" style="--anim-delay: 60ms">
       <span class="gradient-text">Posts</span>
     </h1>
-    <p class="text-lg text-[var(--color-text-muted)] mb-12 max-w-lg">
+    <p class="text-lg text-[var(--color-text-muted)] mb-12 max-w-lg anim-fade-up" style="--anim-delay: 160ms">
       Thoughts on web development, 3D art, game dev, and creative tools.
     </p>
 
     {
       posts.length === 0 ? (
-        <div class="glass-card p-12 text-center">
+        <div class="glass-card p-12 text-center anim-fade-in" style="--anim-delay: 260ms">
           <p class="text-[var(--color-text-muted)] text-lg">No posts yet. Check back soon!</p>
         </div>
       ) : (
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {posts.map((post) => (
+          {posts.map((post, i) => (
             <PostCard post={post} />
           ))}
         </div>

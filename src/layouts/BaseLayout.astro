@@ -24,6 +24,31 @@ const { title, description = 'Personal portfolio — curated content from across
       (function(){var t=localStorage.getItem('theme');var d=t||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',d);})();
     </script>
     <ClientRouter />
+    <!-- Scroll-reveal observer — reveal elements as they scroll into view -->
+    <script>
+      (function setupScrollReveal() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+        );
+        // Observe after first paint; also observe on Astro page swaps
+        function observeAll() {
+          document.querySelectorAll('.reveal-on-scroll:not(.is-revealed)').forEach((el) => observer.observe(el));
+        }
+        observeAll();
+        document.addEventListener('astro:page-load', observeAll);
+        // Re-run after view transition settles
+        document.addEventListener('astro:after-swap', observeAll);
+      })();
+    </script>
   </head>
   <body class="min-h-screen flex flex-col relative z-0">
     <header class="relative z-10 max-w-5xl mx-auto w-full px-6 py-4 flex justify-between items-center">

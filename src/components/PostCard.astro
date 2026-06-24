@@ -9,7 +9,7 @@ interface Props {
 const { post } = Astro.props;
 ---
 
-<article class="glass-card p-6 flex flex-col hover:border-[var(--color-border-hover)] transition-colors duration-300">
+<article class="glass-card p-6 flex flex-col hover:border-[var(--color-border-hover)] transition-colors duration-300 anim-scale-in" style="--anim-delay: 0ms">
   <div class="flex items-center gap-2 mb-3">
     {post.data.tags.slice(0, 2).map((tag: string) => (
       <span class="badge">{tag}</span>
