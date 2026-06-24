@@ -49,9 +49,10 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
         .filter(Boolean)
         .sort((a, b) => a.localeCompare(b));
 
-      // ── Build buttons ──────────────────────
+      // ── Build buttons (batch via fragment to avoid forced reflows) ──
       const btns = new Map<string, HTMLButtonElement>();
       btns.set('', allBtn);
+      const fragment = document.createDocumentFragment();
 
       values.forEach((val) => {
         const count = cards.filter((c) => c.getAttribute(attr) === val).length;
@@ -59,9 +60,11 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
         btn.setAttribute('data-filter', val);
         btn.className = 'filter-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium';
         btn.innerHTML = `${val} <span class="inline-flex items-center rounded-md bg-gray-400/10 px-2 py-0.5 text-xs font-small text-gray-400 inset-ring inset-ring-gray-400/20">${count}</span>`;
-        nav.appendChild(btn);
+        fragment.appendChild(btn);
         btns.set(val, btn);
       });
+
+      nav.appendChild(fragment);
 
       // ── Click handler ───────────────────────
       let animating = false;

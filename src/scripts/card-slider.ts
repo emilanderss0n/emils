@@ -13,15 +13,22 @@ export function initCardSlider(root: HTMLElement | Document = document) {
     let scrollLeft = 0;
 
     function update() {
-      const atStart = track.scrollLeft <= 4;
-      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-      prevBtn.disabled = atStart;
-      nextBtn.disabled = atEnd;
-      const mL = atStart ? 'black' : 'transparent';
-      const mR = atEnd ? 'black' : 'transparent';
-      const mask = `linear-gradient(to right, ${mL} 0%, black 6%, black 94%, ${mR} 100%)`;
-      track.style.webkitMaskImage = mask;
-      track.style.maskImage = mask;
+      // Batch all reads first to avoid forced reflow
+      const sl = track.scrollLeft;
+      const cw = track.clientWidth;
+      const sw = track.scrollWidth;
+
+      requestAnimationFrame(() => {
+        const atStart = sl <= 4;
+        const atEnd = sl + cw >= sw - 4;
+        prevBtn.disabled = atStart;
+        nextBtn.disabled = atEnd;
+        const mL = atStart ? 'black' : 'transparent';
+        const mR = atEnd ? 'black' : 'transparent';
+        const mask = `linear-gradient(to right, ${mL} 0%, black 6%, black 94%, ${mR} 100%)`;
+        track.style.webkitMaskImage = mask;
+        track.style.maskImage = mask;
+      });
     }
 
     update();

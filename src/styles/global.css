@@ -1,5 +1,15 @@
 @import "tailwindcss";
-@import '@fontsource/inter/latin.css';
+
+/*
+ * Inter — self-hosted Latin subset, only the 5 weights actually used.
+ * fontsource's CSS has font-display: swap and correct unicode-range.
+ * Vite bundles & hashes the files in dist/_astro/ automatically.
+ */
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-800.css';
+@import '@fontsource/inter/latin-900.css';
 
 /* ── Light theme tokens ────────────────────────────── */
 :root,
