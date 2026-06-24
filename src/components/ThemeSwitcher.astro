@@ -1,0 +1,46 @@
+---
+// ThemeSwitcher.astro — toggle between light and dark mode.
+// Persists preference in localStorage. Defaults to system preference.
+---
+
+<theme-switcher>
+  <button
+    class="theme-toggle flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-white/[0.05] border border-transparent hover:border-[var(--color-border)] transition-all duration-200"
+    aria-label="Toggle theme"
+  >
+    <!-- Sun icon -->
+    <svg class="w-4 h-4 theme-icon-sun opacity-40 hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2 M12 21v2 M4.22 4.22l1.42 1.42 M18.36 18.36l1.42 1.42 M1 12h2 M21 12h2 M4.22 19.78l1.42-1.42 M18.36 5.64l1.42-1.42"/></svg>
+    <!-- Moon icon -->
+    <svg class="w-4 h-4 theme-icon-moon opacity-40 hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+  </button>
+</theme-switcher>
+
+<script>
+  class ThemeSwitcher extends HTMLElement {
+    connectedCallback() {
+      const btn = this.querySelector('button')!;
+      const sunIcon = this.querySelector('.theme-icon-sun') as HTMLElement;
+      const moonIcon = this.querySelector('.theme-icon-moon') as HTMLElement;
+
+      function applyTheme() {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = stored ? stored === 'dark' : prefersDark;
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        // Active icon is dimmed, inactive icon is bright (invites clicking)
+        sunIcon.style.opacity = isDark ? '0.4' : '1';
+        moonIcon.style.opacity = isDark ? '1' : '0.4';
+      }
+
+      applyTheme();
+
+      btn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        applyTheme();
+      });
+    }
+  }
+  customElements.define('theme-switcher', ThemeSwitcher);
+</script>

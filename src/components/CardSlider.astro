@@ -1,0 +1,52 @@
+---
+// CardSlider.astro — horizontal slider with JS-driven fade mask.
+// Left edge fades only when scrolled right; right edge fades only when more to scroll.
+
+interface Props {
+  title: string;
+  link?: string;
+  linkLabel?: string;
+}
+
+const { title, link, linkLabel = 'View all →' } = Astro.props;
+const sliderId = 'slider-' + Math.random().toString(36).slice(2, 8);
+---
+
+<div class="card-slider pb-12">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="section-title !mb-0 !flex-none no-divider">{title}</h2>
+    <span class="flex-1 mx-4 h-px bg-gradient-to-r from-[var(--color-border)] to-transparent hidden sm:block" aria-hidden="true"></span>
+    {link && (
+      <a href={link} target="_blank" rel="noopener noreferrer"
+         class="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] no-underline transition-colors">
+        {linkLabel}
+      </a>
+    )}
+  </div>
+
+  <div class="relative group/slider">
+    <button class="slider-btn slider-btn--prev absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[var(--color-surface-solid)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-border-hover)] flex items-center justify-center opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 disabled:opacity-0 shadow-lg -translate-x-1/2" aria-label="Previous">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+    </button>
+
+    <div id={sliderId} class="card-slider__track flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-none pb-2" data-slider="true">
+      <slot />
+    </div>
+
+    <button class="slider-btn slider-btn--next absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[var(--color-surface-solid)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-border-hover)] flex items-center justify-center opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 disabled:opacity-0 shadow-lg translate-x-1/2" aria-label="Next">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  import { initCardSlider } from '@scripts/card-slider';
+  initCardSlider();
+</script>
+
+<style>
+  .card-slider__track { scrollbar-width: none; }
+  .card-slider__track::-webkit-scrollbar { display: none; }
+  .card-slider__track > :slotted(*) { flex: 0 0 280px; max-width: 320px; scroll-snap-align: start; }
+  @media (min-width: 640px) { .card-slider__track > :slotted(*) { flex: 0 0 300px; } }
+</style>

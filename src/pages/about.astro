@@ -1,0 +1,98 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ToolIcon from '@components/ToolIcon.astro';
+
+const socials = [
+  { name: 'X', url: 'https://x.com/bobemil_sw13', icon: 'x' },
+  { name: 'GitHub', url: 'https://github.com/emilanderss0n', icon: 'github' },
+  { name: 'CodePen', url: 'https://codepen.io/emilandersson', icon: 'codepen' },
+];
+
+const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
+---
+
+<BaseLayout title="About" description="Emil Andersson — UI Designer, Web Developer, 3D Artist, Video Editor">
+  <section class="py-16 md:py-20">
+    <div class="glass-card p-8 md:p-10 max-w-3xl mx-auto">
+
+      <!-- ── Header: photo + name ──────────────── -->
+      <div class="flex flex-col sm:flex-row gap-8 items-start mb-6">
+        <div class="shrink-0 flex flex-col">
+          <div class="relative bg-gradient-to-br from-[var(--color-accent)]/20 via-[var(--color-accent)]/10 to-[var(--color-accent-2)]/10 rounded-2xl p-1">
+            <div class="relative w-32 h-32 rounded-xl overflow-hidden">
+              <img src="/emil-andersson.jpg" alt="Emil Andersson" class="w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-[var(--color-accent)]/25 mix-blend-mode-overlay"></div>
+            </div>
+            <div class="flex gap-2 px-1.5 pb-1.5 pt-2.5">
+              {socials.map((s) => (
+                <a href={s.url} target="_blank" rel="noopener noreferrer"
+                   class="flex-1 h-9 rounded-lg flex items-center justify-center bg-black/25 hover:bg-white/20 text-white/50 hover:text-white transition-all duration-300 hover:scale-105"
+                   title={s.name}>
+                  {s.icon === 'x' && (
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.176 4h2.76l-6.03 6.888L22 20.26h-5.554l-4.352-5.688L6.44 20.26H3.678l6.452-7.372L3.06 4h5.696l3.934 5.2L17.176 4zm-.575 14.612h1.53L8.178 5.564H6.518l10.083 13.048z"/></svg>
+                  )}
+                  {s.icon === 'github' && (
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.37 0 0 5.37 0 12c0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                  )}
+                  {s.icon === 'codepen' && (
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/><polyline points="2 15.5 12 8.5 22 15.5"/><line x1="12" y1="2" x2="12" y2="8.5"/></svg>
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h1 class="text-3xl font-extrabold tracking-tight mb-1">Emil Andersson</h1>
+          <p class="gradient-text font-semibold text-lg">UI Designer / Web Developer / 3D Artist / Video Editor</p>
+
+          <p class="mt-5 text-[var(--color-text-muted)] leading-relaxed">
+            Hello, I was born in Sweden 1989 in a small town named <strong class="text-[var(--color-text)]">Skänninge</strong>.
+            I'm a simple guy that loves to be creative. There is something very fullfilling with writing code or creating art. Sometimes you help people with your creations, without even realizing it.
+          </p>
+        </div>
+      </div>
+
+      <!-- ── Bio (full width) ─────────────────── -->
+      <div class="space-y-4 text-[var(--color-text-muted)] leading-relaxed mb-10">
+        <p>
+          At 20, fueled by youthful energy and a hunger for something more, a friend and I
+          decided to start our own agency, which had the name <strong class="text-[var(--color-text)]">Delive - Web Solutions</strong>.
+          Our first clients loved what we did with their digital identity (you can still see some of them
+          cruising around with the branding we made for them even today). But after a few years, we both
+          felt the need to move on. 
+        </p>
+          
+        <p>I wanted to explore the world of 3D art and game development.
+          So I did. I've now worked with people from all over the world. Mostly on web design
+          and game development projects. It's so fun meeting people with different backgrounds
+          and ideas. It's like a never-ending source of inspiration.
+        </p>
+
+        <p>
+          I'm on the lookout for creative opportunities or a chance to join your
+          creative team. Proficient in web development, graphic design, video editing, and
+          3D art, I'm poised to make a meaningful impact. If you're interested,
+          <a href="mailto:hello@emils.graphics" class="text-[var(--color-accent)] hover:text-[var(--color-accent-2)] font-medium underline decoration-[var(--color-accent)]/30 hover:decoration-[var(--color-accent-2)]/60 transition-colors">
+            mail me
+          </a>.
+        </p>
+      </div>
+
+      <!-- ── Toolset ──────────────────────────── -->
+      <div class="border-t border-[var(--color-border)] pt-8">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-4">Preferred Toolset</h2>
+        <div class="flex flex-wrap gap-3">
+          {tools.map((tool) => (
+            <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-sm font-medium text-[var(--color-text)] hover:bg-[var(--color-accent)]/10 hover:border-[var(--color-accent)]/25 hover:text-[var(--color-accent)] transition-all duration-300 cursor-default">
+              <ToolIcon name={tool} />
+              {tool}
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

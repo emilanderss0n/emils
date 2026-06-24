@@ -1,0 +1,153 @@
+---
+// CollectionFilter.astro
+// Generic filter with polished staggered card transitions.
+// Usage: <CollectionFilter target="#grid" filterKey="lang" allLabel="All" />
+// Cards need data-{filterKey}="value" attribute.
+
+interface Props {
+  target: string;
+  filterKey: string;
+  allLabel?: string;
+}
+
+const { target, filterKey, allLabel = 'All' } = Astro.props;
+const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
+---
+
+<collection-filter data-target={target} data-filter-key={safeKey}>
+  <nav class="flex flex-wrap gap-2 mb-6" aria-label="Filter">
+    <button data-filter="" class="filter-btn filter-btn--active inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium">
+      {allLabel}
+    </button>
+  </nav>
+</collection-filter>
+
+<style>
+  /* Button styles are in global.css (need to be unscoped for dynamically-created buttons) */
+</style>
+
+<script>
+  class CollectionFilter extends HTMLElement {
+    connectedCallback() {
+      const targetSelector = this.dataset.target;
+      const filterKey = this.dataset.filterKey;
+      if (!targetSelector || !filterKey) return;
+
+      const grid = document.querySelector<HTMLElement>(targetSelector);
+      if (!grid) return;
+
+      const attr = `data-${filterKey}`;
+      const cards = [...grid.querySelectorAll<HTMLElement>(`[${attr}]`)];
+      const nav = this.querySelector('nav')!;
+      const allBtn = nav.querySelector<HTMLButtonElement>('[data-filter=""]')!;
+      const noMatch = document.getElementById(`no-match-${filterKey}`);
+
+      if (cards.length === 0) return;
+
+      // ── Discover unique values ──────────────
+      const values = [...new Set(cards.map((c) => c.getAttribute(attr)!))]
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b));
+
+      // ── Build buttons ──────────────────────
+      const btns = new Map<string, HTMLButtonElement>();
+      btns.set('', allBtn);
+
+      values.forEach((val) => {
+        const count = cards.filter((c) => c.getAttribute(attr) === val).length;
+        const btn = document.createElement('button');
+        btn.setAttribute('data-filter', val);
+        btn.className = 'filter-btn inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium';
+        btn.textContent = `${val} (${count})`;
+        nav.appendChild(btn);
+        btns.set(val, btn);
+      });
+
+      // ── Click handler ───────────────────────
+      let animating = false;
+
+      btns.forEach((btn, val) => {
+        btn.addEventListener('click', async () => {
+          if (animating) return;
+
+          // Update active button
+          btns.forEach((b) => b.classList.remove('filter-btn--active'));
+          btn.classList.add('filter-btn--active');
+
+          // Sort cards: exiting first, then entering
+          const exiting: HTMLElement[] = [];
+          const entering: HTMLElement[] = [];
+          const staying: HTMLElement[] = []; // cards that don't change (no flicker)
+
+          cards.forEach((card) => {
+            const match = !val || card.getAttribute(attr) === val;
+            const isHidden = card.classList.contains('filter-hidden');
+            if (match && isHidden) entering.push(card);
+            else if (!match && !isHidden) exiting.push(card);
+            else if (match && !isHidden) staying.push(card);
+            // else: !match && isHidden → already hidden, ignore
+          });
+
+          // Skip animation if nothing changes
+          if (exiting.length === 0 && entering.length === 0) return;
+
+          animating = true;
+
+          // 1. Animate exiting cards out
+          const exitPromises = exiting.map((card) => {
+            return new Promise<void>((resolve) => {
+              card.classList.add('card-exiting');
+              card.addEventListener('animationend', () => {
+                card.classList.add('filter-hidden');
+                card.classList.remove('card-exiting');
+                resolve();
+              }, { once: true });
+            });
+          });
+
+          // Wait for exits to finish
+          await Promise.all(exitPromises);
+
+          // 2. Reveal entering cards with stagger
+          entering.forEach((card, i) => {
+            // Set opacity:0 before removing filter-hidden to prevent paint flash
+            card.style.opacity = '0';
+            card.classList.remove('filter-hidden');
+            card.style.setProperty('--enter-delay', `${i * 55}ms`);
+            card.classList.add('card-entering');
+            card.addEventListener('animationend', () => {
+              card.classList.remove('card-entering');
+              card.style.removeProperty('--enter-delay');
+              card.style.removeProperty('opacity');
+            }, { once: true });
+          });
+
+          // 3. No-match state + hide empty category groups
+          if (noMatch) {
+            const anyVisible = cards.some((c) => !c.classList.contains('filter-hidden'));
+            noMatch.classList.toggle('hidden', anyVisible);
+          }
+
+          // Hide category group headings whose grids are entirely empty
+          const groupWrappers = document.querySelectorAll('[data-filter-group]');
+          groupWrappers.forEach((wrapper) => {
+            const visibleCards = wrapper.querySelectorAll(`${targetSelector} [${attr}]:not(.filter-hidden)`);
+            (wrapper as HTMLElement).classList.toggle('hidden', visibleCards.length === 0);
+          });
+
+          // Unlock after enters complete
+          const maxDelay = entering.length > 0 ? (entering.length - 1) * 55 + 450 : 0;
+          if (maxDelay > 0) {
+            setTimeout(() => { animating = false; }, maxDelay);
+          } else {
+            animating = false;
+          }
+        });
+      });
+    }
+  }
+
+  if (!customElements.get('collection-filter')) {
+    customElements.define('collection-filter', CollectionFilter);
+  }
+</script>

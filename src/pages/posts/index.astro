@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PostCard from '@components/PostCard.astro';
+
+const allPosts = await getCollection('posts');
+
+// Filter out drafts, sort by date descending
+const posts = allPosts
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Posts" description="Portfolio posts by Emil Andersson — web dev, 3D art, and creative coding.">
+  <section class="py-16 md:py-20">
+    <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-2">
+      <span class="gradient-text">Posts</span>
+    </h1>
+    <p class="text-lg text-[var(--color-text-muted)] mb-12 max-w-lg">
+      Thoughts on web development, 3D art, game dev, and creative tools.
+    </p>
+
+    {
+      posts.length === 0 ? (
+        <div class="glass-card p-12 text-center">
+          <p class="text-[var(--color-text-muted)] text-lg">No posts yet. Check back soon!</p>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {posts.map((post) => (
+            <PostCard post={post} />
+          ))}
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

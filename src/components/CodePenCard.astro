@@ -1,0 +1,70 @@
+---
+// CodePenCard.astro — lazy-loaded CodePen thumbnail card.
+// Shows a skeleton placeholder and self-hydrates when scrolled into view
+// via its own IntersectionObserver (no script needed in the parent page).
+
+interface Props {
+  slug: string;
+  title: string;
+  user: string;
+  src: string;
+}
+
+const { slug, title, user, src } = Astro.props;
+---
+
+<div
+  class="codepen-placeholder glass-card overflow-hidden animate-pulse scroll-snap-align-start flex-shrink-0"
+  style="width: 300px;"
+  data-src={src}
+  data-title={title}
+  data-user={user}
+  data-slug={slug}
+>
+  <div class="aspect-video bg-white/[0.03]" />
+  <div class="p-4">
+    <div class="h-4 bg-white/[0.05] rounded w-3/4" />
+  </div>
+</div>
+
+<script>
+  (function initCodePenCards() {
+    const placeholders = document.querySelectorAll<HTMLElement>(
+      '.codepen-placeholder:not([data-hydrated])'
+    );
+    if (!placeholders.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const ph = entry.target as HTMLElement;
+          const src = ph.dataset.src ?? '';
+          const title = ph.dataset.title ?? '';
+          const user = ph.dataset.user ?? '';
+          const slug = ph.dataset.slug ?? '';
+          ph.classList.remove('animate-pulse');
+          ph.dataset.hydrated = 'true';
+          const a = document.createElement('a');
+          a.href = 'https://codepen.io/' + user + '/pen/' + slug;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.className =
+            'group glass-card overflow-hidden no-underline hover:border-[var(--color-border-hover)] transition-all duration-300 scroll-snap-align-start flex-shrink-0';
+          a.style.width = '300px';
+          a.innerHTML =
+            '<img src="' + src + '" alt="' + title + '" loading="lazy" width="512" height="288" class="w-full aspect-video object-cover" />' +
+            '<div class="p-4 flex items-center justify-between">' +
+            '<h3 class="text-sm font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">' + title + '</h3>' +
+            '<span class="text-xs text-[var(--color-text-muted)]">↗ codepen.io</span>' +
+            '</div>';
+          ph.replaceWith(a);
+          observer.unobserve(ph);
+        });
+      },
+      { rootMargin: '200px' }
+    );
+
+    placeholders.forEach(function (ph) { observer.observe(ph); });
+  })();
+</script>

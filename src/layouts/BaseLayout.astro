@@ -1,0 +1,66 @@
+---
+import '@styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import ThemeSwitcher from '@components/ThemeSwitcher.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Personal portfolio — curated content from across the web' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} — Emil's Portfolio</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Apply theme before paint to prevent flash -->
+    <script is:inline>
+      (function(){var t=localStorage.getItem('theme');var d=t||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',d);})();
+    </script>
+    <ClientRouter />
+  </head>
+  <body class="min-h-screen flex flex-col relative z-0">
+    <header class="relative z-10 max-w-5xl mx-auto w-full px-6 py-4 flex justify-between items-center">
+      <a href="/" class="no-underline">
+        <img src="/logo-2x.png" alt="Emil" class="h-8 w-auto" />
+      </a>
+      <nav>
+        <ul class="flex gap-8 list-none">
+          <li><a href="/" class="text-sm font-medium no-underline transition-colors duration-300 glow-link" class:list={[
+            'text-[var(--color-text-muted)] hover:text-[var(--color-text)]',
+            Astro.url.pathname === '/' ? '!text-[var(--color-text)]' : ''
+          ]}>Home</a></li>
+
+          <li><a href="/about" class="text-sm font-medium no-underline transition-colors duration-300 glow-link" class:list={[
+            'text-[var(--color-text-muted)] hover:text-[var(--color-text)]',
+            Astro.url.pathname === '/about' ? '!text-[var(--color-text)]' : ''
+          ]}>About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="relative z-10 flex-1 max-w-5xl mx-auto w-full px-6 py-8">
+      <slot />
+    </main>
+
+    <footer class="relative z-10 border-t border-[var(--color-border)]">
+      <div class="max-w-5xl mx-auto w-full px-6 py-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="text-xs text-[var(--color-text-muted)]">
+          <p>&copy; {new Date().getFullYear()} Emil. Built with Astro + Tailwind.</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <ThemeSwitcher />
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
