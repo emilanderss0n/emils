@@ -44,6 +44,7 @@ const { title, description = 'Personal portfolio — curated content from across
             'text-[var(--color-text-muted)] hover:text-[var(--color-text)]',
             Astro.url.pathname === '/about' ? '!text-[var(--color-text)]' : ''
           ]}>About</a></li>
+          <ThemeSwitcher />
         </ul>
       </nav>
     </header>
