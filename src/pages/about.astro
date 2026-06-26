@@ -81,7 +81,7 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
         <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-4">Preferred Toolset</h2>
         <div class="flex flex-wrap gap-3">
           {tools.map((tool) => (
-            <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-sm font-medium text-[var(--color-text)]">
+            <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl ghost-btn text-sm font-medium text-[var(--color-text)] cursor-default">
               <ToolIcon name={tool} />
               {tool}
             </div>
