@@ -194,6 +194,13 @@ body::after {
  *   </article>
  */
 
+/* ── Registered custom property for smooth color transitions ── */
+@property --main-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
 /* ── Card container ────────────────────────────── */
 .future-card {
   position: relative;
@@ -203,6 +210,7 @@ body::after {
 
 /* ── Inline SVG (all rendering layers) ────────── */
 .future-card-svg {
+  --main-color: var(--color-accent-glow);
   position: absolute;
   inset: 0;
   width: 100%;
@@ -210,6 +218,11 @@ body::after {
   z-index: 2;
   pointer-events: none;
   overflow: visible;
+  transition: --main-color 0.3s ease;
+}
+
+.future-card:hover .future-card-svg {
+  --main-color: var(--color-accent);
 }
 
 /* ── Solid fill layer (frame-2 fill="rgba(4,22,34,0.72)") ── */
@@ -220,7 +233,7 @@ body::after {
 
 /* ── Dot pattern circle (frame-2 circle fill) ─── */
 .fc-dot {
-  fill: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  fill: color-mix(in srgb, var(--main-color) 10%, transparent);
 }
 
 /* ── Dot pattern overlay (frame-2 fill="url(#dots)" opacity="0.65") ── */
@@ -233,7 +246,7 @@ body::after {
  */
 .fc-glow-stroke {
   fill: none;
-  stroke: color-mix(in srgb, var(--color-accent) 95%, transparent);
+  stroke: color-mix(in srgb, var(--main-color) 95%, transparent);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
@@ -243,7 +256,7 @@ body::after {
  */
 .fc-soft-stroke {
   fill: none;
-  stroke: color-mix(in srgb, var(--color-accent) 32%, transparent);
+  stroke: color-mix(in srgb, var(--main-color) 32%, transparent);
   stroke-width: 3;
   vector-effect: non-scaling-stroke;
   opacity: 0.95;
@@ -253,45 +266,45 @@ body::after {
  * frame-2: flood-color="rgba(18,168,255,0.55)" flood-opacity="0.70"
  */
 .fc-drop-shadow {
-  flood-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  flood-color: color-mix(in srgb, var(--main-color) 55%, transparent);
   flood-opacity: 0.70;
 }
 
 /* ── SVG decorations: accent strips ────────────── */
 .fc-accent-right {
-  stroke: color-mix(in srgb, var(--color-accent) 78%, transparent);
+  stroke: color-mix(in srgb, var(--main-color) 78%, transparent);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
-  fill: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  fill: color-mix(in srgb, var(--main-color) 55%, transparent);
   opacity: 0.95;
 }
 
 .fc-accent-bottom {
-  stroke: color-mix(in srgb, var(--color-accent) 78%, transparent);
+  stroke: color-mix(in srgb, var(--main-color) 78%, transparent);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
-  fill: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  fill: color-mix(in srgb, var(--main-color) 55%, transparent);
   opacity: 0.95;
 }
 
 /* ── SVG decorations: corner triangles ─────────── */
 .fc-corner-tl {
   fill: transparent;
-  stroke: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  stroke: color-mix(in srgb, var(--main-color) 55%, transparent);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 
 .fc-corner-br {
-  fill: var(--color-accent);
-  stroke: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  fill: var(--main-color);
+  stroke: color-mix(in srgb, var(--main-color) 55%, transparent);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 
 .fc-corner-bl {
   fill: transparent;
-  stroke: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  stroke: color-mix(in srgb, var(--main-color) 55%, transparent);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
