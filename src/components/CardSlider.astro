@@ -41,7 +41,17 @@ const sliderId = 'slider-' + Math.random().toString(36).slice(2, 8);
 
 <script>
   import { initCardSlider } from '@scripts/card-slider';
-  initCardSlider();
+
+  let cleanup: (() => void) | null = null;
+
+  function setup() {
+    // Clean up previous observers/listeners before re-initializing
+    if (cleanup) cleanup();
+    cleanup = initCardSlider();
+  }
+
+  setup();
+  document.addEventListener('astro:after-swap', setup);
 </script>
 
 <style>

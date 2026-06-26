@@ -1,7 +1,8 @@
 ---
 import '@styles/global.css';
-import { ClientRouter } from 'astro:transitions';
+import { Image } from 'astro:assets';
 import ThemeSwitcher from '@components/ThemeSwitcher.astro';
+import logoImage from '@assets/logo-2x.png';
 
 interface Props {
   title: string;
@@ -18,13 +19,10 @@ const { title, description = 'Personal portfolio — curated content from across
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} — Emil's Portfolio</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <!-- Apply theme before paint to prevent flash -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <script is:inline>
       (function(){var t=localStorage.getItem('theme');var d=t||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',d);})();
     </script>
-    <ClientRouter />
-    <!-- Scroll-reveal observer — reveal elements as they scroll into view -->
     <script>
       (function setupScrollReveal() {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -39,21 +37,19 @@ const { title, description = 'Personal portfolio — curated content from across
           },
           { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
         );
-        // Observe after first paint; also observe on Astro page swaps
         function observeAll() {
           document.querySelectorAll('.reveal-on-scroll:not(.is-revealed)').forEach((el) => observer.observe(el));
         }
         observeAll();
         document.addEventListener('astro:page-load', observeAll);
-        // Re-run after view transition settles
         document.addEventListener('astro:after-swap', observeAll);
       })();
     </script>
   </head>
   <body class="min-h-screen flex flex-col relative z-0">
-    <header class="relative z-10 max-w-5xl mx-auto w-full px-6 py-4 flex justify-between items-center">
+    <header class="relative z-10 max-w-5xl mx-auto w-full px-6 py-4 flex justify-between items-center" transition:persist>
       <a href="/" class="no-underline">
-        <img src="/logo-2x.png" alt="Emil" class="h-8 w-auto" />
+        <Image src={logoImage} alt="Emil" densities={[1, 2]} class="h-8 w-auto" />
       </a>
       <nav>
         <ul class="flex gap-8 list-none">
@@ -75,7 +71,7 @@ const { title, description = 'Personal portfolio — curated content from across
       <slot />
     </main>
 
-    <footer class="relative z-10 border-t border-[var(--color-border)]">
+    <footer class="relative z-10 border-t border-[var(--color-border)]" transition:persist>
       <div class="max-w-5xl mx-auto w-full px-6 py-8 flex flex-col sm:flex-row justify-between items-center gap-4">
         <div class="text-xs text-[var(--color-text-muted)]">
           <p>&copy; {new Date().getFullYear()} Emil. Built with Astro + Tailwind.</p>

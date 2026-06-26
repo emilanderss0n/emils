@@ -8,11 +8,8 @@ import CodePenCard from '@components/CodePenCard.astro';
 import CardSlider from '@components/CardSlider.astro';
 import { cacheCodePenThumbnails } from '@lib/cache-thumbnails';
 
-// Get repos from Content Layer (filtered in config.ts loader)
 const rawRepos = await getCollection('repos');
 const repos = rawRepos.sort((a, b) => b.data.stars - a.data.stars);
-
-// Codepen data (lazy-loaded at the bottom of the page)
 const codepenUser = 'emilandersson';
 const pens = [
   { slug: 'bNNOYyK', title: 'The Amazing Stress Ball' },
@@ -29,7 +26,6 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
 ---
 
 <BaseLayout title="Home" description="Emil Andersson — developer portfolio & projects">
-  <!-- ── Hero ────────────────────────────────── -->
   <section class="py-20 md:py-28 text-center">
     <h1 class="hero-title text-5xl md:text-6xl font-black tracking-tight leading-[1.05] mb-4 anim-fade-down" style="--anim-delay: 80ms">
       Hi, I'm <span class="gradient-text">Emil</span>
@@ -49,11 +45,9 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
     </div>
   </section>
 
-  <!-- ── GitHub Repos (grouped by category) ── -->
   <section class="pb-16 reveal-on-scroll">
     <h2 class="section-title">GitHub Projects</h2>
 
-    <!-- Shared filter — filters all grouped cards at once -->
     <CollectionFilter target="#repo-grid-grouped" filterKey="lang" allLabel="All Languages" />
 
     <div id="repo-grid-grouped" class="space-y-12">
@@ -86,7 +80,6 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
     <p class="text-[var(--color-text-muted)] text-sm mt-3 hidden" id="no-match-lang">No repos match this filter.</p>
   </section>
 
-  <!-- ── CodePen Showcase (lazy-loaded slider) ── -->
   <div class="reveal-on-scroll">
     <CardSlider title="CodePen" link="https://codepen.io/emilandersson" linkLabel="View all →">
     {pens.map((pen) => (

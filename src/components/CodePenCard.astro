@@ -28,13 +28,18 @@ const { slug, title, user, src } = Astro.props;
 </div>
 
 <script>
-  (function initCodePenCards() {
+  let observer: IntersectionObserver | null = null;
+
+  function initCodePenCards() {
+    // Clean up previous observer
+    if (observer) observer.disconnect();
+
     const placeholders = document.querySelectorAll<HTMLElement>(
       '.codepen-placeholder:not([data-hydrated])'
     );
     if (!placeholders.length) return;
 
-    const observer = new IntersectionObserver(
+    observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
@@ -59,12 +64,15 @@ const { slug, title, user, src } = Astro.props;
             '<span class="text-xs text-[var(--color-text-muted)]">↗ codepen.io</span>' +
             '</div>';
           ph.replaceWith(a);
-          observer.unobserve(ph);
+          observer!.unobserve(ph);
         });
       },
       { rootMargin: '200px' }
     );
 
-    placeholders.forEach(function (ph) { observer.observe(ph); });
-  })();
+    placeholders.forEach((ph) => observer!.observe(ph));
+  }
+
+  initCodePenCards();
+  document.addEventListener('astro:after-swap', initCodePenCards);
 </script>

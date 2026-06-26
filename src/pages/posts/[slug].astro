@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
 
-// Generate all static paths at build time
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts
@@ -22,7 +21,6 @@ const { Content } = await post.render();
   description={post.data.description}
 >
   <article class="py-16 md:py-20 max-w-3xl mx-auto">
-    <!-- Header -->
     <header class="mb-10">
       <div class="flex items-center gap-3 mb-4">
         {post.data.tags.map((tag: string) => (
@@ -58,12 +56,10 @@ const { Content } = await post.render();
       </div>
     </header>
 
-    <!-- Prose content -->
     <div class="prose prose-invert prose-lg max-w-none">
       <Content />
     </div>
 
-    <!-- Back link -->
     <footer class="mt-16 pt-8 border-t border-[var(--color-border)]">
       <a
         href="/posts"

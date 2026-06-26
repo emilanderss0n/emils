@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
 import ToolIcon from '@components/ToolIcon.astro';
+import profileImage from '@assets/emil-andersson.jpg';
 
 const socials = [
   { name: 'X', url: 'https://x.com/bobemil_sw13', icon: 'x' },
@@ -15,12 +17,11 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
   <section class="py-16 md:py-20">
     <div class="glass-card p-8 md:p-10 max-w-3xl mx-auto anim-fade-up">
 
-      <!-- ── Header: photo + name ──────────────── -->
       <div class="flex flex-col sm:flex-row gap-8 items-start mb-6">
         <div class="shrink-0 flex flex-col anim-slide-left" style="--anim-delay: 100ms">
           <div class="relative bg-gradient-to-br from-[var(--color-accent)]/20 via-[var(--color-accent)]/10 to-[var(--color-accent-2)]/10 rounded-2xl p-1">
             <div class="relative w-42 h-52 rounded-xl overflow-hidden">
-              <img src="/emil-andersson.jpg" alt="Emil Andersson" class="w-full h-full object-cover" />
+              <Image src={profileImage} alt="Emil Andersson" class="w-full h-full object-cover" densities={[1, 2]} format="webp" />
               <div class="absolute inset-0 bg-[var(--color-accent)]/25 mix-blend-mode-overlay"></div>
             </div>
             <div class="flex gap-2 px-1.5 pb-1.5 pt-2.5">
@@ -76,7 +77,6 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
         </div>
       </div>
 
-      <!-- ── Toolset ──────────────────────────── -->
       <div class="border-t border-[var(--color-border)] pt-8 anim-fade-up" style="--anim-delay: 400ms">
         <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-4">Preferred Toolset</h2>
         <div class="flex flex-wrap gap-3">
