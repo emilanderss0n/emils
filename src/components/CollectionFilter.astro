@@ -16,7 +16,7 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
 
 <collection-filter data-target={target} data-filter-key={safeKey}>
   <nav class="flex flex-wrap gap-2 mb-6" aria-label="Filter">
-    <button data-filter="" class="filter-btn filter-btn--active inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium">
+    <button data-filter="" class="filter-btn filter-btn--active futuristic-button inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium">
       {allLabel}
     </button>
   </nav>
@@ -67,8 +67,8 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
         const count = cards.filter((c) => c.getAttribute(attr) === val).length;
         const btn = document.createElement('button');
         btn.setAttribute('data-filter', val);
-        btn.className = 'filter-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium';
-        btn.innerHTML = `${val} <span class="inline-flex items-center rounded-md bg-gray-400/10 px-2 py-0.5 text-xs font-small text-gray-400 inset-ring inset-ring-gray-400/20">${count}</span>`;
+        btn.className = 'filter-btn futuristic-button inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium';
+        btn.innerHTML = `${val} <span class="inline-flex items-center rounded-sm bg-indigo-400/10 px-2 py-0.5 text-xs font-small text-[var(--color-text-muted)] inset-ring inset-ring-gray-400/20">${count}</span>`;
         fragment.appendChild(btn);
         btns.set(val, btn);
       });

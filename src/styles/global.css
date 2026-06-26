@@ -339,7 +339,7 @@ body::after {
 
 /* ── Badge ─────────────────────────────────────────── */
 .badge {
-  @apply inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full;
+  @apply inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider px-2 py-1 rounded-md;
   background: rgba(129,140,248,0.1);
   border: 1px solid rgba(129,140,248,0.2);
   color: var(--color-accent);
@@ -440,22 +440,39 @@ body::after {
 }
 
 /* ── CollectionFilter buttons (must be global — buttons are created by JS) ── */
-.filter-btn {
-  transition: all 0.25s ease;
-  background: var(--color-ghost-bg);
-  border: 1px solid var(--color-ghost-border);
-  color: var(--color-text-muted);
-  cursor: pointer;
-}
-.filter-btn:hover {
-  background: var(--color-ghost-bg-hover);
-  border-color: var(--color-ghost-border-hover);
-  color: var(--color-text);
-}
 .filter-btn--active {
   background: rgb(129 140 248 / 0.15) !important;
   border-color: rgb(129 140 248 / 0.25) !important;
   color: var(--color-accent) !important;
+}
+
+.futuristic-br {
+  corner-shape: bevel;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.futuristic-button {
+  transition: all 0.25s ease;
+  cursor: pointer;
+  background: var(--color-ghost-bg);
+  border: 1px solid var(--color-accent-glow);
+  color: var(--color-text-muted);
+  corner-shape: bevel;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0;
+
+  &.reversed {
+    @apply rounded-xl;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+
+  &:hover {
+    background: color-mix(in srgb, var(--color-ghost-bg) 50%, var(--color-accent) 10%);
+    border-color: color-mix(in srgb, var(--color-ghost-bg) 50%, var(--color-accent) 30%);
+    color: var(--color-text);
+  }
 }
 
 /* ── Prose styling for Markdown content ── */
