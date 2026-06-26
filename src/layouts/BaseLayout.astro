@@ -2,6 +2,7 @@
 import '@styles/global.css';
 import { Image } from 'astro:assets';
 import ThemeSwitcher from '@components/ThemeSwitcher.astro';
+import ToolIcon from '@components/ToolIcon.astro';
 import logoImage from '@assets/logo-2x.png';
 
 interface Props {
@@ -76,7 +77,29 @@ const { title, description = 'Personal portfolio — curated content from across
         <div class="text-xs text-[var(--color-text-muted)]">
           <p>&copy; {new Date().getFullYear()} Emil. Built with Astro + Tailwind.</p>
         </div>
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-5">
+          <!-- Social links -->
+          {
+            [
+              { name: 'X',          href: 'https://x.com/bobemil_sw13',            title: 'X (Twitter)' },
+              { name: 'GitHub',     href: 'https://github.com/emilanderss0n',     title: 'GitHub' },
+              { name: 'CodePen',    href: 'https://codepen.io/emilandersson',     title: 'CodePen' },
+              { name: 'ArtStation', href: 'https://www.artstation.com/emils-graphics', title: 'ArtStation' },
+              { name: 'Spotify',    href: 'https://open.spotify.com/artist/5fLAJ1k3aPNR5akavV7gzD?si=JsokA6jwROOmdjrIWG50ng', title: 'Spotify' },
+            ].map((link) => (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={link.title}
+                class="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors duration-300"
+              >
+                <ToolIcon name={link.name} class="w-5 h-5" />
+                <span class="sr-only">{link.title}</span>
+              </a>
+            ))
+          }
+          <span class="w-px h-4 bg-[var(--color-border)]" aria-hidden="true"></span>
           <ThemeSwitcher />
         </div>
       </div>
