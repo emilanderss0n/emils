@@ -16,6 +16,42 @@ const posts = defineCollection({
 });
 
 // GitHub repos (external API, loaded at build time)
+
+function shouldIncludeRepo(repo: any): boolean {
+  if (repo.name === repo.owner?.login) return false;
+  if (repo.fork) return false;
+  if (repo.archived) return false;
+  return true;
+}
+
+function detectCategory(topics: string[], language: string): string {
+  const lowered = (t: string) => t.toLowerCase();
+  if (topics.some((t) => ["game-mod", "game-development"].includes(lowered(t)))) return "game-development";
+  if (topics.some((t) => ["website"].includes(lowered(t)))) return "web-development";
+  if (["c#", "c++", "lua"].includes(language)) return "game-development";
+  if (["typescript", "javascript", "css", "html", "php"].includes(language)) return "web-development";
+  return "other";
+}
+
+function mapRepo(repo: any) {
+  const topics = (repo.topics ?? []) as string[];
+  const lang = (repo.language ?? "").toLowerCase();
+  return {
+    id: repo.id.toString(),
+    name: repo.name,
+    fullName: repo.full_name,
+    description: repo.description,
+    url: repo.html_url,
+    homepage: repo.homepage,
+    stars: repo.stargazers_count,
+    language: repo.language ?? "N/A",
+    topics,
+    category: detectCategory(topics, lang),
+    pushedAt: repo.pushed_at,
+    createdAt: repo.created_at,
+  };
+}
+
 const repos = defineCollection({
   loader: async () => {
     const token = import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
@@ -35,43 +71,7 @@ const repos = defineCollection({
     }
 
     const data = (await res.json()) as any[];
-
-    return data
-      .filter((repo) => {
-        if (repo.name === repo.owner?.login) return false;
-        if (repo.fork) return false;
-        if (repo.archived) return false;
-        return true;
-      })
-      .map((repo) => {
-        const topics = (repo.topics ?? []) as string[];
-        const lang = (repo.language ?? "").toLowerCase();
-
-        // Category determined by GitHub topics. Add these topics to your repos:
-        //   "website"         → Web Development
-        //   "game-mod" or "game-development" → Game Development
-        // Repos without recognized topics fall back to language-based grouping.
-        var category = "other";
-        if (topics.some((t) => ["game-mod","game-development"].includes(t.toLowerCase()))) category = "game-development";
-        else if (topics.some((t) => ["website"].includes(t.toLowerCase()))) category = "web-development";
-        else if (["c#","c++","lua"].includes(lang)) category = "game-development";
-        else if (["typescript","javascript","css","html","php"].includes(lang)) category = "web-development";
-
-        return {
-          id: repo.id.toString(),
-          name: repo.name,
-          fullName: repo.full_name,
-          description: repo.description,
-          url: repo.html_url,
-          homepage: repo.homepage,
-          stars: repo.stargazers_count,
-          language: repo.language ?? "N/A",
-          topics,
-          category,
-          pushedAt: repo.pushed_at,
-          createdAt: repo.created_at,
-        };
-      });
+    return data.filter(shouldIncludeRepo).map(mapRepo);
   },
   schema: z.object({
     name: z.string(),
