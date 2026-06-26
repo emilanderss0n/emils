@@ -15,7 +15,7 @@ const { post } = Astro.props;
       <span class="badge">{tag}</span>
     ))}
   </div>
-  <h3 class="text-base font-semibold mb-2 leading-snug">
+  <h3 class="text-base font-medium mb-2 leading-snug">
     <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="text-[var(--color-text)] hover:text-[var(--color-accent)] no-underline transition-colors">
       {post.data.title}
     </a>

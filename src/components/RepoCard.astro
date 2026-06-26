@@ -7,18 +7,59 @@ interface Props {
 }
 
 const { repo } = Astro.props;
+// Unique clip-path ID per card instance
+const cid = `fc-${repo.id}`;
+// Shared shape path — matches frame-2.svg polygon exactly
+const shapePath = 'M15 0h350l19 19v28.37l-13 13v26l13 13V116l-34 34H224.71l-15-15H58.71l-15 15H15L0 135V15z';
 ---
 
-<article class="repo-card glass-card p-6 flex flex-col anim-scale-in" data-lang={repo.data.language} data-category={repo.data.category}>
-  <h3 class="text-base font-semibold mb-2 leading-snug">
+<article class="repo-card future-card p-6 flex flex-col anim-scale-in" data-lang={repo.data.language} data-category={repo.data.category}>
+  <!-- Inline SVG: clip shape, dot overlay, glow filter, border strokes + decorations -->
+  <svg class="future-card-svg" viewBox="0 0 384 150" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Dot pattern (frame-2.svg dots_950818) -->
+      <pattern id={`dots-${repo.id}`} width="18" height="18" patternUnits="userSpaceOnUse">
+        <circle cx="2.2" cy="2.2" r="1" class="fc-dot"/>
+      </pattern>
+      <!-- Glow filter (frame-2.svg glow_950818) -->
+      <filter id={`glow-${repo.id}`} x="-30%" y="-30%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="0" stdDeviation="3.6" class="fc-drop-shadow"/>
+      </filter>
+      <!-- Clip path for CSS pseudo-elements -->
+      <clipPath id={cid}>
+        <path d={shapePath}/>
+      </clipPath>
+    </defs>
+
+    <!-- Solid fill layer (matches frame-2.svg fill="rgba(4,22,34,0.72)") -->
+    <path d={shapePath} class="fc-fill"/>
+    <!-- Dot pattern overlay (matches frame-2.svg fill="url(#dots_950818)" opacity="0.65") -->
+    <path d={shapePath} fill={`url(#dots-${repo.id})`} class="fc-dots"/>
+
+    <!-- Glow border: 1px inner stroke with drop-shadow filter -->
+    <path d={shapePath} class="fc-glow-stroke" filter={`url(#glow-${repo.id})`}/>
+    <!-- Soft outer stroke: 3px wide, lower opacity -->
+    <path d={shapePath} class="fc-soft-stroke"/>
+
+    <!-- Right-notch accent strip -->
+    <path d="M0 53.37L-9 62.37v22l9 9z" transform="translate(384 0)" class="fc-accent-right"/>
+    <!-- Bottom-notch accent strip -->
+    <path d="M49.71 0l11-11h147l11 11z" transform="translate(0 150)" class="fc-accent-bottom"/>
+    <!-- Corner triangles -->
+    <path d="M-15-5l10-10h-10z" transform="translate(15 15)" class="fc-corner-tl"/>
+    <path d="M34 5l-29 29h29z" transform="translate(350 116)" class="fc-corner-br"/>
+    <path d="M-15 5l10 10h-10z" transform="translate(15 135)" class="fc-corner-bl"/>
+  </svg>
+
+  <h3 class="text-base font-medium mb-2 leading-snug relative z-10">
     <a href={repo.data.url} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text)] hover:text-[var(--color-accent)] no-underline transition-colors">
       {repo.data.name}
     </a>
   </h3>
   {repo.data.description && (
-    <p class="text-sm text-[var(--color-text-muted)] leading-relaxed flex-1">{repo.data.description}</p>
+    <p class="text-sm text-[var(--color-text-muted)] leading-relaxed flex-1 relative z-10">{repo.data.description}</p>
   )}
-  <div class="mt-4 pt-3 border-t border-[var(--color-border)] text-xs text-[var(--color-text-muted)] flex items-center justify-between">
+  <div class="mt-4 pt-3 border-t border-[var(--color-border)] text-xs text-[var(--color-text-muted)] flex items-center justify-between relative z-10">
     <span class="inline-flex items-center gap-1">
       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>

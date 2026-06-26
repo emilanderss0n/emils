@@ -27,7 +27,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
 
 <BaseLayout title="Home" description="Emil Andersson — developer portfolio & projects">
   <section class="py-20 md:py-28 text-center">
-    <h1 class="hero-title text-5xl md:text-6xl font-black tracking-tight leading-[1.05] mb-4 anim-fade-down" style="--anim-delay: 80ms">
+    <h1 class="font-display text-5xl md:text-6xl font-medium tracking-tight leading-[1.05] mb-4 anim-fade-down" style="--anim-delay: 80ms">
       Hi, I'm <span class="gradient-text">Emil</span> / <span class="gradient-text-2">MoxoPixel</span>
     </h1>
     <p class="hero-subtitle text-lg text-[var(--color-text-muted)] max-w-md mx-auto leading-relaxed anim-fade-up" style="--anim-delay: 200ms">
@@ -65,7 +65,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
 
             return (
               <div data-filter-group>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-4">{cat.label}</h3>
+                <h3 class="text-sm font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-4">{cat.label}</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {catRepos.map((repo) => (
                     <RepoCard repo={repo} />

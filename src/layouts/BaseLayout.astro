@@ -21,6 +21,10 @@ const { title, description = 'Personal portfolio — curated content from across
     <title>{title} — Emil's Portfolio</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <!-- Tektur — Google Fonts, weights 400–500 for headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..500&display=swap" rel="stylesheet" />
     <script is:inline>
       (function(){var t=localStorage.getItem('theme');var d=t||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',d);})();
     </script>

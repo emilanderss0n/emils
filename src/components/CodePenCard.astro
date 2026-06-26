@@ -60,7 +60,7 @@ const { slug, title, user, src } = Astro.props;
           a.innerHTML =
             '<img src="' + src + '" alt="' + title + '" loading="lazy" width="512" height="288" class="w-full aspect-video object-cover" />' +
             '<div class="p-4 flex items-center justify-between">' +
-            '<h3 class="text-sm font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">' + title + '</h3>' +
+            '<h3 class="text-sm font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">' + title + '</h3>' +
             '<span class="text-xs text-[var(--color-text-muted)]">↗ codepen.io</span>' +
             '</div>';
           ph.replaceWith(a);
