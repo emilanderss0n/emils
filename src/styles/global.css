@@ -139,14 +139,13 @@ body::after {
 
 /* ── Section titles ────────────────────────────────── */
 .section-title {
-  @apply text-2xl font-extrabold tracking-tight mb-8 flex items-center gap-4;
   font-family: var(--font-display);
   font-weight: 500;
 }
 .section-title::after {
   content: '';
-  flex: 1 0 24px;
-  min-width: 24px;
+  flex: 1 0 1.5rem;
+  min-width: 1.5rem;
   height: 1px;
   background: linear-gradient(to right, var(--color-border), transparent);
 }

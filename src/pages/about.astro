@@ -100,5 +100,44 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
         </div>
       </div>
 
+      <div class="mt-20 flex flex-col lg:flex-row gap-6 items-stretch">
+          <!-- Artist info card -->
+          <div class="lg:w-80 shrink-0 glass-card futuristic-br p-6 flex flex-col items-center text-center anim-scale-in" style="--anim-delay: 500ms">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-[var(--color-accent)]/30 to-[var(--color-accent-2)]/30 flex items-center justify-center mb-4 ring-2 ring-[var(--color-border)]">
+              <svg class="w-8 h-8 text-[var(--color-accent)]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.655 17.31c-.217.355-.677.467-1.032.25-2.828-1.725-6.39-2.115-10.58-1.16-.395.095-.795-.15-.89-.545-.095-.395.15-.795.545-.89 4.58-1.04 8.515-.595 11.707 1.355.355.215.467.68.25 1.03v-.04zm1.49-3.325c-.27.445-.85.585-1.295.315-3.24-1.99-8.18-2.565-12.01-1.405-.495.15-1.015-.105-1.17-.605-.155-.498.11-1.018.605-1.17 4.38-1.325 9.805-.68 13.555 1.59.445.27.585.855.315 1.295v-.02zm.13-3.475C15.38 8.19 8.715 7.945 4.05 9.36c-.605.185-1.245-.14-1.43-.745-.185-.605.14-1.245.745-1.43 5.36-1.63 12.685-1.315 17.585 1.905.55.33.73 1.035.4 1.585-.33.55-1.035.73-1.585.4l-.02-.015z"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-[var(--color-text)] mb-1">CIVIC</h3>
+            <p class="text-xs text-[var(--color-text-muted)] mb-1">Electronic Dance Music</p>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">
+              I've been creating electronic dance music since I was 15 years old. What started as FL Studio experiments grew into a full-on passion. Bring the vibe, feel the beat.
+            </p>
+            <a
+              href="https://open.spotify.com/artist/5fLAJ1k3aPNR5akavV7gzD"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl futuristic-button text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-text)] no-underline transition-colors group"
+            >
+              <svg class="w-4 h-4 group-hover:text-[var(--color-accent-2)] transition-colors" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.655 17.31c-.217.355-.677.467-1.032.25-2.828-1.725-6.39-2.115-10.58-1.16-.395.095-.795-.15-.89-.545-.095-.395.15-.795.545-.89 4.58-1.04 8.515-.595 11.707 1.355.355.215.467.68.25 1.03v-.04zm1.49-3.325c-.27.445-.85.585-1.295.315-3.24-1.99-8.18-2.565-12.01-1.405-.495.15-1.015-.105-1.17-.605-.155-.498.11-1.018.605-1.17 4.38-1.325 9.805-.68 13.555 1.59.445.27.585.855.315 1.295v-.02zm.13-3.475C15.38 8.19 8.715 7.945 4.05 9.36c-.605.185-1.245-.14-1.43-.745-.185-.605.14-1.245.745-1.43 5.36-1.63 12.685-1.315 17.585 1.905.55.33.73 1.035.4 1.585-.33.55-1.035.73-1.585.4l-.02-.015z"/></svg>
+              Listen on Spotify ↗
+            </a>
+          </div>
+
+          <!-- Spotify embed -->
+          <div class="flex-1 min-w-0 glass-card futuristic-br overflow-hidden anim-slide-right p-3" style="--anim-delay: 600ms">
+            <iframe
+              data-testid="embed-iframe"
+              style="border-radius:12px; display:block"
+              src="https://open.spotify.com/embed/artist/5fLAJ1k3aPNR5akavV7gzD?utm_source=generator&theme=0&si=2abe8ce034274426"
+              width="100%"
+              height="352"
+              frameborder="0"
+              allowfullscreen
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
   </section>
 </BaseLayout>
