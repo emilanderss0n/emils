@@ -154,21 +154,6 @@ body::after {
   display: none;
 }
 
-/* ── Glass card ────────────────────────────────────── */
-.glass-card {
-  background: var(--color-surface);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  transition: border-color 0.3s, transform 0.3s;
-}
-.glass-card:hover {
-  border-color: var(--color-border-hover);
-}
-@media (min-width: 640px) {
-  .glass-card { border-radius: 16px; }
-}
-
 /* ── Future card ──────────────────────────────────────
  * Matches frame-2.svg exactly — custom polygon with notches,
  * dot overlay, glow border, and corner triangles.
@@ -307,6 +292,24 @@ body::after {
   stroke: color-mix(in srgb, var(--main-color) 55%, transparent);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
+}
+
+/* ── Glass card ────────────────────────────────────── */
+.glass-card {
+  --main-color: var(--color-accent-glow);
+  transition: opacity 0.28s ease, transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform, opacity;
+  background: var(--color-surface);
+  backdrop-filter: blur(20px);
+  border: 2px solid var(--main-color);
+  border-radius: 12px;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.glass-card:hover {
+  border-color: var(--color-accent);
+}
+@media (min-width: 640px) {
+  .glass-card { border-radius: 16px; }
 }
 
 /* ── Ghost button (theme-aware, replaces bg-white/5 etc) ── */

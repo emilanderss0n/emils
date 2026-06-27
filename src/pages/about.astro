@@ -2,7 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
 import ToolIcon from '@components/ToolIcon.astro';
-import profileImage from '@assets/emil-andersson.jpg';
+import profileImage from '@assets/emil-andersson-illustration.png';
 
 const socials = [
   { name: 'X', url: 'https://x.com/bobemil_sw13', icon: 'x' },
@@ -21,7 +21,7 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
           <div class="relative bg-gradient-to-br from-[var(--color-accent)]/20 via-[var(--color-accent)]/10 to-[var(--color-accent-2)]/10 rounded-2xl futuristic-br p-2">
             <div class="relative w-full sm:w-50 md:w-56 h-48 sm:h-52 md:h-56 rounded-xl futuristic-br overflow-hidden">
               <Image src={profileImage} alt="Emil Andersson" class="w-full h-full object-cover" densities={[1, 2]} format="webp" />
-              <div class="absolute inset-0 bg-[var(--color-accent)]/25 mix-blend-mode-overlay"></div>
+              <div class="absolute inset-0 bg-[var(--color-accent)]/15"></div>
             </div>
             <div class="flex gap-2 px-1.5 pt-2.5">
               {socials.map((s) => (

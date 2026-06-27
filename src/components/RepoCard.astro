@@ -57,7 +57,7 @@ const shapePath = 'M15 0h350l19 19v28.37l-13 13v26l13 13V116l-34 34H224.71l-15-1
     </a>
   </h3>
   {repo.data.description && (
-    <p class="text-sm text-[var(--color-text-muted)] leading-relaxed flex-1 relative z-10">{repo.data.description}</p>
+    <p class="text-sm text-[var(--color-text-muted)] leading-relaxed flex-1 relative z-10 line-clamp-2">{repo.data.description}</p>
   )}
   <div class="mt-4 pt-3 border-t border-[var(--color-border)] text-xs text-[var(--color-text-muted)] flex items-center justify-between relative z-10">
     <span class="inline-flex items-center gap-1">
