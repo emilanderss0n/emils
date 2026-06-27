@@ -1,0 +1,43 @@
+{
+  "name": "Emil Andersson — Portfolio",
+  "short_name": "Emil",
+  "description": "UI Designer, Web Developer, 3D Artist & Video Editor",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#08090d",
+  "background_color": "#08090d",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "categories": ["portfolio", "design", "development"],
+  "lang": "en",
+  "dir": "ltr"
+}
