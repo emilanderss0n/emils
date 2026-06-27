@@ -1,3 +1,11 @@
 RewriteEngine On
+RewriteBase /
+
+# 1. Trailing-slash redirects — do these FIRST with clean URLs (no /dist/ exposed)
+RewriteCond %{REQUEST_URI} !^/dist/
+RewriteCond %{DOCUMENT_ROOT}/dist%{REQUEST_URI} -d
+RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
+
+# 2. Internal rewrite to dist/ (silent, no redirect)
 RewriteCond %{REQUEST_URI} !^/dist/
 RewriteRule ^(.*)$ /dist/$1 [L]
