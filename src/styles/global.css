@@ -165,47 +165,12 @@ body::after {
   display: none;
 }
 
-/* ── Future card ──────────────────────────────────────
- * Matches frame-2.svg exactly — custom polygon with notches,
- * dot overlay, glow border, and corner triangles.
- *
- * Architecture (all rendering done in inline SVG, not CSS pseudo-elements):
- *   <article class="future-card">
- *     <svg class="future-card-svg">
- *       <defs>
- *         <pattern>           ← dot pattern (frame-2 dots_950818)
- *         <filter>            ← glow drop-shadow (frame-2 glow_950818)
- *       </defs>
- *       <path class="fc-fill" />         ← solid fill (frame-2 fill rgba(4,22,34,0.72))
- *       <path class="fc-dots" />         ← dot overlay (frame-2 url(#dots) opacity 0.65)
- *       <path class="fc-glow-stroke" />  ← 1px accent border + drop-shadow filter
- *       <path class="fc-soft-stroke" />  ← 3px soft outer border
- *       <path class="fc-accent-right" /> ← notch accent (right)
- *       <path class="fc-accent-bottom" />← notch accent (bottom)
- *       <path class="fc-corner-tl" />    ← corner triangle (top-left)
- *       <path class="fc-corner-br" />    ← corner triangle (bottom-right)
- *       <path class="fc-corner-bl" />    ← corner triangle (bottom-left)
- *     </svg>
- *     <!-- card content here -->
- *   </article>
- */
-
-/* ── Registered custom property for smooth color transitions ── */
 @property --main-color {
   syntax: '<color>';
   inherits: true;
   initial-value: rgba(0, 0, 0, 0);
 }
 
-/* ── Sci-fi "future card" (pure CSS — adapts to any size) ──
- * Faithful recreation of the original frame-2 shape: TL/BL bevels, a
- * top-right diagonal notch, a right-edge notch (anchored to the top), a
- * trapezoidal bottom-edge notch (centred), and a large bottom-right bevel.
- * A single animatable colour (--fc-glow) drives the border, glow and corner
- * accent — faint at rest, bright accent on hover — exactly like the original.
- * Corner/notch details use fixed px offsets so they stay crisp while the
- * card flexes to any height — no SVG, so nothing ever stretches.
- */
 @property --fc-glow {
   syntax: '<color>';
   inherits: true;
@@ -213,10 +178,10 @@ body::after {
 }
 
 .future-card {
-  --fc-b: 15px;          /* top-left & bottom-left bevel */
-  --fc-br: 34px;         /* bottom-right bevel */
-  --fc-border: 1.5px;    /* border thickness */
-  --fc-glow: var(--color-accent-glow);   /* rest: faint · hover: bright accent */
+  --fc-b: 15px;
+  --fc-br: 34px;
+  --fc-border: 1.5px;
+  --fc-glow: var(--color-accent-glow);
   --fc-shape: polygon(
     0 var(--fc-b),
     var(--fc-b) 0,
@@ -237,89 +202,97 @@ body::after {
   );
   position: relative;
   transition: --fc-glow 0.35s ease, transform 0.3s ease;
-}
 
-.future-card:hover {
-  --fc-glow: var(--color-accent);
-  filter: drop-shadow(0 0 15px color-mix(in srgb, var(--color-accent) 25%, transparent 75%));
-}
+  &:hover {
+    --fc-glow: var(--color-accent);
+    filter: drop-shadow(0 0 15px color-mix(in srgb, var(--color-accent) 25%, transparent 75%));
+  }
 
-/* Border + glow layer (traces every bevel & notch) */
-.future-card::before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  clip-path: var(--fc-shape);
-  background: var(--fc-glow);
-  inset: 0;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    clip-path: var(--fc-shape);
+    background: var(--fc-glow);
+    inset: 0;
+  }
 
-/* Fill + dot texture + BR corner accent (inset to reveal the border) */
-.future-card::after {
-  content: '';
-  position: absolute;
-  inset: var(--fc-border);
-  z-index: 0;
-  clip-path: var(--fc-shape);
-  background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-accent) 8%, transparent) 1px, transparent 1.6px) 0 0 / 10px 10px, color-mix(in srgb, var(--color-surface-solid) 60%, var(--color-bg));
-}
+  &::after {
+    content: '';
+    position: absolute;
+    inset: var(--fc-border);
+    z-index: 0;
+    clip-path: var(--fc-shape);
+    background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-accent) 8%, transparent) 1px, transparent 1.6px) 0 0 / 10px 10px, color-mix(in srgb, var(--color-surface-solid) 60%, var(--color-bg));
+  }
 
-.fc-deco {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
+  .fc-deco {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
 
-.fc-deco::before {
-  content: '';
-  position: absolute;
-  top: 54px;
-  right: 2px;
-  width: 8px;
-  height: 38px;
-  background: color-mix(in srgb, var(--fc-glow) 65%, transparent);
-  clip-path: polygon(100% 0, 0 8px, 0 30px, 100% 38px);
-}
+    &::before {
+      content: '';
+      position: absolute;
+      top: 54px;
+      right: 2px;
+      width: 8px;
+      height: 38px;
+      background: color-mix(in srgb, var(--fc-glow) 65%, transparent);
+      clip-path: polygon(100% 0, 0 8px, 0 30px, 100% 38px);
+    }
 
-.fc-deco::after {
-  content: '';
-  position: absolute;
-  bottom: 2px;
-  left: 13.5%;
-  right: 44.5%;
-  height: 9px;
-  background: color-mix(in srgb, var(--fc-glow) 65%, transparent);
-  clip-path: polygon(0 100%, 10px 0, calc(100% - 10px) 0, 100% 100%);
-}
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 13.5%;
+      right: 44.5%;
+      height: 9px;
+      background: color-mix(in srgb, var(--fc-glow) 65%, transparent);
+      clip-path: polygon(0 100%, 10px 0, calc(100% - 10px) 0, 100% 100%);
+    }
+  }
 
-/* Corner triangles (hollow outline echoing the TL & BL bevels) */
-.fc-corner {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  overflow: visible;
-  stroke: color-mix(in srgb, var(--fc-glow) 85%, transparent);
-  stroke-width: 2;
-}
+  .fc-corner {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    overflow: visible;
+    stroke: color-mix(in srgb, var(--fc-glow) 85%, transparent);
+    stroke-width: 2;
+    transition: .2s;
+  }
 
-.fc-corner-tl {
-  top: 0;
-  left: 0;
-}
+  .fc-corner-tl {
+    top: 0;
+    left: 0;
 
-.fc-corner-bl {
-  bottom: 0;
-  left: 0;
-}
+    .future-card:hover & {
+      top: -2px;
+      left: -2px;
+    }
+  }
 
-.fc-corner-br {
-  right: 0;
-  bottom: 0;
-  width: 29px;
-  height: 29px;
-  stroke: none;
-  fill: var(--fc-glow);
+  .fc-corner-bl {
+    bottom: 0;
+    left: 0;
+
+    .future-card:hover & {
+      bottom: -2px;
+      left: -2px;
+    }
+  }
+
+  .fc-corner-br {
+    right: 0;
+    bottom: 0;
+    width: 29px;
+    height: 29px;
+    stroke: none;
+    fill: var(--fc-glow);
+  }
 }
 
 /* ── Glass card ────────────────────────────────────── */
