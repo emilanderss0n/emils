@@ -1,0 +1,304 @@
+[
+  {
+    "name": "SPT-Menu-Overhaul",
+    "fullName": "emilanderss0n/SPT-Menu-Overhaul",
+    "description": "Client mod for SPT (EFT) that overhauls the main menu in the game",
+    "url": "https://github.com/emilanderss0n/SPT-Menu-Overhaul",
+    "homepage": "https://forge.sp-tarkov.com/mod/1775/wtt-menu-overhaul",
+    "stars": 3,
+    "language": "C#",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2026-06-11T15:46:42Z",
+    "createdAt": "2024-10-11T02:15:53Z"
+  },
+  {
+    "name": "tarkynator",
+    "fullName": "emilanderss0n/tarkynator",
+    "description": "Website for retrieving details about items, quests, crafts, and more from Single Player Tarkov",
+    "url": "https://github.com/emilanderss0n/tarkynator",
+    "homepage": "https://tarkynator.com",
+    "stars": 2,
+    "language": "JavaScript",
+    "topics": [
+      "gaming",
+      "modding-tools",
+      "website"
+    ],
+    "category": "web-development",
+    "pushedAt": "2026-06-02T20:29:56Z",
+    "createdAt": "2024-11-24T20:59:51Z"
+  },
+  {
+    "name": "TGC",
+    "fullName": "emilanderss0n/TGC",
+    "description": "Tactical Gear Component mod for SPT",
+    "url": "https://github.com/emilanderss0n/TGC",
+    "homepage": "",
+    "stars": 1,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-12-12T14:11:26Z",
+    "createdAt": "2024-05-27T14:49:32Z"
+  },
+  {
+    "name": "nhlplay-feedback",
+    "fullName": "emilanderss0n/nhlplay-feedback",
+    "description": "This repo is made for tracking user submitted issues for the website",
+    "url": "https://github.com/emilanderss0n/nhlplay-feedback",
+    "homepage": "https://nhlplay.online",
+    "stars": 1,
+    "language": "N/A",
+    "topics": [
+      "hockey",
+      "website"
+    ],
+    "category": "web-development",
+    "pushedAt": "2025-11-28T21:21:33Z",
+    "createdAt": "2025-09-29T04:07:48Z"
+  },
+  {
+    "name": "emils",
+    "fullName": "emilanderss0n/emils",
+    "description": "Main website for Emil Andersson",
+    "url": "https://github.com/emilanderss0n/emils",
+    "homepage": "",
+    "stars": 0,
+    "language": "Astro",
+    "topics": [
+      "website"
+    ],
+    "category": "web-development",
+    "pushedAt": "2026-06-27T23:06:31Z",
+    "createdAt": "2025-03-15T02:30:20Z"
+  },
+  {
+    "name": "dashxe-vscode-theme",
+    "fullName": "emilanderss0n/dashxe-vscode-theme",
+    "description": "Visual Studio Code theme with a colorful, dark, balanced contrast",
+    "url": "https://github.com/emilanderss0n/dashxe-vscode-theme",
+    "homepage": "",
+    "stars": 0,
+    "language": "N/A",
+    "topics": [
+      "app-development",
+      "theme"
+    ],
+    "category": "other",
+    "pushedAt": "2022-08-09T18:06:29Z",
+    "createdAt": "2022-08-08T21:03:54Z"
+  },
+  {
+    "name": "Actual-Sick-SICC",
+    "fullName": "emilanderss0n/Actual-Sick-SICC",
+    "description": "Mod which adds more items to fit into SICC case in SPT",
+    "url": "https://github.com/emilanderss0n/Actual-Sick-SICC",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2024-07-13T02:47:00Z",
+    "createdAt": "2024-05-30T23:48:15Z"
+  },
+  {
+    "name": "WarHeads",
+    "fullName": "emilanderss0n/WarHeads",
+    "description": "Mod which adds new head models for SPT",
+    "url": "https://github.com/emilanderss0n/WarHeads",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2024-11-26T19:13:19Z",
+    "createdAt": "2024-05-24T03:24:39Z"
+  },
+  {
+    "name": "SandCore",
+    "fullName": "emilanderss0n/SandCore",
+    "description": "New FDE variants of weapon mods and new weapon variants/skins (SPT Mod)",
+    "url": "https://github.com/emilanderss0n/SandCore",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-02-12T18:50:10Z",
+    "createdAt": "2024-07-18T09:53:25Z"
+  },
+  {
+    "name": "GreenCore",
+    "fullName": "emilanderss0n/GreenCore",
+    "description": "New green variants of weapon mods and new green weapon variants/skins (SPT Mod)",
+    "url": "https://github.com/emilanderss0n/GreenCore",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-03-14T20:55:30Z",
+    "createdAt": "2024-07-21T20:12:40Z"
+  },
+  {
+    "name": "WhiteCore",
+    "fullName": "emilanderss0n/WhiteCore",
+    "description": "New white variants of weapon mods and new white weapon skins (SPT Mod)",
+    "url": "https://github.com/emilanderss0n/WhiteCore",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-03-14T20:57:31Z",
+    "createdAt": "2024-07-21T20:04:20Z"
+  },
+  {
+    "name": "MagTape",
+    "fullName": "emilanderss0n/MagTape",
+    "description": "Add magazines with tape on them for easier tagging and easier to spot on the ground (SPT Mod)",
+    "url": "https://github.com/emilanderss0n/MagTape",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-04-18T16:33:10Z",
+    "createdAt": "2024-05-31T13:46:12Z"
+  },
+  {
+    "name": "BlackCore",
+    "fullName": "emilanderss0n/BlackCore",
+    "description": "New variants of weapon mods and new weapon variants/skins (SPT Mod)",
+    "url": "https://github.com/emilanderss0n/BlackCore",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-04-23T03:12:51Z",
+    "createdAt": "2024-05-31T13:53:22Z"
+  },
+  {
+    "name": "TMS",
+    "fullName": "emilanderss0n/TMS",
+    "description": "Mod for SPT. This is an AIO with one config file. It extends functions not available in SVM.",
+    "url": "https://github.com/emilanderss0n/TMS",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-04-26T16:44:12Z",
+    "createdAt": "2024-07-13T02:49:21Z"
+  },
+  {
+    "name": "AdvancedModdingLights",
+    "fullName": "emilanderss0n/AdvancedModdingLights",
+    "description": "Client mod for SPT to enhance the lighting in modding and build screens for better aesthetics",
+    "url": "https://github.com/emilanderss0n/AdvancedModdingLights",
+    "homepage": "https://hub.sp-tarkov.com/files/file/2906-advanced-modding-lights/",
+    "stars": 0,
+    "language": "C#",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-06-27T19:03:37Z",
+    "createdAt": "2025-06-27T18:48:30Z"
+  },
+  {
+    "name": "MoxoCode",
+    "fullName": "emilanderss0n/MoxoCode",
+    "description": "A beautiful dark theme with purple and blue accents for Visual Studio Code",
+    "url": "https://github.com/emilanderss0n/MoxoCode",
+    "homepage": "",
+    "stars": 0,
+    "language": "N/A",
+    "topics": [
+      "app-development"
+    ],
+    "category": "other",
+    "pushedAt": "2025-07-13T17:18:49Z",
+    "createdAt": "2025-07-13T16:45:31Z"
+  },
+  {
+    "name": "moxopixel",
+    "fullName": "emilanderss0n/moxopixel",
+    "description": "This website serves as a portfolio of my work and projects in the modding community, highlighting my dedication to enhancing the longevity and experience of the games I modify.",
+    "url": "https://github.com/emilanderss0n/moxopixel",
+    "homepage": "https://moxopixel.com/",
+    "stars": 0,
+    "language": "JavaScript",
+    "topics": [
+      "website"
+    ],
+    "category": "web-development",
+    "pushedAt": "2025-08-10T21:44:38Z",
+    "createdAt": "2025-07-28T15:39:13Z"
+  },
+  {
+    "name": "Painter",
+    "fullName": "emilanderss0n/Painter",
+    "description": "Painter is a trader who sells unique weapon mods and painted weapons",
+    "url": "https://github.com/emilanderss0n/Painter",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-12-12T14:11:10Z",
+    "createdAt": "2024-05-31T13:17:15Z"
+  },
+  {
+    "name": "spt-hideout-shootout",
+    "fullName": "emilanderss0n/spt-hideout-shootout",
+    "description": "Mod for SPT to enable player to draw weapon in hideout",
+    "url": "https://github.com/emilanderss0n/spt-hideout-shootout",
+    "homepage": "",
+    "stars": 0,
+    "language": "C#",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2026-05-23T22:46:54Z",
+    "createdAt": "2026-05-23T22:28:01Z"
+  }
+]

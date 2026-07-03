@@ -1,20 +1,25 @@
 ---
 // CardSlider.astro — horizontal slider with JS-driven fade mask.
 // Left edge fades only when scrolled right; right edge fades only when more to scroll.
+import ToolIcon from '@components/ToolIcon.astro';
 
 interface Props {
   title: string;
+  icon?: string;
   link?: string;
   linkLabel?: string;
 }
 
-const { title, link, linkLabel = 'View all →' } = Astro.props;
+const { title, icon, link, linkLabel = 'View all →' } = Astro.props;
 const sliderId = 'slider-' + Math.random().toString(36).slice(2, 8);
 ---
 
 <div class="card-slider pb-12">
   <div class="flex items-center justify-between mb-6">
-    <h2 class="section-title !mb-0 !flex-none no-divider">{title}</h2>
+    <h2 class="section-title !mb-0 !flex-none no-divider">
+      {icon && <ToolIcon name={icon} class="section-title-icon w-6 h-6" />}
+      {title}
+    </h2>
     <span class="flex-1 mx-4 h-px bg-gradient-to-r from-[var(--color-border)] to-transparent hidden sm:block" aria-hidden="true"></span>
     {link && (
       <a href={link} target="_blank" rel="noopener noreferrer"

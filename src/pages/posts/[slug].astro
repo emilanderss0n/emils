@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
@@ -7,18 +7,20 @@ export async function getStaticPaths() {
   return posts
     .filter((p) => !p.data.draft)
     .map((post) => ({
-      params: { slug: post.id.replace(/\.md$/, '') },
+      params: { slug: post.id },
       props: { post },
     }));
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 ---
 
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
+  ogImage={`/og/${post.id}.png`}
+  ogType="article"
 >
   <article class="py-16 md:py-20 max-w-3xl mx-auto">
     <header class="mb-10">

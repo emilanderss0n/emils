@@ -1,0 +1,30 @@
+[
+  {
+    "slug": "building-portfolio-astro-5",
+    "url": "/posts/building-portfolio-astro-5/",
+    "title": "Building a Portfolio with Astro 5",
+    "description": "How I built this portfolio site using Astro 5, Tailwind CSS, and the Content Layer — all deployed to shared hosting.",
+    "date": "2026-06-20T00:00:00.000Z",
+    "updated": null,
+    "tags": [
+      "astro",
+      "webdev",
+      "portfolio"
+    ],
+    "category": "web-development"
+  },
+  {
+    "slug": "3d-art-workflow",
+    "url": "/posts/3d-art-workflow/",
+    "title": "My 3D Art Workflow",
+    "description": "A look at my 3D art pipeline — from Blender modeling to final renders, and how I use these skills in game development.",
+    "date": "2026-05-15T00:00:00.000Z",
+    "updated": null,
+    "tags": [
+      "3d",
+      "blender",
+      "gamedev"
+    ],
+    "category": "3d-art"
+  }
+]
