@@ -11,37 +11,8 @@
 @import '@fontsource/inter/latin-800.css';
 @import '@fontsource/inter/latin-900.css';
 
-/* ── Light theme tokens ────────────────────────────── */
-:root,
-[data-theme="light"] {
-  --color-bg: #f5f5f7;
-  --color-surface: rgba(255, 255, 255, 0.75);
-  --color-surface-solid: #ffffff;
-  --color-border: rgba(0, 0, 0, 0.08);
-  --color-border-hover: rgba(0, 0, 0, 0.14);
-  --color-text: #1a1a2e;
-  --color-text-muted: #374151;
-  --color-accent: #6366f1;
-  --color-accent-2: #06b6d4;
-  --color-accent-3: #f881f8;
-  --color-accent-glow: rgba(99, 102, 241, 0.12);
-
-  /* Ghost elements (buttons, lozenges, skeleton placeholders) */
-  --color-ghost-bg: rgba(0, 0, 0, 0.04);
-  --color-ghost-bg-hover: rgba(0, 0, 0, 0.07);
-  --color-ghost-border: rgba(0, 0, 0, 0.08);
-  --color-ghost-border-hover: rgba(0, 0, 0, 0.14);
-  --color-ghost-shadow: rgba(0, 0, 0, 0.06);
-
-  /* Badge & skeleton */
-  --color-badge-bg: rgba(0, 0, 0, 0.05);
-  --color-badge-border: rgba(0, 0, 0, 0.08);
-  --color-skeleton: rgba(0, 0, 0, 0.06);
-  --color-skeleton-shine: rgba(0, 0, 0, 0.10);
-}
-
-/* ── Dark theme tokens ─────────────────────────────── */
-[data-theme="dark"] {
+/* ── Global tokens (dark default) ──────────────────── */
+:root {
   --color-bg: #08090d;
   --color-surface: rgba(18, 20, 30, 0.6);
   --color-surface-solid: #141624;
@@ -97,8 +68,14 @@
 /* ── Base ──────────────────────────────────────────── */
 html {
   font-family: var(--font-sans);
-  background: var(--color-bg);
   color: var(--color-text);
+  color-scheme: dark;
+  background-image: url('../assets/earth-bg.png');
+  background-size: 1500px;
+  background-position: center -20%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #000;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
 }
@@ -223,7 +200,20 @@ body::after {
     inset: var(--fc-border);
     z-index: 0;
     clip-path: var(--fc-shape);
-    background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-accent) 8%, transparent) 1px, transparent 1.6px) 0 0 / 10px 10px, color-mix(in srgb, var(--color-surface-solid) 60%, var(--color-bg));
+    transition: .6s;
+    background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-accent) 8%, transparent) 1px, transparent 1.6px) 0 0 / 10px 10px, color-mix(in srgb, var(--color-surface-solid) 20%, var(--color-bg));
+  }
+
+  &:hover::after {
+    background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-accent) 8%, transparent) 1px, transparent 1.6px) 0 0 / 10px 10px, color-mix(in srgb, var(--color-surface-solid) 80%, var(--color-bg));
+  }
+
+  .text-\[var\(--color-text-muted\)\] {
+    transition: color .3s;
+  }
+  
+  &:hover .text-\[var\(--color-text-muted\)\] {
+    color: var(--color-text);
   }
 
   .fc-deco {
@@ -313,7 +303,7 @@ body::after {
   .glass-card { border-radius: 16px; }
 }
 
-/* ── Ghost button (theme-aware, replaces bg-white/5 etc) ── */
+/* ── Ghost button ───────────────────────────────────── */
 .ghost-btn {
   background: var(--color-ghost-bg);
   border: 1px solid var(--color-ghost-border);
@@ -401,15 +391,6 @@ body::after {
     background: linear-gradient(to right, transparent, var(--color-accent), var(--color-accent-2), transparent);
     box-shadow: 0 0 8px var(--color-accent);
   }
-}
-
-/* ── Nav divider before the theme toggle ────────── */
-.nav-divider {
-  align-self: center;
-  width: 1px;
-  height: 1.1rem;
-  margin: 0 0.15rem;
-  background: linear-gradient(to bottom, transparent, var(--color-border-hover), transparent);
 }
 
 /* ── Hero scramble reveal (TextScramble) ───────── */

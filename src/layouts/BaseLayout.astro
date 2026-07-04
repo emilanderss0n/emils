@@ -1,7 +1,6 @@
 ---
 import '@styles/global.css';
 import { Image } from 'astro:assets';
-import ThemeSwitcher from '@components/ThemeSwitcher.astro';
 import ToolIcon from '@components/ToolIcon.astro';
 import logoImage from '@assets/logo-2x.png';
 
@@ -55,9 +54,6 @@ const fullTitle = `${title} - Emil / Moxo`;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..500&display=swap" rel="stylesheet" />
-    <script is:inline>
-      (function(){var t=localStorage.getItem('theme');var d=t||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',d);})();
-    </script>
     <script>
       (function setupScrollReveal() {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -98,10 +94,6 @@ const fullTitle = `${title} - Emil / Moxo`;
                aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}
                class:list={['nav-link', Astro.url.pathname === '/about' ? 'nav-link--active' : '']}>About</a>
           </li>
-          <li class="nav-divider" aria-hidden="true"></li>
-          <li>
-            <ThemeSwitcher />
-          </li>
         </ul>
       </nav>
     </header>
@@ -137,8 +129,6 @@ const fullTitle = `${title} - Emil / Moxo`;
               </a>
             ))
           }
-          <span class="w-px h-4 bg-[var(--color-border)]" aria-hidden="true"></span>
-          <ThemeSwitcher />
         </div>
       </div>
     </footer>
