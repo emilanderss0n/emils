@@ -237,11 +237,11 @@ h1, h2, h3, h4, h5, h6,
     z-index: 0;
     clip-path: var(--fc-shape);
     transition: .6s;
-    background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-accent) 8%, transparent) 1px, transparent 1.6px) 0 0 / 10px 10px, color-mix(in srgb, var(--color-surface-solid) 20%, var(--color-bg));
+    background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-accent) 8%, transparent) 1px, transparent 1.6px) 0 0 / 10px 10px, color-mix(in srgb, var(--color-bg) 80%, transparent);
   }
 
   &:hover::after {
-    background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-accent) 8%, transparent) 1px, transparent 1.6px) 0 0 / 10px 10px, color-mix(in srgb, var(--color-surface-solid) 80%, var(--color-bg));
+    background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-accent) 8%, transparent) 1px, transparent 1.6px) 0 0 / 10px 10px, var(--color-bg);
   }
 
   .text-\[var\(--color-text-muted\)\] {
@@ -416,18 +416,6 @@ h1, h2, h3, h4, h5, h6,
   background: var(--color-accent-glow);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 28%, transparent);
   backdrop-filter: blur(4px);
-
-  /* Glowing HUD scan-bar under the active item */
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0.5rem;
-    right: 0.5rem;
-    bottom: 3px;
-    height: 2px;
-    background: linear-gradient(to right, transparent, var(--color-accent), var(--color-accent-2), transparent);
-    box-shadow: 0 0 8px var(--color-accent);
-  }
 }
 
 /* ── Hero scramble reveal (TextScramble) ───────── */
