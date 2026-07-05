@@ -3,6 +3,7 @@ import '@styles/global.css';
 import { Image } from 'astro:assets';
 import ToolIcon from '@components/ToolIcon.astro';
 import logoImage from '@assets/logo-2x.png';
+import heroVideo from '@assets/121799-724719792_small.mp4';
 
 interface Props {
   title: string;
@@ -78,6 +79,13 @@ const fullTitle = `${title} - Emil / Moxo`;
     </script>
   </head>
   <body class="min-h-screen flex flex-col relative z-0">
+    <div class="site-video-bg" aria-hidden="true" transition:persist>
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src={heroVideo} type="video/mp4" />
+      </video>
+      <div class="hero-video-tint"></div>
+      <div class="hero-video-vignette"></div>
+    </div>
     <header class="relative z-20 max-w-5xl mx-auto w-full px-5 sm:px-6 py-3 sm:py-4 flex justify-between items-center" transition:persist>
       <a href="/" class="no-underline">
         <Image src={logoImage} alt="Emil" densities={[1, 2]} class="h-8 w-auto" />
@@ -98,7 +106,7 @@ const fullTitle = `${title} - Emil / Moxo`;
       </nav>
     </header>
 
-    <main class="relative z-10 flex-1 max-w-5xl mx-auto w-full px-5 sm:px-6 py-6 sm:py-8">
+    <main class="relative flex-1 max-w-5xl mx-auto w-full px-5 sm:px-6 py-6 sm:py-8">
       <slot />
     </main>
 
@@ -134,3 +142,14 @@ const fullTitle = `${title} - Emil / Moxo`;
     </footer>
   </body>
 </html>
+
+<script is:inline>
+  (function () {
+    var video = document.querySelector('.hero-video');
+    if (!video || video.classList.contains('is-loaded')) return;
+    var show = function () { video.classList.add('is-loaded'); };
+    if (video.readyState >= 3) { show(); return; }
+    video.addEventListener('canplaythrough', show, { once: true });
+    window.setTimeout(show, 3000);
+  })();
+</script>
