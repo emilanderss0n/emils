@@ -372,8 +372,15 @@ h1, h2, h3, h4, h5, h6,
   @apply inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider px-2 py-1 rounded-md;
   background: rgba(129,140,248,0.1);
   border: 1px solid rgba(129,140,248,0.2);
-  color: var(--color-accent);
+  color: var(--color-text-muted);
+  gap: 0.5rem;
+  backdrop-filter: blur(4px);
+  transition: color .2s;
   line-height: 1.1;
+
+  &:hover {
+    color: var(--color-text);
+  }
 }
 
 /* Muted variant for secondary info like star counts */
@@ -510,6 +517,7 @@ h1, h2, h3, h4, h5, h6,
   background: var(--color-ghost-bg);
   border: 1px solid var(--color-accent-glow);
   color: var(--color-text-muted);
+  backdrop-filter: blur(4px);
   corner-shape: bevel;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
@@ -632,6 +640,19 @@ h1, h2, h3, h4, h5, h6,
   animation: slide-in-right 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
+/*
+ * Once an entrance animation ends, drop the leftover (identity) transform and
+ * compositing hint. A lingering `transform`/`will-change` turns the element into
+ * a backdrop root, which excludes the fixed hero video from the backdrop of any
+ * descendant using `backdrop-filter`. The `.anim-done` class is added on
+ * `animationend` (see BaseLayout). Placed after the utilities so it wins the cascade.
+ */
+.anim-done {
+  animation: none;
+  transform: none;
+  will-change: auto;
+}
+
 /* Staggered delays (CSS custom property for per-element control) */
 [style*="--anim-delay"] {
   animation-delay: var(--anim-delay, 0ms);
@@ -648,7 +669,10 @@ h1, h2, h3, h4, h5, h6,
 }
 .reveal-on-scroll.is-revealed {
   opacity: 1;
-  transform: translateY(0);
+  /* `none` (not translateY(0)) + no will-change so the settled element stops
+     being a backdrop root and lets children's backdrop-filter sample the video. */
+  transform: none;
+  will-change: auto;
 }
 
 /* Reduced motion: instant reveal, no animation */

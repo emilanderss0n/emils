@@ -76,6 +76,18 @@ const fullTitle = `${title} - Emil / Moxo`;
         document.addEventListener('astro:page-load', observeAll);
         document.addEventListener('astro:after-swap', observeAll);
       })();
+
+      // Entrance animations (.anim-fade/-scale/-slide) use `fill: both`, which
+      // leaves a lingering transform on the element. That transform makes the
+      // element a "backdrop root", cutting the fixed hero video out of the
+      // backdrop for any descendant using backdrop-filter (buttons, cards, etc.).
+      // Once the animation ends, flag it so CSS can clear the transform.
+      document.addEventListener('animationend', function (e) {
+        var t = e.target;
+        if (t instanceof HTMLElement && /(^|\s)anim-(fade|scale|slide)/.test(t.className)) {
+          t.classList.add('anim-done');
+        }
+      });
     </script>
   </head>
   <body class="min-h-screen flex flex-col relative z-0">
