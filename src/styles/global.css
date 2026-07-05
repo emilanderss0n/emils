@@ -70,14 +70,67 @@ html {
   font-family: var(--font-sans);
   color: var(--color-text);
   color-scheme: dark;
-  background-image: url('../assets/earth-bg.png');
-  background-size: 1500px;
-  background-position: center -20%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   background-color: #000;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: clip;
+}
+
+/* ── Hero video layers ─────────────────────────────── */
+.hero-section {
+  position: relative;
+  isolation: isolate;
+  --hero-top-bleed: clamp(5.5rem, 10vw, 8rem);
+  --hero-bottom-fade: clamp(7rem, 16vw, 12rem);
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: visible;
+}
+
+.hero-media {
+  position: absolute;
+  inset: calc(-1 * var(--hero-top-bleed)) 0 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) calc(100% - var(--hero-bottom-fade)), rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) calc(100% - var(--hero-bottom-fade)), rgba(0, 0, 0, 0) 100%);
+}
+
+.hero-section > :not(.hero-media) {
+  position: relative;
+  z-index: 5;
+}
+
+.hero-video,
+.hero-video-tint,
+.hero-video-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-video {
+  z-index: 1;
+  object-fit: cover;
+  opacity: 0.62;
+}
+
+.hero-video-tint {
+  z-index: 2;
+  background: linear-gradient(to bottom, rgba(8, 9, 13, 0.1) 0%, rgba(8, 9, 13, 0.66) 100%);
+}
+
+.hero-video-vignette {
+  z-index: 3;
+  background: rgba(8, 9, 13, 0.82);
+  -webkit-mask-image: radial-gradient(ellipse 92% 80% at 50% 34%, transparent 30%, rgba(0, 0, 0, 0.3) 62%, rgba(0, 0, 0, 0.9) 100%);
+  mask-image: radial-gradient(ellipse 92% 80% at 50% 34%, transparent 30%, rgba(0, 0, 0, 0.3) 62%, rgba(0, 0, 0, 0.9) 100%);
 }
 
 /* Headings use Orbitron (400–500) for a tech-forward look */
@@ -86,32 +139,6 @@ h1, h2, h3, h4, h5, h6,
 .section-title {
   font-family: var(--font-display);
   font-weight: 500;
-}
-
-/* ── Animated background grid ──────────────────────── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent);
-}
-
-/* ── Gradient orbs ─────────────────────────────────── */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(129,140,248,0.08), transparent),
-    radial-gradient(ellipse 50% 50% at 80% 60%, rgba(103,232,249,0.05), transparent);
 }
 
 /* ── Section titles ────────────────────────────────── */
