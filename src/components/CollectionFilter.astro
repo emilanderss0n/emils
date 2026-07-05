@@ -68,7 +68,7 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
         const btn = document.createElement('button');
         btn.setAttribute('data-filter', val);
         btn.className = 'filter-btn futuristic-button inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium';
-        btn.innerHTML = `${val} <span class="badge futuristic-br inline-flex items-center rounded-sm bg-indigo-400/10 px-2 py-0.5 text-xs font-small text-[var(--color-text-muted)] inset-ring inset-ring-gray-400/20">${count}</span>`;
+        btn.innerHTML = `${val} <span class="badge futuristic-br inline-flex items-center rounded-sm px-2 py-0.5 text-xs font-small text-[var(--color-text-muted)]">${count}</span>`;
         fragment.appendChild(btn);
         btns.set(val, btn);
       });

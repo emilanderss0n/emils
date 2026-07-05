@@ -100,8 +100,7 @@ body {
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 48%);
-  mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 48%);
+  mask-image: linear-gradient(to bottom, black 0%, black 15%, transparent 48%);
 }
 
 .hero-section > :not(.hero-media) {
