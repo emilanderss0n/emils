@@ -90,8 +90,8 @@ const fullTitle = `${title} - Emil / Moxo`;
   </head>
   <body>
     <div class="site-video-bg" aria-hidden="true" transition:persist>
-      <video class="hero-video" autoplay muted loop playsinline>
-        <source src={heroVideo} type="video/mp4" />
+      <video class="hero-video" autoplay muted loop playsinline preload="none">
+        <source data-src={heroVideo} type="video/mp4" />
       </video>
       <div class="hero-video-tint"></div>
       <div class="hero-video-vignette"></div>
@@ -158,10 +158,27 @@ const fullTitle = `${title} - Emil / Moxo`;
 <script is:inline>
   (function () {
     var video = document.querySelector('.hero-video');
-    if (!video || video.classList.contains('is-loaded')) return;
+    var source = video && video.querySelector('source[data-src]');
+    if (!video || !source) return;
     var show = function () { video.classList.add('is-loaded'); };
-    if (video.readyState >= 3) { show(); return; }
-    video.addEventListener('canplaythrough', show, { once: true });
-    window.setTimeout(show, 3000);
+    var loadVideo = function () {
+      if (source.src) return;
+      var src = source.dataset.src;
+      if (!src) return;
+      source.src = src;
+      video.load();
+      if (video.readyState >= 3) { show(); return; }
+      video.addEventListener('canplaythrough', show, { once: true });
+      window.setTimeout(show, 3000);
+    };
+    var schedule = function () {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadVideo, { timeout: 2000 });
+      } else {
+        window.setTimeout(loadVideo, 0);
+      }
+    };
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once: true });
   })();
 </script>

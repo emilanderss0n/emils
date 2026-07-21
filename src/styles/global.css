@@ -21,6 +21,7 @@
   --color-ghost-shadow: rgba(0, 0, 0, 0.10);
   --color-skeleton: rgba(255, 255, 255, 0.05);
   --color-skeleton-shine: rgba(255, 255, 255, 0.08);
+  --box-shadow-nice: 0px 24.7928px 24px -15px light-dark(rgb(33 55 85 / 7%),rgb(33 55 85 / 0%)),0px 15.32523px 10.64212px -8px light-dark(rgb(100 120 172 / 8%),rgb(100 120 172 / 0%)),0px 6.04819px 3.59618px -3px light-dark(rgb(24 34 65 / 10%),rgb(24 34 65 / 0%));
 	--sm-breakpoint-padding: 1.5rem;
 	--md-breakpoint-padding: 2rem;
 	--lg-breakpoint-padding: 3rem;
