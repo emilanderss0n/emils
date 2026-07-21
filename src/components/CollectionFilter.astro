@@ -15,8 +15,8 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
 ---
 
 <collection-filter data-target={target} data-filter-key={safeKey}>
-  <nav class="flex gap-sm filter-nav justify-end" aria-label="Filter">
-    <button data-filter="" class="btn sm filter-btn filter-btn--active">
+  <nav class="flex gap-md filter-nav justify-end" aria-label="Filter">
+    <button data-filter="" class="flex gap-xs filter-btn effect-underline masked filter-btn--active">
       {allLabel}
     </button>
   </nav>
@@ -67,7 +67,7 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
         const count = cards.filter((c) => c.getAttribute(attr) === val).length;
         const btn = document.createElement('button');
         btn.setAttribute('data-filter', val);
-        btn.className = 'btn sm filter-btn';
+        btn.className = 'flex gap-xs filter-btn effect-underline masked';
         btn.innerHTML = `${val} <span class="badge">${count}</span>`;
         fragment.appendChild(btn);
         btns.set(val, btn);
