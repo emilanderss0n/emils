@@ -288,8 +288,12 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     padding: 0.4rem 0.6rem;
-    background: var(--color-surface);
-    color: var(--color-text-muted);
+    background: var(--color-accent-glow);
+    color: color-mix(in srgb, var(--color-accent) 30%, var(--color-text-muted) 70%);
+    border-radius: var(--border-radius-md);
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    corner-shape: bevel;
     backdrop-filter: blur(4px);
     transition: color .2s;
     line-height: 1.1;
@@ -525,7 +529,6 @@
 
   .about-sidebar-socials {
     gap: 0.5rem;
-    padding: 0.75rem 0;
     border-bottom: 1px solid var(--color-ghost-border);
 
     a {
@@ -533,14 +536,12 @@
       flex: 1;
       align-items: center;
       justify-content: center;
-      height: 2.5rem;
+      height: 3rem;
       color: var(--color-text-muted);
-      border: 1px solid transparent;
       transition: color 0.2s, border-color 0.2s, background-color 0.2s;
 
       &:hover {
-        color: var(--color-accent);
-        border-color: var(--color-ghost-border-hover);
+        color: var(--color-text);
         background: var(--color-ghost-bg);
       }
 
@@ -553,6 +554,11 @@
 
   .about-sidebar-toolset {
     padding: 2rem;
+
+    @media (max-width: 42.5rem) {
+      padding: 0;
+      margin-top: 2rem;
+    }
 
     h2 {
       margin-bottom: 1rem;
@@ -570,6 +576,10 @@
 
   .about-copy {
     padding: 3rem;
+
+    @media (max-width: 42.5rem) {
+      padding: 0;
+    }
 
     h1 {
       margin-bottom: 0.5rem;
@@ -593,80 +603,10 @@
   .about-call-to-action {
     margin-top: 2rem;
 
-    .icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.5rem;
-      height: 2.5rem;
-      background: var(--color-accent-glow);
-    }
     .first-line {
       color: var(--color-text-muted);
       font-size: 0.8rem;
     }
-  }
-
-  .about-copy > .mt-5 {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    max-width: 68ch;
-    margin-top: 2rem;
-    color: var(--color-text-muted);
-    line-height: 1.75;
-  }
-
-  .about-copy > .mt-5 p {
-    margin: 0;
-  }
-
-  .about-copy > .mt-5 strong {
-    color: var(--color-text);
-    font-weight: 600;
-  }
-
-  .about-copy > .mt-5 > div:last-child {
-    padding-top: 0.75rem;
-  }
-
-  .about-copy > .mt-5 > div:last-child a,
-  .music-profile a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    width: fit-content;
-    color: var(--color-accent);
-    text-decoration: none;
-    transition: color 0.2s, background-color 0.2s;
-  }
-
-  .about-copy > .mt-5 > div:last-child a:hover,
-  .music-profile a:hover {
-    color: var(--color-text);
-  }
-
-  .about-copy > .mt-5 > div:last-child a > span:first-child {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    background: var(--color-accent-glow);
-  }
-
-  .about-copy > .mt-5 > div:last-child a > span:last-child {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .about-copy > .mt-5 > div:last-child a > span:last-child > span:first-child {
-    margin-bottom: 0.15rem;
-    color: var(--color-text-muted);
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
   }
 
   .music-layout {
@@ -687,47 +627,29 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 3rem;
+
+    @media (max-width: 42.5rem) {
+      padding: 2rem;
+
+      .music-profile-icon { display: none; }
+    }
   }
 
-  .music-profile > div:first-child {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 4rem;
-    height: 4rem;
-    margin-bottom: 1.5rem;
-    color: var(--color-accent);
-    border: 1px solid var(--color-ghost-border);
-    background: var(--color-accent-glow);
-  }
+  .music-profile-heading {
+    h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+    }
 
-  .music-profile > div:first-child svg {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .music-profile h3 {
-    margin-bottom: 0.25rem;
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    font-weight: 500;
-  }
-
-  .music-profile p {
-    color: var(--color-text-muted);
-    line-height: 1.7;
-  }
-
-  .music-profile p:nth-of-type(1) {
-    margin-bottom: 1rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    .small-title {
+      font-size: 0.7rem;
+    }
   }
 
   .music-profile a {
     margin-top: auto;
-    padding-top: 2rem;
     font-size: 0.9rem;
     font-weight: 500;
   }
@@ -739,14 +661,14 @@
 
   .spotify-embed {
     padding: 2rem;
-  }
 
-  .spotify-embed iframe {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    border: 0;
-    border-radius: var(--border-radius-md);
+    iframe {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      border: 0;
+      border-radius: var(--border-radius-md);
+    }
   }
 
   /* ───────────────────────────────────────────────────
