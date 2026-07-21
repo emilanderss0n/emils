@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 
-import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 // Shared hosting → fully static output (no Node.js server needed)
@@ -25,7 +24,5 @@ export default defineConfig({
     }),
   ],
 
-  vite: {
-    plugins: [tailwindcss()],
-  },
+
 });

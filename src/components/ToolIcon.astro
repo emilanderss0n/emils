@@ -6,23 +6,24 @@ import icons from '@lib/tool-icons';
 interface Props {
   name: string;
   class?: string;
+  style?: string;
 }
 
-const { name, class: cls = 'w-5 h-5' } = Astro.props;
+const { name, class: cls = 'w-5 h-5', style: styleStr = '' } = Astro.props;
 const icon = icons[name];
 ---
 
 {icon && icon.type === 'stroke' ? (
-  <svg class={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <svg class={cls} style={styleStr} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d={icon.d} />
   </svg>
 ) : icon ? (
-  <svg class={cls} viewBox={icon.viewBox || '0 0 24 24'} fill="currentColor">
+  <svg class={cls} style={styleStr} viewBox={icon.viewBox || '0 0 24 24'} fill="currentColor">
     <path fill-rule="evenodd" clip-rule="evenodd" d={icon.d} />
   </svg>
 ) : null}
 
 {/* Brand icons using currentColor */}
-{name === 'Blender' && <svg class={cls} viewBox="0 0 24 24" fill="currentColor"><path d={siBlender.path}/></svg>}
-{name === 'Chrome'  && <svg class={cls} viewBox="0 0 24 24" fill="currentColor"><path d={siGooglechrome.path}/></svg>}
-{name === 'Photoshop' && <svg class={cls} viewBox="0 0 24 24" fill="currentColor"><text x="12" y="17" text-anchor="middle" font-size="19" font-weight="600" fill="currentColor" font-family="system-ui, sans-serif">Ps</text></svg>}
+{name === 'Blender' && <svg class={cls} style={styleStr} viewBox="0 0 24 24" fill="currentColor"><path d={siBlender.path}/></svg>}
+{name === 'Chrome'  && <svg class={cls} style={styleStr} viewBox="0 0 24 24" fill="currentColor"><path d={siGooglechrome.path}/></svg>}
+{name === 'Photoshop' && <svg class={cls} style={styleStr} viewBox="0 0 24 24" fill="currentColor"><text x="12" y="17" text-anchor="middle" font-size="19" font-weight="600" fill="currentColor" font-family="system-ui, sans-serif">Ps</text></svg>}

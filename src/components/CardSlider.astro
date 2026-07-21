@@ -14,33 +14,36 @@ const { title, icon, link, linkLabel = 'View all →' } = Astro.props;
 const sliderId = 'slider-' + Math.random().toString(36).slice(2, 8);
 ---
 
-<div class="card-slider pb-12">
-  <div class="flex items-center justify-between mb-6">
-    <h2 class="section-title !mb-0 !flex-none no-divider">
-      {icon && <ToolIcon name={icon} class="section-title-icon w-6 h-6" />}
-      {title}
-    </h2>
-    <span class="flex-1 mx-4 h-px bg-gradient-to-r from-[var(--color-border)] to-transparent hidden sm:block" aria-hidden="true"></span>
-    {link && (
-      <a href={link} target="_blank" rel="noopener noreferrer"
-         class="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] no-underline transition-colors">
-        {linkLabel}
-      </a>
-    )}
+<div class="card-slider">
+  <div class="section-title">
+    <div class="card-slider__title-main section-title-main-text">
+      {icon && <ToolIcon name={icon} class="section-title-icon icon-sm anim-fade-up" style="--anim-delay: 1400ms" />}
+      <h2 class="anim-fade-up" style="--anim-delay: 1400ms">{title}</h2>
+    </div>
+    <div class="card-slider__link anim-fade-up" style="--anim-delay: 1520ms">
+      {link && (
+        <a href={link} target="_blank" rel="noopener noreferrer"
+          class="card-slider__link-anchor">
+          {linkLabel}
+        </a>
+      )}
+    </div>
   </div>
 
-  <div class="relative group/slider">
-    <button class="slider-btn slider-btn--prev absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[var(--color-surface-solid)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-border-hover)] flex items-center justify-center opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 disabled:opacity-0 shadow-lg -translate-x-1/2" aria-label="Previous">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-    </button>
-
-    <div id={sliderId} class="card-slider__track flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-none pb-2" data-slider="true">
+  <div class="card-slider__viewport">
+    <div id={sliderId} class="card-slider__track" data-slider="true">
       <slot />
     </div>
 
-    <button class="slider-btn slider-btn--next absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[var(--color-surface-solid)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-border-hover)] flex items-center justify-center opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 disabled:opacity-0 shadow-lg translate-x-1/2" aria-label="Next">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-    </button>
+    <div class="card-slider__controls" aria-label="Slider controls">
+      <button class="slider-btn slider-btn--prev btn" aria-label="Previous">
+        <svg class="slider-btn__icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
+      </button>
+
+      <button class="slider-btn slider-btn--next btn" aria-label="Next">
+        <svg class="slider-btn__icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -60,8 +63,96 @@ const sliderId = 'slider-' + Math.random().toString(36).slice(2, 8);
 </script>
 
 <style>
-  .card-slider__track { scrollbar-width: none; }
-  .card-slider__track::-webkit-scrollbar { display: none; }
-  .card-slider__track > :slotted(*) { flex: 0 0 280px; max-width: 320px; scroll-snap-align: start; }
-  @media (min-width: 640px) { .card-slider__track > :slotted(*) { flex: 0 0 300px; } }
+  .card-slider {
+    padding-bottom: 1rem;
+  }
+
+  .card-slider__title-main {
+    display: flex;
+    align-items: center;
+    gap: var(--adaptive-space-md);
+  }
+
+  .card-slider__link-anchor {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .card-slider__link-anchor:hover {
+    color: var(--color-accent);
+  }
+
+  .card-slider__viewport {
+    position: relative;
+  }
+
+  .card-slider__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-right: 1rem;
+  }
+
+  .slider-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    appearance: none;
+  }
+
+  .slider-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .slider-btn__icon {
+    display: block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    overflow: visible;
+  }
+
+  .card-slider__track {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    border-block: 1px solid var(--color-ghost-border);
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    cursor: grab;
+  }
+
+  .card-slider__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card-slider__track.cursor-grabbing {
+    cursor: grabbing;
+  }
+
+  :global(.card-slider__track > *) {
+    flex: 0 0 280px;
+    max-width: 320px;
+    scroll-snap-align: start;
+  }
+
+  :global(.card-slider__track > .codepen-card ~ .codepen-card) {
+    border-left: 1px solid var(--color-ghost-border);
+  }
+
+  @media (min-width: 640px) {
+    :global(.card-slider__track > *) {
+      flex-basis: 300px;
+    }
+  }
 </style>

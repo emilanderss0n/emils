@@ -13,11 +13,9 @@
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource/inter": "^5.2.8",
     "astro-og-canvas": "^0.13.0",
-    "simple-icons": "^16.24.0",
-    "tailwindcss": "^4.3.1"
+    "simple-icons": "^16.24.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.3.1",
     "@types/node": "^26.0.0",
     "astro": "^5.0.0",
     "fallow": "^2.102.0"

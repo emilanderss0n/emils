@@ -10,27 +10,44 @@ interface Props {
 const { repo, delay } = Astro.props;
 ---
 
-<article class="repo-card future-card p-6 flex flex-col anim-scale-in" data-lang={repo.data.language} data-category={repo.data.category} style={delay != null ? `--anim-delay: ${delay}ms` : undefined}>
-  <span class="fc-deco" aria-hidden="true">
-    <svg class="fc-corner fc-corner-tl" viewBox="0 0 12 12" fill="none"><path d="M0 12 12 0 0 0Z"/></svg>
-    <svg class="fc-corner fc-corner-bl" viewBox="0 0 12 12" fill="none"><path d="M0 0 12 12 0 12Z"/></svg>
-    <svg class="fc-corner fc-corner-br" viewBox="0 0 30 30"><path d="M30 1 1 30 30 30Z"/></svg>
-  </span>
-  <h3 class="text-base font-medium mb-2 leading-snug relative z-10">
-    <a href={repo.data.url} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text)]">
+<a href={repo.data.url} target="_blank" rel="noopener noreferrer" class="card repo-card anim-scale-in" data-lang={repo.data.language} data-category={repo.data.category} style={delay != null ? `--anim-delay: ${delay}ms` : undefined}>
+  <div class="content flex-column gap-md">
+    <h3>
       {repo.data.name}
-    </a>
-  </h3>
-  {repo.data.description && (
-    <p class="text-sm text-[var(--color-text-muted)] leading-relaxed flex-1 relative z-10 line-clamp-2">{repo.data.description}</p>
-  )}
-  <div class="mt-4 pt-3 border-t border-[var(--color-border)] text-xs text-[var(--color-text-muted)] flex items-center justify-between relative z-10">
-    <span class="inline-flex items-center gap-1">
-      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-      </svg>
-      {new Date(repo.data.pushedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-    </span>
-    <span class="badge futuristic-br">{repo.data.language}</span>
+    </h3>
+    {repo.data.description && (
+      <p>{repo.data.description}</p>
+    )}
+    <div class="flex space-between" style="margin-top: auto;">
+      <span class="flex gap-xs meta">
+        <svg class="icon-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+        </svg>
+        {new Date(repo.data.pushedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+      </span>
+      <span class="badge futuristic-br">{repo.data.language}</span>
+    </div>
   </div>
-</article>
+</a>
+
+<style>
+  .repo-card {
+    display: block;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .repo-card:hover {
+    background: var(--color-ghost-bg);
+    color: var(--color-text);
+  }
+
+  .repo-card h3 {
+    transition: color 0.2s;
+  }
+
+  .repo-card:hover h3 {
+    color: var(--color-accent);
+  }
+</style>

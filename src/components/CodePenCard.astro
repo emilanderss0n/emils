@@ -14,16 +14,18 @@ const { slug, title, user, src } = Astro.props;
 ---
 
 <div
-  class="codepen-placeholder glass-card overflow-hidden animate-pulse scroll-snap-align-start flex-shrink-0"
-  style="width: 300px;"
+  class="codepen-card codepen-card--placeholder"
   data-src={src}
   data-title={title}
   data-user={user}
   data-slug={slug}
 >
-  <div class="aspect-video bg-[var(--color-skeleton)]" />
-  <div class="p-4">
-    <div class="h-4 bg-[var(--color-skeleton-shine)] rounded w-3/4" />
+  <div class="codepen-card__media" aria-hidden="true">
+    <span class="codepen-card__skeleton-media"></span>
+  </div>
+  <div class="codepen-card__footer">
+    <span class="codepen-card__skeleton-line"></span>
+    <span class="codepen-card__skeleton-source"></span>
   </div>
 </div>
 
@@ -35,7 +37,7 @@ const { slug, title, user, src } = Astro.props;
     if (observer) observer.disconnect();
 
     const placeholders = document.querySelectorAll<HTMLElement>(
-      '.codepen-placeholder:not([data-hydrated])'
+      '.codepen-card--placeholder:not([data-hydrated])'
     );
     if (!placeholders.length) return;
 
@@ -48,20 +50,19 @@ const { slug, title, user, src } = Astro.props;
           const title = ph.dataset.title ?? '';
           const user = ph.dataset.user ?? '';
           const slug = ph.dataset.slug ?? '';
-          ph.classList.remove('animate-pulse');
           ph.dataset.hydrated = 'true';
           const a = document.createElement('a');
           a.href = 'https://codepen.io/' + user + '/pen/' + slug;
           a.target = '_blank';
           a.rel = 'noopener noreferrer';
-          a.className =
-            'group glass-card futuristic-br overflow-hidden no-underline hover:border-[var(--color-border-hover)] transition-all duration-300 scroll-snap-align-start flex-shrink-0';
-          a.style.width = '300px';
+          a.className = 'codepen-card';
           a.innerHTML =
-            '<img src="' + src + '" alt="' + title + '" loading="lazy" width="512" height="288" class="w-full aspect-video object-cover" />' +
-            '<div class="p-4 flex items-center justify-between">' +
-            '<h3 class="text-sm font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">' + title + '</h3>' +
-            '<span class="text-xs text-[var(--color-text-muted)]">↗ codepen.io</span>' +
+            '<div class="codepen-card__media">' +
+            '<img src="' + src + '" alt="' + title + '" loading="lazy" width="512" height="288" />' +
+            '</div>' +
+            '<div class="codepen-card__footer">' +
+            '<h3 class="codepen-card__title">' + title + '</h3>' +
+            '<span class="codepen-card__source">codepen.io <span aria-hidden="true">↗</span></span>' +
             '</div>';
           ph.replaceWith(a);
           observer!.unobserve(ph);
@@ -76,3 +77,113 @@ const { slug, title, user, src } = Astro.props;
   initCodePenCards();
   document.addEventListener('astro:after-swap', initCodePenCards);
 </script>
+
+<style>
+  :global(.codepen-card) {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: border-color 0.3s, background-color 0.3s;
+  }
+
+  :global(.codepen-card:hover) {
+    border-color: var(--color-ghost-border-hover);
+    background: var(--color-ghost-bg-hover);
+    color: var(--color-text);
+  }
+
+  :global(.codepen-card__media) {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-skeleton);
+  }
+
+  :global(.codepen-card__media img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s var(--transition-timing-1);
+  }
+
+  :global(.codepen-card:hover .codepen-card__media img) {
+    transform: scale(1.035);
+  }
+
+  :global(.codepen-card__footer) {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 4.25rem;
+    padding: 0.9rem 1rem;
+  }
+
+  :global(.codepen-card__title) {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  :global(.codepen-card:hover .codepen-card__title) {
+    color: var(--color-accent);
+  }
+
+  :global(.codepen-card__source) {
+    flex: 0 0 auto;
+    margin-left: auto;
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+
+  :global(.codepen-card__source span) {
+    color: var(--color-accent);
+    font-size: 0.9rem;
+  }
+
+  :global(.codepen-card--placeholder .codepen-card__skeleton-line) {
+    flex: 1 1 auto;
+    width: auto;
+    height: 0.9rem;
+    border-radius: 999px;
+    background: var(--color-skeleton-shine);
+    animation: codepen-card-pulse 1.8s ease-in-out infinite;
+  }
+
+  :global(.codepen-card--placeholder .codepen-card__skeleton-source) {
+    flex: 0 0 3.75rem;
+    height: 0.65rem;
+    border-radius: 999px;
+    background: var(--color-skeleton-shine);
+    animation: codepen-card-pulse 1.8s ease-in-out 0.2s infinite;
+  }
+
+  :global(.codepen-card--placeholder .codepen-card__skeleton-media) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(110deg, var(--color-skeleton) 35%, var(--color-skeleton-shine) 50%, var(--color-skeleton) 65%);
+    background-size: 200% 100%;
+    animation: codepen-card-shimmer 1.8s linear infinite;
+  }
+
+  @keyframes codepen-card-pulse {
+    50% { opacity: 0.45; }
+  }
+
+  @keyframes codepen-card-shimmer {
+    to { background-position: -200% 0; }
+  }
+</style>

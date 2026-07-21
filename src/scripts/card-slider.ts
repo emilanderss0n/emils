@@ -58,13 +58,17 @@ export function initCardSlider(root: HTMLElement | Document = document): () => v
       const x = e.pageX - track.offsetLeft;
       track.scrollLeft = scrollLeft - (x - startX) * 1.5;
     }
+    function getCardStep(card: HTMLElement) {
+      const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
+      return card.offsetWidth + gap;
+    }
     function onPrevClick() {
       const card = track.querySelector<HTMLElement>(':scope > *');
-      if (card) track.scrollBy({ left: -(card.offsetWidth + 20) * 2, behavior: 'smooth' });
+      if (card) track.scrollBy({ left: -getCardStep(card) * 2, behavior: 'smooth' });
     }
     function onNextClick() {
       const card = track.querySelector<HTMLElement>(':scope > *');
-      if (card) track.scrollBy({ left: (card.offsetWidth + 20) * 2, behavior: 'smooth' });
+      if (card) track.scrollBy({ left: getCardStep(card) * 2, behavior: 'smooth' });
     }
 
     onScroll();
