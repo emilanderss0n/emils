@@ -1,6 +1,19 @@
 /* ── Foundation: base design tokens & reset ─────────── */
 @import './base.css';
 
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
 :root {
   color-scheme: dark;
   interpolate-size: allow-keywords;
@@ -50,7 +63,7 @@
   }
 
   .spacer-block {
-    height: 5rem;
+    height: 6rem;
     border-top: none;
     border-bottom: none;
     background: repeating-linear-gradient(45deg, transparent, var(--color-ghost-bg) 10px);
@@ -466,14 +479,6 @@
     .card {
       padding: 4rem;
 
-      .service-icon {
-        color: var(--color-accent);
-        margin-bottom: 1rem;
-      }
-
-      h3 {
-        margin-bottom: 0.75rem;
-      }
     }
   }
 
