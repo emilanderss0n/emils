@@ -1226,7 +1226,7 @@
             position: absolute;
             width: 8px;
             height: 8px;
-            background-color: var(--color-accent-glow);
+            background-color: var(--color-accent-2);
             opacity: 0;
             transform: translate(0, 0);
             transition: transform .4s ease-in-out .1s, opacity .2s;

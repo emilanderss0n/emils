@@ -26,7 +26,7 @@ html.lenis body {
   --color-text: #f1f3f9;
   --color-text-muted: #b0b4c8;
   --color-accent: #71ffd9;
-  --color-accent-2: #61837a3d;
+  --color-accent-2: rgb(from color-mix(in oklch, var(--color-accent) 30%, white) r g b / 10%);
   --color-accent-glow: rgb(from color-mix(in oklch, var(--color-accent) 50%, black) r g b / 15%);
   --color-ghost-bg: rgba(255, 255, 255, 0.05);
   --color-ghost-bg-hover: rgba(255, 255, 255, 0.10);
