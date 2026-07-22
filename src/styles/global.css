@@ -35,6 +35,7 @@ html.lenis body {
   --color-ghost-shadow: rgba(0, 0, 0, 0.10);
   --color-skeleton: rgba(255, 255, 255, 0.05);
   --color-skeleton-shine: rgba(255, 255, 255, 0.08);
+  --color-dark: rgb(0 0 0 / 30%);
   --box-shadow-nice: 0px 24.7928px 24px -15px light-dark(rgb(33 55 85 / 7%),rgb(33 55 85 / 0%)),0px 15.32523px 10.64212px -8px light-dark(rgb(100 120 172 / 8%),rgb(100 120 172 / 0%)),0px 6.04819px 3.59618px -3px light-dark(rgb(24 34 65 / 10%),rgb(24 34 65 / 0%));
 	--sm-breakpoint-padding: 1.5rem;
 	--md-breakpoint-padding: 2rem;
@@ -58,6 +59,12 @@ html.lenis body {
 }
 
 @layer util {
+  @property --captured-length {
+    syntax: "<length>";
+    initial-value: 0px;
+    inherits: true;
+  }
+
   .spacer {
     border-top: 1px solid var(--color-ghost-border);
     border-bottom: 1px solid var(--color-ghost-border);
@@ -68,6 +75,7 @@ html.lenis body {
     border-top: none;
     border-bottom: none;
     background: repeating-linear-gradient(45deg, transparent, var(--color-ghost-bg) 10px);
+    backdrop-filter: blur(20px);
 
     &.inline {
       border-left: none;
@@ -85,9 +93,7 @@ html.lenis body {
     position: relative;
     text-align: center;
     padding: 10rem 0;
-    border: 1px solid var(--color-ghost-border);
-    border-top: none;
-    border-bottom: none;
+    border: none;
 
     @media (max-width: 42.5rem) {
       padding: 10rem var(--sm-breakpoint-padding);
@@ -156,6 +162,7 @@ html.lenis body {
     gap: 0.85rem;
     padding: 2rem;
     border-bottom: 1px solid var(--color-ghost-border);
+    background: var(--color-dark);
 
     @media (max-width: 42.5rem) {
       flex-direction: column;
@@ -249,6 +256,8 @@ html.lenis body {
       .repo-category {
         padding: 1rem 2rem;
         position: relative;
+        background: var(--color-accent-glow);
+        backdrop-filter: blur(20px);
 
         &::before {
           content: "--";
@@ -388,9 +397,8 @@ html.lenis body {
     text-decoration: none;
     transition: color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, text-shadow 0.25s ease;
 
-    &:hover {
+    &:not(.nav-link--active):hover {
       color: var(--color-text);
-      background: var(--color-ghost-bg);
     }
   }
 
@@ -398,12 +406,25 @@ html.lenis body {
     color: var(--color-accent);
     position: relative;
 
+    &::before {
+      content: "";
+      position: absolute;
+      background: var(--color-text);
+      mask: linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%);
+      height: 1px;
+      opacity: 0.3;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+
     &::after {
       content: "";
       position: absolute;
-      background: var(--color-accent-glow);
-      height: 5px;
-      bottom: 0;
+      background: var(--color-text);
+      filter: blur(20px);
+      height: 7px;
+      bottom: -0.3rem;
       left: 0;
       width: 100%;
     }
@@ -431,6 +452,10 @@ html.lenis body {
       padding: 4rem;
 
     }
+  }
+
+  .about-section {
+    margin-top: 5rem;
   }
 
   .about-intro {
@@ -505,6 +530,8 @@ html.lenis body {
 
   .about-copy {
     padding: 3rem;
+    height: stretch;
+    background: var(--color-dark);
 
     @media (max-width: 42.5rem) {
       padding: 0;
