@@ -22,10 +22,6 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
   </nav>
 </collection-filter>
 
-<style>
-  /* Button styles are in global.css (need to be unscoped for dynamically-created buttons) */
-</style>
-
 <script>
   class CollectionFilter extends HTMLElement {
     #lock = false;

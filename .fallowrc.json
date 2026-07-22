@@ -1,6 +1,7 @@
 {
   "ignoreDependencies": [
     "@assets/emil-andersson-illustration.png",
+    "@assets/emil-andersson-illustration-2.png",
     "@assets/logo-2x.png"
   ],
   "dynamicallyLoaded": [

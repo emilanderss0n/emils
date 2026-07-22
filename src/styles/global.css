@@ -1,5 +1,6 @@
 /* ── Foundation: base design tokens & reset ─────────── */
 @import './base.css';
+@import './animations.css';
 
 html.lenis,
 html.lenis body {
@@ -19,14 +20,14 @@ html.lenis body {
   interpolate-size: allow-keywords;
   --color-bg: #000;
   --color-surface: rgba(18, 20, 30, 0.6);
-  --color-surface-solid: #141624;
+  --color-surface-solid: #161616;
   --color-border: rgba(255, 255, 255, 0.06);
   --color-border-hover: rgba(255, 255, 255, 0.12);
   --color-text: #f1f3f9;
   --color-text-muted: #b0b4c8;
   --color-accent: #71ffd9;
   --color-accent-2: #61837a3d;
-  --color-accent-glow: rgb(129 235 248 / 15%);
+  --color-accent-glow: rgb(from color-mix(in oklch, var(--color-accent) 50%, black) r g b / 15%);
   --color-ghost-bg: rgba(255, 255, 255, 0.05);
   --color-ghost-bg-hover: rgba(255, 255, 255, 0.10);
   --color-ghost-border: rgba(255, 255, 255, 0.10);
@@ -282,6 +283,14 @@ html.lenis body {
     .content {
       height: 100%;
     }
+
+    p {
+      transition: color .2s;
+    }
+
+    &:hover p {
+      color: var(--color-text);
+    }
   }
 
   .gradient-text {
@@ -400,77 +409,14 @@ html.lenis body {
     }
   }
 
-  .hero-scramble .scramble-seg {
-    white-space: nowrap;
-  }
-
-  .scramble .scramble-seg,
-  .scramble .scramble-sep {
-    opacity: 0;
-  }
-
-  .scramble .scrambling {
-    -webkit-text-fill-color: currentColor;
-  }
-
   .filter-hidden {
     display: none !important;
-  }
-
-  @keyframes filter-exit {
-    0%   { opacity: 1; transform: scale(1) translateZ(0); }
-    100% { opacity: 0; transform: scale(0.88) translateZ(0); }
-  }
-  @keyframes filter-enter {
-    0%   { opacity: 0; transform: translateY(24px) scale(0.94) translateZ(0); }
-    100% { opacity: 1; transform: translateY(0) scale(1) translateZ(0); }
-  }
-
-  .repo-card.card-exiting {
-    animation: filter-exit 0.2s ease-out both;
-    pointer-events: none;
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-  }
-
-  .repo-card.card-entering {
-    animation: filter-enter 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-    animation-delay: var(--enter-delay, 0ms);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-  }
-
-  .repo-card.card-entering:not(.card-entering),
-  .repo-card.card-exiting:not(.card-exiting) {
-    will-change: auto;
   }
 
   [data-filter-group] {
     transition: opacity 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
                 transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
                 max-height 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-  }
-
-  @keyframes group-exit {
-    0%   { opacity: 1; transform: translateY(0) translateZ(0); }
-    100% { opacity: 0; transform: translateY(-12px) translateZ(0); }
-  }
-
-  @keyframes group-enter {
-    0%   { opacity: 0; transform: translateY(-12px) translateZ(0); }
-    100% { opacity: 1; transform: translateY(0) translateZ(0); }
-  }
-
-  .group-exiting {
-    animation: group-exit 0.28s ease-out both;
-    pointer-events: none;
-  }
-
-  .group-entering {
-    animation: group-enter 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) both;
   }
 
   .services {
@@ -506,8 +452,8 @@ html.lenis body {
     display: block;
     width: 100%;
     height: auto;
-    border: 1px solid var(--color-ghost-border);
-    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-ghost-border);
+    opacity: 0.8;
   }
 
   .about-sidebar-socials {
@@ -580,11 +526,15 @@ html.lenis body {
   }
 
   .about-text {
-    margin-top: 1rem;
+    margin-top: 2rem;
+
+    p {
+      color: var(--color-text);
+    }
   }
 
   .about-call-to-action {
-    margin-top: 2rem;
+    margin-top: 4rem;
 
     .first-line {
       color: var(--color-text-muted);
@@ -654,135 +604,220 @@ html.lenis body {
     }
   }
 
-  /* ───────────────────────────────────────────────────
-  *   Entrance animations + staggered delays
-  * ─────────────────────────────────────────────────── */
-
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; }
-  }
-  @keyframes fade-down {
-    from { opacity: 0; transform: translateY(-16px); }
-    to   { opacity: 1; }
-  }
-  @keyframes fade-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-  @keyframes scale-in {
-    from { opacity: 0; transform: scale(0.92); }
-    to   { opacity: 1; }
-  }
-  @keyframes slide-in-left {
-    from { opacity: 0; transform: translateX(-20px); }
-    to   { opacity: 1; }
-  }
-  @keyframes slide-in-right {
-    from { opacity: 0; transform: translateX(20px); }
-    to   { opacity: 1; }
-  }
-
-  /* ── Staggered delay utility classes ── */
-  .anim-fade-up {
-    animation: fade-up 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  }
-  .anim-fade-down {
-    animation: fade-down 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  }
-  .anim-fade-in {
-    animation: fade-in 0.5s ease both;
-  }
-  .anim-scale-in {
-    animation: scale-in 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  }
-  .anim-slide-left {
-    animation: slide-in-left 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  }
-  .anim-slide-right {
-    animation: slide-in-right 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  }
-
-  /*
-  * Once an entrance animation ends, drop the leftover (identity) transform and
-  * compositing hint. A lingering `transform`/`will-change` turns the element into
-  * a backdrop root, which excludes the fixed hero video from the backdrop of any
-  * descendant using `backdrop-filter`. The `.anim-done` class is added on
-  * `animationend` (see BaseLayout). Placed after the utilities so it wins the cascade.
-  */
-  .anim-done {
-    animation: none;
-    transform: none;
-    will-change: auto;
-  }
-
-  /* Staggered delays (CSS custom property for per-element control) */
-  [style*="--anim-delay"] {
-    animation-delay: var(--anim-delay, 0ms);
-  }
-
-  /* ── Scroll-driven reveal (below-fold content) ── */
   .reveal-on-scroll {
-    opacity: 0;
-    transform: translateY(28px);
     transition: opacity 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
                 transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-  }
-  .reveal-on-scroll.is-revealed {
-    opacity: 1;
-    /* `none` (not translateY(0)) + no will-change so the settled element stops
-      being a backdrop root and lets children's backdrop-filter sample the video. */
-    transform: none;
-    will-change: auto;
   }
 
-  /* Reduced motion: instant reveal, no animation */
-  @media (prefers-reduced-motion: reduce) {
-    .hero-video {
-      transition: none;
+  .repo-card {
+    display: block;
+    color: var(--color-text);
+    text-decoration: none;
+    backdrop-filter: blur(0px);
+    transition: background-color 0.2s, color 0.2s, backdrop-filter 0.2s;
+  }
+
+  .repo-card:hover {
+    background: var(--color-ghost-bg);
+    backdrop-filter: blur(20px);
+    color: var(--color-text);
+  }
+
+  .repo-card h3 {
+    transition: color 0.2s;
+  }
+
+  .repo-card:hover h3 {
+    color: var(--color-accent);
+  }
+
+  .card-slider {
+    padding-bottom: 1rem;
+  }
+
+  .card-slider__title-main {
+    display: flex;
+    align-items: center;
+    gap: var(--adaptive-space-md);
+  }
+
+  .card-slider__link-anchor {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .card-slider__link-anchor:hover {
+    color: var(--color-accent);
+  }
+
+  .card-slider__viewport {
+    position: relative;
+  }
+
+  .card-slider__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-right: 1rem;
+  }
+
+  .slider-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    appearance: none;
+  }
+
+  .slider-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .slider-btn__icon {
+    display: block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    overflow: visible;
+  }
+
+  .card-slider__track {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    border-block: 1px solid var(--color-ghost-border);
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    cursor: grab;
+  }
+
+  .card-slider__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card-slider__track.cursor-grabbing {
+    cursor: grabbing;
+  }
+
+  .card-slider__track > * {
+    flex: 0 0 280px;
+    max-width: 320px;
+    scroll-snap-align: start;
+  }
+
+  .card-slider__track > .codepen-card ~ .codepen-card {
+    border-left: 1px solid var(--color-ghost-border);
+  }
+
+  @media (min-width: 640px) {
+    .card-slider__track > * {
+      flex-basis: 300px;
     }
-    .anim-fade-up,
-    .anim-fade-down,
-    .anim-fade-in,
-    .anim-scale-in,
-    .anim-slide-left,
-    .anim-slide-right {
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
-    .reveal-on-scroll {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
   }
 
-  /* ───────────────────────────────────────────────────
-  *   View Transition API — page-to-page animations
-  * ─────────────────────────────────────────────────── */
-  ::view-transition-old(root) {
-    animation: vt-exit 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
-  }
-  ::view-transition-new(root) {
-    animation: vt-enter 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  }
-
-  @keyframes vt-exit {
-    to { opacity: 0; transform: translateY(-12px); }
-  }
-  @keyframes vt-enter {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
+  .codepen-card {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: border-color 0.3s, background-color 0.3s;
   }
 
-  /* Custom transition names for hero elements (crossfade on navigation) */
-  .hero-title {
-    view-transition-name: hero-title;
+  .codepen-card:hover {
+    border-color: var(--color-ghost-border-hover);
+    background: var(--color-ghost-bg-hover);
+    color: var(--color-text);
   }
-  .hero-subtitle {
-    view-transition-name: hero-subtitle;
+
+  .codepen-card__media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-skeleton);
+  }
+
+  .codepen-card__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s var(--transition-timing-1);
+  }
+
+  .codepen-card:hover .codepen-card__media img {
+    transform: scale(1.035);
+  }
+
+  .codepen-card__footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 4.25rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .codepen-card__title {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  .codepen-card:hover .codepen-card__title {
+    color: var(--color-accent);
+  }
+
+  .codepen-card__source {
+    flex: 0 0 auto;
+    margin-left: auto;
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+
+  .codepen-card__source span {
+    color: var(--color-accent);
+    font-size: 0.9rem;
+  }
+
+  .codepen-card--placeholder .codepen-card__skeleton-line {
+    flex: 1 1 auto;
+    width: auto;
+    height: 0.9rem;
+    border-radius: 999px;
+    background: var(--color-skeleton-shine);
+  }
+
+  .codepen-card--placeholder .codepen-card__skeleton-source {
+    flex: 0 0 3.75rem;
+    height: 0.65rem;
+    border-radius: 999px;
+    background: var(--color-skeleton-shine);
+  }
+
+  .codepen-card--placeholder .codepen-card__skeleton-media {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(110deg, var(--color-skeleton) 35%, var(--color-skeleton-shine) 50%, var(--color-skeleton) 65%);
+    background-size: 200% 100%;
   }
 }

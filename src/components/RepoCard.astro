@@ -29,25 +29,3 @@ const { repo, delay } = Astro.props;
     </div>
   </div>
 </a>
-
-<style>
-  .repo-card {
-    display: block;
-    color: var(--color-text);
-    text-decoration: none;
-    transition: background-color 0.2s, color 0.2s;
-  }
-
-  .repo-card:hover {
-    background: var(--color-ghost-bg);
-    color: var(--color-text);
-  }
-
-  .repo-card h3 {
-    transition: color 0.2s;
-  }
-
-  .repo-card:hover h3 {
-    color: var(--color-accent);
-  }
-</style>
