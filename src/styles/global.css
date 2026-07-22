@@ -75,6 +75,11 @@ html.lenis body {
     }
   }
 
+  .spacer-line {
+    margin: 0;
+    max-width: 100%;
+  }
+
   .hero-section {
     position: relative;
     text-align: center;
