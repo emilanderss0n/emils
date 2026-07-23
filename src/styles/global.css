@@ -490,11 +490,6 @@ html.lenis body {
 
     .card {
       padding: 4rem;
-      transition: backdrop-filter .3s;
-
-      &:hover {
-        backdrop-filter: blur(30px);
-      }
     }
   }
 

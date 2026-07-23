@@ -88,7 +88,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
                   <h3 class="repo-category small-title anim-fade-up" style={`--anim-delay: ${headingDelay}ms`}>{cat.label}</h3>
                   <div class="spacer-block"></div>
                 </div>
-                <div class="grid main-grid" style="--grid-max-col-count: 3; gap: 0;">
+                <div class="grid main-grid" style="--grid-max-col-count: 3; gap: 1px;">
                   {catRepos.map((repo, i) => (
                     <RepoCard repo={repo} delay={firstCardDelay + i * CARD_STEP} />
                   ))}
@@ -105,7 +105,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
   <section class="spacer-block"></section>
 
   <div class="spacer spacer-1">
-    <div class="services grid" style="--grid-max-col-count: 2; gap: 0;">
+    <div class="services grid" style="--grid-max-col-count: 2; gap: 1px;">
       <div class="card dotted-card flex-column gap-md" style="--color: rgb(255, 126, 206);">
         <div class="flex gap-md">
           <div class="icon-square sm">

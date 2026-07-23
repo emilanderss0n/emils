@@ -2475,13 +2475,13 @@
 
 	.dotted-card {
 		--color-bg: color-mix(in srgb, var(--color) 20%, transparent);
-		background-image: linear-gradient(135deg, var(--color-bg) 0%, var(--color-dark) 50%);
-		background-color: var(--color-dark);
+		background-image: linear-gradient(135deg, var(--color-bg) 0%, transparent 50%);
+		background-color: #000;
 		background-origin: border-box;
 		position: relative;
 		padding: 1rem;
 		display: grid;
-		gap: 0.5rem;
+		gap: 1rem;
 
 		&::after {
 			content: '';
