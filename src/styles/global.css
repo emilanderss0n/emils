@@ -78,6 +78,10 @@ html.lenis body {
   .spacer {
     border-top: 1px solid var(--color-ghost-border);
     border-bottom: 1px solid var(--color-ghost-border);
+
+    @media (max-width: 84.375rem) {
+      border: none;
+    }
   }
 
   .spacer-block {
@@ -91,6 +95,7 @@ html.lenis body {
       border-left: none;
       border-right: none;
       border-top: 1px solid var(--color-ghost-border);
+      margin: 0;
     }
   }
 
@@ -102,11 +107,11 @@ html.lenis body {
   .hero-section {
     position: relative;
     text-align: center;
-    padding: 10rem 0;
+    padding: 10rem 1rem;
     border: none;
 
     @media (max-width: 42.5rem) {
-      padding: 10rem var(--sm-breakpoint-padding);
+      padding: 8rem 1rem;
     }
   }
 
@@ -181,37 +186,25 @@ html.lenis body {
 
     &::before {
       --corner-size: 0.5rem;
+      --corner-size-horizontal: 1.4rem;
       --corner-weight: 2px;
-      --background-color: var(--color-accent-3);
+      --background-color: var(--color-accent-tint);
       content: "";
       position: absolute;
       z-index: -1;
-      inset: 5px;
-      transition: --background-color .3s;
+      inset: 7px;
 
       background:
       no-repeat left top / var(--corner-size) var(--corner-weight),
       no-repeat left top / var(--corner-weight) var(--corner-size),
-      no-repeat right top / var(--corner-size) var(--corner-weight),
-      no-repeat right top / var(--corner-weight) var(--corner-size),
       no-repeat left bottom / var(--corner-size) var(--corner-weight),
-      no-repeat left bottom / var(--corner-weight) var(--corner-size),
-      no-repeat right bottom / var(--corner-size) var(--corner-weight),
-      no-repeat right bottom / var(--corner-weight) var(--corner-size);
+      no-repeat left bottom / var(--corner-weight) var(--corner-size);
 
       background-image:
       linear-gradient(var(--background-color) 0 0),
       linear-gradient(var(--background-color) 0 0),
       linear-gradient(var(--background-color) 0 0),
-      linear-gradient(var(--background-color) 0 0),
-      linear-gradient(var(--background-color) 0 0),
-      linear-gradient(var(--background-color) 0 0),
-      linear-gradient(var(--background-color) 0 0),
       linear-gradient(var(--background-color) 0 0);
-    }
-
-    &:hover::before {
-      --background-color: var(--color-accent);
     }
 
     .section-title-main-text {
@@ -237,6 +230,17 @@ html.lenis body {
 
   .filter-nav {
     flex-wrap: wrap;
+
+    .divider {
+      height: 16px;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--color-ghost-border-hover);
+
+      @media (max-width: 42.5rem) {
+        display: none;
+      }
+    }
 
     @media (max-width: 42.5rem) {
       display: grid;
@@ -357,6 +361,11 @@ html.lenis body {
     &:hover {
       color: var(--color-text);
     }
+
+    &.bright {
+      background: var(--color-accent-tint);
+      color: var(--color-accent);
+    }
   }
 
   .badge--muted {
@@ -382,6 +391,7 @@ html.lenis body {
         width: 100%;
         justify-content: center;
         text-wrap: nowrap;
+        backdrop-filter: blur(20px);
       }
 
       &::after {
@@ -474,9 +484,17 @@ html.lenis body {
     column-rule: inset 1px var(--color-ghost-border);
     row-rule: inset 1px var(--color-ghost-border);
 
+    @media (max-width: 84.375rem) {
+        margin: 0 var(--sm-breakpoint-padding);
+    }
+
     .card {
       padding: 4rem;
+      transition: backdrop-filter .3s;
 
+      &:hover {
+        backdrop-filter: blur(30px);
+      }
     }
   }
 
@@ -727,12 +745,6 @@ html.lenis body {
 
   .card-slider {
     padding-bottom: 1rem;
-  }
-
-  .card-slider__title-main {
-    display: flex;
-    align-items: center;
-    gap: var(--adaptive-space-md);
   }
 
   .card-slider__link-anchor {

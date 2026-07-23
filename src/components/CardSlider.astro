@@ -16,8 +16,10 @@ const sliderId = 'slider-' + Math.random().toString(36).slice(2, 8);
 
 <div class="card-slider">
   <div class="section-title">
-    <div class="card-slider__title-main section-title-main-text">
-      {icon && <ToolIcon name={icon} class="section-title-icon icon-sm anim-fade-up" style="--anim-delay: 1400ms" />}
+    <div class="card-slider__title-main section-title-main-text flex gap-md">
+      <div class="icon-square sm">
+        {icon && <ToolIcon name={icon} class="section-title-icon icon-sm anim-fade-up" style="--anim-delay: 1400ms" />}
+      </div>
       <h2 class="anim-fade-up" style="--anim-delay: 1400ms">{title}</h2>
     </div>
     <div class="card-slider__link anim-fade-up" style="--anim-delay: 1520ms">

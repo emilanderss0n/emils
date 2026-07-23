@@ -386,6 +386,10 @@
         margin: 0 auto;
         max-width: var(--full-width);
         border: 1px solid var(--color-ghost-border);
+
+        @media (max-width: 84.375rem) {
+            margin: 0 var(--sm-breakpoint-padding);
+        }
     }
 
     .flex-default {
@@ -1221,44 +1225,37 @@
             pointer-events: none;
         }
 
-        &::before, &::after {
+        &::before {
+            --corner-size: 0.4rem;
+            --corner-weight: 2px;
+            --background-color: var(--color-accent-2);
             content: "";
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background-color: var(--color-accent);
+            z-index: -1;
+            inset: 10px;
+            transition: --background-color .4s, opacity .4s, inset .2s;
             opacity: 0;
-            transform: translate(0, 0);
-            transition: transform .4s ease-in-out .1s, opacity .2s;
+            background:
+            no-repeat left top / var(--corner-size) var(--corner-weight),
+            no-repeat left top / var(--corner-weight) var(--corner-size),
+            no-repeat right bottom / var(--corner-size) var(--corner-weight),
+            no-repeat right bottom / var(--corner-weight) var(--corner-size);
+            background-image:
+            linear-gradient(var(--background-color) 0 0),
+            linear-gradient(var(--background-color) 0 0),
+            linear-gradient(var(--background-color) 0 0),
+            linear-gradient(var(--background-color) 0 0);
         }
 
-        &::before {
-            top: 0;
-            left: 0;
-            clip-path: polygon(0 0, 100% 0, 0 100%);         
-        }
-
-        &::after {
-            bottom: 0;
-            right: 0;
-            clip-path: polygon(100% 0, 100% 100%, 0 100%);
+        &:hover::before {
+            --background-color: var(--color-accent-tint);
+            opacity: 1;
+            inset: -3px;
         }
 
         &:hover {
             color: var(--color-text);
             filter: brightness(1.2);
-
-            &::before, &::after {
-                opacity: 1;
-            }
-
-            &::before {
-                transform: translate(-30%, -30%);
-            }
-
-            &::after {
-                transform: translate(30%, 30%);
-            }
         }
 
         &:active {
@@ -2147,11 +2144,7 @@
             align-items: center;
             pointer-events: auto;
 
-            @media (max-width: 90rem) {
-                padding: 0 0 0 var(--md-breakpoint-padding);
-            }
-
-            @media (max-width: 47.5rem) {
+            @media (max-width: 84.375rem) {
                 padding: 0 0 0 var(--sm-breakpoint-padding);
             }
 
@@ -2482,19 +2475,13 @@
 
 	.dotted-card {
 		--color-bg: color-mix(in srgb, var(--color) 20%, transparent);
-		background-image: linear-gradient(135deg, var(--color-bg) 0%, transparent 50%);
-		background-color: var(--color-ghost-shadow);
+		background-image: linear-gradient(135deg, var(--color-bg) 0%, var(--color-dark) 50%);
+		background-color: var(--color-dark);
 		background-origin: border-box;
 		position: relative;
-        backdrop-filter: blur(30px);
 		padding: 1rem;
 		display: grid;
 		gap: 0.5rem;
-
-        @media (prefers-color-scheme: light) {
-            box-shadow: inset 0 0 10px rgb(255 255 255 / 79%), var(--box-shadow-nice);
-            border: none;
-        }
 
 		&::after {
 			content: '';
@@ -3433,16 +3420,20 @@
         border-top: 1px solid var(--color-ghost-border);
 
         @media (max-width: 42.5rem) {
-            padding: 0 0.3rem 3rem;
+            padding: 3rem 0.3rem 3rem;
         }
 
         .cont {
             max-width: var(--full-width);
             margin: 0 auto;
 
+            @media (max-width: 84.375rem) {
+                margin: 0 var(--sm-breakpoint-padding);
+            }
+
             @media (max-width: 42.5rem) {
                 flex-direction: column-reverse;
-                gap: 3rem;
+                gap: 2rem;
             }
         }
 
@@ -3452,7 +3443,7 @@
             padding: 5rem 0 2rem;
             text-align: center;
             container-type: inline-size;
-            background: var(--color-accent-glow);
+            border-top: 1px solid var(--color-ghost-border);
             margin-top: 3rem;
 
             @media (max-width: 42.5rem) {
@@ -3461,10 +3452,11 @@
 
             & > h1 {
                 font-size: 13rem;
-                background: repeating-linear-gradient(45deg, transparent, var(--color-ghost-border) 10px);
+                background: repeating-linear-gradient(45deg, transparent, var(--color-ghost-border) 6px);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
+                mask-image: linear-gradient(to right, #00000000 0%, #000000 6%, #00000049 94%, #00000000 100%);
             }
         }
     }
