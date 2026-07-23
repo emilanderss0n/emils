@@ -803,8 +803,8 @@ html.lenis body {
   }
 
   .card-slider__track > * {
-    flex: 0 0 280px;
-    max-width: 320px;
+    flex: 0 0 auto;
+    max-width: 420px;
     scroll-snap-align: start;
   }
 
@@ -814,7 +814,7 @@ html.lenis body {
 
   @media (min-width: 640px) {
     .card-slider__track > * {
-      flex-basis: 300px;
+      flex-basis: 400px;
     }
   }
 
