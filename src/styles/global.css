@@ -25,10 +25,12 @@ html.lenis body {
   --color-border-hover: rgba(255, 255, 255, 0.12);
   --color-text: #f1f3f9;
   --color-text-muted: #b0b4c8;
+  --color-text-accent: color-mix(in srgb, var(--color-accent) 30%, var(--color-text-muted));
   --color-accent: #71ffd9;
   --color-accent-2: rgb(from color-mix(in oklch, var(--color-accent) 30%, white) r g b / 10%);
-  --color-accent-3: rgb(from color-mix(in oklch, var(--color-accent) 40%, black) 10% 20% 20% / 100%);
+  --color-accent-3: #222;
   --color-accent-glow: rgb(from color-mix(in oklch, var(--color-accent) 50%, black) r g b / 15%);
+  --color-accent-tint: rgb(from color-mix(in oklch, var(--color-accent) 50%, black) r g b / 55%);
   --color-ghost-bg: rgba(255, 255, 255, 0.05);
   --color-ghost-bg-hover: rgba(255, 255, 255, 0.10);
   --color-ghost-border: rgba(255, 255, 255, 0.10);
@@ -148,13 +150,12 @@ html.lenis body {
 
   .hero-video-tint {
     z-index: 2;
-    background: linear-gradient(to bottom, rgba(8, 9, 13, 0.1) 0%, rgba(8, 9, 13, 0.66) 100%);
+    background: linear-gradient(to bottom, rgb(0 0 0 / 10%) 0%, var(--color-accent-tint) 100%);
   }
 
   .hero-video-vignette {
     z-index: 3;
-    background: rgba(8, 9, 13, 0.82);
-    -webkit-mask-image: radial-gradient(ellipse 92% 80% at 50% 34%, transparent 30%, rgba(0, 0, 0, 0.3) 62%, rgba(0, 0, 0, 0.9) 100%);
+    background: rgb(0 0 0 / 82%);
     mask-image: radial-gradient(ellipse 92% 80% at 50% 34%, transparent 30%, rgba(0, 0, 0, 0.3) 62%, rgba(0, 0, 0, 0.9) 100%);
   }
 
@@ -282,6 +283,7 @@ html.lenis body {
         position: relative;
         background: var(--color-accent-glow);
         backdrop-filter: blur(20px);
+        color: var(--color-text-accent);
 
         &::before {
           content: "--";
