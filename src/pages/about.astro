@@ -15,9 +15,11 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
 
 <BaseLayout title="About" description="Emil Andersson — UI Designer, Web Developer, 3D Artist, Video Editor">
   <section class="about-section">
-    <div class="section-title">
+    <div class="section-title anim-fade-down" style="--anim-delay: 40ms">
       <div class="flex gap-md section-title-main-text">
-        <ToolIcon name="UI Design" class="section-title-icon icon-sm" />
+        <div class="icon-square sm">
+          <ToolIcon name="UI Design" class="section-title-icon icon-sm" />
+        </div>
         <h2>About Emil</h2>
       </div>
       <span class="badge bright">Creative generalist</span>
@@ -85,7 +87,7 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
               3D art, I'm poised to make a meaningful impact.
             </p>
           </div>
-          <div class="about-call-to-action">
+          <div class="about-call-to-action anim-fade-up" style="--anim-delay: 520ms">
             <div class="flex gap-md">
               <div class="icon-square sm">
                 <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -40,7 +40,10 @@ html.lenis body {
   --color-skeleton-shine: rgba(255, 255, 255, 0.08);
   --color-dark: rgb(0 0 0 / 30%);
   --inset-shadow-accent: inset 0 0 20px var(--color-accent-glow);
-  --box-shadow-nice: 0px 24.7928px 24px -15px light-dark(rgb(33 55 85 / 7%),rgb(33 55 85 / 0%)),0px 15.32523px 10.64212px -8px light-dark(rgb(100 120 172 / 8%),rgb(100 120 172 / 0%)),0px 6.04819px 3.59618px -3px light-dark(rgb(24 34 65 / 10%),rgb(24 34 65 / 0%));
+  --box-shadow-nice: 
+    0px 24.7928px 24px -15px light-dark(rgb(33 55 85 / 7%), rgb(33 55 85 / 0%)),
+    0px 15.32523px 10.64212px -8px light-dark(rgb(100 120 172 / 8%), rgb(100 120 172 / 0%)),
+    0px 6.04819px 3.59618px -3px light-dark(rgb(24 34 65 / 10%),rgb(24 34 65 / 0%));
 	--sm-breakpoint-padding: 1.5rem;
 	--md-breakpoint-padding: 2rem;
 	--lg-breakpoint-padding: 3rem;
@@ -792,13 +795,14 @@ html.lenis body {
 
   .card-slider__track {
     display: flex;
-    gap: 0;
+    gap: 1rem;
     overflow-x: auto;
     border-block: 1px solid var(--color-ghost-border);
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     cursor: grab;
+    padding: 1rem 0;
   }
 
   .card-slider__track::-webkit-scrollbar {
@@ -815,10 +819,6 @@ html.lenis body {
     scroll-snap-align: start;
   }
 
-  .card-slider__track > .codepen-card ~ .codepen-card {
-    border-left: 1px solid var(--color-ghost-border);
-  }
-
   @media (min-width: 640px) {
     .card-slider__track > * {
       flex-basis: 400px;
@@ -829,17 +829,15 @@ html.lenis body {
     display: block;
     width: 100%;
     overflow: hidden;
-    border: 0;
     border-radius: 0;
-    background: var(--color-surface);
+    background: var(--color-accent-2);
     color: var(--color-text);
     text-decoration: none;
     transition: border-color 0.3s, background-color 0.3s;
   }
 
   .codepen-card:hover {
-    border-color: var(--color-ghost-border-hover);
-    background: var(--color-ghost-bg-hover);
+    background: var(--color-accent-tint);
     color: var(--color-text);
   }
 
@@ -847,7 +845,6 @@ html.lenis body {
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    background: var(--color-skeleton);
   }
 
   .codepen-card__media img {
@@ -856,10 +853,7 @@ html.lenis body {
     height: 100%;
     object-fit: cover;
     transition: transform 0.45s var(--transition-timing-1);
-  }
-
-  .codepen-card:hover .codepen-card__media img {
-    transform: scale(1.035);
+    mask: radial-gradient(#000, #25252596);
   }
 
   .codepen-card__footer {

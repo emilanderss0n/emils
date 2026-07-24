@@ -48,11 +48,11 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
 
   <section>
     <div class="section-title">
-      <div class="flex gap-md section-title-main-text">
+      <div class="flex gap-md section-title-main-text anim-fade-up" style="--anim-delay: 1400ms">
         <div class="icon-square sm">
-          <ToolIcon name="GitHub" class="section-title-icon icon-sm anim-fade-up" style="--anim-delay: 1400ms" />
+          <ToolIcon name="GitHub" class="section-title-icon icon-sm" />
         </div>
-        <h2 class="anim-fade-up" style="--anim-delay: 1400ms">GitHub Projects</h2>
+        <h2>GitHub Projects</h2>
       </div>
       <div class="anim-fade-up" style="--anim-delay: 1520ms; width: 100%;">
         <CollectionFilter target="#repo-grid-grouped" filterKey="lang" allLabel="All Languages" />
@@ -106,7 +106,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
 
   <div class="spacer spacer-1">
     <div class="services grid" style="--grid-max-col-count: 2; gap: 1px;">
-      <div class="card dotted-card flex-column gap-md" style="--color: rgb(255, 126, 206);">
+      <div class="card dotted-card flex-column gap-md reveal-on-scroll" style="--color: rgb(255, 126, 206); --reveal-delay: 0ms; --service-tilt: -3deg;">
         <div class="flex gap-md">
           <div class="icon-square sm">
             <ToolIcon name="UI Design" class="service-icon icon-sm" />
@@ -117,7 +117,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
           Thoughtful interfaces that turn complex ideas into clear, intuitive experiences.
         </p>
       </div>
-      <div class="card dotted-card flex-column gap-md" style="--color: rgb(126, 244, 255);">
+      <div class="card dotted-card flex-column gap-md reveal-on-scroll" style="--color: rgb(126, 244, 255); --reveal-delay: 80ms; --service-tilt: 3deg;">
         <div class="flex gap-md">
           <div class="icon-square sm">
             <ToolIcon name="Web Development" class="service-icon icon-sm" />
@@ -128,7 +128,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
           Fast, responsive websites and applications built around your goals, content, and audience.
         </p>
       </div>
-      <div class="card dotted-card flex-column gap-md" style="--color: rgb(181, 255, 111);">
+      <div class="card dotted-card flex-column gap-md reveal-on-scroll" style="--color: rgb(181, 255, 111); --reveal-delay: 160ms; --service-tilt: -2deg;">
         <div class="flex gap-md">
           <div class="icon-square sm">
             <ToolIcon name="3D Art" class="service-icon icon-sm" />
@@ -139,7 +139,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
           Digital worlds, assets, and visual concepts shaped with a mix of craft and curiosity.
         </p>
       </div>
-      <div class="card dotted-card flex-column gap-md" style="--color: rgb(177, 126, 244);">
+      <div class="card dotted-card flex-column gap-md reveal-on-scroll" style="--color: rgb(177, 126, 244); --reveal-delay: 240ms; --service-tilt: 2deg;">
         <div class="flex gap-md">
           <div class="icon-square sm">
             <ToolIcon name="Video Editing" class="service-icon icon-sm" />

@@ -127,6 +127,7 @@
   .reveal-on-scroll {
     opacity: 0;
     transform: translateY(28px);
+    transition-delay: var(--reveal-delay, 0ms);
     will-change: transform, opacity;
     backface-visibility: hidden;
   }
@@ -135,6 +136,81 @@
     opacity: 1;
     transform: none;
     will-change: auto;
+  }
+
+  .services {
+    perspective: 1400px;
+
+    .dotted-card.reveal-on-scroll {
+      overflow: hidden;
+      transform: translate3d(0, 3rem, 0) rotateX(10deg) rotateZ(var(--service-tilt, 0deg)) scale(0.96);
+      transform-origin: 50% 100%;
+      transition:
+        opacity 0.75s cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.8s ease;
+      transition-delay: var(--reveal-delay, 0ms);
+      box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 0%);
+      backface-visibility: hidden;
+    }
+
+    .dotted-card.reveal-on-scroll::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      inset: -20% 0;
+      pointer-events: none;
+      background: linear-gradient(
+        105deg,
+        transparent 25%,
+        color-mix(in srgb, var(--color) 38%, transparent) 50%,
+        transparent 75%
+      );
+      opacity: 0;
+      transform: translateX(-120%) skewX(-18deg);
+      transition:
+        opacity 0.25s ease,
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: calc(var(--reveal-delay, 0ms) + 180ms);
+    }
+
+    .dotted-card.reveal-on-scroll > * {
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(0.75rem);
+      transition:
+        opacity 0.5s ease,
+        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: calc(var(--reveal-delay, 0ms) + 160ms);
+    }
+
+    .dotted-card.reveal-on-scroll > *:nth-child(2) {
+      transition-delay: calc(var(--reveal-delay, 0ms) + 260ms);
+    }
+
+    .dotted-card.reveal-on-scroll.is-revealed {
+      transform: none;
+      box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 22%);
+
+      &::before {
+        opacity: 1;
+        transform: translateX(120%) skewX(-18deg);
+      }
+
+      > * {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .dotted-card .service-icon {
+      transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dotted-card.is-revealed .service-icon {
+      transform: rotate(360deg);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -154,6 +230,13 @@
     }
 
     .reveal-on-scroll {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .services .dotted-card.reveal-on-scroll > *,
+    .services .dotted-card.reveal-on-scroll::before {
       opacity: 1;
       transform: none;
       transition: none;
