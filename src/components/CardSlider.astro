@@ -15,14 +15,14 @@ const sliderId = 'slider-' + Math.random().toString(36).slice(2, 8);
 ---
 
 <div class="card-slider">
-  <div class="section-title">
-    <div class="card-slider__title-main section-title-main-text flex gap-md anim-fade-up" style="--anim-delay: 1400ms">
+  <div class="section-title" data-reveal="unfold">
+    <div class="card-slider__title-main section-title-main-text flex gap-md" data-reveal style="--reveal-delay: 260ms">
       <div class="icon-square sm">
         {icon && <ToolIcon name={icon} class="section-title-icon icon-sm" />}
       </div>
       <h2>{title}</h2>
     </div>
-    <div class="card-slider__link anim-fade-up" style="--anim-delay: 1520ms">
+    <div class="card-slider__link" data-reveal style="--reveal-delay: 360ms">
       {link && (
         <a href={link} target="_blank" rel="noopener noreferrer"
           class="card-slider__link-anchor effect-underline">
@@ -33,7 +33,16 @@ const sliderId = 'slider-' + Math.random().toString(36).slice(2, 8);
   </div>
 
   <div class="card-slider__viewport">
-    <div id={sliderId} class="card-slider__track" data-slider="true">
+    <!-- Slides sit outside the viewport horizontally, so each one reveals as it
+         is scrolled or dragged into frame. -->
+    <div
+      id={sliderId}
+      class="card-slider__track"
+      data-slider="true"
+      data-reveal-items="card"
+      data-reveal-stagger="70"
+      style="--reveal-base: 200ms;"
+    >
       <slot />
     </div>
 

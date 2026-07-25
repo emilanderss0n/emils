@@ -8,6 +8,9 @@ interface Props {
   description?: string;
   ogImage?: string;
   ogType?: 'website' | 'article';
+  /** Delay (ms) applied to reveals that are already on screen at load, so they
+   *  queue up behind the page's own intro instead of firing on top of it. */
+  revealIntro?: number;
 }
 
 const {
@@ -15,6 +18,7 @@ const {
   description = 'Personal portfolio — curated content from across the web',
   ogImage = '/og/default.png',
   ogType = 'website',
+  revealIntro = 0,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -24,7 +28,7 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-reveal-intro={revealIntro || undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -54,28 +58,23 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..500&display=swap" rel="stylesheet" />
-    <script>
+    <script is:inline>
+      // Hide reveal targets before the first paint — the module below takes it
+      // from here. If it never runs (bundle blocked, JS error) drop the flag
+      // again so no content is left stranded at opacity 0.
       (function setupScrollReveal() {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-revealed');
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
-        );
-        function observeAll() {
-          document.querySelectorAll('.reveal-on-scroll:not(.is-revealed)').forEach((el) => observer.observe(el));
-        }
-        observeAll();
-        document.addEventListener('astro:page-load', observeAll);
-        document.addEventListener('astro:after-swap', observeAll);
+        var root = document.documentElement;
+        root.setAttribute('data-reveal-ready', '');
+        window.addEventListener('load', function () {
+          window.setTimeout(function () {
+            if (!root.hasAttribute('data-reveal-active')) {
+              root.removeAttribute('data-reveal-ready');
+            }
+          }, 2000);
+        });
       })();
-
+    </script>
+    <script>
       // Entrance animations (.anim-fade/-scale/-slide) use `fill: both`, which
       // leaves a lingering transform on the element. That transform makes the
       // element a "backdrop root", cutting the fixed hero video out of the
@@ -124,11 +123,11 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
     </main>
 
     <footer transition:persist>
-      <div class="cont flex space-between">
-        <div class="copyright">
+      <div class="cont flex space-between" data-reveal-stagger="90">
+        <div class="copyright" data-reveal>
           <p>&copy; {new Date().getFullYear()} Emil. Built with Astro.</p>
         </div>
-        <div class="filter-nav flex items-center gap-md">
+        <div class="filter-nav flex items-center gap-md" data-reveal>
           <!-- Social links -->
           {
             [
@@ -153,7 +152,7 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
         </div>
       </div>
       <div class="deco-text">
-        <h1>EMIL / MOXO</h1>
+        <h1 data-reveal="deco">EMIL / MOXO</h1>
       </div>
     </footer>
   </body>
@@ -161,8 +160,13 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 
 <script>
   import { initLenis } from '@scripts/lenis';
+  import { initScrollReveal } from '@scripts/scroll-reveal';
 
   initLenis();
+
+  initScrollReveal();
+  document.addEventListener('astro:page-load', initScrollReveal);
+  document.addEventListener('astro:after-swap', initScrollReveal);
 </script>
 
 <script is:inline>

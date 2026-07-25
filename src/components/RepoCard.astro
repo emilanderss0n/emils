@@ -4,13 +4,12 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   repo: CollectionEntry<'repos'>;
-  delay?: number;
 }
 
-const { repo, delay } = Astro.props;
+const { repo } = Astro.props;
 ---
 
-<a href={repo.data.url} target="_blank" rel="noopener noreferrer" class="card repo-card anim-scale-in" data-lang={repo.data.language} data-category={repo.data.category} style={delay != null ? `--anim-delay: ${delay}ms` : undefined}>
+<a href={repo.data.url} target="_blank" rel="noopener noreferrer" class="card repo-card" data-lang={repo.data.language} data-category={repo.data.category}>
   <div class="content flex-column gap-md">
     <h3>
       {repo.data.name}

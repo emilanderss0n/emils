@@ -31,7 +31,7 @@
         display: flex;
         flex-direction: column;
         min-block-size: 100svh;
-
+        
         @media (min-width: 62.5rem) {
             scrollbar-color: var(--color-surface) var(--color-text);
             scrollbar-width: thin;

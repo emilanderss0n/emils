@@ -24,6 +24,8 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
 </collection-filter>
 
 <script>
+  import { settleReveal } from '@scripts/scroll-reveal';
+
   class CollectionFilter extends HTMLElement {
     #lock = false;
 
@@ -101,7 +103,7 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
           const exitPromises = exiting.map(
             (card) =>
               new Promise<void>((resolve) => {
-                card.classList.remove('anim-fade-up', 'anim-fade-down', 'anim-fade-in', 'anim-scale-in', 'anim-slide-left', 'anim-slide-right');
+                card.classList.remove('anim-fade-up', 'anim-fade-down', 'anim-fade-in', 'anim-scale-in');
                 card.classList.add('card-exiting');
                 card.addEventListener('animationend', () => {
                   card.classList.add('filter-hidden');
@@ -115,9 +117,16 @@ const safeKey = filterKey.replace(/[^a-zA-Z0-9_-]/g, '');
 
           // 2. Enter with stagger
           entering.forEach((card, i) => {
-            card.classList.remove('anim-fade-up', 'anim-fade-down', 'anim-fade-in', 'anim-scale-in', 'anim-slide-left', 'anim-slide-right');
+            card.classList.remove('anim-fade-up', 'anim-fade-down', 'anim-fade-in', 'anim-scale-in');
             card.style.opacity = '0';
             card.classList.remove('filter-hidden');
+            // The filter animation (.card-entering below) owns the entrance
+            // from here on, not the reveal transition — mark both revealed
+            // and settled so the card doesn't drop back to opacity 0 once
+            // .card-entering is removed, and doesn't sit with a live
+            // transition-property it will never use again.
+            card.setAttribute('data-revealed', '');
+            settleReveal(card);
             card.style.setProperty('--enter-delay', `${i * 55}ms`);
             card.classList.add('card-entering');
             card.addEventListener('animationend', () => {

@@ -278,8 +278,8 @@ html.lenis body {
   }
 
   .main-grid {
-    column-rule: inset 1px var(--color-ghost-border);
-    row-rule: inset 1px var(--color-ghost-border);
+    column-rule: inset 2px var(--color-ghost-border);
+    row-rule: inset 2px var(--color-ghost-border);
   }
 
   #repo-grid-grouped {
@@ -485,8 +485,8 @@ html.lenis body {
     margin: 0 auto;
     border-left: 1px solid var(--color-ghost-border);
     border-right: 1px solid var(--color-ghost-border);
-    column-rule: inset 1px var(--color-ghost-border);
-    row-rule: inset 1px var(--color-ghost-border);
+    column-rule: inset 2px var(--color-ghost-border);
+    row-rule: inset 2px var(--color-ghost-border);
 
     @media (max-width: 84.375rem) {
         margin: 0 var(--sm-breakpoint-padding);
@@ -507,7 +507,7 @@ html.lenis body {
     gap: 0;
     align-items: start;
     padding: 0;
-    column-rule: 1px solid var(--color-ghost-border);
+    column-rule: 2px solid var(--color-ghost-border);
 
     @media (max-width: 42.5rem) {
       grid-template-columns: 1fr;
@@ -672,11 +672,6 @@ html.lenis body {
       border: 0;
       border-radius: var(--border-radius-md);
     }
-  }
-
-  .reveal-on-scroll {
-    transition: opacity 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
-                transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
   .repo-card {

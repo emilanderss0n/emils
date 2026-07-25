@@ -26,7 +26,7 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
     </div>
 
       <div class="about-intro">
-        <div class="about-sidebar anim-slide-left" style="--anim-delay: 100ms">
+        <div class="about-sidebar anim-fade-up" style="--anim-delay: 100ms">
           <div class="flex-column about-sidebar-profile">
             <Image src={profileImage} alt="Emil Andersson" class="about-image" densities={[1, 2]} format="webp" />
             <div class="flex about-sidebar-socials">
@@ -47,7 +47,7 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
               ))}
             </div>
           </div>
-          <div class="pt-8 about-sidebar-toolset anim-fade-up " style="--anim-delay: 400ms">
+          <div class="pt-8 about-sidebar-toolset" data-reveal>
             <h2>Preferred Toolset</h2>
             <div class="flex flex-wrap gap-md about-sidebar-toolset-icons">
               {tools.map((tool) => (
@@ -60,11 +60,16 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
           </div>
         </div>
 
-        <div class="about-copy anim-slide-right" style="--anim-delay: 180ms">
+        <div class="about-copy anim-fade-up" style="--anim-delay: 180ms">
           <h1>Emil Andersson</h1>
           <p class="gradient-text">UI Designer / Web Developer / 3D Artist / Video Editor</p>
 
-          <div class="about-text flex-column gap-md anim-fade-in" style="--anim-delay: 300ms">
+          <div
+            class="about-text flex-column gap-md"
+            style="--reveal-base: 320ms;"
+            data-reveal-items
+            data-reveal-stagger="110"
+          >
             <p>
               Hello, I was born in Sweden 1989 in a small town named <strong class="text-[var(--color-text)]">Skänninge</strong>.
               I'm a simple guy that loves to be creative. There is something very fullfilling with writing code or creating art. Sometimes you help people with your creations, without even realizing it.
@@ -87,7 +92,7 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
               3D art, I'm poised to make a meaningful impact.
             </p>
           </div>
-          <div class="about-call-to-action anim-fade-up" style="--anim-delay: 520ms">
+          <div class="about-call-to-action" data-reveal="blur-up">
             <div class="flex gap-md">
               <div class="icon-square sm">
                 <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -104,11 +109,11 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
         </div>
       </div>
 
-      <section class="spacer-block inline"></section>
+      <section class="spacer-block inline" data-reveal="expand"></section>
 
       <div class="music-layout">
           <!-- Artist info card -->
-          <div class="music-profile flex-column gap-md anim-scale-in" style="--anim-delay: 500ms">
+          <div class="music-profile flex-column gap-md" data-reveal>
             <div class="music-profile-icon icon-square">
               <svg class="icon-md" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.655 17.31c-.217.355-.677.467-1.032.25-2.828-1.725-6.39-2.115-10.58-1.16-.395.095-.795-.15-.89-.545-.095-.395.15-.795.545-.89 4.58-1.04 8.515-.595 11.707 1.355.355.215.467.68.25 1.03v-.04zm1.49-3.325c-.27.445-.85.585-1.295.315-3.24-1.99-8.18-2.565-12.01-1.405-.495.15-1.015-.105-1.17-.605-.155-.498.11-1.018.605-1.17 4.38-1.325 9.805-.68 13.555 1.59.445.27.585.855.315 1.295v-.02zm.13-3.475C15.38 8.19 8.715 7.945 4.05 9.36c-.605.185-1.245-.14-1.43-.745-.185-.605.14-1.245.745-1.43 5.36-1.63 12.685-1.315 17.585 1.905.55.33.73 1.035.4 1.585-.33.55-1.035.73-1.585.4l-.02-.015z"/></svg>
             </div>
@@ -130,7 +135,7 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
           </div>
 
           <!-- Spotify embed -->
-          <div class="spotify-embed anim-slide-right" style="--anim-delay: 600ms">
+          <div class="spotify-embed" data-reveal style="--reveal-delay: 140ms">
             <iframe
               data-testid="embed-iframe"
               style="border-radius:15px; display:block"
@@ -146,7 +151,7 @@ const tools = ['Blender', 'Photoshop', 'VS Code', 'Chrome', 'GitHub'];
         </div>
       </div>
 
-      <section class="spacer-block"></section>
+      <section class="spacer-block" data-reveal="expand"></section>
 
   </section>
 

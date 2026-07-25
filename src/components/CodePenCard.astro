@@ -30,6 +30,8 @@ const { slug, title, user, src } = Astro.props;
 </div>
 
 <script>
+  import { observeReveal } from '@scripts/scroll-reveal';
+
   let observer: IntersectionObserver | null = null;
 
   function initCodePenCards() {
@@ -64,7 +66,16 @@ const { slug, title, user, src } = Astro.props;
             '<h3 class="codepen-card__title">' + title + '</h3>' +
             '<span class="codepen-card__source">codepen.io <span aria-hidden="true">↗</span></span>' +
             '</div>';
+          // Carry the scroll-reveal state over to the real card — hydration
+          // happens ahead of the reveal trigger, so it still animates in.
+          const variant = ph.getAttribute('data-reveal');
+          if (variant !== null) {
+            a.setAttribute('data-reveal', variant);
+            a.style.setProperty('--reveal-delay', ph.style.getPropertyValue('--reveal-delay'));
+            if (ph.hasAttribute('data-revealed')) a.setAttribute('data-revealed', '');
+          }
           ph.replaceWith(a);
+          if (variant !== null) observeReveal(a);
           observer!.unobserve(ph);
         });
       },
