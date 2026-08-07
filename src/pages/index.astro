@@ -47,7 +47,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
   </section>
 
   <section>
-    <div class="section-title" data-reveal="unfold">
+    <div class="section-title">
       <div class="flex gap-md section-title-main-text" data-reveal style="--reveal-delay: 260ms">
         <div class="icon-square sm">
           <ToolIcon name="GitHub" class="section-title-icon icon-sm" />
@@ -68,23 +68,24 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
             { key: 'other', label: 'Other Projects' },
           ];
 
-          // Each group reveals on its own as you scroll past it, so the cards
-          // only need a stagger relative to their own heading.
+          // The wrapper box (border, background) is static; only the heading
+          // text and each group's card grid reveal as you scroll past it.
           return categories.map((cat) => {
             const catRepos = repos.filter((r) => r.data.category === cat.key);
             if (catRepos.length === 0) return null;
 
             return (
               <div class="repo-group flex-column" data-filter-group>
-                <div class="repo-category-wrapper flex" data-reveal="unfold">
-                  <h3 class="repo-category small-title" data-reveal style="--reveal-delay: 200ms">
-                    {cat.label}
+                <div class="repo-category-wrapper flex">
+                  <h3 class="repo-category small-title">
+                    <span class="repo-category-text" data-reveal>{cat.label}</span>
                   </h3>
                   <div class="spacer-block"></div>
                 </div>
                 <div
                   class="grid main-grid"
                   style="--grid-max-col-count: 3; gap: 1px; --reveal-base: 160ms;"
+                  data-reveal="fade"
                   data-reveal-items="card"
                   data-reveal-stagger="55"
                 >
@@ -107,6 +108,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
     <div
       class="services grid"
       style="--grid-max-col-count: 2; gap: 1px;"
+      data-reveal="fade"
       data-reveal-items="lift"
       data-reveal-stagger="90"
     >

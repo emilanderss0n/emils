@@ -293,10 +293,14 @@ html.lenis body {
         backdrop-filter: blur(20px);
         color: var(--color-text-accent);
 
-        &::before {
-          content: "--";
-          margin-right: 0.5rem;
-          color: var(--color-accent);
+        .repo-category-text {
+          display: inline-block;
+
+          &::before {
+            content: "--";
+            margin-right: 0.5rem;
+            color: var(--color-accent);
+          }
         }
       }
       

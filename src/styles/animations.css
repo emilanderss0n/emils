@@ -178,6 +178,14 @@
       translate: 0 1.75rem;
     }
 
+    /* Opacity only, no translate/scale. For containers whose children carry
+       their own motion already (e.g. .main-grid, .services — their
+       column-rule/row-rule would otherwise render at full opacity from first
+       paint while data-reveal-items hides the cards inside them, making the
+       grid lines look like they're missing rather than not-yet-revealed). */
+    [data-reveal="fade"] {
+    }
+
     [data-reveal="fade-down"] {
       translate: 0 -1.25rem;
     }
@@ -199,16 +207,6 @@
       --reveal-duration: 0.75s;
       translate: 0 2rem;
       scale: 0.97;
-    }
-
-    /* Panel deploying downward — title bars and category headings. The bar
-       opens from its top edge while its contents stay hidden, then the text
-       rises into the finished bar on its own delay. */
-    [data-reveal="unfold"] {
-      --reveal-duration: 0.55s;
-      --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
-      transform-origin: 50% 0;
-      scale: 1 0.35;
     }
 
     /* Decorative band opening out from its centre line. */

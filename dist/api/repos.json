@@ -5,7 +5,7 @@
     "description": "Client mod for SPT (EFT) that overhauls the main menu in the game",
     "url": "https://github.com/emilanderss0n/SPT-Menu-Overhaul",
     "homepage": "https://forge.sp-tarkov.com/mod/1775/wtt-menu-overhaul",
-    "stars": 3,
+    "stars": 5,
     "language": "C#",
     "topics": [
       "game-development",
@@ -31,6 +31,22 @@
     "category": "web-development",
     "pushedAt": "2026-06-02T20:29:56Z",
     "createdAt": "2024-11-24T20:59:51Z"
+  },
+  {
+    "name": "BlackCore",
+    "fullName": "emilanderss0n/BlackCore",
+    "description": "New variants of weapon mods and new weapon variants/skins (SPT Mod)",
+    "url": "https://github.com/emilanderss0n/BlackCore",
+    "homepage": "",
+    "stars": 1,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-04-23T03:12:51Z",
+    "createdAt": "2024-05-31T13:53:22Z"
   },
   {
     "name": "TGC",
@@ -76,7 +92,7 @@
       "website"
     ],
     "category": "web-development",
-    "pushedAt": "2026-07-24T21:28:37Z",
+    "pushedAt": "2026-07-25T12:09:06Z",
     "createdAt": "2025-03-15T02:30:20Z"
   },
   {
@@ -190,22 +206,6 @@
     "category": "game-development",
     "pushedAt": "2025-04-18T16:33:10Z",
     "createdAt": "2024-05-31T13:46:12Z"
-  },
-  {
-    "name": "BlackCore",
-    "fullName": "emilanderss0n/BlackCore",
-    "description": "New variants of weapon mods and new weapon variants/skins (SPT Mod)",
-    "url": "https://github.com/emilanderss0n/BlackCore",
-    "homepage": "",
-    "stars": 0,
-    "language": "TypeScript",
-    "topics": [
-      "game-development",
-      "game-mod"
-    ],
-    "category": "game-development",
-    "pushedAt": "2025-04-23T03:12:51Z",
-    "createdAt": "2024-05-31T13:53:22Z"
   },
   {
     "name": "TMS",
