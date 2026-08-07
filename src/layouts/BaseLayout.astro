@@ -1,7 +1,7 @@
 ---
 import '@styles/global.css';
 import ToolIcon from '@components/ToolIcon.astro';
-import heroVideo from '@assets/14677859_1920_1080_30fps.mp4';
+import heroVideo from '@assets/14676802_1920_1080_30fps.mp4';
 
 interface Props {
   title: string;
@@ -59,9 +59,6 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..500&display=swap" rel="stylesheet" />
     <script is:inline>
-      // Hide reveal targets before the first paint — the module below takes it
-      // from here. If it never runs (bundle blocked, JS error) drop the flag
-      // again so no content is left stranded at opacity 0.
       (function setupScrollReveal() {
         var root = document.documentElement;
         root.setAttribute('data-reveal-ready', '');
@@ -75,11 +72,6 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
       })();
     </script>
     <script>
-      // Entrance animations (.anim-fade/-scale/-slide) use `fill: both`, which
-      // leaves a lingering transform on the element. That transform makes the
-      // element a "backdrop root", cutting the fixed hero video out of the
-      // backdrop for any descendant using backdrop-filter (buttons, cards, etc.).
-      // Once the animation ends, flag it so CSS can clear the transform.
       document.addEventListener('animationend', function (e) {
         var t = e.target;
         if (t instanceof HTMLElement && /(^|\s)anim-(fade|scale|slide)/.test(t.className)) {
@@ -173,18 +165,34 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
   (function () {
     var video = document.querySelector('.hero-video');
     var source = video && video.querySelector('source[data-src]');
-    if (!video || !source) return;
-    var show = function () { video.classList.add('is-loaded'); };
+    // .site-video-bg persists across client-side navigations, so guard
+    // against setting this controller up more than once per tab session.
+    if (!video || !source || video.dataset.revealControllerAttached) return;
+    video.dataset.revealControllerAttached = 'true';
+
+    var heroSection = document.querySelector('.hero-section');
+    var loaded = false;
+    var scrolledPast = !heroSection;
+
+    var updateVisibility = function () {
+      video.classList.toggle('is-loaded', loaded && scrolledPast);
+    };
+    var markLoaded = function () {
+      loaded = true;
+      updateVisibility();
+    };
+
     var loadVideo = function () {
       if (source.src) return;
       var src = source.dataset.src;
       if (!src) return;
       source.src = src;
       video.load();
-      if (video.readyState >= 3) { show(); return; }
-      video.addEventListener('canplaythrough', show, { once: true });
-      window.setTimeout(show, 3000);
+      if (video.readyState >= 3) { markLoaded(); return; }
+      video.addEventListener('canplaythrough', markLoaded, { once: true });
+      window.setTimeout(markLoaded, 3000);
     };
+
     var schedule = function () {
       if ('requestIdleCallback' in window) {
         window.requestIdleCallback(loadVideo, { timeout: 2000 });
@@ -192,7 +200,23 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
         window.setTimeout(loadVideo, 0);
       }
     };
+
     if (document.readyState === 'complete') schedule();
     else window.addEventListener('load', schedule, { once: true });
+
+    // On the homepage, only show the video past the midpoint of the hero
+    // section, fading it back out if the visitor scrolls back above it.
+    if (heroSection) {
+      // Measured on every check rather than cached once, since web fonts
+      // swapping in can still reflow the hero section's height after this
+      // script first runs.
+      var checkScroll = function () {
+        var triggerY = heroSection.offsetTop + heroSection.offsetHeight / 2;
+        scrolledPast = window.scrollY >= triggerY;
+        updateVisibility();
+      };
+      window.addEventListener('scroll', checkScroll, { passive: true });
+      checkScroll();
+    }
   })();
 </script>

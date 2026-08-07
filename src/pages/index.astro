@@ -28,6 +28,8 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
 <BaseLayout title="Home" description="Emil Andersson — developer portfolio & projects" revealIntro={900}>
   <section class="hero-section flex-column gap-lg">
 
+    <canvas id="glcanvas" class="hero-media hero-shader-canvas" aria-hidden="true"></canvas>
+
     <h1 class="hero-scramble scramble font-display" data-scramble-speed="1.3" aria-label="Hi, I'm Emil / Moxo">
       <span class="scramble-seg" data-text="Hi, I'm">Hi, I'm</span> <span class="scramble-seg gradient-text" data-text="Emil">Emil</span> <span class="scramble-sep">/</span> <span class="scramble-seg gradient-text" data-text="Moxo">Moxo</span>
     </h1>
@@ -112,7 +114,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
       data-reveal-items="lift"
       data-reveal-stagger="90"
     >
-      <div class="card dotted-card flex-column gap-md" style="--color: rgb(255, 126, 206);">
+      <div class="card dotted-card flex-column gap-md">
         <div class="flex gap-md">
           <div class="icon-square sm">
             <ToolIcon name="UI Design" class="service-icon icon-sm" />
@@ -123,7 +125,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
           Thoughtful interfaces that turn complex ideas into clear, intuitive experiences.
         </p>
       </div>
-      <div class="card dotted-card flex-column gap-md" style="--color: rgb(126, 244, 255);">
+      <div class="card dotted-card flex-column gap-md">
         <div class="flex gap-md">
           <div class="icon-square sm">
             <ToolIcon name="Web Development" class="service-icon icon-sm" />
@@ -134,7 +136,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
           Fast, responsive websites and applications built around your goals, content, and audience.
         </p>
       </div>
-      <div class="card dotted-card flex-column gap-md" style="--color: rgb(181, 255, 111);">
+      <div class="card dotted-card flex-column gap-md">
         <div class="flex gap-md">
           <div class="icon-square sm">
             <ToolIcon name="3D Art" class="service-icon icon-sm" />
@@ -145,7 +147,7 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
           Digital worlds, assets, and visual concepts shaped with a mix of craft and curiosity.
         </p>
       </div>
-      <div class="card dotted-card flex-column gap-md" style="--color: rgb(177, 126, 244);">
+      <div class="card dotted-card flex-column gap-md">
         <div class="flex gap-md">
           <div class="icon-square sm">
             <ToolIcon name="Video Editing" class="service-icon icon-sm" />
@@ -227,4 +229,246 @@ const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.s
     // Fallback: run sequence even if video never fires canplaythrough
     window.setTimeout(startSequence, 3000);
   }
+</script>
+
+<script is:inline>
+  // Glowing wireframe torus, sized to .hero-section (not the full viewport)
+  // so it stays behind the heading instead of stretching edge to edge.
+  // #glcanvas isn't persisted across navigations, so the loop is cancelled
+  // on astro:before-swap to avoid an orphaned rAF once the canvas is gone.
+  (function () {
+    const canvas = document.getElementById('glcanvas');
+    if (!canvas || canvas.dataset.glInitialized) return;
+    canvas.dataset.glInitialized = 'true';
+
+    const gl = canvas.getContext('webgl');
+
+    if (!gl) {
+      console.error('WebGL not supported');
+      return;
+    }
+
+    // Vertex Shader
+    const vsSource = `
+      attribute vec4 aVertexPosition;
+      void main() {
+          gl_Position = aVertexPosition;
+      }
+    `;
+
+    // Fragment Shader
+    const fsSource = `
+      precision highp float;
+      uniform vec2 u_resolution;
+      uniform float u_time;
+      uniform vec3 u_accent;
+
+      void main() {
+          // Normalize pixel coordinates (from 0 to 1)
+          vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+
+          // Remap to centered coordinates, adjust aspect ratio
+          float aspect = u_resolution.x / u_resolution.y;
+          vec2 p = uv * 2.0 - 1.0;
+          p.x *= aspect;
+
+          // Shift the shape up to match reference (half visible at top).
+          // Applied before the zoom below so the ring's centre stays pinned
+          // to the same spot in the hero no matter how the zoom adapts.
+          p.y += 0.8;
+
+          // Zoom in so the ring reads larger. The visible half-width is
+          // zoom * aspect, and the ring's outer edge sits at
+          // radius + thickness = 2.1 — so a flat 0.8 let the lobes run off
+          // the left/right edges on anything narrower than a ~3:1 canvas.
+          // Scale down just enough to keep the whole ring inside instead,
+          // and only when the container is actually too narrow for 0.8.
+          float zoom = max(0.8, 2.45 / aspect);
+          p *= zoom;
+
+          // Parameters for the fake torus
+          float radius = 1.6;
+          float thickness = 0.5;
+
+          // Polar coordinates
+          float r = length(p);
+          float a = atan(p.y, p.x);
+
+          // Distance to the ring center
+          float dist = abs(r - radius);
+
+          // Create curved lines simulating a 3D wireframe
+          // The angle 'a' defines position around the ring
+          // The radius 'r' warps the lines to simulate depth/curvature
+          float warp = sin(r * 4.0 - u_time * 0.5) * 0.3;
+
+          // Base frequency of lines
+          float lineFreq = 80.0;
+
+          // Generate sine wave pattern
+          float lines = sin((a + warp) * lineFreq + u_time * 2.0);
+
+          // Sharpen lines and make them thinner
+          lines = smoothstep(0.85, 1.0, lines);
+
+          // Mask lines to only appear within the thickness of the ring
+          // Soft mask for a glowing edge
+          float mask = smoothstep(thickness, 0.0, dist);
+
+          // Core glow independent of lines
+          float coreGlow = 0.05 / (dist * dist + 0.05);
+
+          // Combine lines and mask
+          float pattern = lines * mask;
+
+          // Ring gradient built from --color-accent so the hero tracks the
+          // site token instead of the unrelated blue/purple pair it used to
+          // hardcode. The second stop is the same accent pushed toward deep
+          // cyan, which keeps the sweep inside the accent's hue family.
+          vec3 color1 = u_accent;
+          vec3 color2 = mix(u_accent, vec3(0.0, 0.35, 0.85), 0.7);
+
+          // Mix colors based on angle to create gradient along the ring
+          vec3 baseColor = mix(color1, color2, sin(a * 2.0 + u_time * 0.5) * 0.5 + 0.5);
+
+          // Add white highlights to the lines themselves
+          vec3 lineColor = mix(baseColor, vec3(1.0), 0.4);
+
+          // Final color composition
+          vec3 finalColor = lineColor * pattern * 2.5 + baseColor * coreGlow * 1.5;
+
+          // Fade out at the bottom edges to blend into black background
+          finalColor *= smoothstep(1.5, -0.5, p.y);
+
+          // Global fade out based on distance to center to prevent sharp cuts
+          finalColor *= smoothstep(3.0, 1.0, r);
+
+          // Safety fade at the very left/right edges. The zoom above already
+          // keeps the ring inside the canvas, so this only needs to cover the
+          // sliver outside it — starting at 0.7 would have dimmed the lobes
+          // themselves (they now reach ~0.86 of the half-width).
+          float edgeX = abs(uv.x - 0.5) * 2.0;
+          finalColor *= 1.0 - smoothstep(0.88, 1.0, edgeX);
+
+          // Carry the glow in the alpha channel instead of painting an opaque
+          // rectangle. Writing alpha 1.0 everywhere made the canvas a solid
+          // black box that ended at the section's edges and read as a hard
+          // vertical seam against the full-viewport .hero-video-tint either
+          // side of it. Alpha is the brightest channel, so every RGB component
+          // is <= alpha and the output is already valid premultiplied alpha,
+          // which is what WebGL's default premultipliedAlpha: true expects.
+          float alpha = clamp(max(finalColor.r, max(finalColor.g, finalColor.b)), 0.0, 1.0);
+          gl_FragColor = vec4(finalColor, alpha);
+      }
+    `;
+
+    // Compile Shader Function
+    function loadShader(gl, type, source) {
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    }
+
+    // Initialize Shader Program
+    const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
+    const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+    const shaderProgram = gl.createProgram();
+    gl.attachShader(shaderProgram, vertexShader);
+    gl.attachShader(shaderProgram, fragmentShader);
+    gl.linkProgram(shaderProgram);
+
+    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+      console.error('Program link error:', gl.getProgramInfoLog(shaderProgram));
+    }
+
+    // Setup Geometry (Full Screen Quad)
+    const positions = new Float32Array([
+      -1.0, 1.0,
+       1.0, 1.0,
+      -1.0, -1.0,
+       1.0, -1.0,
+    ]);
+
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+    // Get Locations
+    const vertexPosition = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
+    const resolutionLocation = gl.getUniformLocation(shaderProgram, 'u_resolution');
+    const timeLocation = gl.getUniformLocation(shaderProgram, 'u_time');
+    const accentLocation = gl.getUniformLocation(shaderProgram, 'u_accent');
+
+    // Resolve --color-accent to plain RGB so the shader palette follows the
+    // token. Bounced through a probe element's computed style rather than
+    // parsed by hand, so any CSS colour syntax the token might use later
+    // (hex, color-mix(), oklch()) still comes back as rgb().
+    function readAccent() {
+      const fallback = [0.443, 1.0, 0.851]; // #71ffd9
+      const raw = getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-accent').trim();
+      if (!raw) return fallback;
+      const probe = document.createElement('span');
+      probe.style.cssText = 'position:absolute;visibility:hidden';
+      probe.style.color = raw;
+      document.body.appendChild(probe);
+      const parts = getComputedStyle(probe).color.match(/[\d.]+/g);
+      probe.remove();
+      if (!parts || parts.length < 3) return fallback;
+      return [parts[0] / 255, parts[1] / 255, parts[2] / 255];
+    }
+
+    const accent = readAccent();
+
+    // Resize Handling
+    function resizeCanvasToDisplaySize(canvas) {
+      const displayWidth = canvas.clientWidth;
+      const displayHeight = canvas.clientHeight;
+
+      if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+        canvas.width = displayWidth;
+        canvas.height = displayHeight;
+        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+      }
+    }
+
+    let rafId = 0;
+
+    // Render Loop
+    function render(time) {
+      resizeCanvasToDisplaySize(gl.canvas);
+
+      gl.clearColor(0.0, 0.0, 0.0, 0.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+
+      gl.useProgram(shaderProgram);
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      gl.vertexAttribPointer(vertexPosition, 2, gl.FLOAT, false, 0, 0);
+      gl.enableVertexAttribArray(vertexPosition);
+
+      // Set Uniforms
+      gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
+      gl.uniform1f(timeLocation, time * 0.001); // Convert to seconds
+      gl.uniform3f(accentLocation, accent[0], accent[1], accent[2]);
+
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+      rafId = requestAnimationFrame(render);
+    }
+
+    rafId = requestAnimationFrame(render);
+
+    document.addEventListener('astro:before-swap', function stop() {
+      cancelAnimationFrame(rafId);
+      document.removeEventListener('astro:before-swap', stop);
+    });
+  })();
 </script>
