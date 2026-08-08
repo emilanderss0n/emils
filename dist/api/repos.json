@@ -21,7 +21,7 @@
     "description": "Website for retrieving details about items, quests, crafts, and more from Single Player Tarkov",
     "url": "https://github.com/emilanderss0n/tarkynator",
     "homepage": "https://tarkynator.com",
-    "stars": 2,
+    "stars": 3,
     "language": "JavaScript",
     "topics": [
       "gaming",
@@ -92,7 +92,7 @@
       "website"
     ],
     "category": "web-development",
-    "pushedAt": "2026-08-07T08:33:44Z",
+    "pushedAt": "2026-08-08T12:00:18Z",
     "createdAt": "2025-03-15T02:30:20Z"
   },
   {
