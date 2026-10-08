@@ -44,10 +44,22 @@
 		}
 	}
 
+	/* The stills are taller than the live stage, but capped so a wide phone's still does not
+	   turn into a tower; the card grows with the still past the narrowest phones, and the
+	   resize stays inside at 320px. */
 	.stage {
+		--obj-w: clamp(10rem, 48cqi, 14rem);
+		--grow: 1.22;
+		--w-max: 51;
+
 		width: min(100%, 30rem);
+		max-height: 26rem;
 		margin-top: 1rem;
 		aspect-ratio: 4 / 5;
+	}
+
+	.stage-code {
+		inset: auto auto 5% 6%;
 	}
 
 	/* On the smaller stills the selected layer sits higher; keep the hand on it. */
@@ -114,6 +126,8 @@
 	--shade: oklch(0% 0 0 / 0.5);
 	--highlight: oklch(100% 0 0 / 0.06);
 	--obj-w: clamp(10rem, 42cqi, 18rem);
+	--grow: 1.3;
+	--w-max: 55;
 	--move: 800ms var(--ease-out);
 	--fade: 400ms var(--ease-out);
 	--dots: radial-gradient(circle, var(--heading) 1.1px, transparent 1.7px) 0 0 / 7px 7px;
@@ -1057,11 +1071,15 @@
 		transition-delay: 200ms;
 	}
 
-	/* The phone still has no room for the window beside the code: a smaller card, top
-	   right, over the code's bottom left. */
+	/* The phone still has no room for the window beside the code: the card sits top right
+	   above the code's bottom left, shrunk a little on the narrowest stills. */
 	.service & {
 		.stage-object {
-			transform: translate(22cqi, -18.5cqi) scale(0.85);
+			transform: translate(18cqi, -18.5cqi) scale(0.85);
+
+			@container (min-width: 22rem) {
+				transform: translate(22cqi, -18.5cqi);
+			}
 		}
 
 		.stage-window {
@@ -1227,7 +1245,7 @@
 	.service & {
 		--img-off: 26%;
 		--push: 1.9;
-		--lift: -15cqi;
+		--lift: -2.5rem;
 		--mon-w: min(82cqi, var(--push) * (var(--obj-w) - 1.25rem));
 	}
 
@@ -1359,8 +1377,8 @@
 
 	30%,
 	40% {
-		--size: 1.3;
-		--w: 55;
+		--size: var(--grow);
+		--w: var(--w-max);
 	}
 
 	51%,
