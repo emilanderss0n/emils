@@ -1,50 +1,53 @@
 ---
 import '@styles/global.css';
-import ToolIcon from '@components/ToolIcon.astro';
-import heroVideo from '@assets/14676802_1920_1080_30fps.mp4';
+import SiteHeader from '@components/SiteHeader.astro';
+import SiteFooter from '@components/SiteFooter.astro';
 
 interface Props {
-  title: string;
+  /** Page name; the home page leaves it out to get the full site title. */
+  title?: string;
   description?: string;
   ogImage?: string;
   ogType?: 'website' | 'article';
-  /** Delay (ms) applied to reveals that are already on screen at load, so they
-   *  queue up behind the page's own intro instead of firing on top of it. */
-  revealIntro?: number;
+  /** True when the page opens with the dark hero (the header adapts to it). */
+  overHero?: boolean;
 }
 
 const {
   title,
-  description = 'Personal portfolio — curated content from across the web',
+  description = 'Emil Andersson (Moxo) is a UI designer, web developer, 3D artist and video editor in Tranås, Sweden, making web apps, tools and game mods.',
   ogImage = '/og/default.png',
   ogType = 'website',
-  revealIntro = 0,
+  overHero = false,
 } = Astro.props;
 
+const siteName = 'Emil / Moxo';
+const fullTitle = title ? `${title} — ${siteName}` : `${siteName} — UI designer & developer`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
-const fullTitle = `${title} - Emil / Moxo`;
-const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 ---
 
 <!doctype html>
-<html lang="en" data-reveal-intro={revealIntro || undefined}>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Lets CSS hide text that scripts will animate in (see text-scramble.css). -->
+    <script is:inline>document.documentElement.dataset.js = '';</script>
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f6f6f9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
-    <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:site_name" content="Emil / Moxo" />
+    <meta property="og:site_name" content={siteName} />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
@@ -54,169 +57,26 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- Tektur — Google Fonts, weights 400–500 for headings -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..500&display=swap" rel="stylesheet" />
-    <script is:inline>
-      (function setupScrollReveal() {
-        var root = document.documentElement;
-        root.setAttribute('data-reveal-ready', '');
-        window.addEventListener('load', function () {
-          window.setTimeout(function () {
-            if (!root.hasAttribute('data-reveal-active')) {
-              root.removeAttribute('data-reveal-ready');
-            }
-          }, 2000);
-        });
-      })();
-    </script>
-    <script>
-      document.addEventListener('animationend', function (e) {
-        var t = e.target;
-        if (t instanceof HTMLElement && /(^|\s)anim-(fade|scale|slide)/.test(t.className)) {
-          t.classList.add('anim-done');
-        }
-      });
-    </script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" />
   </head>
   <body>
-    <div class="site-video-bg" aria-hidden="true" transition:persist>
-      <video class="hero-video" autoplay muted loop playsinline preload="none">
-        <source data-src={heroVideo} type="video/mp4" />
-      </video>
-      <div class="hero-video-tint"></div>
-      <div class="hero-video-vignette"></div>
-    </div>
-    <header transition:persist>
-      <div class="cont">
-        <a href="/" class="logo">
-          <h1>Emil <span>/ Moxo</span></h1>
-        </a>
-        <nav aria-label="Primary">
-          <ul class="nav-pill flex">
-            <li>
-              <a href="/"
-                aria-current={currentPath === '/' ? 'page' : undefined}
-                class:list={['nav-link', currentPath === '/' ? 'nav-link--active' : '']}>Home</a>
-            </li>
-            <li>
-              <a href="/about"
-                aria-current={currentPath === '/about' ? 'page' : undefined}
-                class:list={['nav-link', currentPath === '/about' ? 'nav-link--active' : '']}>About</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-    <main>
+    <SiteHeader overHero={overHero} />
+    <main id="top">
       <slot />
     </main>
+    <SiteFooter />
 
-    <footer transition:persist>
-      <div class="cont flex space-between" data-reveal-stagger="90">
-        <div class="copyright" data-reveal>
-          <p>&copy; {new Date().getFullYear()} Emil. Built with Astro.</p>
-        </div>
-        <div class="filter-nav flex items-center gap-md" data-reveal>
-          <!-- Social links -->
-          {
-            [
-              { name: 'X',          href: 'https://x.com/bobemil_sw13',            title: 'X (Twitter)' },
-              { name: 'GitHub',     href: 'https://github.com/emilanderss0n',     title: 'GitHub' },
-              { name: 'CodePen',    href: 'https://codepen.io/emilandersson',     title: 'CodePen' },
-              { name: 'ArtStation', href: 'https://www.artstation.com/emils-graphics', title: 'ArtStation' },
-              { name: 'Spotify',    href: 'https://open.spotify.com/artist/5fLAJ1k3aPNR5akavV7gzD?si=JsokA6jwROOmdjrIWG50ng', title: 'Spotify' },
-            ].map((link) => (
-              <a
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={link.title}
-                class="btn sm"
-              >
-                <ToolIcon name={link.name} class="icon-sm" />
-                <span class="sr-only">{link.title}</span>
-              </a>
-            ))
-          }
-        </div>
-      </div>
-      <div class="deco-text">
-        <h1 data-reveal="deco">EMIL / MOXO</h1>
-      </div>
-    </footer>
+    <script>
+      import { initHeader } from '@scripts/header';
+      import { initCopyEmail } from '@scripts/copy-email';
+      import { initSmoothScroll } from '@scripts/smooth-scroll';
+
+      initSmoothScroll();
+      initHeader();
+      initCopyEmail();
+    </script>
   </body>
 </html>
-
-<script>
-  import { initLenis } from '@scripts/lenis';
-  import { initScrollReveal } from '@scripts/scroll-reveal';
-
-  initLenis();
-
-  initScrollReveal();
-  document.addEventListener('astro:page-load', initScrollReveal);
-  document.addEventListener('astro:after-swap', initScrollReveal);
-</script>
-
-<script is:inline>
-  (function () {
-    var video = document.querySelector('.hero-video');
-    var source = video && video.querySelector('source[data-src]');
-    // .site-video-bg persists across client-side navigations, so guard
-    // against setting this controller up more than once per tab session.
-    if (!video || !source || video.dataset.revealControllerAttached) return;
-    video.dataset.revealControllerAttached = 'true';
-
-    var heroSection = document.querySelector('.hero-section');
-    var loaded = false;
-    var scrolledPast = !heroSection;
-
-    var updateVisibility = function () {
-      video.classList.toggle('is-loaded', loaded && scrolledPast);
-    };
-    var markLoaded = function () {
-      loaded = true;
-      updateVisibility();
-    };
-
-    var loadVideo = function () {
-      if (source.src) return;
-      var src = source.dataset.src;
-      if (!src) return;
-      source.src = src;
-      video.load();
-      if (video.readyState >= 3) { markLoaded(); return; }
-      video.addEventListener('canplaythrough', markLoaded, { once: true });
-      window.setTimeout(markLoaded, 3000);
-    };
-
-    var schedule = function () {
-      if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(loadVideo, { timeout: 2000 });
-      } else {
-        window.setTimeout(loadVideo, 0);
-      }
-    };
-
-    if (document.readyState === 'complete') schedule();
-    else window.addEventListener('load', schedule, { once: true });
-
-    // On the homepage, only show the video past the midpoint of the hero
-    // section, fading it back out if the visitor scrolls back above it.
-    if (heroSection) {
-      // Measured on every check rather than cached once, since web fonts
-      // swapping in can still reflow the hero section's height after this
-      // script first runs.
-      var checkScroll = function () {
-        var triggerY = heroSection.offsetTop + heroSection.offsetHeight / 2;
-        scrolledPast = window.scrollY >= triggerY;
-        updateVisibility();
-      };
-      window.addEventListener('scroll', checkScroll, { passive: true });
-      checkScroll();
-    }
-  })();
-</script>

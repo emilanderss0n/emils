@@ -1,0 +1,27 @@
+---
+// SiteHeader.astro — fixed header that condenses into a floating bar on scroll
+// (see scripts/header.ts).
+interface Props {
+  /** True when the page starts with the dark hero behind the header. */
+  overHero?: boolean;
+}
+
+const { overHero = false } = Astro.props;
+// Section links point at the home page from every other page.
+const home = Astro.url.pathname === '/' ? '' : '/';
+---
+
+<header class="header" data-over-hero={overHero || undefined}>
+  <div class="header-bar">
+    <a class="header-brand" href={`${home}#top`}>Emil <span>/ Moxo</span></a>
+    <nav class="header-nav" aria-label="Sections">
+      <a class="header-link" href={`${home}#work`}>Work</a>
+      <a class="header-link" href={`${home}#services`}>Services</a>
+      <a class="header-link" href={`${home}#about`}>About</a>
+    </nav>
+    <div class="header-end">
+      <p class="header-time"><span data-local-time>Sweden</span></p>
+      <a class="button button-primary button-small" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</header>

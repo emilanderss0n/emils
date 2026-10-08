@@ -1,0 +1,119 @@
+.footer {
+	padding-top: var(--section-gap);
+}
+
+.contact {
+	position: relative;
+	overflow: hidden;
+	container-type: inline-size;
+	padding: clamp(1.5rem, 5vw, 4.5rem) clamp(1.5rem, 5vw, 4.5rem) 0;
+	border-radius: var(--radius-xl);
+	background: var(--surface);
+	color: var(--body);
+	box-shadow: var(--shadow);
+	color-scheme: dark;
+
+	/* Soft accent glow in the bottom-right corner. */
+	&::before {
+		content: "";
+		position: absolute;
+		inset: auto -10% -40% 30%;
+		height: 80%;
+		background: radial-gradient(closest-side, var(--accent), transparent);
+		opacity: 0.18;
+		filter: blur(4rem);
+		pointer-events: none;
+	}
+}
+
+.contact-main {
+	display: flex;
+	flex-direction: column;
+	gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+.contact-email-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem 1.5rem;
+}
+
+.contact-email {
+	width: fit-content;
+	color: var(--heading);
+	font-size: clamp(1.75rem, 4.5cqi, 4rem);
+	font-weight: 500;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	text-decoration: underline;
+	text-decoration-thickness: 0.06em;
+	text-underline-offset: 0.18em;
+	text-decoration-color: color-mix(in oklab, var(--heading), transparent 70%);
+	overflow-wrap: anywhere;
+	transition: text-decoration-color 150ms var(--ease-out);
+
+	&:hover {
+		text-decoration-color: var(--heading);
+	}
+}
+
+.copy[data-state="copied"] {
+	background: color-mix(in oklab, var(--success), transparent 85%);
+	color: var(--success);
+}
+
+.contact-columns {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2rem clamp(3rem, 8cqi, 6rem);
+
+	ul {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+}
+
+.contact-label {
+	margin-bottom: 1rem;
+	color: var(--muted);
+	font-family: var(--mono);
+	font-size: 0.8125rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.wordmark {
+	position: relative;
+	margin: clamp(3rem, 8cqi, 7rem) 0 -0.11em;
+	color: var(--heading);
+	font-size: 20.5cqi;
+	font-weight: 600;
+	line-height: 0.8;
+	letter-spacing: -0.065em;
+	white-space: nowrap;
+	user-select: none;
+
+	span {
+		color: color-mix(in oklab, var(--heading), transparent 72%);
+		font-weight: 500;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		@supports ((animation-timeline: view()) and (animation-range: entry)) {
+			animation: wordmark-rise linear both;
+			animation-timeline: view();
+			animation-range: entry 0% entry 70%;
+		}
+	}
+}
+
+.legal {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-block: 1.75rem 2.25rem;
+	color: var(--muted);
+	font-size: 0.875rem;
+}

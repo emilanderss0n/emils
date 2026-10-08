@@ -1,10 +1,6 @@
 {
   "ignoreDependencies": [
-    "@assets/emil-andersson-illustration.png",
-    "@assets/emil-andersson-illustration-2.png",
+    "@assets/img",
     "@assets/logo-2x.png"
-  ],
-  "dynamicallyLoaded": [
-    "src/scripts/card-slider.ts"
   ]
 }

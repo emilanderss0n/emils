@@ -1,474 +1,205 @@
 ---
+import { Image } from 'astro:assets';
+import type { ComponentProps } from 'astro/types';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import CollectionFilter from '@components/CollectionFilter.astro';
-import RepoCard from '@components/RepoCard.astro';
-import CodePenCard from '@components/CodePenCard.astro';
-import CardSlider from '@components/CardSlider.astro';
-import ToolIcon from '@components/ToolIcon.astro';
-import { cacheCodePenThumbnails } from '@lib/cache-thumbnails';
+import Icon, { type IconName } from '@components/Icon.astro';
+import ProjectRow from '@components/ProjectRow.astro';
+import MoreItem from '@components/MoreItem.astro';
+import { featured, getGithubStats, getRepoInfo, githubProfile } from '@lib/github';
+import { codepenProfile } from '@lib/codepen';
+import { getMoreItems } from '@lib/more-projects';
 
-const rawRepos = await getCollection('repos');
-const repos = rawRepos.sort((a, b) => b.data.stars - a.data.stars);
-const codepenUser = 'emilandersson';
-const pens = [
-  { slug: 'bNNOYyK', title: 'The Amazing Stress Ball' },
-  { slug: 'OPXEMWV', title: 'Loading Bar Animation' },
-  { slug: 'LEEvLxJ', title: 'Amazing Tilt Cards' },
-  { slug: 'jEbOKed', title: 'Stacked Cards' },
-  { slug: 'qEONMJa', title: 'CSS-Only Carousel Slider' },
-  { slug: 'bNVEZgr', title: 'Captcha Slider Concept' },
-  { slug: 'pvJyNrm', title: 'Expanding Dots (GSAP)' },
-  { slug: 'GggeONK', title: 'Animated Radio Buttons' }
+import portrait from '@assets/img/emil.webp';
 
+const github = await getGithubStats();
+const moreItems = await getMoreItems();
+
+// All figures update on each build. Years count from 2009, when I started my first
+// agency; the rest comes from GitHub (see the repos loader in content/config.ts).
+// Big numbers round down to a stable "870K" instead of changing with every download.
+const roundDown = (n: number) =>
+  n >= 10_000 ? `${Math.floor(n / 10_000) * 10}K` : n >= 1_000 ? `${Math.floor(n / 1_000)}K` : String(n);
+const stats = [
+  { label: 'Building for the web', figure: String(new Date().getFullYear() - 2009), unit: 'years' },
+  { label: 'Mods and tools downloaded', figure: roundDown(github.downloads), unit: 'times' },
+  { label: 'Versions shipped on GitHub', figure: String(github.releases), unit: 'releases' },
+  { label: 'Open source on GitHub', figure: String(github.repos), unit: 'repos' },
 ];
-const thumbCache = await cacheCodePenThumbnails(codepenUser, pens.map((p) => p.slug));
+// Stats fade in on load, one after another. Their figures scramble in later,
+// once scrolled into view, staggered left to right.
+const enterDelay = (i: number) => 320 + i * 60;
+const scrambleDelay = (i: number) => i * 150;
+
+// Each row links to its GitHub repo and shows its stars, both read from GitHub at build
+// time; `href` here is only a fallback for when GitHub can't be reached.
+const featuredProjects = [
+  {
+    repo: featured.nhlplay,
+    title: 'NHLPLAY',
+    tags: ['Web app', 'UI Design'],
+    text: 'For hockey fans who want more than box scores. Follow games live, dig into player stats, track your favourite players and build your dream lineup with drag and drop.',
+    specs: [['Year', '2025'], ['Stack', 'PHP, JavaScript, CSS'], ['Data', 'NHL API']],
+    href: 'https://github.com/emilanderss0n/nhlplay-feedback',
+    extra: { label: 'Feedback', href: 'https://github.com/emilanderss0n/nhlplay-feedback/issues' },
+  },
+  {
+    repo: featured.tarkynator,
+    title: 'Tarkynator',
+    tags: ['Web tool', 'Graphic Design'],
+    text: 'The quick way to look things up in Single Player Tarkov. Items, quests, crafts and traders in one fast search, pulled live from the Tarkov API.',
+    specs: [['Year', '2024'], ['Stack', 'JavaScript, CSS, HTML'], ['Data', 'Tarkov API']],
+    href: 'https://github.com/emilanderss0n/tarkynator',
+  },
+  {
+    repo: featured.menuOverhaul,
+    title: 'Menu Overhaul',
+    tags: ['Game mod', 'UI Design'],
+    text: 'A full redesign of the menus in Escape from Tarkov. Every screen gets a new look and feel, from the main menu to the character and trader screens.',
+    specs: [['Year', '2024'], ['Stack', 'C#, Unity'], ['Tools', 'Photoshop, Visual Studio']],
+    href: 'https://github.com/emilanderss0n/SPT-Menu-Overhaul',
+  },
+] satisfies (Omit<ComponentProps<typeof ProjectRow>, 'index'> & { repo: string })[];
+
+const projects = await Promise.all(
+  featuredProjects.map(async ({ repo, ...project }) => {
+    const info = await getRepoInfo(repo);
+    return { ...project, href: info.url ?? project.href, stars: info.stars };
+  }),
+);
+
+const services = [
+  { name: 'UI Design', icon: 'pen-tool', text: 'Interfaces that make complicated things feel simple, from a single menu to a whole app.' },
+  { name: 'Web Development', icon: 'code', text: 'Fast, responsive websites and web apps, built around your content and the people who use them.' },
+  { name: '3D Art', icon: 'box', text: 'Models, textures and game-ready assets, from one hero item to a set of seventy.' },
+  { name: 'Video Editing', icon: 'clapperboard', text: 'Tight edits, motion and sound design that give your story pace and polish.' },
+] satisfies { name: string; icon: IconName; text: string }[];
+
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
-<BaseLayout title="Home" description="Emil Andersson — developer portfolio & projects" revealIntro={900}>
-  <section class="hero-section flex-column gap-lg">
-
-    <canvas id="glcanvas" class="hero-media hero-shader-canvas" aria-hidden="true"></canvas>
-
-    <h1 class="hero-scramble scramble font-display" data-scramble-speed="1.3" aria-label="Hi, I'm Emil / Moxo">
-      <span class="scramble-seg" data-text="Hi, I'm">Hi, I'm</span> <span class="scramble-seg gradient-text" data-text="Emil">Emil</span> <span class="scramble-sep">/</span> <span class="scramble-seg gradient-text" data-text="Moxo">Moxo</span>
-    </h1>
-    <p class="hero-subtitle scramble" data-scramble-speed="1.6" data-scramble-delay="400" aria-label="Full-stack developer building tools, game mods, web experiences, and creating music.">
-      <span class="scramble-seg" data-text="Full-stack developer building tools, game mods, web experiences, and creating music.">Full-stack developer building tools, game mods, web experiences, and creating music.</span>
-    </p>
-    <div class="flex justify-center gap-md" data-hero-buttons style="opacity: 0">
-      <a href="https://github.com/emilanderss0n" target="_blank" rel="noopener noreferrer"
-         class="btn">
-        <svg class="icon-sm" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        <span>GitHub</span>
-      </a>
-      <a href="/about" class="btn reversed">
-        <span>About me →</span>
-      </a>
+<BaseLayout overHero>
+  <section class="hero" aria-labelledby="hero-title">
+    <canvas class="hero-canvas" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <p class="hero-chip enter"><span class="status-dot" aria-hidden="true"></span>Available for new projects</p>
+        <h1 class="hero-title scramble" id="hero-title" data-scramble-delay="120" data-scramble-speed="1.1">
+          <span class="visually-hidden">Designer &amp; developer building tools, mods and worlds.</span>
+          <span class="scramble-seg" data-text="Designer & developer" aria-hidden="true">Designer &amp; developer</span>
+          <span class="hero-gradient" aria-hidden="true"><span class="scramble-seg" data-text="building tools, mods and ">building tools, mods and </span><em class="scramble-seg" data-text="worlds.">worlds.</em></span>
+        </h1>
+        <div class="hero-foot">
+          <p class="hero-lede enter">I'm Emil, also known as Moxo. I design interfaces, build for the web, make 3D art and edit video. Open to freelance work, or to joining a creative team.</p>
+          <div class="hero-actions enter">
+            <a class="button button-primary" href="#contact">Start a project<Icon name="arrow-right" /></a>
+            <a class="button button-ghost" href="#work">See my work</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-meta enter">
+        <p>UI · Web · 3D · Video</p>
+        <p>Based in Tranås, Sweden</p>
+        <a class="hero-scroll" href="#work">Scroll<Icon name="arrow-down" /></a>
+      </div>
     </div>
   </section>
 
-  <section>
-    <div class="section-title">
-      <div class="flex gap-md section-title-main-text" data-reveal style="--reveal-delay: 260ms">
-        <div class="icon-square sm">
-          <ToolIcon name="GitHub" class="section-title-icon icon-sm" />
+  <section class="facts wrap" aria-label="In numbers">
+    <dl class="stats">
+      {stats.map((stat, i) => (
+        <div class="stat enter" style={`--enter-delay: ${enterDelay(i)}ms`}>
+          <dt>{stat.label}</dt>
+          <dd>
+            <span class="stat-figure scramble" data-scramble-trigger="view" data-scramble-delay={scrambleDelay(i)} data-scramble-speed="1.2" aria-hidden="true"><span class="scramble-seg" data-text={stat.figure}>{stat.figure}</span></span>
+            <span class="visually-hidden">{stat.figure}</span>
+            <span class="stat-unit">{stat.unit}</span>
+          </dd>
         </div>
-        <h2>GitHub Projects</h2>
-      </div>
-      <div data-reveal style="--reveal-delay: 360ms; width: 100%;">
-        <CollectionFilter target="#repo-grid-grouped" filterKey="lang" allLabel="All Languages" />
-      </div>
-    </div>
-
-    <div id="repo-grid-grouped" class="flex-column">
-      {
-        (() => {
-          const categories = [
-            { key: 'game-development', label: 'Game Development' },
-            { key: 'web-development', label: 'Web Development' },
-            { key: 'other', label: 'Other Projects' },
-          ];
-
-          // The wrapper box (border, background) is static; only the heading
-          // text and each group's card grid reveal as you scroll past it.
-          return categories.map((cat) => {
-            const catRepos = repos.filter((r) => r.data.category === cat.key);
-            if (catRepos.length === 0) return null;
-
-            return (
-              <div class="repo-group flex-column" data-filter-group>
-                <div class="repo-category-wrapper flex">
-                  <h3 class="repo-category small-title">
-                    <span class="repo-category-text" data-reveal>{cat.label}</span>
-                  </h3>
-                  <div class="spacer-block"></div>
-                </div>
-                <div
-                  class="grid main-grid"
-                  style="--grid-max-col-count: 3; gap: 1px; --reveal-base: 160ms;"
-                  data-reveal="fade"
-                  data-reveal-items="card"
-                  data-reveal-stagger="55"
-                >
-                  {catRepos.map((repo) => (
-                    <RepoCard repo={repo} />
-                  ))}
-                </div>
-              </div>
-            );
-          });
-        })()
-      }
-    </div>
-    <p class="small-text hidden" id="no-match-lang">No repos match this filter.</p>
+      ))}
+    </dl>
   </section>
 
-  <section class="spacer-block" data-reveal="expand"></section>
-
-  <div class="spacer spacer-1">
-    <div
-      class="services grid"
-      style="--grid-max-col-count: 2; gap: 1px;"
-      data-reveal="fade"
-      data-reveal-items="lift"
-      data-reveal-stagger="90"
-    >
-      <div class="card dotted-card flex-column gap-md">
-        <div class="flex gap-md">
-          <div class="icon-square sm">
-            <ToolIcon name="UI Design" class="service-icon icon-sm" />
-          </div>
-          <h3>UI Design</h3>
-        </div>
-        <p>
-          Thoughtful interfaces that turn complex ideas into clear, intuitive experiences.
-        </p>
-      </div>
-      <div class="card dotted-card flex-column gap-md">
-        <div class="flex gap-md">
-          <div class="icon-square sm">
-            <ToolIcon name="Web Development" class="service-icon icon-sm" />
-          </div>
-          <h3>Web Development</h3>
-        </div>
-        <p>
-          Fast, responsive websites and applications built around your goals, content, and audience.
-        </p>
-      </div>
-      <div class="card dotted-card flex-column gap-md">
-        <div class="flex gap-md">
-          <div class="icon-square sm">
-            <ToolIcon name="3D Art" class="service-icon icon-sm" />
-          </div>
-          <h3>3D Art</h3>
-        </div>
-        <p>
-          Digital worlds, assets, and visual concepts shaped with a mix of craft and curiosity.
-        </p>
-      </div>
-      <div class="card dotted-card flex-column gap-md">
-        <div class="flex gap-md">
-          <div class="icon-square sm">
-            <ToolIcon name="Video Editing" class="service-icon icon-sm" />
-          </div>
-          <h3>Video Editing</h3>
-        </div>
-        <p>
-          Focused edits, motion, and sound that give your story the pace and polish it deserves.
-        </p>
-      </div>
+  <section class="section wrap" id="work" aria-labelledby="work-title">
+    <p class="eyebrow">Selected work<span class="eyebrow-count">{pad(projects.length + moreItems.length)}</span></p>
+    <div class="section-head reveal">
+      <h2 class="section-title" id="work-title">Apps, tools and mods <span>used by thousands of people.</span></h2>
+      <p class="section-lede">From a live companion app for NHL fans to tools, menus and custom items for the Single Player Tarkov community. I take every project from the first sketch to the shipped build, and handle the design, the code and the 3D art myself.</p>
     </div>
-  </div>
 
-  <section class="spacer-block" data-reveal="expand"></section>
+    <ol class="projects frame" role="list">
+      {projects.map((project, i) => <ProjectRow index={pad(i + 1)} {...project} />)}
+    </ol>
 
-  <section>
-    <CardSlider title="CodePen" icon="CodePen" link="https://codepen.io/emilandersson" linkLabel="View all →">
-    {pens.map((pen) => (
-      <CodePenCard
-        slug={pen.slug}
-        title={pen.title}
-        user={codepenUser}
-        src={thumbCache[pen.slug] || `https://shots.codepen.io/${codepenUser}/pen/${pen.slug}-512.webp`}
-      />
-    ))}
-    </CardSlider>
+    {moreItems.length > 0 && (
+      <div class="more">
+        <div class="more-head">
+          <h3 class="more-title">More projects</h3>
+          <p class="more-links">
+            <a class="link" href={githubProfile} target="_blank" rel="noopener">GitHub<Icon name="external" /></a>
+            <a class="link" href={codepenProfile} target="_blank" rel="noopener">CodePen<Icon name="external" /></a>
+          </p>
+        </div>
+        <ul class="more-list frame" role="list">
+          {moreItems.map((item, i) => <MoreItem item={item} delay={(i % 2) * 120} />)}
+        </ul>
+      </div>
+    )}
   </section>
 
-  <section class="spacer-block" data-reveal="expand"></section>
+  <section class="section wrap" id="services" aria-labelledby="services-title">
+    <p class="eyebrow">Services<span class="eyebrow-count">{pad(services.length)}</span></p>
+    <div class="services-head">
+      <h2 class="section-title" id="services-title">What I can do <span>for your next project.</span></h2>
+      <p class="section-lede">A generalist on purpose. One person carrying an idea from the first sketch to the shipped build means nothing gets lost between design and code. <a class="link link-inline" href="#contact">Let's discuss your project<Icon name="arrow-right" /></a></p>
+    </div>
+    <ol class="services" role="list">
+      {services.map((service, i) => (
+        <li class="service">
+          <Icon name={service.icon} />
+          <h3 class="service-name scramble" data-scramble-trigger="view" data-scramble-delay={scrambleDelay(i)}>
+            <span class="visually-hidden">{service.name}</span>
+            <span class="scramble-seg" data-text={service.name} aria-hidden="true">{service.name}</span>
+          </h3>
+          <p class="service-text">{service.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="section wrap" id="about" aria-labelledby="about-title">
+    <p class="eyebrow">About</p>
+    <div class="split reveal">
+      <div class="split-aside">
+        <h2 class="section-title" id="about-title">Hi, I'm Emil. <span>A creative generalist from Sweden.</span></h2>
+        <figure class="about-portrait">
+          <Image src={portrait} alt="Portrait of Emil Andersson" widths={[400, 800]} sizes="(max-width: 47.5rem) 18rem, 22rem" loading="lazy" />
+        </figure>
+      </div>
+      <div class="about">
+        <blockquote class="about-quote">
+          <p>“Sometimes you help people with your creations <span>without even realising it.”</span></p>
+        </blockquote>
+        <div class="prose">
+          <p>I was born in 1989 in Skänninge, a small town in Sweden, and I've been making things for as long as I can remember. These days I live in Tranås, and writing code or making art is still how I'd rather spend my day.</p>
+          <p>At 20, a friend and I started our own agency, Delive – Web Solutions, and some of the brands we made for those first clients are still around today. Later I moved into 3D art and game development, and I've since worked with people all over the world on websites, tools and games.</p>
+        </div>
+        <dl class="specs specs-wide">
+          <div><dt>Based in</dt><dd>Tranås, Sweden</dd></div>
+          <div><dt>Roles</dt><dd>UI designer, web developer, 3D artist, video editor</dd></div>
+          <div><dt>Toolset</dt><dd>Blender, Photoshop, Substance Painter, Unity, VS Code</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <script>
+  import { initHeroAura } from '@scripts/hero-aura';
   import { initScramble } from '@scripts/text-scramble';
+  import { initPointerGlow } from '@scripts/pointer-glow';
 
-  const video = document.querySelector<HTMLVideoElement>('.hero-video');
-  const buttonsEl = document.querySelector<HTMLElement>('[data-hero-buttons]');
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const animateButtons = () => {
-    if (!buttonsEl) return;
-    buttonsEl.style.opacity = '';
-    buttonsEl.classList.add('anim-fade-up');
-  };
-
-  /** Unhide segments and kick off the scramble in the same JS frame. */
-  const revealAndScramble = () => {
-    document.querySelectorAll<HTMLElement>('.scramble-seg, .scramble-sep').forEach((el) => {
-      el.style.opacity = '1';
-    });
-    initScramble();
-  };
-
-  let sequenceStarted = false;
-  const startSequence = () => {
-    if (sequenceStarted) return;
-    sequenceStarted = true;
-
-    if (prefersReducedMotion) {
-      revealAndScramble();
-      animateButtons();
-      return;
-    }
-
-    // Step 1: fade in video (handled by BaseLayout)
-    // Step 2: start scramble partway through video fade
-    window.setTimeout(revealAndScramble, 600);
-
-    // Step 3: animate buttons after scramble has run
-    window.setTimeout(animateButtons, 1300);
-  };
-
-  if (!video) {
-    revealAndScramble();
-    animateButtons();
-  } else if (video.readyState >= 3) {
-    startSequence();
-  } else {
-    video.addEventListener('canplaythrough', startSequence, { once: true });
-    // Fallback: run sequence even if video never fires canplaythrough
-    window.setTimeout(startSequence, 3000);
-  }
-</script>
-
-<script is:inline>
-  // Glowing wireframe torus, sized to .hero-section (not the full viewport)
-  // so it stays behind the heading instead of stretching edge to edge.
-  // #glcanvas isn't persisted across navigations, so the loop is cancelled
-  // on astro:before-swap to avoid an orphaned rAF once the canvas is gone.
-  (function () {
-    const canvas = document.getElementById('glcanvas');
-    if (!canvas || canvas.dataset.glInitialized) return;
-    canvas.dataset.glInitialized = 'true';
-
-    const gl = canvas.getContext('webgl');
-
-    if (!gl) {
-      console.error('WebGL not supported');
-      return;
-    }
-
-    // Vertex Shader
-    const vsSource = `
-      attribute vec4 aVertexPosition;
-      void main() {
-          gl_Position = aVertexPosition;
-      }
-    `;
-
-    // Fragment Shader
-    const fsSource = `
-      precision highp float;
-      uniform vec2 u_resolution;
-      uniform float u_time;
-      uniform vec3 u_accent;
-
-      void main() {
-          // Normalize pixel coordinates (from 0 to 1)
-          vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-
-          // Remap to centered coordinates, adjust aspect ratio
-          float aspect = u_resolution.x / u_resolution.y;
-          vec2 p = uv * 2.0 - 1.0;
-          p.x *= aspect;
-
-          // Shift the shape up to match reference (half visible at top).
-          // Applied before the zoom below so the ring's centre stays pinned
-          // to the same spot in the hero no matter how the zoom adapts.
-          p.y += 0.8;
-
-          // Zoom in so the ring reads larger. The visible half-width is
-          // zoom * aspect, and the ring's outer edge sits at
-          // radius + thickness = 2.1 — so a flat 0.8 let the lobes run off
-          // the left/right edges on anything narrower than a ~3:1 canvas.
-          // Scale down just enough to keep the whole ring inside instead,
-          // and only when the container is actually too narrow for 0.8.
-          float zoom = max(0.8, 2.45 / aspect);
-          p *= zoom;
-
-          // Parameters for the fake torus
-          float radius = 1.6;
-          float thickness = 0.5;
-
-          // Polar coordinates
-          float r = length(p);
-          float a = atan(p.y, p.x);
-
-          // Distance to the ring center
-          float dist = abs(r - radius);
-
-          // Create curved lines simulating a 3D wireframe
-          // The angle 'a' defines position around the ring
-          // The radius 'r' warps the lines to simulate depth/curvature
-          float warp = sin(r * 4.0 - u_time * 0.5) * 0.3;
-
-          // Base frequency of lines
-          float lineFreq = 80.0;
-
-          // Generate sine wave pattern
-          float lines = sin((a + warp) * lineFreq + u_time * 2.0);
-
-          // Sharpen lines and make them thinner
-          lines = smoothstep(0.85, 1.0, lines);
-
-          // Mask lines to only appear within the thickness of the ring
-          // Soft mask for a glowing edge
-          float mask = smoothstep(thickness, 0.0, dist);
-
-          // Core glow independent of lines
-          float coreGlow = 0.05 / (dist * dist + 0.05);
-
-          // Combine lines and mask
-          float pattern = lines * mask;
-
-          // Ring gradient built from --color-accent so the hero tracks the
-          // site token instead of the unrelated blue/purple pair it used to
-          // hardcode. The second stop is the same accent pushed toward deep
-          // cyan, which keeps the sweep inside the accent's hue family.
-          vec3 color1 = u_accent;
-          vec3 color2 = mix(u_accent, vec3(0.0, 0.35, 0.85), 0.7);
-
-          // Mix colors based on angle to create gradient along the ring
-          vec3 baseColor = mix(color1, color2, sin(a * 2.0 + u_time * 0.5) * 0.5 + 0.5);
-
-          // Add white highlights to the lines themselves
-          vec3 lineColor = mix(baseColor, vec3(1.0), 0.4);
-
-          // Final color composition
-          vec3 finalColor = lineColor * pattern * 2.5 + baseColor * coreGlow * 1.5;
-
-          // Fade out at the bottom edges to blend into black background
-          finalColor *= smoothstep(1.5, -0.5, p.y);
-
-          // Global fade out based on distance to center to prevent sharp cuts
-          finalColor *= smoothstep(3.0, 1.0, r);
-
-          // Safety fade at the very left/right edges. The zoom above already
-          // keeps the ring inside the canvas, so this only needs to cover the
-          // sliver outside it — starting at 0.7 would have dimmed the lobes
-          // themselves (they now reach ~0.86 of the half-width).
-          float edgeX = abs(uv.x - 0.5) * 2.0;
-          finalColor *= 1.0 - smoothstep(0.88, 1.0, edgeX);
-
-          // Carry the glow in the alpha channel instead of painting an opaque
-          // rectangle. Writing alpha 1.0 everywhere made the canvas a solid
-          // black box that ended at the section's edges and read as a hard
-          // vertical seam against the full-viewport .hero-video-tint either
-          // side of it. Alpha is the brightest channel, so every RGB component
-          // is <= alpha and the output is already valid premultiplied alpha,
-          // which is what WebGL's default premultipliedAlpha: true expects.
-          float alpha = clamp(max(finalColor.r, max(finalColor.g, finalColor.b)), 0.0, 1.0);
-          gl_FragColor = vec4(finalColor, alpha);
-      }
-    `;
-
-    // Compile Shader Function
-    function loadShader(gl, type, source) {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error('Shader compile error:', gl.getShaderInfoLog(shader));
-        gl.deleteShader(shader);
-        return null;
-      }
-      return shader;
-    }
-
-    // Initialize Shader Program
-    const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
-    const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
-
-    const shaderProgram = gl.createProgram();
-    gl.attachShader(shaderProgram, vertexShader);
-    gl.attachShader(shaderProgram, fragmentShader);
-    gl.linkProgram(shaderProgram);
-
-    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-      console.error('Program link error:', gl.getProgramInfoLog(shaderProgram));
-    }
-
-    // Setup Geometry (Full Screen Quad)
-    const positions = new Float32Array([
-      -1.0, 1.0,
-       1.0, 1.0,
-      -1.0, -1.0,
-       1.0, -1.0,
-    ]);
-
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-
-    // Get Locations
-    const vertexPosition = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
-    const resolutionLocation = gl.getUniformLocation(shaderProgram, 'u_resolution');
-    const timeLocation = gl.getUniformLocation(shaderProgram, 'u_time');
-    const accentLocation = gl.getUniformLocation(shaderProgram, 'u_accent');
-
-    // Resolve --color-accent to plain RGB so the shader palette follows the
-    // token. Bounced through a probe element's computed style rather than
-    // parsed by hand, so any CSS colour syntax the token might use later
-    // (hex, color-mix(), oklch()) still comes back as rgb().
-    function readAccent() {
-      const fallback = [0.443, 1.0, 0.851]; // #71ffd9
-      const raw = getComputedStyle(document.documentElement)
-        .getPropertyValue('--color-accent').trim();
-      if (!raw) return fallback;
-      const probe = document.createElement('span');
-      probe.style.cssText = 'position:absolute;visibility:hidden';
-      probe.style.color = raw;
-      document.body.appendChild(probe);
-      const parts = getComputedStyle(probe).color.match(/[\d.]+/g);
-      probe.remove();
-      if (!parts || parts.length < 3) return fallback;
-      return [parts[0] / 255, parts[1] / 255, parts[2] / 255];
-    }
-
-    const accent = readAccent();
-
-    // Resize Handling
-    function resizeCanvasToDisplaySize(canvas) {
-      const displayWidth = canvas.clientWidth;
-      const displayHeight = canvas.clientHeight;
-
-      if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
-        canvas.width = displayWidth;
-        canvas.height = displayHeight;
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-      }
-    }
-
-    let rafId = 0;
-
-    // Render Loop
-    function render(time) {
-      resizeCanvasToDisplaySize(gl.canvas);
-
-      gl.clearColor(0.0, 0.0, 0.0, 0.0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-
-      gl.useProgram(shaderProgram);
-
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-      gl.vertexAttribPointer(vertexPosition, 2, gl.FLOAT, false, 0, 0);
-      gl.enableVertexAttribArray(vertexPosition);
-
-      // Set Uniforms
-      gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
-      gl.uniform1f(timeLocation, time * 0.001); // Convert to seconds
-      gl.uniform3f(accentLocation, accent[0], accent[1], accent[2]);
-
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-
-      rafId = requestAnimationFrame(render);
-    }
-
-    rafId = requestAnimationFrame(render);
-
-    document.addEventListener('astro:before-swap', function stop() {
-      cancelAnimationFrame(rafId);
-      document.removeEventListener('astro:before-swap', stop);
-    });
-  })();
+  initHeroAura();
+  initPointerGlow();
+  // Wait for web fonts so the reserved space matches the final text.
+  void document.fonts.ready.then(() => initScramble());
 </script>

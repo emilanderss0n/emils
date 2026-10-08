@@ -1,0 +1,88 @@
+:root {
+	--bg-l: oklch(97.6% 0.004 275);
+	--bg-d: oklch(14.5% 0.006 275);
+	--surface-l: oklch(100% 0 0);
+	--surface-d: oklch(19% 0.007 275);
+	--sunken-l: oklch(94.4% 0.005 275);
+	--sunken-d: oklch(22% 0.008 275);
+	--heading-l: oklch(17% 0.012 275);
+	--heading-d: oklch(97% 0.004 275);
+	--body-l: oklch(37% 0.012 275);
+	--body-d: oklch(80% 0.008 275);
+	--muted-l: oklch(52% 0.012 275);
+	--muted-d: oklch(64% 0.01 275);
+	--accent-l: oklch(52% 0.21 278);
+	--accent-d: oklch(74% 0.15 278);
+	--hairline-l: oklch(17% 0.012 275 / 0.1);
+	--hairline-d: oklch(100% 0 0 / 0.08);
+	--shade-l: oklch(25% 0.03 275 / 0.1);
+	--shade-d: oklch(0% 0 0 / 0.5);
+	--highlight-l: oklch(100% 0 0 / 0.9);
+	--highlight-d: oklch(100% 0 0 / 0.06);
+
+	--bg: light-dark(var(--bg-l), var(--bg-d));
+	--surface: light-dark(var(--surface-l), var(--surface-d));
+	--sunken: light-dark(var(--sunken-l), var(--sunken-d));
+	--heading: light-dark(var(--heading-l), var(--heading-d));
+	--body: light-dark(var(--body-l), var(--body-d));
+	--muted: light-dark(var(--muted-l), var(--muted-d));
+	--accent: light-dark(var(--accent-l), var(--accent-d));
+	--hairline: light-dark(var(--hairline-l), var(--hairline-d));
+	--shade: light-dark(var(--shade-l), var(--shade-d));
+	--highlight: light-dark(var(--highlight-l), var(--highlight-d));
+	--tint: color-mix(in oklab, var(--heading), transparent 93%);
+	--brand-from: light-dark(oklch(55% 0.2 255), oklch(74% 0.14 250));
+	--brand-to: light-dark(oklch(52% 0.24 300), oklch(72% 0.17 305));
+	--success: light-dark(oklch(52% 0.14 155), oklch(76% 0.15 155));
+	--hero-bg: oklch(13% 0.02 275);
+
+	--shadow: 0 1px 2px var(--shade), 0 1.5rem 3rem -1.5rem var(--shade), inset 0 1px 0 var(--highlight);
+
+	--font: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+	--mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+	--serif: "Instrument Serif", "Instrument Serif Fallback", ui-serif, Georgia, serif;
+
+	/* Geist's "0" width (what 1ch is with the web font), for text measures. Unlike
+	   ch, this doesn't change while the fallback font shows, so lines wrap the same
+	   before and after the web font loads. */
+	--ch: 0.663em;
+	--ch-medium: 0.673em;
+
+	--radius-xl: 2.25rem;
+	--radius-lg: 1.75rem;
+	--radius-md: 1.125rem;
+	--radius-pill: 999px;
+
+	--gutter: clamp(1.375rem, 4vw, 3rem);
+	--max: 100rem;
+	--section-gap: clamp(6rem, 12vw, 11rem);
+	--header-offset: 5.5rem;
+	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+	/* Browsers without light-dark(): pick the palette with a media query instead. */
+	@supports not (color: light-dark(#000, #fff)) {
+		--bg: var(--bg-l);
+		--surface: var(--surface-l);
+		--sunken: var(--sunken-l);
+		--heading: var(--heading-l);
+		--body: var(--body-l);
+		--muted: var(--muted-l);
+		--accent: var(--accent-l);
+		--hairline: var(--hairline-l);
+		--shade: var(--shade-l);
+		--highlight: var(--highlight-l);
+
+		@media (prefers-color-scheme: dark) {
+			--bg: var(--bg-d);
+			--surface: var(--surface-d);
+			--sunken: var(--sunken-d);
+			--heading: var(--heading-d);
+			--body: var(--body-d);
+			--muted: var(--muted-d);
+			--accent: var(--accent-d);
+			--hairline: var(--hairline-d);
+			--shade: var(--shade-d);
+			--highlight: var(--highlight-d);
+		}
+	}
+}

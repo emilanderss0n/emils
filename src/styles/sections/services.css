@@ -1,0 +1,72 @@
+/* The header and the services share one four-column grid, so the intro starts right
+   above the third service. */
+.services-head,
+.services {
+	--columns: repeat(4, minmax(0, 1fr));
+	--column-gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.services-head {
+	display: grid;
+	grid-template-columns: var(--columns);
+	align-items: start;
+	gap: 1.5rem var(--column-gap);
+
+	> * {
+		grid-column: span 2;
+	}
+
+	@media (max-width: 62.5rem) {
+		grid-template-columns: minmax(0, 1fr);
+
+		> * {
+			grid-column: auto;
+		}
+	}
+}
+
+/* Services: one row of four across the full width (two on tablets, one on phones),
+   no lines. Icon over the heading, then the text. Names scramble in left to right as
+   the row comes into view (scripts/text-scramble.ts). */
+.services {
+	display: grid;
+	grid-template-columns: var(--columns);
+	gap: clamp(2.75rem, 5vw, 3.5rem) var(--column-gap);
+	margin-top: clamp(3.5rem, 7vw, 6rem);
+
+	@media (max-width: 62.5rem) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	@media (max-width: 37.5rem) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.service {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.75rem;
+
+	.icon {
+		width: 1.75rem;
+		height: 1.75rem;
+		margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+		color: var(--heading);
+		stroke-width: 1.5;
+	}
+}
+
+/* Positioned for the scramble's glyph overlay. */
+.service-name {
+	position: relative;
+	font-size: clamp(1.5rem, 2.2vw, 2rem);
+	line-height: 1.1;
+	letter-spacing: -0.03em;
+}
+
+.service-text {
+	max-width: calc(40 * var(--ch));
+	font-size: 1rem;
+}

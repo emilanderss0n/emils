@@ -9,7 +9,7 @@ const pages: Record<string, { title: string; description: string }> = {
   default: {
     title: 'Emil / Moxo',
     description:
-      'Full-stack developer building tools, game mods, web experiences, and creating music.',
+      'UI designer, web developer, 3D artist and video editor in Tranås, Sweden. Web apps, tools and game mods.',
   },
   ...Object.fromEntries(
     posts

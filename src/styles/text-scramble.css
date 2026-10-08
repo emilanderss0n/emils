@@ -1,0 +1,30 @@
+/* Used by src/scripts/text-scramble.ts. Segments stay hidden until
+   initScramble() picks them up, so the final text never flashes first.
+   Only when JS runs (data-js is set in BaseLayout), so text is never lost without it. */
+:root[data-js] .scramble {
+	.scramble-seg,
+	.scramble-sep {
+		opacity: 0;
+	}
+}
+
+/* Characters not revealed yet: invisible, but still taking up their space. */
+.scramble-hidden {
+	visibility: hidden;
+}
+
+/* Overlay for the scrambling glyphs, positioned by the script over the hidden
+   characters. Kept out of the text so it can never affect its layout. */
+.scramble-layer {
+	position: absolute;
+	inset: 0 auto auto 0;
+	pointer-events: none;
+	user-select: none;
+}
+
+.scramble-glyph {
+	position: absolute;
+	white-space: pre;
+	/* Solid glyph colour, even inside gradient (background-clip: text) text. */
+	-webkit-text-fill-color: currentColor;
+}

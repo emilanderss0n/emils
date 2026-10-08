@@ -1,0 +1,55 @@
+/* Metric-matched fallbacks for the Google web fonts.
+   Text first renders in a local font; when the web font arrives it swaps in.
+   These faces scale the local font (size-adjust) and set its line metrics so it
+   takes the same space as the web font, so the swap doesn't move the layout.
+   Values were measured in Chromium against the site's own copy. */
+
+@font-face {
+	font-family: "Geist Fallback";
+	src: local("Arial"), local("ArialMT");
+	font-weight: 100 450;
+	size-adjust: 101.42%;
+	ascent-override: 99.09%;
+	descent-override: 29.09%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: "Geist Fallback";
+	src: local("Arial"), local("ArialMT");
+	font-weight: 451 550;
+	size-adjust: 103.66%;
+	ascent-override: 96.95%;
+	descent-override: 28.46%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: "Geist Fallback";
+	src: local("Arial Bold"), local("Arial-BoldMT");
+	font-weight: 551 900;
+	size-adjust: 99.28%;
+	ascent-override: 101.23%;
+	descent-override: 29.71%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: "Geist Mono Fallback";
+	src: local("Courier New"), local("CourierNewPSMT");
+	size-adjust: 99.98%;
+	ascent-override: 100.52%;
+	descent-override: 29.5%;
+	line-gap-override: 0%;
+}
+
+/* Only the italic is loaded (the hero's "worlds."). */
+@font-face {
+	font-family: "Instrument Serif Fallback";
+	src: local("Times New Roman Italic"), local("TimesNewRomanPS-ItalicMT");
+	font-style: italic;
+	size-adjust: 86.03%;
+	ascent-override: 115.08%;
+	descent-override: 36.04%;
+	line-gap-override: 0%;
+}

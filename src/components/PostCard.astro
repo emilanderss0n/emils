@@ -1,29 +1,21 @@
 ---
-// PostCard.astro — reusable card for post listings
+// PostCard.astro — post teaser as a tile, for use inside a .tiles list.
 import type { CollectionEntry } from 'astro:content';
+import Icon from '@components/Icon.astro';
 
 interface Props {
   post: CollectionEntry<'posts'>;
 }
 
 const { post } = Astro.props;
+const date = post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
 
-<article class="card flex anim-scale-in" style="--anim-delay: 0ms">
-  <div class="flex">
-    {post.data.tags.slice(0, 2).map((tag: string) => (
-      <span class="badge">{tag}</span>
-    ))}
-  </div>
-  <h3>
-    <a href={`/posts/${post.id}`}>
-      {post.data.title}
-    </a>
-  </h3>
-  <p>{post.data.description}</p>
-  <div>
-    <time datetime={post.data.date.toISOString()}>
-      {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-    </time>
-  </div>
-</article>
+<a class="tile" href={`/posts/${post.id}`}>
+  <span class="tile-title">{post.data.title}<Icon name="arrow-right" /></span>
+  <span class="tile-text">{post.data.description}</span>
+  <span class="tile-meta">
+    <time datetime={post.data.date.toISOString()}>{date}</time>
+    {post.data.tags.slice(0, 2).map((tag) => ` · ${tag}`)}
+  </span>
+</a>

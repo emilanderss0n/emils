@@ -1,0 +1,28 @@
+---
+// MoreItem.astro — a compact row in the "More projects" list (a GitHub repo or a CodePen pen).
+import Icon from '@components/Icon.astro';
+import type { MoreItem } from '@lib/more-projects';
+
+interface Props {
+  item: MoreItem;
+  /** Delay (ms) before the name scrambles in, to stagger rows that enter view together. */
+  delay?: number;
+}
+
+const { item, delay = 0 } = Astro.props;
+const { name, text, href, label, meta, stars = 0 } = item;
+---
+
+<li>
+  <a class="more-item" href={href} target="_blank" rel="noopener" data-glow>
+    <span class="visually-hidden">{name}</span>
+    <span class="more-name scramble" data-scramble-trigger="view" data-scramble-delay={delay} aria-hidden="true"><span class="scramble-seg" data-text={name}>{name}</span></span>
+    <span class="more-arrow" aria-hidden="true"><Icon name="arrow-right" /></span>
+    {text && <span class="more-text">{text}</span>}
+    <span class="more-meta">
+      {label && <span class="more-label" style={`--label: ${label.color}`}>{label.text}</span>}
+      {meta.map((entry) => <span>{entry}</span>)}
+      {stars > 0 && <span class="more-stars"><Icon name="star" />{stars}<span class="visually-hidden">{stars === 1 ? ' star' : ' stars'}</span></span>}
+    </span>
+  </a>
+</li>

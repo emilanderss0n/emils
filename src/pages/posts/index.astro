@@ -3,35 +3,24 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PostCard from '@components/PostCard.astro';
 
-const allPosts = await getCollection('posts');
-
-// Filter out drafts, sort by date descending
-const posts = allPosts
+const posts = (await getCollection('posts'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title="Posts" description="Portfolio posts by Emil Andersson — web dev, 3D art, and creative coding.">
-  <section class="py-16 md:py-20">
-    <h1 class="text-4xl md:text-5xl font-medium tracking-tight mb-2 anim-fade-down" style="--anim-delay: 60ms">
-      <span class="gradient-text">Posts</span>
-    </h1>
-    <p class="text-lg text-[var(--color-text-muted)] mb-12 max-w-lg anim-fade-up" style="--anim-delay: 160ms">
-      Thoughts on web development, 3D art, game dev, and creative tools.
-    </p>
+<BaseLayout title="Posts" description="Posts by Emil Andersson on web development, 3D art, game dev and creative tools.">
+  <section class="section page wrap" aria-labelledby="posts-title">
+    <p class="eyebrow">Posts<span class="eyebrow-count">{String(posts.length).padStart(2, '0')}</span></p>
+    <div class="section-head">
+      <h1 class="section-title" id="posts-title">Notes and write-ups <span>on web, 3D, game dev and tools.</span></h1>
+    </div>
 
-    {
-      posts.length === 0 ? (
-        <div class="glass-card p-12 text-center anim-fade-in" style="--anim-delay: 260ms">
-          <p class="text-[var(--color-text-muted)] text-lg">No posts yet. Check back soon!</p>
-        </div>
-      ) : (
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {posts.map((post, i) => (
-            <PostCard post={post} />
-          ))}
-        </div>
-      )
-    }
+    {posts.length === 0 ? (
+      <p class="section-lede">No posts yet. Check back soon!</p>
+    ) : (
+      <ul class="tiles more" role="list">
+        {posts.map((post) => <li><PostCard post={post} /></li>)}
+      </ul>
+    )}
   </section>
 </BaseLayout>

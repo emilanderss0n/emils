@@ -1,0 +1,31 @@
+/* Pages without the hero need room for the fixed header. */
+.page {
+	padding-top: clamp(8rem, 14vw, 11rem);
+}
+
+.post {
+	display: flex;
+	flex-direction: column;
+	gap: clamp(2.5rem, 5vw, 4rem);
+	max-width: 50rem;
+}
+
+.post-head {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 1.5rem;
+
+	.section-title {
+		max-width: calc(22 * var(--ch-medium));
+	}
+
+	time {
+		font-variant-numeric: tabular-nums;
+	}
+}
+
+.post-foot {
+	padding-top: 2rem;
+	border-top: 1px solid var(--hairline);
+}

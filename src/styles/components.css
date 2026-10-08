@@ -1,0 +1,456 @@
+/* Lucide icons (components/Icon.astro), sized to the surrounding text. */
+.icon {
+	width: 0.875em;
+	height: 0.875em;
+	flex: none;
+}
+
+.link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3em;
+	width: fit-content;
+	color: var(--heading);
+	font-weight: 500;
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.25em;
+	text-decoration-color: color-mix(in oklab, var(--heading), transparent 65%);
+	transition: text-decoration-color 150ms var(--ease-out);
+
+	&:hover {
+		text-decoration-color: var(--heading);
+	}
+
+	/* Inside running text: wraps with the sentence, arrow nudges forward on hover. */
+	&.link-inline {
+		display: inline;
+
+		.icon {
+			margin-left: 0.3em;
+			vertical-align: -0.1em;
+			transition: translate 250ms var(--ease-out);
+		}
+
+		&:hover .icon {
+			translate: 0.2em 0;
+		}
+	}
+}
+
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4em;
+	width: fit-content;
+	height: 3rem;
+	padding-inline: 1.375rem;
+	border: 0;
+	border-radius: var(--radius-pill);
+	font-family: inherit;
+	font-size: 0.9375rem;
+	font-weight: 500;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background-color 150ms var(--ease-out), scale 150ms var(--ease-out);
+
+	&:active {
+		scale: 0.97;
+	}
+
+	&.button-primary {
+		background: var(--heading);
+		color: var(--bg);
+
+		&:hover {
+			background: color-mix(in oklab, var(--heading), var(--bg) 18%);
+		}
+	}
+
+	&.button-secondary {
+		background: var(--tint);
+		color: var(--heading);
+
+		&:hover {
+			background: color-mix(in oklab, var(--heading), transparent 88%);
+		}
+	}
+
+	&.button-ghost {
+		padding-inline: 0.75rem;
+		background: transparent;
+		color: var(--heading);
+
+		&:hover {
+			background: var(--tint);
+		}
+	}
+
+	&.button-small {
+		height: 2.5rem;
+		padding-inline: 1.125rem;
+		font-size: 0.875rem;
+	}
+}
+
+.status-dot {
+	flex: none;
+	width: 0.5rem;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background: var(--accent);
+	box-shadow: 0 0 0 0.25rem color-mix(in oklab, var(--accent), transparent 80%);
+}
+
+/* Small mono pills: categories on case studies, tags on posts. */
+.chips {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--body);
+	font-family: var(--mono);
+	font-size: 0.75rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+
+	span {
+		padding: 0.25rem 0.625rem;
+		border-radius: var(--radius-pill);
+		background: var(--tint);
+	}
+
+	.chips-index {
+		margin-right: 0.5rem;
+		padding: 0;
+		background: none;
+		color: var(--heading);
+	}
+}
+
+.section {
+	padding-top: var(--section-gap);
+
+	.facts + & {
+		padding-top: clamp(5rem, 9vw, 8rem);
+	}
+}
+
+.eyebrow {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: clamp(2rem, 4vw, 3rem);
+	color: var(--muted);
+	font-family: var(--mono);
+	font-size: 0.8125rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+
+	&::after {
+		content: "";
+		order: 1;
+		flex: 1;
+		height: 1px;
+		background: var(--hairline);
+	}
+
+	.eyebrow-count {
+		order: 2;
+	}
+}
+
+.section-title {
+	max-width: calc(18 * var(--ch-medium));
+	font-size: clamp(2rem, 4vw, 3.5rem);
+	line-height: 1.05;
+	letter-spacing: -0.035em;
+
+	span {
+		color: var(--muted);
+	}
+}
+
+.section-lede {
+	max-width: calc(46 * var(--ch));
+	font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+}
+
+.section-head,
+.split {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+	gap: 1.5rem clamp(2rem, 6vw, 6rem);
+
+	@media (max-width: 56.25rem) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.section-head {
+	align-items: start;
+}
+
+.split-aside {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 1.5rem;
+}
+
+.specs {
+	display: grid;
+
+	div {
+		display: grid;
+		grid-template-columns: 6.5rem minmax(0, 1fr);
+		gap: 1rem;
+		padding-block: 0.75rem;
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	dt {
+		color: var(--muted);
+		font-family: var(--mono);
+		font-size: 0.8125rem;
+		line-height: 1.85;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	dd {
+		color: var(--heading);
+		font-size: 0.9375rem;
+	}
+
+	&.specs-wide div {
+		grid-template-columns: 9rem minmax(0, 1fr);
+		padding-block: 1rem;
+
+		@media (max-width: 30rem) {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 0.25rem;
+		}
+	}
+}
+
+/* A framed list or grid (featured projects, more projects, services), with crosshair
+   marks on its four corners, centred on the border. The marks take the accent colour
+   while a link inside is hovered or focused from the keyboard. On phones the frame
+   opens up and the list runs edge to edge. --inset is the shared text inset for rows
+   inside, so every framed list lines up on the same left edge. */
+.frame {
+	--mark: 11px;
+	--mark-color: color-mix(in oklab, var(--heading), transparent 55%);
+	--inset: clamp(1rem, 2vw, 1.75rem);
+
+	position: relative;
+	border: 1px solid var(--hairline);
+
+	&::after {
+		--h: linear-gradient(currentColor, currentColor) 0 0 / var(--mark) 1px no-repeat;
+		--v: linear-gradient(currentColor, currentColor) 0 0 / 1px var(--mark) no-repeat;
+
+		content: "";
+		position: absolute;
+		inset: calc(-1px - var(--mark) / 2 + 0.5px);
+		background: var(--h), var(--v), var(--h), var(--v), var(--h), var(--v), var(--h), var(--v);
+		background-position:
+			left 0 top calc(var(--mark) / 2 - 0.5px), left calc(var(--mark) / 2 - 0.5px) top 0,
+			right 0 top calc(var(--mark) / 2 - 0.5px), right calc(var(--mark) / 2 - 0.5px) top 0,
+			left 0 bottom calc(var(--mark) / 2 - 0.5px), left calc(var(--mark) / 2 - 0.5px) bottom 0,
+			right 0 bottom calc(var(--mark) / 2 - 0.5px), right calc(var(--mark) / 2 - 0.5px) bottom 0;
+		color: var(--mark-color);
+		transition: color 300ms var(--ease-out);
+		pointer-events: none;
+	}
+
+	@media (hover: hover) {
+		&:has(a:hover) {
+			--mark-color: var(--accent);
+		}
+	}
+
+	&:has(:focus-visible) {
+		--mark-color: var(--accent);
+	}
+
+	@media (max-width: 37.5rem) {
+		--inset: 1.375rem;
+
+		margin-inline: calc(var(--gutter) * -1);
+		border-inline: 0;
+
+		&::after {
+			display: none;
+		}
+	}
+}
+
+/* Card grid: project tiles, posts, and (later) GitHub repos and CodePens. */
+.tiles {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 1rem;
+
+	@media (max-width: 62.5rem) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	@media (max-width: 37.5rem) {
+		display: flex;
+		margin-inline: calc(var(--gutter) * -1);
+		padding: 0.5rem var(--gutter) 1.5rem;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-padding-inline: var(--gutter);
+		scrollbar-width: none;
+	}
+
+	li {
+		display: flex;
+
+		@media (max-width: 37.5rem) {
+			flex: 0 0 82%;
+			scroll-snap-align: start;
+		}
+	}
+}
+
+.tile {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	width: 100%;
+	padding: 0.75rem;
+	border-radius: var(--radius-lg);
+	background: var(--surface);
+	box-shadow: var(--shadow);
+	text-decoration: none;
+	transition: translate 200ms var(--ease-out);
+
+	&:hover {
+		translate: 0 -2px;
+	}
+
+	img {
+		width: 100%;
+		aspect-ratio: 16 / 10;
+		margin-bottom: 0.875rem;
+		border-radius: var(--radius-md);
+		background: var(--sunken);
+		object-fit: cover;
+		object-position: var(--pos, 50% 50%);
+	}
+
+	.tile-title,
+	.tile-text,
+	.tile-meta {
+		padding-inline: 0.5rem;
+	}
+
+	.tile-title {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.75rem;
+		color: var(--heading);
+		font-size: 1.0625rem;
+		font-weight: 500;
+		letter-spacing: -0.015em;
+	}
+
+	.tile-text {
+		color: var(--body);
+		font-size: 0.9375rem;
+		line-height: 1.5;
+	}
+
+	.tile-meta {
+		margin-top: auto;
+		padding-block: 0.875rem 0.5rem;
+		color: var(--muted);
+		font-size: 0.8125rem;
+	}
+}
+
+/* Long-form text: the about copy and Markdown posts. */
+.prose {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	max-width: calc(58 * var(--ch));
+	font-size: clamp(1.125rem, 1.6vw, 1.3125rem);
+	line-height: 1.6;
+
+	h2,
+	h3 {
+		margin-top: 1.5rem;
+		line-height: 1.15;
+		letter-spacing: -0.025em;
+	}
+
+	h2 {
+		font-size: 1.6em;
+	}
+
+	h3 {
+		font-size: 1.25em;
+	}
+
+	a {
+		color: var(--heading);
+		text-underline-offset: 0.25em;
+		text-decoration-color: color-mix(in oklab, var(--heading), transparent 65%);
+	}
+
+	strong {
+		color: var(--heading);
+		font-weight: 600;
+	}
+
+	ul,
+	ol {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		padding-left: 1.25em;
+	}
+
+	ul {
+		list-style: disc;
+	}
+
+	ol {
+		list-style: decimal;
+	}
+
+	li::marker {
+		color: var(--muted);
+	}
+
+	code {
+		padding: 0.1em 0.35em;
+		border-radius: 0.375rem;
+		background: var(--tint);
+		color: var(--heading);
+		font-family: var(--mono);
+		font-size: 0.85em;
+	}
+
+	pre {
+		overflow-x: auto;
+		padding: 1.25rem 1.5rem;
+		border-radius: var(--radius-md);
+		font-size: 0.875rem;
+		line-height: 1.6;
+
+		code {
+			padding: 0;
+			background: none;
+			font-size: inherit;
+		}
+	}
+}

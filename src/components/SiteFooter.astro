@@ -1,0 +1,55 @@
+---
+// SiteFooter.astro — contact card with email, links and the big wordmark.
+const home = Astro.url.pathname === '/' ? '' : '/';
+const email = 'hello@emils.graphics';
+
+const sections = [
+  { label: 'Work', href: `${home}#work` },
+  { label: 'Services', href: `${home}#services` },
+  { label: 'About', href: `${home}#about` },
+];
+
+const elsewhere = [
+  { label: 'GitHub', href: 'https://github.com/emilanderss0n' },
+  { label: 'CodePen', href: 'https://codepen.io/emilandersson' },
+  { label: 'ArtStation', href: 'https://www.artstation.com/emils-graphics' },
+  { label: 'X', href: 'https://x.com/bobemil_sw13' },
+  { label: 'Spotify', href: 'https://open.spotify.com/artist/5fLAJ1k3aPNR5akavV7gzD' },
+];
+---
+
+<footer class="footer wrap" id="contact">
+  <div class="contact">
+    <p class="eyebrow">Contact</p>
+    <div class="split">
+      <div class="split-aside">
+        <h2 class="section-title">Have a project in mind? <span>Let's make it.</span></h2>
+      </div>
+      <div class="contact-main">
+        <div class="contact-email-row">
+          <a class="contact-email" href={`mailto:${email}`}>{email}</a>
+          <button class="button button-secondary button-small copy" type="button" data-copy={email} hidden>Copy</button>
+        </div>
+        <div class="contact-columns">
+          <div>
+            <p class="contact-label">Sections</p>
+            <ul role="list">
+              {sections.map((link) => <li><a class="link" href={link.href}>{link.label}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <p class="contact-label">Elsewhere</p>
+            <ul role="list">
+              {elsewhere.map((link) => <li><a class="link" href={link.href} target="_blank" rel="noopener">{link.label}</a></li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="wordmark" aria-hidden="true">Emil <span>/ Moxo</span></p>
+  </div>
+  <div class="legal">
+    <p>&copy; {new Date().getFullYear()} Emil Andersson</p>
+    <a class="link" href="#top">Back to top</a>
+  </div>
+</footer>
