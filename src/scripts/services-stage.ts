@@ -3,11 +3,12 @@
 // The list only dims the other services once this runs (data-live), so without it all
 // four read normally. The layout itself is desktop only (services.css).
 //
-// Every stage's card holds a short looping clip, which plays only while that stage is on
-// screen and the tab is visible (and never with reduced motion: its poster stands in).
+// Every stage holds two copies of a short looping clip: one in the card and one on the
+// video state's monitor. The copy that is showing plays only while its stage is on
+// screen and the tab is visible, and never with reduced motion (its poster stands in).
 
 export function initServicesStage(): void {
-  initClips();
+  const updateClips = initClips();
 
   const stage = document.querySelector<HTMLElement>('.stage[data-live]');
   const items = Array.from(document.querySelectorAll<HTMLElement>('.service[data-state]'));
@@ -17,6 +18,7 @@ export function initServicesStage(): void {
   const activate = (item: HTMLElement) => {
     stage.dataset.state = item.dataset.state;
     for (const other of items) other.toggleAttribute('data-active', other === item);
+    updateClips();
   };
 
   list.setAttribute('data-live', '');
@@ -33,16 +35,22 @@ export function initServicesStage(): void {
   for (const item of items) observer.observe(item);
 }
 
-function initClips(): void {
-  if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+function initClips(): () => void {
+  if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return () => {};
 
-  const clips = Array.from(document.querySelectorAll<HTMLVideoElement>('.stage .obj-video'));
-  if (clips.length === 0) return;
+  const clips = Array.from(document.querySelectorAll<HTMLVideoElement>('.stage video'));
+  if (clips.length === 0) return () => {};
   const onScreen = new Set<HTMLVideoElement>();
+
+  const showing = (clip: HTMLVideoElement) => {
+    const onMonitor = clip.classList.contains('mon-video');
+    const inVideoState = clip.closest<HTMLElement>('.stage')?.dataset.state === 'video';
+    return onMonitor === inVideoState;
+  };
 
   const update = () => {
     for (const clip of clips) {
-      if (onScreen.has(clip) && !document.hidden) clip.play().catch(() => {});
+      if (onScreen.has(clip) && !document.hidden && showing(clip)) clip.play().catch(() => {});
       else clip.pause();
     }
   };
@@ -57,4 +65,5 @@ function initClips(): void {
   });
   for (const clip of clips) observer.observe(clip);
   document.addEventListener('visibilitychange', update);
+  return update;
 }

@@ -51,6 +51,8 @@
 		--obj-w: clamp(10rem, 48cqi, 14rem);
 		--grow: 1.22;
 		--w-max: 51;
+		--mon-w: 82cqi;
+		--lift: -2.5rem;
 
 		width: min(100%, 30rem);
 		max-height: 26rem;
@@ -135,8 +137,9 @@
 	--win-pad: 0.75rem;
 	--win-bar: 1.625rem;
 	--mon-w: 72cqi;
-	--mon-h: 40.5cqi;
+	--mon-h: calc(var(--mon-w) * 9 / 16);
 	--mon-r: 0.75rem;
+	--lift: -5cqi;
 	--lx: 50%;
 	--ly: 46%;
 	--step: 0;
@@ -266,8 +269,8 @@
 	}
 }
 
-/* The card's place and angle for each state. The window, monitor, titles, guides and
-   inspector sit around the card inside the same element, so they travel with it. */
+/* The card's place and angle for each state. The window and the inspector sit around the
+   card inside the same element, so they travel with it. */
 .stage-object {
 	position: relative;
 	transform-style: preserve-3d;
@@ -338,32 +341,38 @@
 	}
 }
 
-/* Video: the program monitor the footage plays on (its black and frame sit under the
-   card, which the clip on the stage object crops to the same box), the two titles cut in
-   over it, and the safe-area guide with its centre mark on top. */
-.stage-monitor,
-.stage-titles,
-.stage-guides {
+/* Video: the program monitor, a 16:9 frame above the timeline holding its own copy of
+   the footage (filling it, whatever the card's size), the two titles cut in over it,
+   and the safe-area guide with its centre mark on top. */
+.stage-monitor {
 	position: absolute;
-	top: 50%;
+	top: calc(50% + var(--lift));
 	left: 50%;
+	width: var(--mon-w);
+	height: var(--mon-h);
+	overflow: hidden;
+	border: 1px solid var(--hairline);
+	border-radius: var(--mon-r);
+	background: var(--stage-bg);
 	translate: -50% -50%;
 	opacity: 0;
 	pointer-events: none;
 	transition: opacity var(--fade);
+
+	.mon-video {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		image-rendering: pixelated;
+		filter: grayscale(1) contrast(1.05);
+	}
 }
 
-.stage-monitor {
-	width: var(--mon-w);
-	height: var(--mon-h);
-	border-radius: var(--mon-r);
-	background: var(--stage-bg);
-	box-shadow: inset 0 0 0 1px var(--hairline);
-}
-
-.stage-titles {
-	width: var(--mon-w);
-	height: var(--mon-h);
+.mon-titles {
+	position: absolute;
+	inset: 0;
 	color: oklch(12% 0 0);
 	font-size: clamp(1.375rem, 6.2cqi, 3.125rem);
 	font-weight: 900;
@@ -385,11 +394,11 @@
 	}
 }
 
-.stage-guides {
+.mon-guides {
 	--line: color-mix(in oklab, var(--heading), transparent 70%);
 
-	width: calc(var(--mon-w) * 0.9);
-	height: calc(var(--mon-h) * 0.9);
+	position: absolute;
+	inset: 5%;
 	border: 1px solid var(--line);
 	outline: 1px solid oklch(0% 0 0 / 0.3);
 
@@ -436,7 +445,7 @@
 	/* --turn (0 to 1) eases the 3D state's slow turn in and out, so leaving it unwinds the
 	   card instead of snapping it flat; --sway is the turn itself, paused outside it. */
 	rotate: calc(var(--turn) * (-30deg + var(--sway)));
-	transition: background-color var(--fade), border-color var(--fade), box-shadow var(--fade), --turn var(--move), --size var(--move);
+	transition: background-color var(--fade), border-color var(--fade), box-shadow var(--fade), opacity var(--fade), --turn var(--move), --size var(--move);
 
 	@media (prefers-reduced-motion: no-preference) {
 		animation: stage-sway 7s ease-in-out infinite alternate paused;
@@ -1226,70 +1235,29 @@
 	}
 }
 
-/* Video Editing: the footage alone on the program monitor (the card loses its surface,
-   corners and other parts, so only the clip is left, filling the frame), with the two
-   titles cut in on either side of the skater in step with their clip on the timeline
-   (4s loop) and wiped off before it starts over. */
+/* Video Editing: the card gives way to the footage alone on the program monitor, with
+   the two titles cut in on either side of the skater in step with their clip on the
+   timeline (4s loop) and wiped off before it starts over. */
 .stage[data-state="video"] {
-	/* The clip's offset from the card's centre (as a part of the card's height) and the
-	   zoom that fills the monitor with it. The card's width is capped while the stage
-	   keeps growing, so the monitor is capped to what the zoomed clip covers (its width
-	   less the card's padding) and keeps its 16:9. The narrower phone card is taller, so
-	   its numbers differ and its monitor is wider. */
-	--img-off: 23%;
-	--push: 2;
-	--lift: -5cqi;
-	--mon-w: min(72cqi, var(--push) * (var(--obj-w) - 1.25rem));
-	--mon-h: calc(var(--mon-w) * 9 / 16);
-
-	.service & {
-		--img-off: 26%;
-		--push: 1.9;
-		--lift: -2.5rem;
-		--mon-w: min(82cqi, var(--push) * (var(--obj-w) - 1.25rem));
-	}
-
 	.stage-object {
-		transform: translateY(var(--lift));
-		clip-path: inset(calc(50% - var(--mon-h) / 2) calc(50% - var(--mon-w) / 2) round var(--mon-r));
-	}
-
-	.stage-monitor,
-	.stage-titles {
-		opacity: 1;
-	}
-
-	.stage-guides {
-		opacity: 1;
-		transition-delay: 300ms;
+		transform: translateY(var(--lift)) scale(0.9);
 	}
 
 	.obj {
-		translate: 0 calc(var(--img-off) * var(--push));
-		scale: var(--push);
+		opacity: 0;
 		animation: none;
 	}
 
-	.obj-media {
-		border-radius: 0;
-
-		.obj-video {
-			opacity: 1;
-		}
-	}
-
-	.obj-title,
-	.obj-text,
-	.obj-button {
-		opacity: 0;
+	.stage-monitor {
+		opacity: 1;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
-		.stage-titles [data-side="left"] {
+		.mon-titles [data-side="left"] {
 			animation: stage-word-left 4s var(--ease-out) infinite;
 		}
 
-		.stage-titles [data-side="right"] {
+		.mon-titles [data-side="right"] {
 			animation: stage-word-right 4s var(--ease-out) infinite;
 		}
 

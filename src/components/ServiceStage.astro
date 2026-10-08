@@ -4,8 +4,9 @@
 // through each craft's own tool: selected and resized on a design canvas (ui), typed into
 // a browser window from its code (web), exploded into a dot-matrix mesh in a 3D viewport
 // (3d) and, as the footage alone, titled on a program monitor over a timeline (video).
-// The live copy changes state as the services scroll past (scripts/services-stage.ts,
-// which also plays the clip only while the stage is on screen); the others hold one
+// The monitor holds its own copy of the clip so it always fills the frame. The live copy
+// changes state as the services scroll past (scripts/services-stage.ts, which also plays
+// whichever clip is showing, only while the stage is on screen); the others hold one
 // state each, for phones. Purely decorative, so hidden from assistive tech.
 import { stageCode } from '@lib/stage-code';
 import { arrowCursor, grabCursor, resizeCursor } from '@lib/pixel-cursor';
@@ -65,7 +66,6 @@ const wave = Array.from({ length: 72 }, (_, i) => 0.2 + 0.8 * Math.abs(Math.sin(
   <span class="stage-stats">{stats.map(([name, value]) => <span>{name}<b>{value}</b></span>)}</span>
   <div class="stage-object">
     <span class="stage-window"><span class="win-url">nhlplay.app</span></span>
-    <span class="stage-monitor"></span>
     <span class="stage-floor"></span>
     <div class="obj" style={part(0)}>
       <span class="obj-part obj-media" style={part(1)}>
@@ -82,10 +82,13 @@ const wave = Array.from({ length: 72 }, (_, i) => 0.2 + 0.8 * Math.abs(Math.sin(
       <svg class="stage-cursor stage-arrow" viewBox="0 0 16 16" width="16" height="16">{arrowCursor.map(({ x, y, outline }) => <rect x={x} y={y} width="1" height="1" class={outline ? 'px-line' : 'px-fill'} />)}</svg>
       <svg class="stage-cursor stage-resize" viewBox="0 0 16 16" width="16" height="16">{resizeCursor.map(({ x, y, outline }) => <rect x={x} y={y} width="1" height="1" class={outline ? 'px-line' : 'px-fill'} />)}</svg>
     </div>
-    <span class="stage-titles">{words.map(({ name, side }) => <span data-side={side}>{name}</span>)}</span>
-    <span class="stage-guides"></span>
     <span class="stage-inspect"><span><b>article</b>.card</span><span>288 × 236</span></span>
   </div>
+  <span class="stage-monitor">
+    <video class="mon-video" src="/media/skater.mp4" poster="/media/skater-frame.webp" muted loop playsinline preload="none" disablepictureinpicture></video>
+    <span class="mon-titles">{words.map(({ name, side }) => <span data-side={side}>{name}</span>)}</span>
+    <span class="mon-guides"></span>
+  </span>
   <span class="stage-gizmo"><span class="gz-z">Z</span><span class="gz-y">Y</span><span class="gz-x">X</span></span>
   <svg class="stage-cursor stage-hand" viewBox="0 0 16 16" width="16" height="16">{grabCursor.map(({ x, y, outline }) => <rect x={x} y={y} width="1" height="1" class={outline ? 'px-line' : 'px-fill'} />)}</svg>
   <pre class="stage-code">{typed.map(({ line, chars, start, end, duration }) => (
