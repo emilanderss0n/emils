@@ -237,7 +237,7 @@
 	}
 }
 
-/* A framed list (featured projects, more projects): a hairline border with rounded
+/* A framed list (the featured projects): a hairline border with rounded
    corners, which also clip the rows' hover tint. Rows in the corners round their own
    highlight and focus ring to --corner, the frame's inner radius, so the ring follows
    the curve instead of being cut by it. On phones the frame opens up and the list runs

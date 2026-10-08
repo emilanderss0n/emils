@@ -19,6 +19,8 @@
 	--shade-d: oklch(0% 0 0 / 0.5);
 	--highlight-l: oklch(100% 0 0 / 0.9);
 	--highlight-d: oklch(100% 0 0 / 0.06);
+	--lift-l: oklch(100% 0 0 / 0.85);
+	--lift-d: oklch(100% 0 0 / 0.01);
 
 	--bg: light-dark(var(--bg-l), var(--bg-d));
 	--surface: light-dark(var(--surface-l), var(--surface-d));
@@ -30,6 +32,8 @@
 	--hairline: light-dark(var(--hairline-l), var(--hairline-d));
 	--shade: light-dark(var(--shade-l), var(--shade-d));
 	--highlight: light-dark(var(--highlight-l), var(--highlight-d));
+	/* What a hovered row lifts to: almost white in light mode, a touch lighter in dark. */
+	--lift: light-dark(var(--lift-l), var(--lift-d));
 	--tint: color-mix(in oklab, var(--heading), transparent 93%);
 	--brand-from: light-dark(oklch(55% 0.2 255), oklch(74% 0.14 250));
 	--brand-to: light-dark(oklch(52% 0.24 300), oklch(72% 0.17 305));
@@ -60,6 +64,9 @@
 	--header-offset: 5.5rem;
 	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
+	/* The dot grid's spacing where a light brightens the dots under it (Services stage, featured Work rows). */
+	--dot-pitch: 1.25rem;
+
 	/* Browsers without light-dark(): pick the palette with a media query instead. */
 	@supports not (color: light-dark(#000, #fff)) {
 		--bg: var(--bg-l);
@@ -72,6 +79,7 @@
 		--hairline: var(--hairline-l);
 		--shade: var(--shade-l);
 		--highlight: var(--highlight-l);
+		--lift: var(--lift-l);
 
 		@media (prefers-color-scheme: dark) {
 			--bg: var(--bg-d);
@@ -84,6 +92,7 @@
 			--hairline: var(--hairline-d);
 			--shade: var(--shade-d);
 			--highlight: var(--highlight-d);
+			--lift: var(--lift-d);
 		}
 	}
 }

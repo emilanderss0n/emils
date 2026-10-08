@@ -133,7 +133,6 @@
 	--move: 800ms var(--ease-out);
 	--fade: 400ms var(--ease-out);
 	--dots: radial-gradient(circle, var(--heading) 1.1px, transparent 1.7px) 0 0 / 7px 7px;
-	--grid: 1.25rem;
 	--win-pad: 0.75rem;
 	--win-bar: 1.625rem;
 	--mon-w: 72cqi;
@@ -142,6 +141,7 @@
 	--lift: -5cqi;
 	--lx: 50%;
 	--ly: 46%;
+	--light: 0;
 	--step: 0;
 
 	position: relative;
@@ -156,7 +156,7 @@
 	color-scheme: dark;
 	perspective: 70rem;
 	isolation: isolate;
-	transition: --lx var(--move), --ly var(--move);
+	transition: --lx var(--move), --ly var(--move), --light var(--fade);
 
 	@media (prefers-reduced-motion: reduce) {
 		--move: 0ms;
@@ -173,7 +173,7 @@
 		content: "";
 		position: absolute;
 		inset: 0;
-		background: radial-gradient(circle, var(--hairline) 1px, transparent 1.5px) 0 0 / var(--grid) var(--grid);
+		background: radial-gradient(circle, var(--hairline) 1px, transparent 1.5px) 0 0 / var(--dot-pitch) var(--dot-pitch);
 		pointer-events: none;
 	}
 
@@ -200,6 +200,11 @@
 		--lx: 50%;
 		--ly: 36%;
 	}
+
+	/* The pointer light fades in while the pointer is over the stage (scripts/pointer-light.ts). */
+	&[data-lit] {
+		--light: 1;
+	}
 }
 
 /* The light: a soft glow and brighter dots, on the same grid as the base dots, masked to
@@ -209,9 +214,30 @@
 	inset: 0;
 	background:
 		radial-gradient(26cqi at var(--lx) var(--ly), color-mix(in oklab, var(--heading), transparent 94%), transparent),
-		radial-gradient(circle, color-mix(in oklab, var(--heading), transparent 60%) 1px, transparent 1.5px) 0 0 / var(--grid) var(--grid);
+		radial-gradient(circle, color-mix(in oklab, var(--heading), transparent 60%) 1px, transparent 1.5px) 0 0 / var(--dot-pitch) var(--dot-pitch);
 	mask-image: radial-gradient(36cqi at var(--lx) var(--ly), #000, transparent);
 	pointer-events: none;
+}
+
+/* The pointer light: a halftone of the light on the grid, like the footer wordmark's,
+   but fainter and tighter than the state's light. The dots under it brighten and, nearer
+   its centre (::before), swell a little. Both layers' dots have soft edges, so toward the
+   light's edge they look to shrink away rather than switch off. */
+.stage-hover {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(circle, color-mix(in oklab, var(--heading), transparent 68%) 0.8px, transparent 2px) 0 0 / var(--dot-pitch) var(--dot-pitch);
+	mask-image: radial-gradient(16cqi at var(--x, -100rem) var(--y, -100rem), #000, transparent);
+	opacity: var(--light);
+	pointer-events: none;
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle, color-mix(in oklab, var(--heading), transparent 55%) 1.4px, transparent 2.6px) 0 0 / var(--dot-pitch) var(--dot-pitch);
+		mask-image: radial-gradient(8cqi at var(--x, -100rem) var(--y, -100rem), #000, transparent);
+	}
 }
 
 /* The file the card currently lives in, top left. The names sit on top of each other

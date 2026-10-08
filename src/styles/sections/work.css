@@ -1,10 +1,13 @@
-/* Hover for the ruled project lists: the space between a row's lines fills
-   with a faint tint, lit by a glow that follows the pointer (scripts/pointer-glow.ts).
+/* Hover for the project lists: a row lifts (--lift).
    --on is 1 while a row is hovered or focused from the keyboard. It ignores focus left
    behind by a click and the hover a tap leaves on touch screens, so a row doesn't stay
    lit after its link has opened. */
 :is(.project, .more-item) {
 	--on: 0;
+
+	border-radius: var(--corners, 0);
+	background-color: color-mix(in oklab, var(--lift) calc(var(--on) * 100%), transparent);
+	transition: background-color 300ms var(--ease-out);
 
 	@media (hover: hover) {
 		&:hover {
@@ -14,17 +17,6 @@
 
 	&:is(:focus-visible, :has(:focus-visible)) {
 		--on: 1;
-	}
-
-	&::before {
-		content: "";
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		border-radius: var(--corners, 0);
-		background: radial-gradient(32rem circle at var(--x, 30%) var(--y, 50%), color-mix(in oklab, var(--accent), transparent 90%), transparent 70%), color-mix(in oklab, var(--heading), transparent 97%);
-		opacity: var(--on);
-		transition: opacity 300ms var(--ease-out);
 	}
 }
 
@@ -51,7 +43,16 @@
 	}
 }
 
+/* A featured row also carries a dot grid, and a halftone light follows the pointer over
+   it (scripts/pointer-glow.ts), like the one on the Services stage. The grid (::before)
+   is barely there across the row and brightens under the light, whose reach is --reach;
+   in light mode its ink is the accent, in dark mode plain. Nearer the light's centre
+   (::after) the dots swell a little. Both layers' dots have soft edges, so toward the
+   light's edge they shrink away rather than switch off. */
 .project {
+	--reach: 24rem;
+	--ink: light-dark(var(--accent-l), var(--heading-d));
+
 	position: relative;
 	isolation: isolate;
 	display: grid;
@@ -60,6 +61,39 @@
 	gap: 1.5rem clamp(1.5rem, 3vw, 3rem);
 	padding: clamp(1.75rem, 3.5vw, 2.75rem) var(--inset);
 	border-top: 1px solid var(--hairline);
+
+	/* Browsers without light-dark(): pick the ink with a media query instead. */
+	@supports not (color: light-dark(#000, #fff)) {
+		--ink: var(--accent-l);
+
+		@media (prefers-color-scheme: dark) {
+			--ink: var(--heading-d);
+		}
+	}
+
+	/* The two mask layers add up: the grid shows at a quarter strength everywhere, and in
+	   full under the light. */
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: radial-gradient(circle, color-mix(in oklab, var(--ink), transparent 78%) 0.8px, transparent 2px) 0 0 / var(--dot-pitch) var(--dot-pitch);
+		mask-image: radial-gradient(var(--reach) at var(--x, 30%) var(--y, 50%), #000, transparent), linear-gradient(rgb(0 0 0 / 0.25) 0 0);
+		opacity: var(--on);
+		transition: opacity 300ms var(--ease-out);
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: radial-gradient(circle, color-mix(in oklab, var(--ink), transparent 68%) 1.4px, transparent 2.6px) 0 0 / var(--dot-pitch) var(--dot-pitch);
+		mask-image: radial-gradient(calc(var(--reach) / 2) at var(--x, 30%) var(--y, 50%), #000, transparent);
+		opacity: var(--on);
+		transition: opacity 300ms var(--ease-out);
+	}
 
 	/* In the rounded frame, the frame draws the top edge. */
 	&:first-child {
@@ -86,7 +120,7 @@
 		padding-block: 2.25rem 2.5rem;
 	}
 
-	&:has(.project-link:focus-visible)::before {
+	&:has(.project-link:focus-visible) {
 		outline: 2px solid var(--accent);
 		outline-offset: -2px;
 	}
@@ -250,106 +284,106 @@
 	gap: 1.5rem;
 }
 
-/* More projects (GitHub repos and CodePen pens): a ruled grid of compact rows. Row lines
-   run across both columns, with a single line between the columns. In the rounded frame
-   the frame draws the bottom edge, so the last row has no line of its own; on phones the
-   rows' lines run edge to edge instead. */
+/* More projects (GitHub repos and CodePen pens): a plain list, one row per project, with
+   hairline dividers between rows. On wide screens a row is one line: name, description,
+   its meta and an arrow at the right edge, on columns the whole list shares (subgrid), so
+   every description starts at the same point and every meta ends on the same edge. The
+   name column fits the longest name, up to a cap. On narrower screens a row stacks: the
+   name with the arrow, the description, then the meta. The hover tint fills a row exactly
+   between its dividers, the text a little inset from its edges; on phones the list runs
+   edge to edge like the featured frame, the text on the gutter. */
 .more-list {
-	--frame-radius: var(--radius-lg);
-
 	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
+	grid-template-columns: fit-content(14rem) minmax(0, 1fr) max-content auto;
+	column-gap: clamp(1rem, 3vw, 2.5rem);
 
 	@media (max-width: 47.5rem) {
-		grid-template-columns: minmax(0, 1fr);
+		grid-template-columns: minmax(0, 1fr) auto;
 	}
 
 	@media (max-width: 37.5rem) {
-		border-bottom: 0;
+		margin-inline: calc(var(--gutter) * -1);
 	}
 
 	li {
-		display: flex;
-		border-bottom: 1px solid var(--hairline);
+		display: grid;
+		grid-column: 1 / -1;
+		grid-template-columns: subgrid;
 
-		&:first-child {
-			--corners: var(--corner) var(--corner) 0 0;
-		}
-
-		&:last-child {
-			--corners: 0 0 var(--corner) var(--corner);
-		}
-
-		@media (min-width: 37.5625rem) {
-			&:last-child {
-				border-bottom: 0;
-			}
-		}
-
-		/* Two columns: each corner belongs to one cell. */
-		@media (min-width: 47.5625rem) {
-			&:nth-child(odd) {
-				border-right: 1px solid var(--hairline);
-			}
-
-			&:nth-child(odd):nth-last-child(2) {
-				border-bottom: 0;
-			}
-
-			&:nth-child(1) {
-				--corners: var(--corner) 0 0 0;
-			}
-
-			&:nth-child(2) {
-				--corners: 0 var(--corner) 0 0;
-			}
-
-			&:nth-child(odd):nth-last-child(-n + 2) {
-				--corners: 0 0 0 var(--corner);
-			}
-
-			&:nth-child(even):last-child {
-				--corners: 0 0 var(--corner) 0;
-			}
+		& + li {
+			border-top: 1px solid var(--hairline);
 		}
 	}
 }
 
 .more-item {
-	position: relative;
-	isolation: isolate;
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) auto;
-	grid-template-areas: "name arrow" "text text" "meta meta";
-	align-content: start;
-	gap: 0.375rem 1rem;
-	width: 100%;
-	padding: 1.5rem var(--inset) 1.375rem;
-
-	@media (max-width: 37.5rem) {
-		padding-block: 1.75rem 1.625rem;
-	}
+	grid-column: 1 / -1;
+	grid-template-columns: subgrid;
+	grid-template-areas: "name text meta arrow";
+	align-items: baseline;
+	padding: 0.875rem 1rem;
 	color: var(--body);
 	text-decoration: none;
 
-	&:focus-visible {
-		outline: none;
+	@media (max-width: 47.5rem) {
+		grid-template-areas: "name arrow" "text text" "meta meta";
+		row-gap: 0.375rem;
+		padding-block: 1rem;
+	}
 
-		&::before {
-			outline: 2px solid var(--accent);
-			outline-offset: -2px;
-		}
+	@media (max-width: 37.5rem) {
+		padding-inline: var(--gutter);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: -2px;
 	}
 }
 
 .more-name {
 	grid-area: name;
-	justify-self: start;
 	color: var(--heading);
-	font-size: 1.0625rem;
+	font-size: 1rem;
 	font-weight: 500;
 	letter-spacing: -0.015em;
 	overflow-wrap: anywhere;
+}
+
+/* One line, cut with an ellipsis; two lines when stacked. */
+.more-text {
+	grid-area: text;
+	min-width: 0;
+	overflow: hidden;
+	font-size: 0.9375rem;
+	line-height: 1.5;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	@media (max-width: 47.5rem) {
+		display: -webkit-box;
+		white-space: normal;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+	}
+}
+
+.more-meta {
+	grid-area: meta;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 1.25rem;
+	justify-self: end;
+	color: var(--muted);
+	font-family: var(--mono);
+	font-size: 0.75rem;
+	white-space: nowrap;
+
+	@media (max-width: 47.5rem) {
+		justify-self: start;
+		margin-top: 0.25rem;
+	}
 }
 
 .more-arrow {
@@ -358,27 +392,6 @@
 	color: color-mix(in oklab, var(--heading) calc(var(--on) * 100%), var(--muted));
 	translate: calc(var(--on) * 0.25rem) 0;
 	transition: translate 300ms var(--ease-out), color 300ms var(--ease-out);
-}
-
-.more-text {
-	grid-area: text;
-	display: -webkit-box;
-	overflow: hidden;
-	font-size: 0.9375rem;
-	line-height: 1.5;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-}
-
-.more-meta {
-	grid-area: meta;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.25rem 1.25rem;
-	margin-top: 0.5rem;
-	color: var(--muted);
-	font-family: var(--mono);
-	font-size: 0.75rem;
 }
 
 .more-stars {

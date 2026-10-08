@@ -17,16 +17,32 @@
 	color: var(--body);
 	box-shadow: var(--shadow);
 	color-scheme: dark;
+	isolation: isolate;
 
-	/* Soft accent glow in the bottom-right corner. */
+	/* Soft accent glow in the bottom-right corner (::before), dodged onto the card under
+	   the content, with a film grain over it (::after): a noise texture masked to the glow's
+	   shape so the grain fades out with the light. */
 	&::before {
 		content: "";
 		position: absolute;
 		inset: auto -10% -40% 30%;
+		z-index: -1;
 		height: 80%;
 		background: radial-gradient(closest-side, var(--accent), transparent);
 		opacity: 0.18;
-		filter: blur(4rem);
+		mix-blend-mode: color-dodge;
+		pointer-events: none;
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		inset: auto -10% -40% 30%;
+		z-index: -1;
+		height: 100%;
+		background: url("/media/noise.svg");
+		mask-image: radial-gradient(closest-side, #000, transparent);
+		opacity: 0.4;
 		pointer-events: none;
 	}
 }

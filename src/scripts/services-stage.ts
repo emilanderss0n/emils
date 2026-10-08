@@ -6,9 +6,13 @@
 // Every stage holds two copies of a short looping clip: one in the card and one on the
 // video state's monitor. The copy that is showing plays only while its stage is on
 // screen and the tab is visible, and never with reduced motion (its poster stands in).
+// While the pointer is over a stage, a faint light follows it over the dot grid
+// (pointer-light.ts), like the footer wordmark's.
+import { followPointer } from './pointer-light';
 
 export function initServicesStage(): void {
   const updateClips = initClips();
+  for (const stage of document.querySelectorAll<HTMLElement>('.stage')) followPointer(stage, stage, [stage]);
 
   const stage = document.querySelector<HTMLElement>('.stage[data-live]');
   const items = Array.from(document.querySelectorAll<HTMLElement>('.service[data-state]'));

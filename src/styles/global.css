@@ -32,7 +32,7 @@
 	initial-value: 100%;
 }
 
-/* Registered so it can fade (the footer wordmark's pointer light). */
+/* Registered so it can fade (the pointer light on the footer wordmark and the Services stage). */
 @property --light {
 	syntax: "<number>";
 	inherits: true;

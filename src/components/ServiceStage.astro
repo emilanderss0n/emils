@@ -62,6 +62,7 @@ const wave = Array.from({ length: 72 }, (_, i) => 0.2 + 0.8 * Math.abs(Math.sin(
 
 <div class="stage" data-state={state} data-live={live || undefined} style={`--done: ${done}ms`} aria-hidden="true">
   <span class="stage-light"></span>
+  <span class="stage-hover"></span>
   <p class="stage-file">{files.map(([key, name], i) => <span data-for={key} style={`--n: ${i}`}>{name}</span>)}</p>
   <span class="stage-stats">{stats.map(([name, value]) => <span>{name}<b>{value}</b></span>)}</span>
   <div class="stage-object">
