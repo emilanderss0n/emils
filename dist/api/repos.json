@@ -4,16 +4,18 @@
     "fullName": "emilanderss0n/SPT-Menu-Overhaul",
     "description": "Client mod for SPT (EFT) that overhauls the main menu in the game",
     "url": "https://github.com/emilanderss0n/SPT-Menu-Overhaul",
-    "homepage": "https://forge.sp-tarkov.com/mod/1775/wtt-menu-overhaul",
-    "stars": 5,
+    "homepage": "https://sp-mod.com/mod/1775/wtt-menu-overhaul",
+    "stars": 6,
     "language": "C#",
     "topics": [
       "game-development",
       "game-mod"
     ],
     "category": "game-development",
-    "pushedAt": "2026-06-11T15:46:42Z",
-    "createdAt": "2024-10-11T02:15:53Z"
+    "pushedAt": "2026-08-15T07:26:05Z",
+    "createdAt": "2024-10-11T02:15:53Z",
+    "releases": 17,
+    "downloads": 125808
   },
   {
     "name": "tarkynator",
@@ -29,8 +31,10 @@
       "website"
     ],
     "category": "web-development",
-    "pushedAt": "2026-06-02T20:29:56Z",
-    "createdAt": "2024-11-24T20:59:51Z"
+    "pushedAt": "2026-08-14T21:28:22Z",
+    "createdAt": "2024-11-24T20:59:51Z",
+    "releases": 0,
+    "downloads": 0
   },
   {
     "name": "BlackCore",
@@ -38,7 +42,7 @@
     "description": "New variants of weapon mods and new weapon variants/skins (SPT Mod)",
     "url": "https://github.com/emilanderss0n/BlackCore",
     "homepage": "",
-    "stars": 1,
+    "stars": 2,
     "language": "TypeScript",
     "topics": [
       "game-development",
@@ -46,7 +50,9 @@
     ],
     "category": "game-development",
     "pushedAt": "2025-04-23T03:12:51Z",
-    "createdAt": "2024-05-31T13:53:22Z"
+    "createdAt": "2024-05-31T13:53:22Z",
+    "releases": 10,
+    "downloads": 128857
   },
   {
     "name": "TGC",
@@ -62,7 +68,9 @@
     ],
     "category": "game-development",
     "pushedAt": "2025-12-12T14:11:26Z",
-    "createdAt": "2024-05-27T14:49:32Z"
+    "createdAt": "2024-05-27T14:49:32Z",
+    "releases": 21,
+    "downloads": 226352
   },
   {
     "name": "nhlplay-feedback",
@@ -78,7 +86,9 @@
     ],
     "category": "web-development",
     "pushedAt": "2025-11-28T21:21:33Z",
-    "createdAt": "2025-09-29T04:07:48Z"
+    "createdAt": "2025-09-29T04:07:48Z",
+    "releases": 0,
+    "downloads": 0
   },
   {
     "name": "emils",
@@ -92,8 +102,28 @@
       "website"
     ],
     "category": "web-development",
-    "pushedAt": "2026-08-08T12:00:46Z",
-    "createdAt": "2025-03-15T02:30:20Z"
+    "pushedAt": "2026-10-08T02:01:32Z",
+    "createdAt": "2025-03-15T02:30:20Z",
+    "releases": 0,
+    "downloads": 0
+  },
+  {
+    "name": "spt-hideout-shootout",
+    "fullName": "emilanderss0n/spt-hideout-shootout",
+    "description": "Mod for SPT to enable player to draw weapon in hideout",
+    "url": "https://github.com/emilanderss0n/spt-hideout-shootout",
+    "homepage": "",
+    "stars": 0,
+    "language": "C#",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2026-08-15T23:15:01Z",
+    "createdAt": "2026-05-23T22:28:01Z",
+    "releases": 2,
+    "downloads": 4076
   },
   {
     "name": "dashxe-vscode-theme",
@@ -109,7 +139,9 @@
     ],
     "category": "other",
     "pushedAt": "2022-08-09T18:06:29Z",
-    "createdAt": "2022-08-08T21:03:54Z"
+    "createdAt": "2022-08-08T21:03:54Z",
+    "releases": 0,
+    "downloads": 0
   },
   {
     "name": "Actual-Sick-SICC",
@@ -125,7 +157,9 @@
     ],
     "category": "game-development",
     "pushedAt": "2024-07-13T02:47:00Z",
-    "createdAt": "2024-05-30T23:48:15Z"
+    "createdAt": "2024-05-30T23:48:15Z",
+    "releases": 2,
+    "downloads": 10759
   },
   {
     "name": "WarHeads",
@@ -141,7 +175,9 @@
     ],
     "category": "game-development",
     "pushedAt": "2024-11-26T19:13:19Z",
-    "createdAt": "2024-05-24T03:24:39Z"
+    "createdAt": "2024-05-24T03:24:39Z",
+    "releases": 4,
+    "downloads": 9524
   },
   {
     "name": "SandCore",
@@ -157,7 +193,9 @@
     ],
     "category": "game-development",
     "pushedAt": "2025-02-12T18:50:10Z",
-    "createdAt": "2024-07-18T09:53:25Z"
+    "createdAt": "2024-07-18T09:53:25Z",
+    "releases": 2,
+    "downloads": 26165
   },
   {
     "name": "GreenCore",
@@ -173,7 +211,9 @@
     ],
     "category": "game-development",
     "pushedAt": "2025-03-14T20:55:30Z",
-    "createdAt": "2024-07-21T20:12:40Z"
+    "createdAt": "2024-07-21T20:12:40Z",
+    "releases": 2,
+    "downloads": 17698
   },
   {
     "name": "WhiteCore",
@@ -189,7 +229,9 @@
     ],
     "category": "game-development",
     "pushedAt": "2025-03-14T20:57:31Z",
-    "createdAt": "2024-07-21T20:04:20Z"
+    "createdAt": "2024-07-21T20:04:20Z",
+    "releases": 2,
+    "downloads": 18882
   },
   {
     "name": "MagTape",
@@ -205,7 +247,9 @@
     ],
     "category": "game-development",
     "pushedAt": "2025-04-18T16:33:10Z",
-    "createdAt": "2024-05-31T13:46:12Z"
+    "createdAt": "2024-05-31T13:46:12Z",
+    "releases": 4,
+    "downloads": 69441
   },
   {
     "name": "TMS",
@@ -221,7 +265,9 @@
     ],
     "category": "game-development",
     "pushedAt": "2025-04-26T16:44:12Z",
-    "createdAt": "2024-07-13T02:49:21Z"
+    "createdAt": "2024-07-13T02:49:21Z",
+    "releases": 8,
+    "downloads": 12967
   },
   {
     "name": "AdvancedModdingLights",
@@ -237,7 +283,9 @@
     ],
     "category": "game-development",
     "pushedAt": "2025-06-27T19:03:37Z",
-    "createdAt": "2025-06-27T18:48:30Z"
+    "createdAt": "2025-06-27T18:48:30Z",
+    "releases": 1,
+    "downloads": 6712
   },
   {
     "name": "MoxoCode",
@@ -252,7 +300,9 @@
     ],
     "category": "other",
     "pushedAt": "2025-07-13T17:18:49Z",
-    "createdAt": "2025-07-13T16:45:31Z"
+    "createdAt": "2025-07-13T16:45:31Z",
+    "releases": 1,
+    "downloads": 2
   },
   {
     "name": "moxopixel",
@@ -267,7 +317,9 @@
     ],
     "category": "web-development",
     "pushedAt": "2025-08-10T21:44:38Z",
-    "createdAt": "2025-07-28T15:39:13Z"
+    "createdAt": "2025-07-28T15:39:13Z",
+    "releases": 0,
+    "downloads": 0
   },
   {
     "name": "Painter",
@@ -283,22 +335,8 @@
     ],
     "category": "game-development",
     "pushedAt": "2025-12-12T14:11:10Z",
-    "createdAt": "2024-05-31T13:17:15Z"
-  },
-  {
-    "name": "spt-hideout-shootout",
-    "fullName": "emilanderss0n/spt-hideout-shootout",
-    "description": "Mod for SPT to enable player to draw weapon in hideout",
-    "url": "https://github.com/emilanderss0n/spt-hideout-shootout",
-    "homepage": "",
-    "stars": 0,
-    "language": "C#",
-    "topics": [
-      "game-development",
-      "game-mod"
-    ],
-    "category": "game-development",
-    "pushedAt": "2026-05-23T22:46:54Z",
-    "createdAt": "2026-05-23T22:28:01Z"
+    "createdAt": "2024-05-31T13:17:15Z",
+    "releases": 15,
+    "downloads": 215542
   }
 ]

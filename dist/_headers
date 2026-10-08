@@ -5,11 +5,7 @@
 # HTML pages — cache for 1 day, revalidate
 /
   Cache-Control: public, max-age=86400, must-revalidate
-/about
-  Cache-Control: public, max-age=86400, must-revalidate
 /posts
-  Cache-Control: public, max-age=86400, must-revalidate
-/codepen
   Cache-Control: public, max-age=86400, must-revalidate
 
 # Images — cache for a week
