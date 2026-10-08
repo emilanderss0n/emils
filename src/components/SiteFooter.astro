@@ -11,11 +11,16 @@ const sections = [
   { label: 'About', href: `${home}#about` },
 ];
 
+const websites = [
+  { label: 'NHLPLAY', href: 'https://nhlplay.online' },
+  { label: 'Tarkynator', href: 'https://tarkynator.com' },
+];
+
 const elsewhere = [
   { label: 'GitHub', href: 'https://github.com/emilanderss0n' },
   { label: 'CodePen', href: 'https://codepen.io/emilandersson' },
   { label: 'ArtStation', href: 'https://www.artstation.com/emils-graphics' },
-  { label: 'X', href: 'https://x.com/bobemil_sw13' },
+  { label: 'X (Twitter)', href: 'https://x.com/bobemil_sw13' },
   { label: 'Spotify', href: 'https://open.spotify.com/artist/5fLAJ1k3aPNR5akavV7gzD' },
 ];
 
@@ -50,6 +55,12 @@ const pitches = [3, 4, 5, 6, 7];
             <p class="contact-label">Sections</p>
             <ul role="list">
               {sections.map((link) => <li><a class="link" href={link.href}>{link.label}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <p class="contact-label">Websites</p>
+            <ul role="list">
+              {websites.map((link) => <li><a class="link" href={link.href} target="_blank" rel="noopener">{link.label}</a></li>)}
             </ul>
           </div>
           <div>
