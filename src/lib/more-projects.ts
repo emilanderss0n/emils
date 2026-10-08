@@ -6,11 +6,8 @@ export interface MoreItem {
   name: string;
   text?: string | null;
   href: string;
-  /** Shown first in the meta line, after a coloured dot: the repo's language, or "CodePen". */
+  /** Shown first in the meta line, after a coloured dot: the repo's language ("Misc" when it has none), or "CodePen". */
   label?: { text: string; color: string };
-  meta: string[];
-  /** GitHub stars, shown last with a star icon. */
-  stars?: number;
 }
 
 // GitHub's own language colours.
@@ -40,9 +37,8 @@ export async function getMoreItems(): Promise<MoreItem[]> {
     name: data.name,
     text: data.description,
     href: data.url,
-    label: data.language === 'N/A' ? undefined : { text: data.language, color: languageColors[data.language] ?? 'var(--muted)' },
-    meta: [`Updated ${new Date(data.pushedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}`],
-    stars: data.stars,
+    // A repo with no language GitHub can name is filed under "Misc".
+    label: data.language === 'N/A' ? { text: 'Misc', color: 'var(--muted)' } : { text: data.language, color: languageColors[data.language] ?? 'var(--muted)' },
   }));
   return mix(repos, getPens());
 }

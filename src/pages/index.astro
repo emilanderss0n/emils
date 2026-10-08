@@ -26,24 +26,23 @@ const stats = [
   { label: 'Versions shipped on GitHub', figure: String(github.releases), unit: 'releases' },
   { label: 'Open source on GitHub', figure: String(github.repos), unit: 'repos' },
 ];
-// Each row links to its GitHub repo and shows its stars, both read from GitHub at build
-// time; `href` here is only a fallback for when GitHub can't be reached.
+// Each row links to its GitHub repo, read from GitHub at build time; `href` here is
+// only a fallback for when GitHub can't be reached.
 const featuredProjects = [
   {
     repo: featured.nhlplay,
     title: 'NHLPLAY',
     tags: ['Web app', 'UI Design'],
     text: 'For hockey fans who want more than box scores. Follow games live, dig into player stats, track your favourite players and build your dream lineup with drag and drop.',
-    specs: [['Year', '2025'], ['Stack', 'PHP, JavaScript, CSS'], ['Data', 'NHL API']],
+    specs: [['Stack', 'PHP, JavaScript, CSS'], ['Data', 'NHL API']],
     href: 'https://github.com/emilanderss0n/nhlplay-feedback',
-    extra: { label: 'Feedback', href: 'https://github.com/emilanderss0n/nhlplay-feedback/issues' },
   },
   {
     repo: featured.tarkynator,
     title: 'Tarkynator',
     tags: ['Web tool', 'Graphic Design'],
     text: 'The quick way to look things up in Single Player Tarkov. Items, quests, crafts and traders in one fast search, pulled live from the Tarkov API.',
-    specs: [['Year', '2024'], ['Stack', 'JavaScript, CSS, HTML'], ['Data', 'Tarkov API']],
+    specs: [['Stack', 'JavaScript, CSS, HTML'], ['Data', 'Tarkov API']],
     href: 'https://github.com/emilanderss0n/tarkynator',
   },
   {
@@ -51,7 +50,7 @@ const featuredProjects = [
     title: 'Menu Overhaul',
     tags: ['Game mod', 'UI Design'],
     text: 'A full redesign of the menus in Escape from Tarkov. Every screen gets a new look and feel, from the main menu to the character and trader screens.',
-    specs: [['Year', '2024'], ['Stack', 'C#, Unity'], ['Tools', 'Photoshop, Visual Studio']],
+    specs: [['Stack', 'C#, Unity'], ['Tools', 'Photoshop, Visual Studio']],
     href: 'https://github.com/emilanderss0n/SPT-Menu-Overhaul',
   },
 ] satisfies (Omit<ComponentProps<typeof ProjectRow>, 'index'> & { repo: string })[];
@@ -59,7 +58,7 @@ const featuredProjects = [
 const projects = await Promise.all(
   featuredProjects.map(async ({ repo, ...project }) => {
     const info = await getRepoInfo(repo);
-    return { ...project, href: info.url ?? project.href, stars: info.stars };
+    return { ...project, href: info.url ?? project.href };
   }),
 );
 
@@ -111,7 +110,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
   <section class="section wrap" id="work" aria-labelledby="work-title">
     <div class="section-top">
-      <p class="eyebrow" data-reveal>Selected work<span class="eyebrow-count">{pad(projects.length + moreItems.length)}</span></p>
+      <p class="eyebrow" data-reveal>Selected work<span class="eyebrow-count">01</span></p>
       <div class="section-head">
         <h2 class="section-title" id="work-title" data-reveal>Apps, tools and mods <span>used by thousands of people.</span></h2>
         <p class="section-lede" data-reveal>From a live companion app for NHL fans to tools, menus and custom items for the Single Player Tarkov community. I take every project from the first sketch to the shipped build, and handle the design, the code and the 3D art myself.</p>
@@ -132,7 +131,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
           </p>
         </div>
         <ul class="more-list" role="list">
-          {moreItems.map((item) => <MoreItem item={item} />)}
+          {moreItems.map((item, i) => <MoreItem index={pad(projects.length + i + 1)} item={item} />)}
         </ul>
       </div>
     )}
@@ -140,7 +139,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
   <section class="section wrap" id="services" aria-labelledby="services-title">
     <div class="section-top">
-      <p class="eyebrow" data-reveal>Services<span class="eyebrow-count">{pad(services.length)}</span></p>
+      <p class="eyebrow" data-reveal>Services<span class="eyebrow-count">02</span></p>
       <div class="section-head">
         <h2 class="section-title" id="services-title" data-reveal>What I can do <span>for your next project.</span></h2>
         <p class="section-lede" data-reveal>A generalist on purpose. One person carrying an idea from the first sketch to the shipped build means nothing gets lost between design and code. <a class="link link-inline" href="#contact">Let's discuss your project<Icon name="arrow-right" /></a></p>
@@ -164,7 +163,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   </section>
 
   <section class="section wrap" id="about" aria-labelledby="about-title">
-    <p class="eyebrow" data-reveal>About</p>
+    <p class="eyebrow" data-reveal>About<span class="eyebrow-count">03</span></p>
     <div class="split">
       <div class="split-aside">
         <h2 class="section-title" id="about-title" data-reveal>Hi, I'm Emil. <span>A creative generalist from Sweden.</span></h2>

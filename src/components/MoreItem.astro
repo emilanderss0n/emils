@@ -1,24 +1,23 @@
 ---
 // MoreItem.astro — a row in the "More projects" list (a GitHub repo or a CodePen pen).
-import Icon from '@components/Icon.astro';
 import type { MoreItem } from '@lib/more-projects';
 
 interface Props {
+  index: string;
   item: MoreItem;
 }
 
-const { item } = Astro.props;
-const { name, text, href, label, meta, stars = 0 } = item;
+const { index, item } = Astro.props;
+const { name, text, href, label } = item;
 ---
 
 <li data-reveal="contents">
   <a class="more-item" href={href} target="_blank" rel="noopener">
+    <span class="more-index" aria-hidden="true">{index}</span>
     <span class="more-name">{name}</span>
     {text && <span class="more-text">{text}</span>}
     <span class="more-meta">
       {label && <span class="more-label" style={`--label: ${label.color}`}>{label.text}</span>}
-      {meta.map((entry) => <span>{entry}</span>)}
-      {stars > 0 && <span class="more-stars"><Icon name="star" />{stars}<span class="visually-hidden">{stars === 1 ? ' star' : ' stars'}</span></span>}
     </span>
   </a>
 </li>

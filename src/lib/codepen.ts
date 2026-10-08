@@ -22,6 +22,5 @@ export function getPens(): MoreItem[] {
     text: pen.text,
     href: `https://codepen.io/${codepenUser}/pen/${pen.slug}`,
     label: { text: 'CodePen', color: 'var(--heading)' },
-    meta: [],
   }));
 }

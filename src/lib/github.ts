@@ -40,10 +40,10 @@ export async function getMoreRepos() {
     .sort((a, b) => Date.parse(b.data.pushedAt) - Date.parse(a.data.pushedAt));
 }
 
-/** A repo's current GitHub page and star count, for the featured rows. */
+/** A repo's current GitHub page, for the featured rows. */
 export async function getRepoInfo(id: string) {
   const repo = (await getRepos()).find((entry) => entry.id === id);
-  return { url: repo?.data.url, stars: repo?.data.stars };
+  return { url: repo?.data.url };
 }
 
 /** Totals across all public repos, for the stats on the home page. */

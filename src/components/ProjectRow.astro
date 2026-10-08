@@ -1,7 +1,7 @@
 ---
 // ProjectRow.astro — featured project as a large row in the .projects list.
-// The whole row links to the project's GitHub repo; an optional extra link
-// (e.g. NHLPLAY's feedback page) sits above that link.
+// The whole row links to the project's GitHub repo. On the right: the tags as the first
+// spec, then the specs.
 import Icon from '@components/Icon.astro';
 
 interface Props {
@@ -11,20 +11,14 @@ interface Props {
   text: string;
   specs: [label: string, value: string][];
   href: string;
-  stars?: number;
-  extra?: { label: string; href: string };
 }
 
-const { index, title, tags, text, specs, href, stars = 0, extra } = Astro.props;
+const { index, title, tags, text, specs, href } = Astro.props;
 ---
 
 <li class="project" data-glow data-reveal="contents">
   <span class="project-index">{index}</span>
   <div class="project-main">
-    <p class="project-tags">
-      {tags.join(' / ')}
-      {stars > 0 && <span class="project-stars"><span aria-hidden="true">/</span><Icon name="star" />{stars}<span class="visually-hidden">{stars === 1 ? ' star' : ' stars'}</span></span>}
-    </p>
     <h3 class="project-title">
       <a class="project-link" href={href} target="_blank" rel="noopener">
         <span class="visually-hidden">{title}</span>
@@ -35,9 +29,9 @@ const { index, title, tags, text, specs, href, stars = 0, extra } = Astro.props;
   </div>
   <div class="project-meta">
     <dl class="project-specs">
+      <div><dt>Type</dt><dd>{tags.join(', ')}</dd></div>
       {specs.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
     </dl>
-    {extra && <a class="link project-extra" href={extra.href} target="_blank" rel="noopener">{extra.label}<Icon name="external" /></a>}
   </div>
   <span class="project-arrow" aria-hidden="true"><Icon name="external" /></span>
 </li>
