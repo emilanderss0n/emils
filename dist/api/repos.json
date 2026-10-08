@@ -15,7 +15,7 @@
     "pushedAt": "2026-08-15T07:26:05Z",
     "createdAt": "2024-10-11T02:15:53Z",
     "releases": 17,
-    "downloads": 125916
+    "downloads": 125930
   },
   {
     "name": "tarkynator",
@@ -95,14 +95,14 @@
     "fullName": "emilanderss0n/emils",
     "description": "Main website for Emil Andersson",
     "url": "https://github.com/emilanderss0n/emils",
-    "homepage": "",
+    "homepage": "https://emilandersson.com/",
     "stars": 0,
     "language": "CSS",
     "topics": [
       "website"
     ],
     "category": "web-development",
-    "pushedAt": "2026-10-08T18:04:39Z",
+    "pushedAt": "2026-10-08T18:08:53Z",
     "createdAt": "2025-03-15T02:30:20Z",
     "releases": 0,
     "downloads": 0
@@ -123,7 +123,7 @@
     "pushedAt": "2026-08-15T23:15:01Z",
     "createdAt": "2026-05-23T22:28:01Z",
     "releases": 2,
-    "downloads": 4086
+    "downloads": 4087
   },
   {
     "name": "dashxe-vscode-theme",
@@ -303,23 +303,6 @@
     "createdAt": "2025-07-13T16:45:31Z",
     "releases": 1,
     "downloads": 2
-  },
-  {
-    "name": "moxopixel",
-    "fullName": "emilanderss0n/moxopixel",
-    "description": "This website serves as a portfolio of my work and projects in the modding community, highlighting my dedication to enhancing the longevity and experience of the games I modify.",
-    "url": "https://github.com/emilanderss0n/moxopixel",
-    "homepage": "https://moxopixel.com/",
-    "stars": 0,
-    "language": "JavaScript",
-    "topics": [
-      "website"
-    ],
-    "category": "web-development",
-    "pushedAt": "2025-08-10T21:44:38Z",
-    "createdAt": "2025-07-28T15:39:13Z",
-    "releases": 0,
-    "downloads": 0
   },
   {
     "name": "Painter",
