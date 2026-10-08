@@ -16,13 +16,24 @@
 	&[data-condensed] {
 		padding-top: 0.75rem;
 
+		/* Phones: a full-width bar flush with the top instead of a floating one. */
+		@media (max-width: 37.5rem) {
+			padding-top: 0;
+		}
+
 		.header-bar {
 			width: min(100% - 2 * var(--gutter), 48rem);
 			height: 3.5rem;
-			padding-inline: 1.25rem 0.375rem;
+			padding-inline: 1.25rem 0.5rem;
 			background-color: color-mix(in oklab, var(--surface), transparent 18%);
 			box-shadow: var(--shadow);
-			backdrop-filter: blur(1.25rem) saturate(1.6);
+			backdrop-filter: blur(0.6rem) saturate(1.6);
+
+			@media (max-width: 37.5rem) {
+				width: 100%;
+				height: 4rem;
+				padding-inline: var(--gutter);
+			}
 		}
 
 		.header-time {
@@ -44,14 +55,22 @@
 	width: min(100% - 2 * var(--gutter), var(--max));
 	height: 6.25rem;
 	padding-inline: 0;
-	border-radius: var(--radius-md);
+	/* Condensed, the bar wraps the 2.5rem pill button with 0.5rem all round, so its corners
+	   are the button's radius plus that gap: a pill of its own, concentric with the button.
+	   Set here too so condensing doesn't animate the radius (it can't be seen before). */
+	border-radius: 1.75rem;
 	background-color: transparent;
 	box-shadow: 0 1px 2px transparent, 0 1.5rem 3rem -1.5rem transparent, inset 0 1px 0 transparent;
 	pointer-events: auto;
 	transition: width 400ms var(--ease-out), height 300ms var(--ease-out), padding 300ms var(--ease-out), background-color 300ms var(--ease-out), box-shadow 300ms var(--ease-out), backdrop-filter 300ms var(--ease-out);
 
+	/* Phones: full width from the start, with the content on the page gutter, so
+	   condensing only changes the height and the surface. */
 	@media (max-width: 37.5rem) {
 		grid-template-columns: minmax(0, 1fr) auto;
+		width: 100%;
+		padding-inline: var(--gutter);
+		border-radius: 0;
 	}
 }
 
@@ -62,6 +81,12 @@
 	letter-spacing: -0.015em;
 	text-decoration: none;
 	white-space: nowrap;
+	line-height: normal;
+
+	/* Phones: with the nav links hidden, the name carries the bar. */
+	@media (max-width: 37.5rem) {
+		font-size: 1.1875rem;
+	}
 
 	span {
 		color: var(--muted);

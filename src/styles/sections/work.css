@@ -21,6 +21,7 @@
 		position: absolute;
 		inset: 0;
 		z-index: -1;
+		border-radius: var(--corners, 0);
 		background: radial-gradient(32rem circle at var(--x, 30%) var(--y, 50%), color-mix(in oklab, var(--accent), transparent 90%), transparent 70%), color-mix(in oklab, var(--heading), transparent 97%);
 		opacity: var(--on);
 		transition: opacity 300ms var(--ease-out);
@@ -33,7 +34,11 @@
 	--dim: 0;
 
 	margin-top: clamp(3rem, 6vw, 5rem);
-	border-top: 0;
+
+	/* Phones: each row's top line runs edge to edge, with no frame line above the first. */
+	@media (max-width: 37.5rem) {
+		border-top: 0;
+	}
 
 	@media (hover: hover) {
 		&:has(.project:hover) {
@@ -55,6 +60,19 @@
 	gap: 1.5rem clamp(1.5rem, 3vw, 3rem);
 	padding: clamp(1.75rem, 3.5vw, 2.75rem) var(--inset);
 	border-top: 1px solid var(--hairline);
+
+	/* In the rounded frame, the frame draws the top edge. */
+	&:first-child {
+		--corners: var(--corner) var(--corner) 0 0;
+
+		@media (min-width: 37.5625rem) {
+			border-top: 0;
+		}
+	}
+
+	&:last-child {
+		--corners: 0 0 var(--corner) var(--corner);
+	}
 
 	@media (max-width: 62.5rem) {
 		grid-template-columns: 2.5rem minmax(0, 1fr) 3rem;
@@ -233,23 +251,65 @@
 }
 
 /* More projects (GitHub repos and CodePen pens): a ruled grid of compact rows. Row lines
-   run across both columns, with a single line between the columns. */
+   run across both columns, with a single line between the columns. In the rounded frame
+   the frame draws the bottom edge, so the last row has no line of its own; on phones the
+   rows' lines run edge to edge instead. */
 .more-list {
+	--frame-radius: var(--radius-lg);
+
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	border-bottom: 0;
 
 	@media (max-width: 47.5rem) {
 		grid-template-columns: minmax(0, 1fr);
+	}
+
+	@media (max-width: 37.5rem) {
+		border-bottom: 0;
 	}
 
 	li {
 		display: flex;
 		border-bottom: 1px solid var(--hairline);
 
+		&:first-child {
+			--corners: var(--corner) var(--corner) 0 0;
+		}
+
+		&:last-child {
+			--corners: 0 0 var(--corner) var(--corner);
+		}
+
+		@media (min-width: 37.5625rem) {
+			&:last-child {
+				border-bottom: 0;
+			}
+		}
+
+		/* Two columns: each corner belongs to one cell. */
 		@media (min-width: 47.5625rem) {
 			&:nth-child(odd) {
 				border-right: 1px solid var(--hairline);
+			}
+
+			&:nth-child(odd):nth-last-child(2) {
+				border-bottom: 0;
+			}
+
+			&:nth-child(1) {
+				--corners: var(--corner) 0 0 0;
+			}
+
+			&:nth-child(2) {
+				--corners: 0 var(--corner) 0 0;
+			}
+
+			&:nth-child(odd):nth-last-child(-n + 2) {
+				--corners: 0 0 0 var(--corner);
+			}
+
+			&:nth-child(even):last-child {
+				--corners: 0 0 var(--corner) 0;
 			}
 		}
 	}

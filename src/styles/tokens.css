@@ -54,6 +54,7 @@
 	--radius-pill: 999px;
 
 	--gutter: clamp(1.375rem, 4vw, 3rem);
+	--column-gap: clamp(1.5rem, 3vw, 3rem);
 	--max: 100rem;
 	--section-gap: clamp(6rem, 12vw, 11rem);
 	--header-offset: 5.5rem;

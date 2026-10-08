@@ -1,12 +1,17 @@
+/* Wider screens: the counts spread across the full width, first flush left and last flush
+   right, with equal space between them and a thin rule exactly midway through each space.
+   Each count after the first takes a share of the free width and centres its rule in the
+   part left of its text. The rules stay put while the counts rise in
+   (data-reveal="contents"). Phones: two by two, no rules. */
 .stats {
-	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
-	row-gap: 2rem;
+	display: flex;
 	margin-top: clamp(3rem, 7vw, 8rem);
 	padding-block: clamp(1.5rem, 3vw, 2.25rem) clamp(2rem, 4vw, 3rem);
 
 	@media (max-width: 47.5rem) {
+		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 2rem var(--column-gap);
 	}
 
 	dt {
@@ -30,8 +35,25 @@
 
 	@media (min-width: 47.5625rem) {
 		&:not(:first-child) {
-			padding-left: clamp(1rem, 2vw, 1.5rem);
-			border-left: 1px solid var(--hairline);
+			flex: auto;
+			display: grid;
+			grid-template-columns: minmax(1.5rem, 1fr) 1px minmax(1.5rem, 1fr) auto;
+			align-content: start;
+			column-gap: 0;
+
+			&::before {
+				content: "";
+				grid-area: 1 / 2 / 3;
+				background: var(--hairline);
+			}
+
+			dd {
+				grid-area: 1 / 4;
+			}
+
+			dt {
+				grid-area: 2 / 4;
+			}
 		}
 	}
 }

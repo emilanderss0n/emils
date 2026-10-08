@@ -3,7 +3,6 @@
 .services-head,
 .services {
 	--columns: repeat(4, minmax(0, 1fr));
-	--column-gap: clamp(1.5rem, 3vw, 3rem);
 }
 
 .services-head {

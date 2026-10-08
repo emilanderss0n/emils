@@ -206,6 +206,10 @@
 		gap: 1rem;
 		padding-block: 0.75rem;
 		border-bottom: 1px solid var(--hairline);
+
+		&:last-child {
+			border-bottom: none;
+		}
 	}
 
 	dt {
@@ -233,56 +237,30 @@
 	}
 }
 
-/* A framed list or grid (featured projects, more projects, services), with crosshair
-   marks on its four corners, centred on the border. The marks take the accent colour
-   while a link inside is hovered or focused from the keyboard. On phones the frame
-   opens up and the list runs edge to edge. --inset is the shared text inset for rows
-   inside, so every framed list lines up on the same left edge. */
+/* A framed list (featured projects, more projects): a hairline border with rounded
+   corners, which also clip the rows' hover tint. Rows in the corners round their own
+   highlight and focus ring to --corner, the frame's inner radius, so the ring follows
+   the curve instead of being cut by it. On phones the frame opens up and the list runs
+   edge to edge. --inset is the shared text inset for rows inside, so every framed list
+   lines up on the same left edge. */
 .frame {
-	--mark: 11px;
-	--mark-color: color-mix(in oklab, var(--heading), transparent 55%);
+	--frame-radius: var(--radius-xl);
+	--corner: max(0px, var(--frame-radius) - 1px);
 	--inset: clamp(1rem, 2vw, 1.75rem);
 
-	position: relative;
+	overflow: hidden;
 	border: 1px solid var(--hairline);
+	border-radius: var(--frame-radius);
 
-	&::after {
-		--h: linear-gradient(currentColor, currentColor) 0 0 / var(--mark) 1px no-repeat;
-		--v: linear-gradient(currentColor, currentColor) 0 0 / 1px var(--mark) no-repeat;
-
-		content: "";
-		position: absolute;
-		inset: calc(-1px - var(--mark) / 2 + 0.5px);
-		background: var(--h), var(--v), var(--h), var(--v), var(--h), var(--v), var(--h), var(--v);
-		background-position:
-			left 0 top calc(var(--mark) / 2 - 0.5px), left calc(var(--mark) / 2 - 0.5px) top 0,
-			right 0 top calc(var(--mark) / 2 - 0.5px), right calc(var(--mark) / 2 - 0.5px) top 0,
-			left 0 bottom calc(var(--mark) / 2 - 0.5px), left calc(var(--mark) / 2 - 0.5px) bottom 0,
-			right 0 bottom calc(var(--mark) / 2 - 0.5px), right calc(var(--mark) / 2 - 0.5px) bottom 0;
-		color: var(--mark-color);
-		transition: color 300ms var(--ease-out);
-		pointer-events: none;
-	}
-
-	@media (hover: hover) {
-		&:has(a:hover) {
-			--mark-color: var(--accent);
-		}
-	}
-
-	&:has(:focus-visible) {
-		--mark-color: var(--accent);
-	}
-
+	/* Set directly, not through --frame-radius, so a list's own radius can't bring the
+	   corners back on phones. */
 	@media (max-width: 37.5rem) {
+		--corner: 0px;
 		--inset: 1.375rem;
 
 		margin-inline: calc(var(--gutter) * -1);
 		border-inline: 0;
-
-		&::after {
-			display: none;
-		}
+		border-radius: 0;
 	}
 }
 

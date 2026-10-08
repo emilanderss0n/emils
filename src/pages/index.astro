@@ -96,7 +96,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   <section class="facts wrap" aria-label="In numbers">
     <dl class="stats">
       {stats.map((stat) => (
-        <div class="stat" data-reveal>
+        <div class="stat" data-reveal="contents">
           <dt>{stat.label}</dt>
           <dd>
             <span class="stat-figure scramble" data-scramble-trigger="reveal" data-scramble-delay="80" aria-hidden="true"><span class="scramble-seg" data-text={stat.figure}>{stat.figure}</span></span>
@@ -109,10 +109,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
   </section>
 
   <section class="section wrap" id="work" aria-labelledby="work-title">
-    <p class="eyebrow" data-reveal>Selected work<span class="eyebrow-count">{pad(projects.length + moreItems.length)}</span></p>
-    <div class="section-head">
-      <h2 class="section-title" id="work-title" data-reveal>Apps, tools and mods <span>used by thousands of people.</span></h2>
-      <p class="section-lede" data-reveal>From a live companion app for NHL fans to tools, menus and custom items for the Single Player Tarkov community. I take every project from the first sketch to the shipped build, and handle the design, the code and the 3D art myself.</p>
+    <div class="section-top">
+      <p class="eyebrow" data-reveal>Selected work<span class="eyebrow-count">{pad(projects.length + moreItems.length)}</span></p>
+      <div class="section-head">
+        <h2 class="section-title" id="work-title" data-reveal>Apps, tools and mods <span>used by thousands of people.</span></h2>
+        <p class="section-lede" data-reveal>From a live companion app for NHL fans to tools, menus and custom items for the Single Player Tarkov community. I take every project from the first sketch to the shipped build, and handle the design, the code and the 3D art myself.</p>
+      </div>
     </div>
 
     <ol class="projects frame" role="list">
@@ -136,10 +138,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
   </section>
 
   <section class="section wrap" id="services" aria-labelledby="services-title">
-    <p class="eyebrow" data-reveal>Services<span class="eyebrow-count">{pad(services.length)}</span></p>
-    <div class="services-head">
-      <h2 class="section-title" id="services-title" data-reveal>What I can do <span>for your next project.</span></h2>
-      <p class="section-lede" data-reveal>A generalist on purpose. One person carrying an idea from the first sketch to the shipped build means nothing gets lost between design and code. <a class="link link-inline" href="#contact">Let's discuss your project<Icon name="arrow-right" /></a></p>
+    <div class="section-top">
+      <p class="eyebrow" data-reveal>Services<span class="eyebrow-count">{pad(services.length)}</span></p>
+      <div class="services-head">
+        <h2 class="section-title" id="services-title" data-reveal>What I can do <span>for your next project.</span></h2>
+        <p class="section-lede" data-reveal>A generalist on purpose. One person carrying an idea from the first sketch to the shipped build means nothing gets lost between design and code. <a class="link link-inline" href="#contact">Let's discuss your project<Icon name="arrow-right" /></a></p>
+      </div>
     </div>
     <ol class="services" role="list">
       {services.map((service) => (
