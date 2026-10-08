@@ -9,15 +9,21 @@ interface Props {
 const { overHero = false } = Astro.props;
 // Section links point at the home page from every other page.
 const home = Astro.url.pathname === '/' ? '' : '/';
+const links = [
+  { label: 'Work', href: `${home}#work` },
+  { label: 'Services', href: `${home}#services` },
+  { label: 'About', href: `${home}#about` },
+];
 ---
 
 <header class="header" data-over-hero={overHero || undefined}>
   <div class="header-bar">
     <a class="header-brand" href={`${home}#top`}>Emil <span>/ Moxo</span></a>
     <nav class="header-nav" aria-label="Sections">
-      <a class="header-link" href={`${home}#work`}>Work</a>
-      <a class="header-link" href={`${home}#services`}>Services</a>
-      <a class="header-link" href={`${home}#about`}>About</a>
+      {links.map((link) => <a class="header-link" href={link.href}>{link.label}</a>)}
+      <span class="header-active" aria-hidden="true">
+        {links.map((link) => <span class="header-link">{link.label}</span>)}
+      </span>
     </nav>
     <div class="header-end">
       <p class="header-time"><span data-local-time>Sweden</span></p>

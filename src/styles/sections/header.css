@@ -70,6 +70,7 @@
 }
 
 .header-nav {
+	position: relative;
 	display: flex;
 	gap: 0.25rem;
 
@@ -85,13 +86,39 @@
 	font-size: 0.9375rem;
 	font-weight: 500;
 	text-decoration: none;
+	transition: color 200ms var(--ease-out);
 
 	&:hover {
 		color: var(--heading);
 	}
+}
 
-	&[aria-current="true"] {
-		background: color-mix(in oklab, var(--accent), transparent 88%);
+/* The current section's highlight: a copy of the links in the accent colour on an accent
+   tint, clipped down to the current link (scripts/header.ts sets the edges). Moving the
+   clip slides the pill and its coloured label together, so the highlight travels from
+   link to link instead of fading out on one and in on the next. It only fades when it
+   first appears and when it goes (back in the hero), placed without sliding. */
+.header-active {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	gap: inherit;
+	border-radius: var(--radius-pill);
+	background: color-mix(in oklab, var(--accent), transparent 88%);
+	clip-path: inset(0 var(--active-right, 100%) 0 var(--active-left, 0) round var(--radius-pill));
+	opacity: 0;
+	pointer-events: none;
+	transition: clip-path 300ms var(--ease-out), opacity 250ms var(--ease-out);
+
+	.header-nav[data-current] & {
+		opacity: 1;
+	}
+
+	.header-nav[data-instant] & {
+		transition: opacity 250ms var(--ease-out);
+	}
+
+	.header-link {
 		color: var(--accent);
 	}
 }

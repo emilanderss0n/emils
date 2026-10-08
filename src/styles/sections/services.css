@@ -26,8 +26,7 @@
 }
 
 /* Services: one row of four across the full width (two on tablets, one on phones),
-   no lines. Icon over the heading, then the text. Names scramble in left to right as
-   the row comes into view (scripts/text-scramble.ts). */
+   no lines. Icon over the heading, then the text. */
 .services {
 	display: grid;
 	grid-template-columns: var(--columns);
@@ -58,9 +57,7 @@
 	}
 }
 
-/* Positioned for the scramble's glyph overlay. */
 .service-name {
-	position: relative;
 	font-size: clamp(1.5rem, 2.2vw, 2rem);
 	line-height: 1.1;
 	letter-spacing: -0.03em;

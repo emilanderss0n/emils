@@ -1,17 +1,58 @@
-/* Page-load entrance, with an optional per-element --enter-delay. */
+/* Page-load entrance, with an optional per-element --enter-delay. Inside a [data-intro]
+   block (the hero) it waits, while JS runs, for the intro to start (data-play), so the
+   delays count from the moment the headline begins. */
 .enter {
 	@media (prefers-reduced-motion: no-preference) {
-		animation: rise 600ms var(--ease-out) var(--enter-delay, 0ms) backwards;
+		animation: rise 700ms var(--ease-out) var(--enter-delay, 0ms) backwards;
+
+		:root[data-js] [data-intro]:not([data-play]) & {
+			animation-play-state: paused;
+		}
 	}
 }
 
-/* Scroll-driven entrance, where supported. */
-.reveal {
-	@media (prefers-reduced-motion: no-preference) {
-		@supports ((animation-timeline: view()) and (animation-range: entry)) {
-			animation: rise linear backwards;
-			animation-timeline: view();
-			animation-range: entry 0% entry 70%;
+/* Scroll-into-view entrance (scripts/reveal.ts): hidden until revealed, then rises with
+   the stagger the script gives it. "contents" animates the children instead, so a
+   ruled row's lines stay in place. Elements scrolled past unseen ("instant") just show. */
+@media (prefers-reduced-motion: no-preference) {
+	:root[data-js] {
+		[data-reveal]:not([data-reveal="contents"], [data-revealed]),
+		[data-reveal="contents"]:not([data-revealed]) > * {
+			opacity: 0;
+		}
+
+		[data-revealed=""]:not([data-reveal="contents"]),
+		[data-reveal="contents"][data-revealed=""] > * {
+			animation: rise 700ms var(--ease-out) var(--reveal-delay, 0ms) backwards;
+		}
+
+		/* A section's eyebrow sets it up: the label fades in, its rule draws out to the
+		   edge, and the count arrives at the end of the rule. */
+		.eyebrow[data-revealed=""] {
+			animation-name: fade;
+
+			&::after {
+				transform-origin: left;
+				animation: draw 1100ms var(--ease-out) var(--reveal-delay, 0ms) backwards;
+			}
+
+			.eyebrow-count {
+				animation: fade 500ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 500ms) backwards;
+			}
+		}
+
+		/* The footer wordmark: letters rise out of the card's bottom edge one after
+		   another, arriving as dots; the name then fills in solid from the bottom up. */
+		.wordmark[data-revealed=""] > .wordmark-char {
+			--char-delay: calc(var(--reveal-delay, 0ms) + var(--i) * 55ms);
+
+			animation:
+				wordmark-rise 1100ms var(--ease-out) var(--char-delay) backwards,
+				wordmark-fill 1300ms var(--ease-out) calc(var(--char-delay) + 450ms) backwards;
+
+			&::before {
+				animation: wordmark-dots 1750ms linear var(--char-delay) backwards;
+			}
 		}
 	}
 }
@@ -23,21 +64,46 @@
 	}
 }
 
+@keyframes fade {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes draw {
+	from {
+		scale: 0 1;
+	}
+}
+
 @keyframes scroll-nudge {
 	0%,
-	60%,
+	40%,
 	100% {
 		translate: 0 0;
 	}
 
-	30% {
+	20% {
 		translate: 0 0.2em;
 	}
 }
 
 @keyframes wordmark-rise {
 	from {
-		translate: 0 45%;
+		translate: 0 110%;
+	}
+}
+
+@keyframes wordmark-fill {
+	from {
+		--fill: -20%;
+	}
+}
+
+@keyframes wordmark-dots {
+	from,
+	to {
+		opacity: 1;
 	}
 }
 

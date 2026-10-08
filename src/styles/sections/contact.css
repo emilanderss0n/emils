@@ -85,6 +85,8 @@
 }
 
 .wordmark {
+	--light: 0;
+
 	position: relative;
 	margin: clamp(3rem, 8cqi, 7rem) 0 -0.11em;
 	color: var(--heading);
@@ -94,19 +96,78 @@
 	letter-spacing: -0.065em;
 	white-space: nowrap;
 	user-select: none;
+	transition: --light 300ms var(--ease-out);
 
-	span {
-		color: color-mix(in oklab, var(--heading), transparent 72%);
-		font-weight: 500;
+	/* The pointer light on the alias's dots fades in while the pointer is over the card. */
+	&[data-lit] {
+		--light: 1;
 	}
 
-	@media (prefers-reduced-motion: no-preference) {
-		@supports ((animation-timeline: view()) and (animation-range: entry)) {
-			animation: wordmark-rise linear both;
-			animation-timeline: view();
-			animation-range: entry 0% entry 70%;
+	/* Each letter is drawn twice. Its own text is the solid part, painted from the bottom
+	   up to --fill. Behind it, a copy (::before) is screened into dots by one of the
+	   halftone filters in SiteFooter.astro, picked to match the wordmark's size: the dot
+	   grid scales with it, up to the hero's 7px. The alias always shows its dots; the name
+	   only while it fills in (animations.css), so none peek out around the solid letters.
+	   The box is padded past the glyphs so nothing clips them, and the negative margins
+	   keep the layout as if it weren't. */
+	.wordmark-char {
+		--fill: 100%;
+
+		position: relative;
+		isolation: isolate;
+		display: inline-block;
+		padding: 0.15em 0.1em;
+		margin: -0.15em -0.1em;
+		background: linear-gradient(to top, var(--heading) var(--fill), transparent calc(var(--fill) + 15%));
+		background-clip: text;
+		color: transparent;
+
+		&::before {
+			content: attr(data-char);
+			position: absolute;
+			inset: 0;
+			z-index: -1;
+			padding: inherit;
+			color: var(--heading);
+			opacity: 0;
+			filter: url("#halftone-3");
+
+			@container (min-width: 38rem) {
+				filter: url("#halftone-4");
+			}
+
+			@container (min-width: 49rem) {
+				filter: url("#halftone-5");
+			}
+
+			@container (min-width: 60rem) {
+				filter: url("#halftone-6");
+			}
+
+			@container (min-width: 71rem) {
+				filter: url("#halftone-7");
+			}
 		}
 	}
+
+	/* Its dots are lit from the pointer (scripts/wordmark-light.ts). */
+	.wordmark-alias {
+		--fill: -20%;
+		--dim: color-mix(in oklab, var(--heading), transparent 40%);
+
+		font-weight: 500;
+
+		&::before {
+			opacity: 1;
+			background: radial-gradient(circle 16rem at var(--x, -100rem) var(--y, -100rem), color-mix(in oklab, var(--dim), var(--heading) calc(var(--light) * 100%)), var(--dim));
+			background-clip: text;
+			color: transparent;
+		}
+	}
+}
+
+.halftone {
+	position: absolute;
 }
 
 .legal {

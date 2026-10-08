@@ -24,3 +24,17 @@
 	inherits: false;
 	initial-value: 61%;
 }
+
+/* Registered so it can be animated (the footer wordmark fills in from its dots). */
+@property --fill {
+	syntax: "<percentage>";
+	inherits: false;
+	initial-value: 100%;
+}
+
+/* Registered so it can fade (the footer wordmark's pointer light). */
+@property --light {
+	syntax: "<number>";
+	inherits: true;
+	initial-value: 0;
+}

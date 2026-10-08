@@ -5,18 +5,15 @@ import type { MoreItem } from '@lib/more-projects';
 
 interface Props {
   item: MoreItem;
-  /** Delay (ms) before the name scrambles in, to stagger rows that enter view together. */
-  delay?: number;
 }
 
-const { item, delay = 0 } = Astro.props;
+const { item } = Astro.props;
 const { name, text, href, label, meta, stars = 0 } = item;
 ---
 
-<li>
+<li data-reveal="contents">
   <a class="more-item" href={href} target="_blank" rel="noopener" data-glow>
-    <span class="visually-hidden">{name}</span>
-    <span class="more-name scramble" data-scramble-trigger="view" data-scramble-delay={delay} aria-hidden="true"><span class="scramble-seg" data-text={name}>{name}</span></span>
+    <span class="more-name">{name}</span>
     <span class="more-arrow" aria-hidden="true"><Icon name="arrow-right" /></span>
     {text && <span class="more-text">{text}</span>}
     <span class="more-meta">

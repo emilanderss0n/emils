@@ -49,7 +49,7 @@
 	width: 100%;
 	height: 100%;
 	opacity: 0;
-	transition: opacity 1200ms var(--ease-out);
+	transition: opacity 1800ms var(--ease-out);
 
 	&.is-ready {
 		opacity: 1;
@@ -72,10 +72,15 @@
 	align-items: flex-start;
 	gap: clamp(1.5rem, 3vw, 2rem);
 	margin-block: auto;
+
+	/* Phones: the text sits low, under the aura, instead of floating mid-screen. */
+	@media (max-width: 37.5rem) {
+		margin-bottom: 0;
+	}
 }
 
 .hero-chip {
-	--enter-delay: 80ms;
+	--enter-delay: 0ms;
 
 	display: inline-flex;
 	align-items: center;
@@ -114,34 +119,16 @@
 	color: transparent;
 }
 
-.hero-foot {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1.75rem 3rem;
-	width: 100%;
-	margin-top: clamp(0.5rem, 1.5vw, 1rem);
-}
-
 .hero-lede {
-	--enter-delay: 160ms;
+	--enter-delay: 650ms;
 
 	max-width: calc(42 * var(--ch));
+	margin-top: clamp(0.5rem, 1.5vw, 1rem);
 	font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
 }
 
-.hero-actions {
-	--enter-delay: 220ms;
-
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 0.75rem;
-}
-
 .hero-meta {
-	--enter-delay: 300ms;
+	--enter-delay: 950ms;
 
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -179,9 +166,14 @@
 	color: var(--heading);
 	text-decoration: none;
 
+	/* Starts once the intro has settled, then nudges now and then. */
 	.icon {
 		@media (prefers-reduced-motion: no-preference) {
-			animation: scroll-nudge 2.4s var(--ease-out) infinite;
+			animation: scroll-nudge 3.2s var(--ease-out) 2.2s infinite;
+
+			:root[data-js] .hero:not([data-play]) & {
+				animation-play-state: paused;
+			}
 		}
 	}
 }

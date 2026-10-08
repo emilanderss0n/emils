@@ -18,8 +18,16 @@
 	text-decoration-color: color-mix(in oklab, var(--heading), transparent 65%);
 	transition: text-decoration-color 150ms var(--ease-out);
 
+	.icon {
+		transition: translate 200ms var(--ease-out);
+	}
+
 	&:hover {
 		text-decoration-color: var(--heading);
+
+		.icon {
+			translate: 0.12em -0.12em;
+		}
 	}
 
 	/* Inside running text: wraps with the sentence, arrow nudges forward on hover. */
@@ -29,7 +37,6 @@
 		.icon {
 			margin-left: 0.3em;
 			vertical-align: -0.1em;
-			transition: translate 250ms var(--ease-out);
 		}
 
 		&:hover .icon {
@@ -75,16 +82,6 @@
 
 		&:hover {
 			background: color-mix(in oklab, var(--heading), transparent 88%);
-		}
-	}
-
-	&.button-ghost {
-		padding-inline: 0.75rem;
-		background: transparent;
-		color: var(--heading);
-
-		&:hover {
-			background: var(--tint);
 		}
 	}
 

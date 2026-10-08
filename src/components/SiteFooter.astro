@@ -1,5 +1,7 @@
 ---
 // SiteFooter.astro — contact card with email, links and the big wordmark.
+import { halftoneDot } from '@lib/halftone';
+
 const home = Astro.url.pathname === '/' ? '' : '/';
 const email = 'hello@emils.graphics';
 
@@ -16,21 +18,34 @@ const elsewhere = [
   { label: 'X', href: 'https://x.com/bobemil_sw13' },
   { label: 'Spotify', href: 'https://open.spotify.com/artist/5fLAJ1k3aPNR5akavV7gzD' },
 ];
+
+// The wordmark, one span per letter so the letters can rise in one after another.
+// The alias ("/ Moxo") is drawn in the hero's dot grid.
+const wordmark = [
+  ...[...'Emil'].map((char) => ({ char, alias: false })),
+  ...[...' / Moxo'].map((char) => ({ char, alias: true })),
+];
+
+// Halftone filters for the wordmark's dots, one per grid size (the grid scales with the
+// wordmark, from 3px on phones to the hero's 7px). Each blurs the letter's shape, multiplies
+// it by a grid of soft dots and sharpens the result, so dots shrink smoothly toward the
+// letter's edges instead of being cut off by them.
+const pitches = [3, 4, 5, 6, 7];
 ---
 
 <footer class="footer wrap" id="contact">
   <div class="contact">
-    <p class="eyebrow">Contact</p>
+    <p class="eyebrow" data-reveal>Contact</p>
     <div class="split">
       <div class="split-aside">
-        <h2 class="section-title">Have a project in mind? <span>Let's make it.</span></h2>
+        <h2 class="section-title" data-reveal>Have a project in mind? <span>Let's make it.</span></h2>
       </div>
       <div class="contact-main">
-        <div class="contact-email-row">
+        <div class="contact-email-row" data-reveal>
           <a class="contact-email" href={`mailto:${email}`}>{email}</a>
           <button class="button button-secondary button-small copy" type="button" data-copy={email} hidden>Copy</button>
         </div>
-        <div class="contact-columns">
+        <div class="contact-columns" data-reveal>
           <div>
             <p class="contact-label">Sections</p>
             <ul role="list">
@@ -46,7 +61,23 @@ const elsewhere = [
         </div>
       </div>
     </div>
-    <p class="wordmark" aria-hidden="true">Emil <span>/ Moxo</span></p>
+    <p class="wordmark" aria-hidden="true" data-reveal="contents">
+      {wordmark.map(({ char, alias }, i) => char === ' ' ? ' ' : <span class:list={['wordmark-char', { 'wordmark-alias': alias }]} style={`--i: ${i}`} data-char={char}>{char}</span>)}
+    </p>
+    <svg class="halftone" aria-hidden="true" focusable="false" width="0" height="0">
+      {pitches.map((pitch) => (
+        <filter id={`halftone-${pitch}`} color-interpolation-filters="sRGB">
+          <feGaussianBlur in="SourceAlpha" stdDeviation={pitch * 0.35} result="soft" />
+          <feImage href={halftoneDot(pitch)} x="0" y="0" width={pitch} height={pitch} result="dot" />
+          <feTile in="dot" result="grid" />
+          <feComposite in="soft" in2="grid" operator="arithmetic" k1="1" result="screened" />
+          <feComponentTransfer in="screened" result="dots">
+            <feFuncA type="linear" slope="6" intercept="-1.2" />
+          </feComponentTransfer>
+          <feComposite in="SourceGraphic" in2="dots" operator="in" />
+        </filter>
+      ))}
+    </svg>
   </div>
   <div class="legal">
     <p>&copy; {new Date().getFullYear()} Emil Andersson</p>

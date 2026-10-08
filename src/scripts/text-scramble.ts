@@ -8,6 +8,8 @@
 // placed over its hidden character, so however wide or narrow they are they
 // can't touch the text's layout.
 
+import type { RevealDetail } from '@scripts/reveal';
+
 const CHAR_SETS = {
   tech1: '!<>-_\\/[]{}—=+*^?#________',
   tech2: '!<>-_\\/[]{}—=+*^?#$%&()~',
@@ -183,8 +185,9 @@ export class TextScramble {
  *   data-scramble-delay    — ms to wait before starting (default 0)
  *   data-scramble-from     — "empty" (materialise from nothing, default) or
  *                            "self" (scramble the existing text in place)
- *   data-scramble-trigger  — "load" (start now, default) or "view" (start when
- *                            the host scrolls into view; the delay counts from then)
+ *   data-scramble-trigger  — "load" (start now, default) or "reveal" (start with the
+ *                            closest [data-reveal] element, see scripts/reveal.ts; the
+ *                            delay is added to that element's own stagger)
  *
  * Segments stay hidden by text-scramble.css (once JS is known to run) until
  * their host starts.
@@ -198,25 +201,6 @@ export function initScramble(root: ParentNode = document): void {
   const accent =
     getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() ||
     'currentColor';
-
-  // Shared by every "view" host: fires once each host is ~15% into the viewport.
-  const waiting = new Map<Element, () => void>();
-  let observer: IntersectionObserver | undefined;
-  const whenInView = (host: HTMLElement, callback: () => void) => {
-    observer ??= new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          observer?.unobserve(entry.target);
-          waiting.get(entry.target)?.();
-          waiting.delete(entry.target);
-        }
-      },
-      { rootMargin: '0px 0px -15% 0px' },
-    );
-    waiting.set(host, callback);
-    observer.observe(host);
-  };
 
   for (const host of hosts) {
     const segments = Array.from(host.querySelectorAll<HTMLElement>('.scramble-seg'));
@@ -246,12 +230,28 @@ export function initScramble(root: ParentNode = document): void {
       show();
     };
 
-    const schedule = () => {
-      if (delay > 0) window.setTimeout(start, delay);
+    const schedule = (wait: number) => {
+      if (wait > 0) window.setTimeout(start, wait);
       else start();
     };
 
-    if (host.dataset.scrambleTrigger === 'view') whenInView(host, schedule);
-    else schedule();
+    const revealer = host.dataset.scrambleTrigger === 'reveal' ? host.closest<HTMLElement>('[data-reveal]') : null;
+    if (!revealer) {
+      schedule(delay);
+    } else if (revealer.dataset.revealed === 'instant') {
+      show();
+    } else if (revealer.dataset.revealed !== undefined) {
+      schedule((parseFloat(revealer.style.getPropertyValue('--reveal-delay')) || 0) + delay);
+    } else {
+      revealer.addEventListener(
+        'reveal',
+        (event) => {
+          const detail = (event as CustomEvent<RevealDetail>).detail;
+          if (detail.instant) show();
+          else schedule(detail.delay + delay);
+        },
+        { once: true },
+      );
+    }
   }
 }

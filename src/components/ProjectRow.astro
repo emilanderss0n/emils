@@ -18,7 +18,7 @@ interface Props {
 const { index, title, tags, text, specs, href, stars = 0, extra } = Astro.props;
 ---
 
-<li class="project" data-glow>
+<li class="project" data-glow data-reveal="contents">
   <span class="project-index">{index}</span>
   <div class="project-main">
     <p class="project-tags">
@@ -28,7 +28,7 @@ const { index, title, tags, text, specs, href, stars = 0, extra } = Astro.props;
     <h3 class="project-title">
       <a class="project-link" href={href} target="_blank" rel="noopener">
         <span class="visually-hidden">{title}</span>
-        <span class="project-name scramble" data-scramble-trigger="view" aria-hidden="true"><span class="scramble-seg" data-text={title}>{title}</span></span>
+        <span class="project-name scramble" data-scramble-trigger="reveal" aria-hidden="true"><span class="scramble-seg" data-text={title}>{title}</span></span>
       </a>
     </h3>
     <p class="project-text">{text}</p>

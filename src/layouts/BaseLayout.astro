@@ -32,7 +32,7 @@ const ogImageUrl = new URL(ogImage, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Lets CSS hide text that scripts will animate in (see text-scramble.css). -->
+    <!-- Lets CSS hide content that scripts will animate in (text-scramble.css, animations.css). -->
     <script is:inline>document.documentElement.dataset.js = '';</script>
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f6f6f9" media="(prefers-color-scheme: light)" />
@@ -73,10 +73,15 @@ const ogImageUrl = new URL(ogImage, Astro.site);
       import { initHeader } from '@scripts/header';
       import { initCopyEmail } from '@scripts/copy-email';
       import { initSmoothScroll } from '@scripts/smooth-scroll';
+      import { initReveal } from '@scripts/reveal';
+      import { initWordmarkLight } from '@scripts/wordmark-light';
 
       initSmoothScroll();
       initHeader();
       initCopyEmail();
+      initWordmarkLight();
+      // Anything below the hero that is already in view waits out the hero's intro.
+      void document.fonts.ready.then(() => initReveal(900));
     </script>
   </body>
 </html>
