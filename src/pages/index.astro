@@ -2,9 +2,10 @@
 import { Image } from 'astro:assets';
 import type { ComponentProps } from 'astro/types';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Icon, { type IconName } from '@components/Icon.astro';
+import Icon from '@components/Icon.astro';
 import ProjectRow from '@components/ProjectRow.astro';
 import MoreItem from '@components/MoreItem.astro';
+import ServiceStage, { type StageState } from '@components/ServiceStage.astro';
 import { featured, getGithubStats, getRepoInfo, githubProfile } from '@lib/github';
 import { codepenProfile } from '@lib/codepen';
 import { getMoreItems } from '@lib/more-projects';
@@ -63,11 +64,11 @@ const projects = await Promise.all(
 );
 
 const services = [
-  { name: 'UI Design', icon: 'pen-tool', text: 'Interfaces that make complicated things feel simple, from a single menu to a whole app.' },
-  { name: 'Web Development', icon: 'code', text: 'Fast, responsive websites and web apps, built around your content and the people who use them.' },
-  { name: '3D Art', icon: 'box', text: 'Models, textures and game-ready assets, from one hero item to a set of seventy.' },
-  { name: 'Video Editing', icon: 'clapperboard', text: 'Tight edits, motion and sound design that give your story pace and polish.' },
-] satisfies { name: string; icon: IconName; text: string }[];
+  { name: 'UI Design', state: 'ui', text: 'Interfaces that make complicated things feel simple, from a single menu to a whole app.' },
+  { name: 'Web Development', state: 'web', text: 'Fast, responsive websites and web apps, built around your content and the people who use them.' },
+  { name: '3D Art', state: '3d', text: 'Models, textures and game-ready assets, from one hero item to a set of seventy.' },
+  { name: 'Video Editing', state: 'video', text: 'Tight edits, motion and sound design that give your story pace and polish.' },
+] satisfies { name: string; state: StageState; text: string }[];
 
 const pad = (n: number) => String(n).padStart(2, '0');
 ---
@@ -140,20 +141,26 @@ const pad = (n: number) => String(n).padStart(2, '0');
   <section class="section wrap" id="services" aria-labelledby="services-title">
     <div class="section-top">
       <p class="eyebrow" data-reveal>Services<span class="eyebrow-count">{pad(services.length)}</span></p>
-      <div class="services-head">
+      <div class="section-head">
         <h2 class="section-title" id="services-title" data-reveal>What I can do <span>for your next project.</span></h2>
         <p class="section-lede" data-reveal>A generalist on purpose. One person carrying an idea from the first sketch to the shipped build means nothing gets lost between design and code. <a class="link link-inline" href="#contact">Let's discuss your project<Icon name="arrow-right" /></a></p>
       </div>
     </div>
-    <ol class="services" role="list">
-      {services.map((service) => (
-        <li class="service" data-reveal>
-          <Icon name={service.icon} />
-          <h3 class="service-name">{service.name}</h3>
-          <p class="service-text">{service.text}</p>
-        </li>
-      ))}
-    </ol>
+    <div class="services">
+      <ol class="services-list" role="list">
+        {services.map((service, i) => (
+          <li class="service" data-reveal data-state={service.state}>
+            <span class="service-index">{pad(i + 1)}</span>
+            <h3 class="service-name">{service.name}</h3>
+            <p class="service-text">{service.text}</p>
+            <ServiceStage state={service.state} />
+          </li>
+        ))}
+      </ol>
+      <div class="services-stage" data-reveal>
+        <ServiceStage live />
+      </div>
+    </div>
   </section>
 
   <section class="section wrap" id="about" aria-labelledby="about-title">
@@ -187,9 +194,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
   import { initHeroAura } from '@scripts/hero-aura';
   import { initScramble } from '@scripts/text-scramble';
   import { initPointerGlow } from '@scripts/pointer-glow';
+  import { initServicesStage } from '@scripts/services-stage';
 
   initHeroAura();
   initPointerGlow();
+  initServicesStage();
   // Wait for web fonts so the reserved space matches the final text. The headline
   // starts the hero's intro; the chip, intro text and labels follow on their delays.
   void document.fonts.ready.then(() => {

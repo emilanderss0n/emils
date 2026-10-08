@@ -1,0 +1,116 @@
+---
+// ServiceStage.astro — the Services section's "one idea, four crafts" visual. One small
+// project card whose image is a short looping clip (public/media/skater.mp4), carried
+// through each craft's own tool: selected and resized on a design canvas (ui), typed into
+// a browser window from its code (web), exploded into a dot-matrix mesh in a 3D viewport
+// (3d) and, as the footage alone, titled on a program monitor over a timeline (video).
+// The live copy changes state as the services scroll past (scripts/services-stage.ts,
+// which also plays the clip only while the stage is on screen); the others hold one
+// state each, for phones. Purely decorative, so hidden from assistive tech.
+import { stageCode } from '@lib/stage-code';
+import { arrowCursor, grabCursor, resizeCursor } from '@lib/pixel-cursor';
+
+export type StageState = 'ui' | 'web' | '3d' | 'video';
+
+interface Props {
+  state?: StageState;
+  live?: boolean;
+}
+
+const { state = 'ui', live = false } = Astro.props;
+const files: [StageState, string][] = [
+  ['ui', 'nhlplay.fig'],
+  ['web', 'card.html'],
+  ['3d', 'card.blend'],
+  ['video', 'promo.mp4'],
+];
+// The code types on one character at a time (13ms each), each line after the one before,
+// and the card's parts appear as the line that makes them finishes. Once the last line
+// lands, the finished card gets inspected a beat later.
+const typeStart = 300;
+const typeStep = 13;
+let at = typeStart;
+const typed = stageCode.map((line) => {
+  const chars = line.reduce((n, [, text]) => n + text.length, 0);
+  const start = at;
+  at += chars * typeStep;
+  return { line, chars, start, end: at, duration: chars * typeStep };
+});
+const done = at + 350;
+// Which code line builds each part of the card: the article, then its clip, title,
+// text and link.
+const part = (line: number) => `--line: ${line}; --built: ${typed[line].end}ms`;
+// The 3D viewport's mesh statistics.
+const stats = [
+  ['Objects', '1 / 5'],
+  ['Vertices', '1,284'],
+  ['Triangles', '2,568'],
+];
+// The edit, as start and end points along the timeline: the footage runs the whole way
+// on V1, and one title clip on V2 brings in the two words, one each side of the skater.
+const footage = { from: '0%', to: '100%', name: 'Skater' };
+const title = { from: '20%', to: '96%', name: 'SKATE FASTER' };
+const words = [
+  { name: 'SKATE', side: 'left' },
+  { name: 'FASTER', side: 'right' },
+];
+const ruler = ['00:00', '00:01', '00:02', '00:03'];
+// A fixed, natural-looking waveform for the audio track: bar heights from 0.2 to 1.
+const wave = Array.from({ length: 72 }, (_, i) => 0.2 + 0.8 * Math.abs(Math.sin(i * 0.7) * Math.cos(i * 0.23 + 1)));
+---
+
+<div class="stage" data-state={state} data-live={live || undefined} style={`--done: ${done}ms`} aria-hidden="true">
+  <span class="stage-light"></span>
+  <p class="stage-file">{files.map(([key, name], i) => <span data-for={key} style={`--n: ${i}`}>{name}</span>)}</p>
+  <span class="stage-stats">{stats.map(([name, value]) => <span>{name}<b>{value}</b></span>)}</span>
+  <div class="stage-object">
+    <span class="stage-window"><span class="win-url">nhlplay.app</span></span>
+    <span class="stage-monitor"></span>
+    <span class="stage-floor"></span>
+    <div class="obj" style={part(0)}>
+      <span class="obj-part obj-media" style={part(1)}>
+        <video class="obj-video" src="/media/skater.mp4" poster="/media/skater-frame.webp" muted loop playsinline preload="none" disablepictureinpicture></video>
+        {[0, 1, 2, 3].map((i) => <span class="obj-vertex" style={`--i: ${i}`}></span>)}
+      </span>
+      <span class="obj-part obj-title" style={part(2)}>NHLPLAY</span>
+      <span class="obj-part obj-text" style={part(3)}>Live games, player stats and your dream lineup.</span>
+      <span class="obj-part obj-button" style={part(4)}>Open app</span>
+      <span class="obj-select">
+        {[0, 1, 2, 3].map((i) => <span class="obj-handle" style={`--i: ${i}`}></span>)}
+      </span>
+      <span class="obj-size"></span>
+      <svg class="stage-cursor stage-arrow" viewBox="0 0 16 16" width="16" height="16">{arrowCursor.map(({ x, y, outline }) => <rect x={x} y={y} width="1" height="1" class={outline ? 'px-line' : 'px-fill'} />)}</svg>
+      <svg class="stage-cursor stage-resize" viewBox="0 0 16 16" width="16" height="16">{resizeCursor.map(({ x, y, outline }) => <rect x={x} y={y} width="1" height="1" class={outline ? 'px-line' : 'px-fill'} />)}</svg>
+    </div>
+    <span class="stage-titles">{words.map(({ name, side }) => <span data-side={side}>{name}</span>)}</span>
+    <span class="stage-guides"></span>
+    <span class="stage-inspect"><span><b>article</b>.card</span><span>288 × 236</span></span>
+  </div>
+  <span class="stage-gizmo"><span class="gz-z">Z</span><span class="gz-y">Y</span><span class="gz-x">X</span></span>
+  <svg class="stage-cursor stage-hand" viewBox="0 0 16 16" width="16" height="16">{grabCursor.map(({ x, y, outline }) => <rect x={x} y={y} width="1" height="1" class={outline ? 'px-line' : 'px-fill'} />)}</svg>
+  <pre class="stage-code">{typed.map(({ line, chars, start, end, duration }) => (
+    <span class="code-line" style={`--n: ${chars}; --start: ${start}ms; --end: ${end}ms; --type: ${duration}ms`}>{line.map(([kind, text]) => <span class={`code-${kind}`}>{text}</span>)}</span>
+  ))}</pre>
+  <div class="stage-timeline">
+    <span class="tl-head">
+      <span class="tl-transport">
+        <svg viewBox="0 0 10 10"><rect x="1" y="2" width="1.25" height="6" /><polygon points="9,2 9,8 3.5,5" /></svg>
+        <svg viewBox="0 0 10 10"><rect x="2.25" y="2" width="1.75" height="6" /><rect x="6" y="2" width="1.75" height="6" /></svg>
+        <svg viewBox="0 0 10 10"><polygon points="1,2 1,8 6.5,5" /><rect x="7.75" y="2" width="1.25" height="6" /></svg>
+      </span>
+      <span class="tl-time"></span>
+    </span>
+    <span class="tl-body">
+      <span class="tl-ruler">{ruler.map((mark, i) => <span style={`--at: ${i * 25}%`}>{mark}</span>)}</span>
+      <span class="tl-label" style="--row: 2">V2</span>
+      <span class="tl-track" style="--row: 2"><span class="tl-clip" style={`--from: ${title.from}; --to: ${title.to}; --i: 0`}><span>{title.name}</span></span></span>
+      <span class="tl-label" style="--row: 3">V1</span>
+      <span class="tl-track" style="--row: 3"><span class="tl-clip tl-clip-film" style={`--from: ${footage.from}; --to: ${footage.to}; --i: 1`}><span>{footage.name}</span></span></span>
+      <span class="tl-label" style="--row: 4">A1</span>
+      <span class="tl-track tl-audio" style="--row: 4"><span class="tl-clip" style={`--from: 0%; --to: 100%; --i: 2`}>
+        <svg viewBox="0 0 72 10" preserveAspectRatio="none">{wave.map((h, i) => <rect x={i + 0.2} y={5 - h * 4.5} width="0.6" height={h * 9} />)}</svg>
+      </span></span>
+      <span class="tl-playhead"><span></span></span>
+    </span>
+  </div>
+</div>

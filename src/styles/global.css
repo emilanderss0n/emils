@@ -38,3 +38,57 @@
 	inherits: true;
 	initial-value: 0;
 }
+
+/* Registered so they can be animated (the Services stage's card turning in its 3D state). */
+@property --turn {
+	syntax: "<number>";
+	inherits: false;
+	initial-value: 0;
+}
+
+@property --sway {
+	syntax: "<angle>";
+	inherits: false;
+	initial-value: 0deg;
+}
+
+/* Registered so they can be eased (the Services stage's light: where it sits in each
+   state). */
+@property --lx {
+	syntax: "<length-percentage>";
+	inherits: true;
+	initial-value: 50%;
+}
+
+@property --ly {
+	syntax: "<length-percentage>";
+	inherits: true;
+	initial-value: 50%;
+}
+
+/* Registered so they can be animated (the Services stage's card being resized in its UI
+   state: its width as a factor of its resting width, and the width its tooltip reads). */
+@property --size {
+	syntax: "<number>";
+	inherits: false;
+	initial-value: 1;
+}
+
+@property --w {
+	syntax: "<integer>";
+	inherits: true;
+	initial-value: 42;
+}
+
+/* Registered so they can count (the Services stage's timecode: seconds and frames). */
+@property --tc-s {
+	syntax: "<integer>";
+	inherits: false;
+	initial-value: 0;
+}
+
+@property --tc-f {
+	syntax: "<integer>";
+	inherits: false;
+	initial-value: 0;
+}

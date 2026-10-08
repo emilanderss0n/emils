@@ -1,43 +1,24 @@
-/* The header and the services share one four-column grid, so the intro starts right
-   above the third service. */
-.services-head,
+/* Services: "one idea, four crafts". On wide screens the services are a list beside a
+   sticky stage (components/ServiceStage.astro) that shows one small card in the craft of
+   the service crossing the middle of the screen (scripts/services-stage.ts), on the same
+   two columns as the heading and intro above. On smaller screens each service shows its
+   own still of the stage under its text. */
 .services {
-	--columns: repeat(4, minmax(0, 1fr));
-}
-
-.services-head {
-	display: grid;
-	grid-template-columns: var(--columns);
-	align-items: start;
-	gap: 1.5rem var(--column-gap);
-
-	> * {
-		grid-column: span 2;
-	}
-
-	@media (max-width: 62.5rem) {
-		grid-template-columns: minmax(0, 1fr);
-
-		> * {
-			grid-column: auto;
-		}
-	}
-}
-
-/* Services: one row of four across the full width (two on tablets, one on phones),
-   no lines. Icon over the heading, then the text. */
-.services {
-	display: grid;
-	grid-template-columns: var(--columns);
-	gap: clamp(2.75rem, 5vw, 3.5rem) var(--column-gap);
 	margin-top: clamp(3.5rem, 7vw, 6rem);
 
-	@media (max-width: 62.5rem) {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+	@media (min-width: 56.25rem) {
+		display: grid;
+		grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+		column-gap: clamp(2rem, 6vw, 6rem);
 	}
+}
 
-	@media (max-width: 37.5rem) {
-		grid-template-columns: minmax(0, 1fr);
+.services-list {
+	display: grid;
+	gap: clamp(3rem, 8vw, 4.5rem);
+
+	@media (min-width: 56.25rem) {
+		gap: 0;
 	}
 }
 
@@ -47,17 +28,50 @@
 	align-items: flex-start;
 	gap: 0.75rem;
 
-	.icon {
-		width: 1.75rem;
-		height: 1.75rem;
-		margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+	/* Each service holds the stage for a stretch of scrolling; the ones not active
+	   step back. */
+	@media (min-width: 56.25rem) {
+		justify-content: center;
+		min-height: 42svh;
+		transition: opacity 400ms var(--ease-out);
+
+		.services-list[data-live] &:not([data-active]) {
+			opacity: 0.28;
+		}
+
+		.stage {
+			display: none;
+		}
+	}
+
+	.stage {
+		width: min(100%, 30rem);
+		margin-top: 1rem;
+		aspect-ratio: 4 / 5;
+	}
+
+	/* On the smaller stills the selected layer sits higher; keep the hand on it. */
+	.stage-hand {
+		top: 21%;
+	}
+}
+
+/* Numbered like the project rows and the eyebrow's count; the active one's number
+   takes the heading colour, as a lit project row's does. */
+.service-index {
+	margin-bottom: clamp(0.25rem, 1vw, 0.75rem);
+	color: var(--muted);
+	font-family: var(--mono);
+	font-size: 0.8125rem;
+	transition: color 400ms var(--ease-out);
+
+	.service[data-active] & {
 		color: var(--heading);
-		stroke-width: 1.5;
 	}
 }
 
 .service-name {
-	font-size: clamp(1.5rem, 2.2vw, 2rem);
+	font-size: clamp(1.5rem, 2.6vw, 2.5rem);
 	line-height: 1.1;
 	letter-spacing: -0.03em;
 }
@@ -65,4 +79,1463 @@
 .service-text {
 	max-width: calc(40 * var(--ch));
 	font-size: 1rem;
+}
+
+.services-stage {
+	display: none;
+
+	@media (min-width: 56.25rem) {
+		display: block;
+
+		.stage {
+			--stage-h: min(34rem, 70svh);
+
+			position: sticky;
+			top: max(6.5rem, (100svh - var(--stage-h)) / 2);
+			height: var(--stage-h);
+		}
+	}
+}
+
+/* The stage: a dark viewport like the hero's panel, in both colour schemes, but with no
+   tint: the site's dark palette is redone here in plain greys. A dot grid covers it, and
+   a light sits over the card (--lx/--ly), moving with each state; the dots under the
+   light brighten, like the hero's matrix. Holds the card (.obj) and the pieces each state
+   brings in (selection, code, monitor, timeline). Sized from its own width (cqi). --step
+   is the state's place in the sequence, for the file label's roll. */
+.stage {
+	--stage-bg: oklch(13% 0 0);
+	--bg: oklch(14.5% 0 0);
+	--surface: oklch(19% 0 0);
+	--heading: oklch(97% 0 0);
+	--body: oklch(80% 0 0);
+	--muted: oklch(64% 0 0);
+	--hairline: oklch(100% 0 0 / 0.08);
+	--shade: oklch(0% 0 0 / 0.5);
+	--highlight: oklch(100% 0 0 / 0.06);
+	--obj-w: clamp(10rem, 42cqi, 18rem);
+	--move: 800ms var(--ease-out);
+	--fade: 400ms var(--ease-out);
+	--dots: radial-gradient(circle, var(--heading) 1.1px, transparent 1.7px) 0 0 / 7px 7px;
+	--grid: 1.25rem;
+	--win-pad: 0.75rem;
+	--win-bar: 1.625rem;
+	--mon-w: 72cqi;
+	--mon-h: 40.5cqi;
+	--mon-r: 0.75rem;
+	--lx: 50%;
+	--ly: 46%;
+	--step: 0;
+
+	position: relative;
+	display: grid;
+	place-items: center;
+	aspect-ratio: 1;
+	overflow: hidden;
+	container-type: inline-size;
+	border: 1px solid var(--hairline);
+	border-radius: var(--radius-xl);
+	background: radial-gradient(70% 70% at 50% 42%, oklch(17.5% 0 0), var(--stage-bg));
+	color-scheme: dark;
+	perspective: 70rem;
+	isolation: isolate;
+	transition: --lx var(--move), --ly var(--move);
+
+	@media (prefers-reduced-motion: reduce) {
+		--move: 0ms;
+		--fade: 0ms;
+	}
+
+	@media (min-width: 56.25rem) {
+		.services-stage & {
+			aspect-ratio: auto;
+		}
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle, var(--hairline) 1px, transparent 1.5px) 0 0 / var(--grid) var(--grid);
+		pointer-events: none;
+	}
+
+	&[data-state="ui"] {
+		--step: 0;
+		--lx: 50%;
+		--ly: 46%;
+	}
+
+	&[data-state="web"] {
+		--step: 1;
+		--lx: 64%;
+		--ly: 34%;
+	}
+
+	&[data-state="3d"] {
+		--step: 2;
+		--lx: 50%;
+		--ly: 28%;
+	}
+
+	&[data-state="video"] {
+		--step: 3;
+		--lx: 50%;
+		--ly: 36%;
+	}
+}
+
+/* The light: a soft glow and brighter dots, on the same grid as the base dots, masked to
+   its surroundings. */
+.stage-light {
+	position: absolute;
+	inset: 0;
+	background:
+		radial-gradient(26cqi at var(--lx) var(--ly), color-mix(in oklab, var(--heading), transparent 94%), transparent),
+		radial-gradient(circle, color-mix(in oklab, var(--heading), transparent 60%) 1px, transparent 1.5px) 0 0 / var(--grid) var(--grid);
+	mask-image: radial-gradient(36cqi at var(--lx) var(--ly), #000, transparent);
+	pointer-events: none;
+}
+
+/* The file the card currently lives in, top left. The names sit on top of each other
+   and roll: the one for the current state in place, earlier ones up, later ones down. */
+.stage-file {
+	position: absolute;
+	inset: 1.625rem auto auto 1.875rem;
+	display: grid;
+	color: var(--muted);
+	font-family: var(--mono);
+	font-size: 0.75rem;
+	letter-spacing: 0.04em;
+
+	span {
+		grid-area: 1 / 1;
+		opacity: 0;
+		translate: 0 calc(clamp(-1, var(--n) - var(--step), 1) * 0.6em);
+		transition: opacity var(--fade), translate var(--move);
+	}
+}
+
+.stage[data-state="ui"] [data-for="ui"],
+.stage[data-state="web"] [data-for="web"],
+.stage[data-state="3d"] [data-for="3d"],
+.stage[data-state="video"] [data-for="video"] {
+	opacity: 1;
+	transition-delay: 200ms, 0ms;
+}
+
+/* The 3D viewport's mesh statistics, top right. */
+.stage-stats {
+	position: absolute;
+	inset: 1.625rem 1.875rem auto auto;
+	display: grid;
+	grid-template-columns: auto auto;
+	gap: 0.3125rem 0.625rem;
+	color: var(--muted);
+	font-family: var(--mono);
+	font-size: 0.625rem;
+	line-height: 1;
+	opacity: 0;
+	translate: 0 -0.25rem;
+	pointer-events: none;
+	transition: opacity var(--fade), translate var(--fade);
+
+	span {
+		display: contents;
+	}
+
+	b {
+		color: var(--heading);
+		font-weight: 400;
+		font-variant-numeric: tabular-nums;
+		text-align: right;
+	}
+}
+
+/* The card's place and angle for each state. The window, monitor, titles, guides and
+   inspector sit around the card inside the same element, so they travel with it. */
+.stage-object {
+	position: relative;
+	transform-style: preserve-3d;
+	transition: transform var(--move);
+}
+
+/* Web: a browser window around the card, with its title bar (three dots and the address)
+   above it, and the finished card's inspector tooltip. */
+.stage-window {
+	position: absolute;
+	inset: calc(-1 * (var(--win-bar) + var(--win-pad))) calc(-1 * var(--win-pad)) calc(-1 * var(--win-pad));
+	border-radius: var(--radius-lg);
+	background: var(--bg);
+	box-shadow: var(--shadow);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--fade);
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: calc(var(--win-bar) / 2);
+		left: 0.875rem;
+		width: 2rem;
+		height: 0.4rem;
+		translate: 0 -50%;
+		background: radial-gradient(circle, color-mix(in oklab, var(--heading), transparent 70%) 0.19rem, transparent 0.22rem) 0 50% / 0.7rem 100% repeat-x;
+	}
+
+	.win-url {
+		position: absolute;
+		inset: 0 0 auto;
+		display: grid;
+		place-items: center;
+		height: var(--win-bar);
+		border-bottom: 1px solid var(--hairline);
+		color: var(--muted);
+		font-family: var(--mono);
+		font-size: 0.625rem;
+	}
+}
+
+.stage-inspect {
+	position: absolute;
+	top: -0.375rem;
+	left: 0.875rem;
+	display: flex;
+	gap: 0.5rem;
+	padding: 0.3125rem 0.5rem;
+	border-radius: 0.375rem;
+	background: var(--surface);
+	box-shadow: var(--shadow);
+	color: var(--muted);
+	font-family: var(--mono);
+	font-size: 0.625rem;
+	line-height: 1;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+
+	b {
+		color: var(--heading);
+		font-weight: 400;
+	}
+
+	span + span {
+		font-variant-numeric: tabular-nums;
+	}
+}
+
+/* Video: the program monitor the footage plays on (its black and frame sit under the
+   card, which the clip on the stage object crops to the same box), the two titles cut in
+   over it, and the safe-area guide with its centre mark on top. */
+.stage-monitor,
+.stage-titles,
+.stage-guides {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--fade);
+}
+
+.stage-monitor {
+	width: var(--mon-w);
+	height: var(--mon-h);
+	border-radius: var(--mon-r);
+	background: var(--stage-bg);
+	box-shadow: inset 0 0 0 1px var(--hairline);
+}
+
+.stage-titles {
+	width: var(--mon-w);
+	height: var(--mon-h);
+	color: oklch(12% 0 0);
+	font-size: clamp(1.375rem, 6.2cqi, 3.125rem);
+	font-weight: 900;
+	line-height: 1;
+	letter-spacing: 0.03em;
+
+	span {
+		position: absolute;
+		top: 50%;
+		translate: 0 -50%;
+	}
+
+	[data-side="left"] {
+		left: 6%;
+	}
+
+	[data-side="right"] {
+		right: 6%;
+	}
+}
+
+.stage-guides {
+	--line: color-mix(in oklab, var(--heading), transparent 70%);
+
+	width: calc(var(--mon-w) * 0.9);
+	height: calc(var(--mon-h) * 0.9);
+	border: 1px solid var(--line);
+	outline: 1px solid oklch(0% 0 0 / 0.3);
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		translate: -50% -50%;
+		background: var(--line);
+	}
+
+	&::before {
+		width: 0.75rem;
+		height: 1px;
+	}
+
+	&::after {
+		width: 1px;
+		height: 0.75rem;
+	}
+}
+
+/* The card. --line is which code line makes each part and --built when that line is
+   typed. --size is its width as a factor of its resting width, which the UI state's
+   resize pulls on: the card grows to the right from a fixed left edge, and the shift
+   compensates for the clip growing taller so the top edge stays put too. */
+.obj {
+	--turn: 0;
+	--size: 1;
+
+	position: relative;
+	display: grid;
+	gap: clamp(0.375rem, 1.5cqi, 0.75rem);
+	width: calc(var(--obj-w) * var(--size));
+	padding: 0.625rem 0.625rem 0.875rem;
+	border: 1px solid transparent;
+	border-radius: var(--radius-lg);
+	font-size: clamp(0.6875rem, 2.1cqi, 0.9375rem);
+	line-height: 1.4;
+	transform-style: preserve-3d;
+	translate: calc(var(--obj-w) * (var(--size) - 1) / 2) calc(var(--obj-w) * (var(--size) - 1) * 9 / 32);
+	/* --turn (0 to 1) eases the 3D state's slow turn in and out, so leaving it unwinds the
+	   card instead of snapping it flat; --sway is the turn itself, paused outside it. */
+	rotate: calc(var(--turn) * (-30deg + var(--sway)));
+	transition: background-color var(--fade), border-color var(--fade), box-shadow var(--fade), --turn var(--move), --size var(--move);
+
+	@media (prefers-reduced-motion: no-preference) {
+		animation: stage-sway 7s ease-in-out infinite alternate paused;
+	}
+
+	> * {
+		transform-style: preserve-3d;
+		transition: translate var(--move), background var(--fade), color var(--fade), border-color var(--fade), box-shadow var(--fade), opacity var(--fade);
+	}
+
+	/* Two outline slices under the card give it thickness in the 3D state. */
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		inset: -1px;
+		border: 1px solid color-mix(in oklab, var(--heading), transparent 80%);
+		border-radius: inherit;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity var(--fade);
+	}
+
+	&::before {
+		translate: 0 0 -0.375rem;
+	}
+
+	&::after {
+		translate: 0 0 -0.75rem;
+	}
+}
+
+.obj-part {
+	position: relative;
+	outline: 1px solid transparent;
+	outline-offset: -1px;
+}
+
+/* The clip, under the box's own paint so the dot-matrix layer covers it in 3D, with the
+   matrix dots (::before) over it. */
+.obj-media {
+	aspect-ratio: 16 / 9;
+	border: 1px solid transparent;
+	border-radius: var(--radius-md);
+	isolation: isolate;
+
+	.obj-video {
+		position: absolute;
+		inset: -1px;
+		z-index: -1;
+		width: calc(100% + 2px);
+		height: calc(100% + 2px);
+		border-radius: inherit;
+		object-fit: cover;
+		image-rendering: pixelated;
+		filter: grayscale(1) contrast(1.05);
+		opacity: 0;
+		transition: opacity var(--fade);
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset: -1px;
+		border-radius: inherit;
+		background: radial-gradient(circle, oklch(100% 0 0 / 0.14) 0.9px, transparent 1.4px) 0 0 / 6px 6px;
+		opacity: 0;
+		transition: opacity var(--fade);
+	}
+}
+
+/* The selected mesh's corner vertices, in the 3D state. */
+.obj-vertex {
+	position: absolute;
+	width: 0.3125rem;
+	aspect-ratio: 1;
+	border-radius: 1px;
+	background: var(--heading);
+	opacity: 0;
+	scale: 0.4;
+	transition: opacity var(--fade), scale 300ms var(--ease-out);
+
+	&:nth-child(1) {
+		top: -0.1875rem;
+		left: -0.1875rem;
+	}
+
+	&:nth-child(2) {
+		top: -0.1875rem;
+		right: -0.1875rem;
+	}
+
+	&:nth-child(3) {
+		bottom: -0.1875rem;
+		left: -0.1875rem;
+	}
+
+	&:nth-child(4) {
+		right: -0.1875rem;
+		bottom: -0.1875rem;
+	}
+}
+
+.obj-title {
+	width: fit-content;
+	margin-top: 0.25rem;
+	color: var(--heading);
+	font-size: 1.35em;
+	font-weight: 500;
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+}
+
+.obj-text {
+	color: var(--body);
+}
+
+.obj-button {
+	width: fit-content;
+	margin-top: 0.25rem;
+	padding: 0.45em 1em;
+	border: 1px solid transparent;
+	border-radius: var(--radius-pill);
+	background: var(--heading);
+	color: var(--bg);
+	font-weight: 500;
+}
+
+/* The selection frame and its handles: the design tool's chrome around the card. */
+.obj-select {
+	--line: color-mix(in oklab, var(--heading), transparent 30%);
+
+	position: absolute;
+	inset: -0.375rem;
+	border: 1px solid var(--line);
+	border-radius: calc(var(--radius-lg) + 0.375rem);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--fade);
+}
+
+.obj-handle {
+	position: absolute;
+	width: 0.4375rem;
+	aspect-ratio: 1;
+	border: 1px solid var(--line);
+	background: var(--bg);
+	scale: 0.3;
+	transition: scale 300ms var(--ease-out);
+
+	&:nth-child(1) {
+		top: -0.25rem;
+		left: -0.25rem;
+	}
+
+	&:nth-child(2) {
+		top: -0.25rem;
+		right: -0.25rem;
+	}
+
+	&:nth-child(3) {
+		bottom: -0.25rem;
+		left: -0.25rem;
+	}
+
+	&:nth-child(4) {
+		right: -0.25rem;
+		bottom: -0.25rem;
+	}
+}
+
+/* The size tooltip under the card while it is resized: its width in container units,
+   counted from --w. */
+.obj-size {
+	position: absolute;
+	top: calc(100% + 0.75rem);
+	left: 50%;
+	padding: 0.3125rem 0.5rem;
+	border-radius: 0.375rem;
+	background: var(--heading);
+	color: var(--bg);
+	font-family: var(--mono);
+	font-size: 0.625rem;
+	line-height: 1;
+	white-space: nowrap;
+	translate: -50% 0.25rem;
+	opacity: 0;
+	pointer-events: none;
+	counter-reset: w var(--w);
+
+	&::before {
+		content: "W ";
+		opacity: 0.55;
+	}
+
+	&::after {
+		content: counter(w) "cqi";
+		font-variant-numeric: tabular-nums;
+	}
+}
+
+/* Pixel-art cursors. The arrow and the edge-resize arrows live inside the card, so their
+   paths are measured against it and the resize arrows ride its right edge; the grabbing
+   hand drags across the model in the 3D state, in step with its turn (both run on the
+   same clock, paused outside that state). */
+.stage-cursor {
+	position: absolute;
+	width: clamp(2rem, 6cqi, 3rem);
+	height: auto;
+	shape-rendering: crispEdges;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--fade);
+
+	.px-line {
+		fill: oklch(14% 0 0);
+	}
+
+	.px-fill {
+		fill: oklch(98% 0 0);
+	}
+}
+
+.stage-arrow {
+	top: 86%;
+	left: 84%;
+	translate: 5cqi 6cqi;
+	transition: opacity var(--fade), translate 600ms var(--ease-out);
+}
+
+.stage-resize {
+	top: 50%;
+	left: 100%;
+	translate: -50% -50%;
+}
+
+.stage-hand {
+	top: 31%;
+	left: 46%;
+
+	@media (prefers-reduced-motion: no-preference) {
+		animation: stage-drag 7s ease-in-out infinite alternate paused;
+	}
+}
+
+/* The code panel. In the web state each line is typed on a character at a time (--n
+   steps over --type, starting at --start), and cleared once the panel is gone. */
+.stage-code {
+	position: absolute;
+	inset: auto auto 8% 6%;
+	margin: 0;
+	padding: 0.875rem 1rem;
+	border-radius: var(--radius-md);
+	background: var(--surface);
+	box-shadow: var(--shadow);
+	font-family: var(--mono);
+	font-size: clamp(0.5625rem, 1.55cqi, 0.75rem);
+	line-height: 1.7;
+	opacity: 0;
+	translate: 0 1rem;
+	transition: opacity var(--fade), translate var(--move);
+
+	counter-reset: line;
+
+	.code-line {
+		display: block;
+		width: fit-content;
+		clip-path: inset(0 100% 0 0);
+		transition: clip-path 0ms 400ms;
+
+		&::before {
+			content: counter(line);
+			counter-increment: line;
+			display: inline-block;
+			width: 1.25em;
+			margin-right: 1em;
+			color: color-mix(in oklab, var(--muted), transparent 45%);
+			text-align: right;
+		}
+
+		&:last-child::after {
+			content: "";
+			display: inline-block;
+			width: 1px;
+			height: 1.05em;
+			margin-left: 0.125em;
+			vertical-align: -0.15em;
+			background: var(--heading);
+			opacity: 0;
+		}
+	}
+
+	.code-tag {
+		color: var(--muted);
+	}
+
+	.code-attr {
+		color: var(--heading);
+	}
+
+	.code-str {
+		color: var(--body);
+	}
+
+	.code-text {
+		color: var(--body);
+	}
+}
+
+/* The timeline: the editor's panel docked along the stage's bottom edge, kept quiet so
+   the monitor leads. Transport and timecode on top, then a time ruler and three labelled
+   tracks (the two titles, the footage as a film strip of its frames, and a waveform),
+   with the playhead sweeping across all of them. */
+.stage-timeline {
+	position: absolute;
+	inset: auto 0 0;
+	display: grid;
+	gap: 0.5rem;
+	padding: 0.75rem 1.5rem 1rem;
+	border-top: 1px solid var(--hairline);
+	background: color-mix(in oklab, var(--stage-bg), transparent 15%);
+	font-family: var(--mono);
+	opacity: 0;
+	translate: 0 1rem;
+	transition: opacity var(--fade), translate var(--move);
+}
+
+.tl-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.tl-transport {
+	display: flex;
+	gap: 0.5rem;
+	color: color-mix(in oklab, var(--muted), transparent 30%);
+
+	svg {
+		width: 0.6875rem;
+		fill: currentColor;
+
+		&:nth-child(2) {
+			color: var(--muted);
+		}
+	}
+}
+
+/* Seconds and frames (25 a second) count up with the playhead. */
+.tl-time {
+	--tc-s: 4;
+	--tc-f: 12;
+
+	color: var(--muted);
+	font-size: 0.625rem;
+	font-variant-numeric: tabular-nums;
+	counter-reset: tc-s var(--tc-s) tc-f var(--tc-f);
+
+	&::after {
+		content: "00:00:" counter(tc-s, decimal-leading-zero) ":" counter(tc-f, decimal-leading-zero);
+	}
+}
+
+/* Every part has its row set (the markup numbers each label and track pair with --row),
+   so the playhead can span the ruler and all three tracks without the grid moving them
+   down to make room for it. */
+.tl-body {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	align-items: center;
+	gap: 0.25rem 0.625rem;
+
+	.tl-ruler {
+		grid-area: 1 / 2;
+	}
+
+	.tl-label {
+		grid-area: var(--row) / 1;
+	}
+
+	.tl-track {
+		grid-area: var(--row) / 2;
+	}
+
+	.tl-playhead {
+		grid-area: 1 / 2 / 5 / 3;
+	}
+}
+
+.tl-ruler {
+	position: relative;
+	height: 0.875rem;
+	background: repeating-linear-gradient(90deg, color-mix(in oklab, var(--heading), transparent 80%) 0 1px, transparent 1px 6.25%) bottom / 100% 30% no-repeat;
+
+	span {
+		position: absolute;
+		top: 0;
+		left: var(--at);
+		padding-left: 0.1875rem;
+		border-left: 1px solid color-mix(in oklab, var(--heading), transparent 65%);
+		color: color-mix(in oklab, var(--muted), transparent 20%);
+		font-size: 0.5625rem;
+		line-height: 1;
+	}
+}
+
+.tl-label {
+	color: color-mix(in oklab, var(--muted), transparent 20%);
+	font-size: 0.5625rem;
+}
+
+.tl-track {
+	position: relative;
+	height: 1rem;
+	border-radius: 0.3125rem;
+	background: color-mix(in oklab, var(--heading), transparent 95%);
+}
+
+/* Clips drop into their tracks one after another (--i) in the video state. */
+.tl-clip {
+	position: absolute;
+	inset: 2px auto 2px var(--from);
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	width: calc(var(--to) - var(--from));
+	padding-left: 0.3125rem;
+	border-radius: 0.1875rem;
+	background: color-mix(in oklab, var(--heading), transparent 86%);
+	opacity: 0;
+	translate: 0 -0.375rem;
+	transition: opacity var(--fade), translate var(--fade);
+
+	> span {
+		color: color-mix(in oklab, var(--heading), transparent 15%);
+		font-size: 0.5625rem;
+	}
+
+	&.tl-clip-film {
+		background: repeating-linear-gradient(90deg, transparent 0 calc(2rem - 1px), oklch(0% 0 0 / 0.5) calc(2rem - 1px) 2rem), url("/media/skater-frame.webp") left center / auto 100% repeat-x;
+
+		> span {
+			padding: 0.0625rem 0.25rem;
+			border-radius: 0.1875rem;
+			background: oklch(0% 0 0 / 0.55);
+		}
+	}
+}
+
+.tl-audio .tl-clip {
+	padding: 0 0.25rem;
+	background: color-mix(in oklab, var(--heading), transparent 92%);
+
+	svg {
+		width: 100%;
+		height: 70%;
+		fill: color-mix(in oklab, var(--heading), transparent 60%);
+	}
+}
+
+.tl-playhead {
+	position: relative;
+	align-self: stretch;
+	pointer-events: none;
+
+	span {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: 1px;
+		background: var(--heading);
+		opacity: 0;
+		transition: opacity var(--fade);
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: -0.125rem;
+			left: -0.1875rem;
+			width: 0.4375rem;
+			aspect-ratio: 1;
+			border-radius: 50%;
+			background: var(--heading);
+		}
+	}
+}
+
+/* 3D tool context: a perspective grid floor under the model, with its X axis (brighter)
+   and Y axis, and an orientation marker in the corner coloured the same way. */
+.stage-floor {
+	--line: color-mix(in oklab, var(--heading), transparent 88%);
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: calc(var(--obj-w) * 2.6);
+	aspect-ratio: 1;
+	translate: -50% -50% -2rem;
+	rotate: -30deg;
+	background:
+		linear-gradient(transparent calc(50% - 0.5px), color-mix(in oklab, var(--heading), transparent 45%) calc(50% - 0.5px) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+		linear-gradient(90deg, transparent calc(50% - 0.5px), color-mix(in oklab, var(--heading), transparent 65%) calc(50% - 0.5px) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+		linear-gradient(var(--line) 1px, transparent 1px) center / 1.5rem 1.5rem,
+		linear-gradient(90deg, var(--line) 1px, transparent 1px) center / 1.5rem 1.5rem;
+	mask-image: radial-gradient(closest-side, #000 35%, transparent);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--fade);
+}
+
+.stage-gizmo {
+	position: absolute;
+	right: 1.75rem;
+	bottom: 1.75rem;
+	width: 3.5rem;
+	aspect-ratio: 1;
+	color: var(--muted);
+	font-family: var(--mono);
+	font-size: 0.625rem;
+	opacity: 0;
+	transition: opacity var(--fade);
+
+	/* Each letter sits just past the tip of its axis; the axis is drawn from the letter
+	   back to the centre. */
+	span {
+		position: absolute;
+		top: calc(50% + sin(var(--angle)) * (var(--len) + 0.4375rem));
+		left: calc(50% + cos(var(--angle)) * (var(--len) + 0.4375rem));
+		line-height: 1;
+		translate: -50% -50%;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: var(--len);
+			height: 1px;
+			background: currentColor;
+			transform-origin: 0 50%;
+			transform: rotate(calc(var(--angle) + 180deg)) translateX(0.4375rem);
+		}
+	}
+
+	.gz-x {
+		--len: 1.375rem;
+		--angle: -18deg;
+
+		color: var(--body);
+	}
+
+	.gz-y {
+		--len: 0.875rem;
+		--angle: 44deg;
+	}
+
+	.gz-z {
+		--len: 1.375rem;
+		--angle: -90deg;
+
+		color: var(--heading);
+	}
+}
+
+/* UI Design: the card selected on a design canvas. The arrow lands on it and the
+   selection frame follows; then, on a loop, the arrow goes to the card's right edge,
+   becomes the resize arrows, pulls the edge out while the content reflows and a tooltip
+   reads the width in container units, pushes it back, and returns. Every animation runs
+   on the same clock. */
+.stage[data-state="ui"] {
+	--loop: 12s;
+
+	.obj {
+		border-color: var(--hairline);
+		background: var(--surface);
+	}
+
+	.obj-media {
+		.obj-video {
+			opacity: 1;
+		}
+
+		&::before {
+			opacity: 1;
+		}
+	}
+
+	.stage-arrow {
+		opacity: 1;
+		translate: 0 0;
+	}
+
+	.obj-select {
+		opacity: 1;
+		transition-delay: 450ms;
+	}
+
+	.obj-handle {
+		scale: 1;
+		transition-delay: calc(500ms + var(--i) * 40ms);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.obj {
+			animation: stage-ui-resize var(--loop) ease-in-out 1.4s infinite;
+		}
+
+		.stage-arrow {
+			animation: stage-ui-arrow var(--loop) ease-in-out 1.4s infinite;
+		}
+
+		.stage-resize {
+			animation: stage-ui-grab var(--loop) linear 1.4s infinite;
+		}
+
+		.obj-size {
+			animation: stage-ui-tip var(--loop) var(--ease-out) 1.4s infinite;
+		}
+	}
+}
+
+/* Web Development: built. The code types on beside the card, and the card fills in part
+   by part as the line that makes each one lands. */
+.stage[data-state="web"] {
+	.stage-object {
+		transform: translate(19cqi, -6cqi);
+	}
+
+	.stage-window {
+		opacity: 1;
+		transition-delay: 200ms;
+	}
+
+	/* The phone still has no room for the window beside the code: a smaller card, top
+	   right, over the code's bottom left. */
+	.service & {
+		.stage-object {
+			transform: translate(22cqi, -18.5cqi) scale(0.85);
+		}
+
+		.stage-window {
+			opacity: 0;
+		}
+	}
+
+	.obj {
+		background: var(--surface);
+		box-shadow: var(--shadow);
+		outline: 1px solid transparent;
+		outline-offset: -1px;
+		transition-delay: var(--built), var(--built), var(--built), 0ms;
+
+		@media (prefers-reduced-motion: no-preference) {
+			animation: stage-inspect-box 2600ms linear var(--done) both;
+		}
+	}
+
+	/* Each part flashes as its line lands, then settles. */
+	.obj-part {
+		transition-delay: var(--built);
+
+		@media (prefers-reduced-motion: no-preference) {
+			animation: stage-paint 900ms var(--ease-out) var(--built) both;
+		}
+
+		&::before {
+			transition-delay: var(--built);
+		}
+	}
+
+	.obj-media {
+		.obj-video {
+			opacity: 1;
+			transition-delay: var(--built);
+		}
+
+		&::before {
+			opacity: 1;
+		}
+	}
+
+	.stage-inspect {
+		@media (prefers-reduced-motion: no-preference) {
+			animation: stage-inspect 2600ms var(--ease-out) var(--done) both;
+		}
+	}
+
+	.stage-code {
+		opacity: 1;
+		translate: 0 0;
+
+		.code-line {
+			clip-path: inset(0 0 0 0);
+			transition: clip-path var(--type) steps(var(--n)) var(--start);
+
+			&:last-child::after {
+				animation: stage-blink 1s steps(2, jump-none) var(--end) infinite;
+			}
+		}
+	}
+}
+
+/* 3D Art: the card as a model in a 3D viewport. Tilted back on a grid floor, given some
+   thickness, its layers pulled apart in depth and drawn in the hero's dot matrix, turning
+   slowly under the hand. Layers higher up the card rise further and lift off later, so
+   the stack fans out from the bottom instead of folding over itself. */
+.stage[data-state="3d"] {
+	.stage-object {
+		transform: rotateX(56deg) scale(0.92);
+	}
+
+	.obj {
+		--turn: 1;
+
+		border-color: color-mix(in oklab, var(--heading), transparent 70%);
+		background: color-mix(in oklab, var(--heading), transparent 96%);
+		animation-play-state: running;
+
+		&::before,
+		&::after {
+			opacity: 1;
+		}
+	}
+
+	.obj-part {
+		transition-delay: calc((4 - var(--line)) * 70ms);
+	}
+
+	.stage-floor {
+		opacity: 1;
+		transition-delay: 100ms;
+	}
+
+	.stage-gizmo {
+		opacity: 1;
+		transition-delay: 450ms;
+	}
+
+	.stage-hand {
+		opacity: 1;
+		transition-delay: 350ms;
+		animation-play-state: running;
+	}
+
+	.stage-stats {
+		opacity: 1;
+		translate: 0 0;
+		transition-delay: 500ms;
+	}
+
+	/* The layer the hand holds is the selected one: lit edges and its vertices. */
+	.obj-media {
+		border-color: color-mix(in oklab, var(--heading), transparent 20%);
+		background: var(--dots);
+		translate: 0 0 4.5rem;
+	}
+
+	.obj-vertex {
+		opacity: 1;
+		scale: 1;
+		transition-delay: calc(650ms + var(--i) * 50ms);
+	}
+
+	.obj-title,
+	.obj-text,
+	.obj-button {
+		border-color: transparent;
+		background: var(--dots);
+		color: transparent;
+	}
+
+	.obj-title {
+		translate: 0 0 3rem;
+	}
+
+	.obj-text {
+		translate: 0 0 1.75rem;
+	}
+
+	.obj-button {
+		translate: 0 0 0.75rem;
+	}
+}
+
+/* Video Editing: the footage alone on the program monitor (the card loses its surface,
+   corners and other parts, so only the clip is left, filling the frame), with the two
+   titles cut in on either side of the skater in step with their clip on the timeline
+   (4s loop) and wiped off before it starts over. */
+.stage[data-state="video"] {
+	/* The clip's offset from the card's centre (as a part of the card's height) and the
+	   zoom that fills the monitor with it. The card's width is capped while the stage
+	   keeps growing, so the monitor is capped to what the zoomed clip covers (its width
+	   less the card's padding) and keeps its 16:9. The narrower phone card is taller, so
+	   its numbers differ and its monitor is wider. */
+	--img-off: 23%;
+	--push: 2;
+	--lift: -5cqi;
+	--mon-w: min(72cqi, var(--push) * (var(--obj-w) - 1.25rem));
+	--mon-h: calc(var(--mon-w) * 9 / 16);
+
+	.service & {
+		--img-off: 26%;
+		--push: 1.9;
+		--lift: -15cqi;
+		--mon-w: min(82cqi, var(--push) * (var(--obj-w) - 1.25rem));
+	}
+
+	.stage-object {
+		transform: translateY(var(--lift));
+		clip-path: inset(calc(50% - var(--mon-h) / 2) calc(50% - var(--mon-w) / 2) round var(--mon-r));
+	}
+
+	.stage-monitor,
+	.stage-titles {
+		opacity: 1;
+	}
+
+	.stage-guides {
+		opacity: 1;
+		transition-delay: 300ms;
+	}
+
+	.obj {
+		translate: 0 calc(var(--img-off) * var(--push));
+		scale: var(--push);
+		animation: none;
+	}
+
+	.obj-media {
+		border-radius: 0;
+
+		.obj-video {
+			opacity: 1;
+		}
+	}
+
+	.obj-title,
+	.obj-text,
+	.obj-button {
+		opacity: 0;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.stage-titles [data-side="left"] {
+			animation: stage-word-left 4s var(--ease-out) infinite;
+		}
+
+		.stage-titles [data-side="right"] {
+			animation: stage-word-right 4s var(--ease-out) infinite;
+		}
+
+		.tl-time {
+			animation: stage-seconds 4s steps(4) infinite, stage-frames 1s steps(25) infinite;
+		}
+	}
+
+	.stage-timeline {
+		opacity: 1;
+		translate: 0 0;
+
+		.tl-clip {
+			opacity: 1;
+			translate: 0 0;
+			transition-delay: calc(300ms + var(--i) * 90ms);
+		}
+
+		.tl-playhead span {
+			opacity: 1;
+
+			@media (prefers-reduced-motion: no-preference) {
+				animation: stage-play 4s linear infinite;
+			}
+		}
+	}
+}
+
+@keyframes stage-paint {
+	from {
+		filter: brightness(1.7);
+	}
+
+	to {
+		filter: brightness(1);
+	}
+}
+
+@keyframes stage-blink {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes stage-inspect {
+	0% {
+		opacity: 0;
+		translate: 0 0.25rem;
+	}
+
+	12%,
+	78% {
+		opacity: 1;
+		translate: 0 0;
+	}
+
+	100% {
+		opacity: 0;
+		translate: 0 0;
+	}
+}
+
+@keyframes stage-inspect-box {
+	0%,
+	100% {
+		outline-color: transparent;
+	}
+
+	12%,
+	78% {
+		outline-color: color-mix(in oklab, var(--heading), transparent 55%);
+	}
+}
+
+@keyframes stage-ui-resize {
+	0%,
+	19% {
+		--size: 1;
+		--w: 42;
+	}
+
+	30%,
+	40% {
+		--size: 1.3;
+		--w: 55;
+	}
+
+	51%,
+	100% {
+		--size: 1;
+		--w: 42;
+	}
+}
+
+@keyframes stage-ui-arrow {
+	0%,
+	10% {
+		top: 86%;
+		left: 84%;
+		opacity: 1;
+	}
+
+	16% {
+		top: 50%;
+		left: 100%;
+		opacity: 1;
+	}
+
+	17%,
+	60% {
+		top: 50%;
+		left: 100%;
+		opacity: 0;
+	}
+
+	61% {
+		top: 50%;
+		left: 100%;
+		opacity: 1;
+	}
+
+	67%,
+	100% {
+		top: 86%;
+		left: 84%;
+		opacity: 1;
+	}
+}
+
+@keyframes stage-ui-grab {
+	0%,
+	16% {
+		opacity: 0;
+	}
+
+	17%,
+	60% {
+		opacity: 1;
+	}
+
+	61%,
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes stage-ui-tip {
+	0%,
+	17% {
+		opacity: 0;
+		translate: -50% 0.25rem;
+	}
+
+	19%,
+	53% {
+		opacity: 1;
+		translate: -50% 0;
+	}
+
+	56%,
+	100% {
+		opacity: 0;
+		translate: -50% 0.25rem;
+	}
+}
+
+@keyframes stage-sway {
+	from {
+		--sway: -8deg;
+	}
+
+	to {
+		--sway: 8deg;
+	}
+}
+
+@keyframes stage-drag {
+	from {
+		translate: -3cqi 0;
+	}
+
+	to {
+		translate: 3cqi 0;
+	}
+}
+
+@keyframes stage-word-left {
+	0%,
+	20% {
+		clip-path: inset(0 100% 0 0);
+		translate: -0.5em -50%;
+		letter-spacing: 0.28em;
+		opacity: 1;
+	}
+
+	30%,
+	90% {
+		clip-path: inset(0);
+		translate: 0 -50%;
+		letter-spacing: 0.03em;
+		opacity: 1;
+	}
+
+	97%,
+	100% {
+		clip-path: inset(0);
+		translate: 0.3em -50%;
+		letter-spacing: 0.03em;
+		opacity: 0;
+	}
+}
+
+@keyframes stage-word-right {
+	0%,
+	35% {
+		clip-path: inset(0 0 0 100%);
+		translate: 0.5em -50%;
+		letter-spacing: 0.28em;
+		opacity: 1;
+	}
+
+	45%,
+	90% {
+		clip-path: inset(0);
+		translate: 0 -50%;
+		letter-spacing: 0.03em;
+		opacity: 1;
+	}
+
+	97%,
+	100% {
+		clip-path: inset(0);
+		translate: -0.3em -50%;
+		letter-spacing: 0.03em;
+		opacity: 0;
+	}
+}
+
+@keyframes stage-seconds {
+	from {
+		--tc-s: 0;
+	}
+
+	to {
+		--tc-s: 4;
+	}
+}
+
+@keyframes stage-frames {
+	from {
+		--tc-f: 0;
+	}
+
+	to {
+		--tc-f: 25;
+	}
+}
+
+@keyframes stage-play {
+	to {
+		left: 100%;
+	}
 }
