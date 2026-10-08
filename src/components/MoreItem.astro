@@ -20,6 +20,5 @@ const { name, text, href, label, meta, stars = 0 } = item;
       {meta.map((entry) => <span>{entry}</span>)}
       {stars > 0 && <span class="more-stars"><Icon name="star" />{stars}<span class="visually-hidden">{stars === 1 ? ' star' : ' stars'}</span></span>}
     </span>
-    <span class="more-arrow" aria-hidden="true"><Icon name="arrow-right" /></span>
   </a>
 </li>
