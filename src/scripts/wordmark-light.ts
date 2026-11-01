@@ -1,6 +1,5 @@
 // Footer wordmark: while the pointer is over the contact card, a soft light follows it
-// (pointer-light.ts) and brightens the dots of the alias ("/ Moxo") underneath, like the
-// hero's aura leaning toward the pointer.
+// (pointer-light.ts) and brightens the dots of the alias ("/ Moxo") underneath.
 import { followPointer } from './pointer-light';
 
 export function initWordmarkLight(): void {

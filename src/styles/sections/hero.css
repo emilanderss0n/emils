@@ -1,16 +1,25 @@
+/* The hero is light in both colour schemes: a field of light tiles (scripts/hero-wave.ts)
+   under the page's light-mode colours. Its background is the field's own grey, shown
+   until the field fades in (--fade-in). In dark mode the field shows at --field strength
+   over the dark page, so the hero sits back a little; until the field is in, the grey
+   is mixed with the page the same way, and once it is, the hero's own background turns
+   to the page colour under it. */
 .hero {
 	--inset: 0.75rem;
+	--fade-in: 1800ms;
+	--field: 1;
 
 	position: relative;
 	isolation: isolate;
 	display: flex;
-	min-height: max(36rem, 100svh - 2 * var(--inset));
+	min-height: max(36rem, 70svh - 2 * var(--inset));
 	margin: var(--inset);
 	overflow: hidden;
 	border-radius: var(--radius-xl);
 	background: var(--hero-bg);
 	color: var(--body);
-	color-scheme: dark;
+	color-scheme: light;
+	transition: background-color var(--fade-in) var(--ease-out);
 
 	@media (max-width: 37.5rem) {
 		--inset: 0rem;
@@ -18,26 +27,16 @@
 		border-radius: 0 0 var(--radius-xl) var(--radius-xl);
 	}
 
-	/* Violet glow behind the canvas. */
-	&::before {
-		content: "";
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		background: radial-gradient(60% 70% at 72% 55%, oklch(45% 0.2 280 / 0.45), transparent 70%);
-	}
+	@media (prefers-color-scheme: dark) {
+		--field: 0.85;
+		--body: var(--hero-dim-body);
+		--muted: var(--hero-dim-muted);
+		--accent: var(--hero-dim-accent);
 
-	/* Darkens the edges so the text stays readable over the canvas. */
-	&::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		background: linear-gradient(180deg, oklch(13% 0.02 275 / 0.8), transparent 20%), linear-gradient(90deg, oklch(13% 0.02 275 / 0.85), oklch(13% 0.02 275 / 0.35) 45%, transparent 70%), linear-gradient(0deg, oklch(13% 0.02 275 / 0.7), transparent 30%);
-		pointer-events: none;
+		background: color-mix(in srgb, var(--hero-bg) calc(var(--field) * 100%), var(--bg-d));
 
-		@media (max-width: 47.5rem) {
-			background: linear-gradient(180deg, oklch(13% 0.02 275 / 0.6), transparent 12%, transparent 18%, oklch(13% 0.02 275 / 0.75) 40%, oklch(13% 0.02 275 / 0.85));
+		&:has(.hero-canvas.is-ready) {
+			background: var(--bg-d);
 		}
 	}
 }
@@ -49,10 +48,10 @@
 	width: 100%;
 	height: 100%;
 	opacity: 0;
-	transition: opacity 1800ms var(--ease-out);
+	transition: opacity var(--fade-in) var(--ease-out);
 
 	&.is-ready {
-		opacity: 1;
+		opacity: var(--field);
 	}
 }
 
@@ -73,26 +72,10 @@
 	gap: clamp(1.5rem, 3vw, 2rem);
 	margin-block: auto;
 
-	/* Phones: the text sits low, under the aura, instead of floating mid-screen. */
+	/* Phones: the text sits low, under the tiles, instead of floating mid-screen. */
 	@media (max-width: 37.5rem) {
 		margin-bottom: 0;
 	}
-}
-
-.hero-chip {
-	--enter-delay: 0ms;
-
-	display: inline-flex;
-	align-items: center;
-	gap: 0.625rem;
-	padding: 0.4375rem 0.875rem 0.4375rem 0.75rem;
-	border-radius: var(--radius-pill);
-	background: oklch(100% 0 0 / 0.07);
-	box-shadow: inset 0 1px 0 oklch(100% 0 0 / 0.08);
-	color: var(--heading);
-	font-size: 0.875rem;
-	font-weight: 500;
-	backdrop-filter: blur(0.75rem);
 }
 
 .hero-title {
@@ -114,7 +97,7 @@
 }
 
 .hero-gradient {
-	background: linear-gradient(90deg, oklch(97% 0.01 275), oklch(80% 0.1 265) 45%, oklch(72% 0.17 300));
+	background: linear-gradient(90deg, var(--heading), var(--accent));
 	background-clip: text;
 	color: transparent;
 }

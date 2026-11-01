@@ -25,14 +25,14 @@ const elsewhere = [
 ];
 
 // The wordmark, one span per letter so the letters can rise in one after another.
-// The alias ("/ Moxo") is drawn in the hero's dot grid.
+// The alias ("/ Moxo") is drawn in a dot grid.
 const wordmark = [
   ...[...'Emil'].map((char) => ({ char, alias: false })),
   ...[...' / Moxo'].map((char) => ({ char, alias: true })),
 ];
 
 // Halftone filters for the wordmark's dots, one per grid size (the grid scales with the
-// wordmark, from 3px on phones to the hero's 7px). Each blurs the letter's shape, multiplies
+// wordmark, from 3px on phones to 7px). Each blurs the letter's shape, multiplies
 // it by a grid of soft dots and sharpens the result, so dots shrink smoothly toward the
 // letter's edges instead of being cut off by them.
 const pitches = [3, 4, 5, 6, 7];

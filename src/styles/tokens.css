@@ -40,7 +40,12 @@
 	--brand-from: light-dark(oklch(55% 0.2 255), oklch(74% 0.14 250));
 	--brand-to: light-dark(oklch(52% 0.24 300), oklch(72% 0.17 305));
 	--success: light-dark(oklch(52% 0.14 155), oklch(76% 0.15 155));
-	--hero-bg: oklch(13% 0.02 275);
+	--hero-bg: oklch(92% 0 0);
+	/* Text over the hero in dark mode, where its tiles show dimmer (sections/hero.css):
+	   a step darker than the light-mode text so it keeps its contrast. */
+	--hero-dim-body: oklch(30% 0.012 275);
+	--hero-dim-muted: oklch(35% 0.012 275);
+	--hero-dim-accent: oklch(40% 0.075 173);
 
 	--shadow: 0 1px 2px var(--shade), 0 1.5rem 3rem -1.5rem var(--shade), inset 0 1px 0 var(--highlight);
 

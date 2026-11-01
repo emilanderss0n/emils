@@ -127,7 +127,7 @@
 	/* Each letter is drawn twice. Its own text is the solid part, painted from the bottom
 	   up to --fill. Behind it, a copy (::before) is screened into dots by one of the
 	   halftone filters in SiteFooter.astro, picked to match the wordmark's size: the dot
-	   grid scales with it, up to the hero's 7px. The alias always shows its dots; the name
+	   grid scales with it, up to 7px. The alias always shows its dots; the name
 	   only while it fills in (animations.css), so none peek out around the solid letters.
 	   The box is padded past the glyphs so nothing clips them, and the negative margins
 	   keep the layout as if it weren't. */

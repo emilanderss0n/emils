@@ -111,10 +111,10 @@
 	}
 }
 
-/* The stage: a dark viewport like the hero's panel, in both colour schemes, but with no
+/* The stage: a dark viewport in both colour schemes, but with no
    tint: the site's dark palette is redone here in plain greys. A dot grid covers it, and
    a light sits over the card (--lx/--ly), moving with each state; the dots under the
-   light brighten, like the hero's matrix. Holds the card (.obj) and the pieces each state
+   light brighten. Holds the card (.obj) and the pieces each state
    brings in (selection, code, monitor, timeline). Sized from its own width (cqi). --step
    is the state's place in the sequence, for the file label's roll. */
 .stage {
@@ -1180,7 +1180,7 @@
 }
 
 /* 3D Art: the card as a model in a 3D viewport. Tilted back on a grid floor, given some
-   thickness, its layers pulled apart in depth and drawn in the hero's dot matrix, turning
+   thickness, its layers pulled apart in depth and drawn in a dot matrix, turning
    slowly under the hand. Layers higher up the card rise further and lift off later, so
    the stack fans out from the bottom instead of folding over itself. */
 .stage[data-state="3d"] {

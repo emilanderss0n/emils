@@ -6,8 +6,8 @@
 		width: min(100%, 18rem);
 	}
 
-	/* The portrait dissolves diagonally into a halftone dot screen, echoing the hero's
-	   pixel grid: solid from the top-left corner to --solid, then visible only through
+	/* The portrait dissolves diagonally into a halftone dot screen, echoing the site's
+	   dot grids: solid from the top-left corner to --solid, then visible only through
 	   4px dots that thin out to nothing at the bottom-right corner. */
 	img {
 		--dots: radial-gradient(circle, #000 0.7px, transparent 1.3px) 0 0 / 4px 4px;

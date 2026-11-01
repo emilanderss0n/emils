@@ -77,7 +77,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <canvas class="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-inner">
       <div class="hero-content">
-        <p class="hero-chip enter"><span class="status-dot" aria-hidden="true"></span>Available for new projects</p>
         <h1 class="hero-title scramble" id="hero-title" data-scramble-delay="120" data-scramble-speed="1.1">
           <span class="visually-hidden">Designer &amp; developer building tools, mods and worlds.</span>
           <span class="scramble-seg" data-text="Designer & developer" aria-hidden="true">Designer &amp; developer</span>
@@ -190,13 +189,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
 </BaseLayout>
 
 <script>
-  import { initHeroAura } from '@scripts/hero-aura';
   import { initScramble } from '@scripts/text-scramble';
   import { initPointerGlow } from '@scripts/pointer-glow';
   import { initServicesStage } from '@scripts/services-stage';
   import { initMoreRoll } from '@scripts/more-roll';
 
-  initHeroAura();
+  // The hero's tile field brings in Three.js, so it loads on its own after the page shows.
+  void import('@scripts/hero-wave').then(({ initHeroWave }) => initHeroWave());
   initPointerGlow();
   initMoreRoll();
   initServicesStage();
