@@ -1,5 +1,7 @@
 ---
 // MoreItem.astro — a row in the "More projects" list (a GitHub repo or a CodePen pen).
+// The row is drawn twice: the face that shows at rest, and an inert copy in the opposite
+// theme that rolls round while the row is lit (sections/work.css, scripts/more-roll.ts).
 import type { MoreItem } from '@lib/more-projects';
 
 interface Props {
@@ -13,11 +15,15 @@ const { name, text, href, label } = item;
 
 <li data-reveal="contents">
   <a class="more-item" href={href} target="_blank" rel="noopener">
-    <span class="more-index" aria-hidden="true">{index}</span>
-    <span class="more-name">{name}</span>
-    {text && <span class="more-text">{text}</span>}
-    <span class="more-meta">
-      {label && <span class="more-label" style={`--label: ${label.color}`}>{label.text}</span>}
-    </span>
+    {['rest', 'lit'].map((face) => (
+      <span class={`more-face more-face-${face}`} inert={face === 'lit'} aria-hidden={face === 'lit' ? 'true' : undefined}>
+        <span class="more-index" aria-hidden="true">{index}</span>
+        <span class="more-name">{name}</span>
+        {text && <span class="more-text">{text}</span>}
+        <span class="more-meta">
+          {label && <span class="more-label" style={`--label: ${label.color}`}>{label.text}</span>}
+        </span>
+      </span>
+    ))}
   </a>
 </li>

@@ -194,9 +194,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
   import { initScramble } from '@scripts/text-scramble';
   import { initPointerGlow } from '@scripts/pointer-glow';
   import { initServicesStage } from '@scripts/services-stage';
+  import { initMoreRoll } from '@scripts/more-roll';
 
   initHeroAura();
   initPointerGlow();
+  initMoreRoll();
   initServicesStage();
   // Wait for web fonts so the reserved space matches the final text. The headline
   // starts the hero's intro; the chip, intro text and labels follow on their delays.

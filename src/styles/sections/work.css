@@ -1,13 +1,10 @@
-/* Hover for the project lists: a row lifts (--lift).
+/* Hover for the project lists: a featured row lifts (--lift), a More projects row turns
+   over to the opposite theme.
    --on is 1 while a row is hovered or focused from the keyboard. It ignores focus left
    behind by a click and the hover a tap leaves on touch screens, so a row doesn't stay
    lit after its link has opened. */
 :is(.project, .more-item) {
 	--on: 0;
-
-	border-radius: var(--corners, 0);
-	background-color: color-mix(in oklab, var(--lift) calc(var(--on) * 100%), transparent);
-	transition: background-color 300ms var(--ease-out);
 
 	@media (hover: hover) {
 		&:hover {
@@ -77,6 +74,9 @@
 	gap: 1.5rem clamp(1.5rem, 3vw, 3rem);
 	padding: clamp(1.75rem, 3.5vw, 2.75rem) var(--inset);
 	border-top: 1px solid var(--hairline);
+	border-radius: var(--corners, 0);
+	background-color: color-mix(in oklab, var(--lift) calc(var(--on) * 100%), transparent);
+	transition: background-color 300ms var(--ease-out);
 
 	/* Browsers without light-dark(): pick the ink with a media query instead. */
 	@supports not (color: light-dark(#000, #fff)) {
@@ -272,8 +272,8 @@
    description starts at the same point and every meta ends on the same edge. The name
    column fits the longest name, up to a cap. On narrower screens a row stacks: the
    number, name and meta, then the description under the name. At rest the text runs flush with the list's
-   edges; a lit row tints between its dividers and, from desktop widths up, its text
-   eases in from both edges by --shift. That inset is drawn with translate, and with
+   edges; a lit row turns over to a copy in the opposite theme whose text, above phone
+   widths, sits in from both edges by --shift. That inset is drawn with translate, and with
    margins on the description, which sits in a flexible column, rather than with
    padding: padding on a subgrid row would widen the shared columns and nudge every
    other row. On phones the list runs edge to edge like the featured frame, the text on
@@ -302,17 +302,73 @@
 	}
 }
 
+/* Each row is a box that turns on its middle, as deep as the row is tall (--depth is half
+   the row's height). Its front is the row as it shows at rest (.more-face-rest). A copy in
+   the opposite theme (.more-face-lit) waits out of sight on the box's top (--side: 1) or
+   bottom (--side: -1); a lit row rolls it round to the front while the rest face rolls
+   away over the other edge (--away). The row clips the box, so the faces roll in and out
+   through its edges. scripts/more-roll.ts measures --depth and points --side and --away
+   at the edges the pointer comes in and goes out by; the values here are for keyboard
+   focus. */
 .more-item {
 	--shift: 0rem;
+	--roll: 500ms;
+	--depth: 1.6875rem;
+	--side: 1;
+	--away: -1;
+	--other-heading: var(--bg);
+	--other-body: color-mix(in oklab, var(--bg) 78%, var(--heading));
+	--other-muted: color-mix(in oklab, var(--bg) 60%, var(--heading));
 
 	display: grid;
 	grid-column: 1 / -1;
 	grid-template-columns: subgrid;
+	overflow: clip;
+	perspective: 100rem;
+	text-decoration: none;
+
+	@media (min-width: 37.5625rem) {
+		--shift: 1rem;
+	}
+
+	/* The rest face rolls away while the row is lit, and also while the script moves it
+	   to the other edge out of sight (data-snap), without a roll. At rest it has no
+	   transform, so its text renders like the rest of the page. */
+	@media (prefers-reduced-motion: no-preference) {
+		@media (hover: hover) {
+			&:hover > .more-face-rest {
+				transform: var(--rolled);
+			}
+		}
+
+		&:is(:focus-visible, [data-snap="rest"]) > .more-face-rest {
+			transform: var(--rolled);
+		}
+	}
+
+	&[data-snap="rest"] > .more-face-rest {
+		transition: none;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: -2px;
+	}
+}
+
+/* Both faces lay out alike, on the list's shared columns, in the row's one cell. --lit
+   sets each face's colours and inset: 0 for the rest face, 1 for the copy. */
+.more-face {
+	grid-column: 1 / -1;
+	grid-row: 1;
+	display: grid;
+	grid-template-columns: subgrid;
 	grid-template-areas: "index name text meta";
 	align-items: baseline;
 	padding-block: 0.875rem;
-	color: var(--body);
-	text-decoration: none;
+	color: color-mix(in oklab, var(--other-body) calc(var(--lit) * 100%), var(--body));
+	backface-visibility: hidden;
+	transition: transform var(--roll) var(--ease-out), opacity 300ms var(--ease-out);
 
 	@media (max-width: 47.5rem) {
 		grid-template-areas: "index name meta" ". text text";
@@ -323,35 +379,55 @@
 	@media (max-width: 37.5rem) {
 		padding-inline: var(--gutter);
 	}
+}
 
-	@media (min-width: 62.5625rem) {
-		--shift: 1rem;
+.more-face-rest {
+	--lit: 0;
+	--rolled: translateZ(calc(var(--depth) * -1)) rotateX(calc(var(--away) * 90deg)) translateZ(var(--depth));
+}
+
+/* The copy keeps full strength while other rows fade back, and stacks above the rest face
+   even with no transform (reduced motion). As it turns away it fades toward the page
+   colour, like a face catching less light. */
+.more-face-lit {
+	--lit: 1;
+
+	isolation: isolate;
+	background: color-mix(in oklab, var(--heading) calc(50% + var(--on) * 50%), var(--bg));
+	opacity: 1;
+	transform: translateZ(calc(var(--depth) * -1)) rotateX(calc((1 - var(--on)) * var(--side) * 90deg)) translateZ(var(--depth));
+	transition: transform var(--roll) var(--ease-out), background-color var(--roll) var(--ease-out);
+
+	/* With reduced motion the copy fades in flat over the rest face instead. */
+	@media (prefers-reduced-motion: reduce) {
+		opacity: var(--on);
+		transform: none;
+		transition: opacity var(--roll) var(--ease-out);
 	}
 
-	&:focus-visible {
-		outline: 2px solid var(--accent);
-		outline-offset: -2px;
+	/* The script moves it to the other edge out of sight, without a roll. */
+	.more-item[data-snap="lit"] > & {
+		--on: 0;
+		transition: none;
 	}
 }
 
 .more-index {
 	grid-area: index;
-	color: color-mix(in oklab, var(--heading) calc(var(--on) * 100%), var(--muted));
+	color: color-mix(in oklab, var(--other-heading) calc(var(--lit) * 100%), var(--muted));
 	font-family: var(--mono);
 	font-size: 0.75rem;
-	translate: calc(var(--on) * var(--shift)) 0;
-	transition: translate 300ms var(--ease-out), color 300ms var(--ease-out), opacity 300ms var(--ease-out);
+	translate: calc(var(--lit) * var(--shift)) 0;
 }
 
 .more-name {
 	grid-area: name;
-	color: var(--heading);
+	color: color-mix(in oklab, var(--other-heading) calc(var(--lit) * 100%), var(--heading));
 	font-size: 1rem;
 	font-weight: 500;
 	letter-spacing: -0.015em;
 	overflow-wrap: anywhere;
-	translate: calc(var(--on) * var(--shift)) 0;
-	transition: translate 300ms var(--ease-out), opacity 300ms var(--ease-out);
+	translate: calc(var(--lit) * var(--shift)) 0;
 }
 
 /* One line, cut with an ellipsis; two lines when stacked. */
@@ -361,10 +437,9 @@
 	overflow: hidden;
 	font-size: 0.9375rem;
 	line-height: 1.5;
-	margin-inline: calc(var(--on) * var(--shift));
+	margin-inline: calc(var(--lit) * var(--shift));
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	transition: margin 300ms var(--ease-out), opacity 300ms var(--ease-out);
 
 	@media (max-width: 47.5rem) {
 		display: -webkit-box;
@@ -380,12 +455,11 @@
 	flex-wrap: wrap;
 	gap: 0.25rem 1.25rem;
 	justify-self: end;
-	color: var(--muted);
+	color: color-mix(in oklab, var(--other-muted) calc(var(--lit) * 100%), var(--muted));
 	font-family: var(--mono);
 	font-size: 0.75rem;
 	white-space: nowrap;
-	translate: calc(var(--on) * var(--shift) * -1) 0;
-	transition: translate 300ms var(--ease-out), opacity 300ms var(--ease-out);
+	translate: calc(var(--lit) * var(--shift) * -1) 0;
 }
 
 .more-label {
