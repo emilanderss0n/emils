@@ -11,8 +11,10 @@
 	--body-d: oklch(80% 0.008 275);
 	--muted-l: oklch(52% 0.012 275);
 	--muted-d: oklch(64% 0.01 275);
-	--accent-l: oklch(52% 0.21 278);
-	--accent-d: oklch(74% 0.15 278);
+	/* The favicon's mint (#71ffd9) in dark mode. Light mode takes the same hue deep enough
+	   to read as text and outlines on the light background. */
+	--accent-l: oklch(50% 0.095 173);
+	--accent-d: oklch(91% 0.135 173);
 	--hairline-l: oklch(17% 0.012 275 / 0.1);
 	--hairline-d: oklch(100% 0 0 / 0.08);
 	--shade-l: oklch(25% 0.03 275 / 0.1);
