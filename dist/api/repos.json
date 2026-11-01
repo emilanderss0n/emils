@@ -15,7 +15,7 @@
     "pushedAt": "2026-08-15T07:26:05Z",
     "createdAt": "2024-10-11T02:15:53Z",
     "releases": 17,
-    "downloads": 125938
+    "downloads": 130864
   },
   {
     "name": "tarkynator",
@@ -37,6 +37,21 @@
     "downloads": 0
   },
   {
+    "name": "MoxoCraft",
+    "fullName": "emilanderss0n/MoxoCraft",
+    "description": "My own suite of plugins for PhotoCraft. Chromatic Aberration, LUTs, Overlay Effects, etc.",
+    "url": "https://github.com/emilanderss0n/MoxoCraft",
+    "homepage": "https://moxopixel.com/",
+    "stars": 2,
+    "language": "Rust",
+    "topics": [],
+    "category": "other",
+    "pushedAt": "2026-10-19T15:01:42Z",
+    "createdAt": "2026-10-17T21:18:47Z",
+    "releases": 6,
+    "downloads": 93
+  },
+  {
     "name": "BlackCore",
     "fullName": "emilanderss0n/BlackCore",
     "description": "New variants of weapon mods and new weapon variants/skins (SPT Mod)",
@@ -52,7 +67,7 @@
     "pushedAt": "2025-04-23T03:12:51Z",
     "createdAt": "2024-05-31T13:53:22Z",
     "releases": 10,
-    "downloads": 128859
+    "downloads": 128913
   },
   {
     "name": "TGC",
@@ -70,7 +85,7 @@
     "pushedAt": "2025-12-12T14:11:26Z",
     "createdAt": "2024-05-27T14:49:32Z",
     "releases": 21,
-    "downloads": 226356
+    "downloads": 226418
   },
   {
     "name": "nhlplay-feedback",
@@ -93,7 +108,7 @@
   {
     "name": "emils",
     "fullName": "emilanderss0n/emils",
-    "description": "Main website for Emil Andersson",
+    "description": "Main portfolio website for MoxoPixel / Emil Andersson",
     "url": "https://github.com/emilanderss0n/emils",
     "homepage": "https://emilandersson.com/",
     "stars": 0,
@@ -102,7 +117,7 @@
       "website"
     ],
     "category": "web-development",
-    "pushedAt": "2026-10-08T20:02:00Z",
+    "pushedAt": "2026-10-08T20:08:25Z",
     "createdAt": "2025-03-15T02:30:20Z",
     "releases": 0,
     "downloads": 0
@@ -123,7 +138,7 @@
     "pushedAt": "2026-08-15T23:15:01Z",
     "createdAt": "2026-05-23T22:28:01Z",
     "releases": 2,
-    "downloads": 4088
+    "downloads": 4412
   },
   {
     "name": "dashxe-vscode-theme",
@@ -159,7 +174,7 @@
     "pushedAt": "2024-07-13T02:47:00Z",
     "createdAt": "2024-05-30T23:48:15Z",
     "releases": 2,
-    "downloads": 10759
+    "downloads": 10764
   },
   {
     "name": "WarHeads",
@@ -177,7 +192,7 @@
     "pushedAt": "2024-11-26T19:13:19Z",
     "createdAt": "2024-05-24T03:24:39Z",
     "releases": 4,
-    "downloads": 9524
+    "downloads": 9526
   },
   {
     "name": "SandCore",
@@ -195,7 +210,7 @@
     "pushedAt": "2025-02-12T18:50:10Z",
     "createdAt": "2024-07-18T09:53:25Z",
     "releases": 2,
-    "downloads": 26168
+    "downloads": 26173
   },
   {
     "name": "GreenCore",
@@ -213,7 +228,7 @@
     "pushedAt": "2025-03-14T20:55:30Z",
     "createdAt": "2024-07-21T20:12:40Z",
     "releases": 2,
-    "downloads": 17700
+    "downloads": 17712
   },
   {
     "name": "WhiteCore",
@@ -231,7 +246,7 @@
     "pushedAt": "2025-03-14T20:57:31Z",
     "createdAt": "2024-07-21T20:04:20Z",
     "releases": 2,
-    "downloads": 18883
+    "downloads": 18896
   },
   {
     "name": "MagTape",
@@ -249,7 +264,7 @@
     "pushedAt": "2025-04-18T16:33:10Z",
     "createdAt": "2024-05-31T13:46:12Z",
     "releases": 4,
-    "downloads": 69444
+    "downloads": 69463
   },
   {
     "name": "TMS",
@@ -267,7 +282,7 @@
     "pushedAt": "2025-04-26T16:44:12Z",
     "createdAt": "2024-07-13T02:49:21Z",
     "releases": 8,
-    "downloads": 12967
+    "downloads": 12970
   },
   {
     "name": "AdvancedModdingLights",
@@ -285,7 +300,7 @@
     "pushedAt": "2025-06-27T19:03:37Z",
     "createdAt": "2025-06-27T18:48:30Z",
     "releases": 1,
-    "downloads": 6714
+    "downloads": 6765
   },
   {
     "name": "MoxoCode",
@@ -320,6 +335,6 @@
     "pushedAt": "2025-12-12T14:11:10Z",
     "createdAt": "2024-05-31T13:17:15Z",
     "releases": 15,
-    "downloads": 215545
+    "downloads": 215615
   }
 ]
