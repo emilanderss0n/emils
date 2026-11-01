@@ -58,13 +58,22 @@
 
 /* A featured row also carries a dot grid, and a halftone light follows the pointer over
    it (scripts/pointer-glow.ts), like the one on the Services stage. The grid (::before)
-   is barely there across the row and brightens under the light, whose reach is --reach;
-   in light mode its ink is the accent, in dark mode plain. Nearer the light's centre
-   (::after) the dots swell a little. Both layers' dots have soft edges, so toward the
-   light's edge they shrink away rather than switch off. */
+   is barely there across the row (--faint) and brightens under the light, whose reach is
+   --reach; in light mode its ink is the accent, in dark mode plain. Nearer the light's
+   centre (::after) the dots swell a little. Both layers' dots have soft edges: solid out
+   to their --*-core radius and gone by --*-edge, in --ink at --*-ink strength. So toward
+   the light's edge they shrink away rather than switch off. With a mouse, the script
+   draws the grid on a canvas instead (scripts/project-dots.ts), from the same values. */
 .project {
 	--reach: 24rem;
 	--ink: light-dark(var(--accent-l), oklch(0.97 0 0 / 0.74));
+	--faint: 0.25;
+	--fine-core: 0.8px;
+	--fine-edge: 2px;
+	--fine-ink: 22%;
+	--near-core: 1.4px;
+	--near-edge: 2.6px;
+	--near-ink: 32%;
 
 	position: relative;
 	isolation: isolate;
@@ -94,8 +103,8 @@
 		position: absolute;
 		inset: 0;
 		z-index: -1;
-		background: radial-gradient(circle, color-mix(in oklab, var(--ink), transparent 78%) 0.8px, transparent 2px) 0 0 / var(--dot-pitch) var(--dot-pitch);
-		mask-image: radial-gradient(var(--reach) at var(--x, 30%) var(--y, 50%), #000, transparent), linear-gradient(rgb(0 0 0 / 0.25) 0 0);
+		background: radial-gradient(circle, color-mix(in oklab, var(--ink) var(--fine-ink), transparent) var(--fine-core), transparent var(--fine-edge)) 0 0 / var(--dot-pitch) var(--dot-pitch);
+		mask-image: radial-gradient(var(--reach) at var(--x, 30%) var(--y, 50%), #000, transparent), linear-gradient(rgb(0 0 0 / var(--faint)) 0 0);
 		opacity: var(--on);
 		transition: opacity 300ms var(--ease-out);
 	}
@@ -105,10 +114,33 @@
 		position: absolute;
 		inset: 0;
 		z-index: -1;
-		background: radial-gradient(circle, color-mix(in oklab, var(--ink), transparent 68%) 1.4px, transparent 2.6px) 0 0 / var(--dot-pitch) var(--dot-pitch);
+		background: radial-gradient(circle, color-mix(in oklab, var(--ink) var(--near-ink), transparent) var(--near-core), transparent var(--near-edge)) 0 0 / var(--dot-pitch) var(--dot-pitch);
 		mask-image: radial-gradient(calc(var(--reach) / 2) at var(--x, 30%) var(--y, 50%), #000, transparent);
 		opacity: var(--on);
 		transition: opacity 300ms var(--ease-out);
+	}
+
+	&[data-dots] {
+		&::before {
+			display: none;
+		}
+
+		&::after {
+			display: none;
+		}
+	}
+
+	/* The canvas fades in and out with the row like the grid it stands in for. */
+	.project-dots {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		width: 100%;
+		height: 100%;
+		color: var(--ink);
+		opacity: var(--on);
+		transition: opacity 300ms var(--ease-out);
+		pointer-events: none;
 	}
 
 	/* In the rounded frame, the frame draws the top edge. */

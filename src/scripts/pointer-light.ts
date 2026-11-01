@@ -1,13 +1,18 @@
 // A soft light that follows the pointer over an area: the footer wordmark (wordmark-light.ts)
 // and the Services stage (services-stage.ts). The light trails the pointer and glides to a
 // stop rather than sticking to it. While the pointer is over the area, `lit` carries
-// data-lit, and each target gets the light's position relative to itself as --x / --y (px).
-// Mouse and trackpad only.
+// data-lit, each target gets the light's position relative to itself as --x / --y (px),
+// and `onMove`, if given, gets it in viewport coordinates. Mouse and trackpad only.
 
 // How long the light takes to cover most of the distance to the pointer (ms).
 const LAG = 140;
 
-export function followPointer(area: HTMLElement, lit: HTMLElement, targets: HTMLElement[]): void {
+export function followPointer(
+  area: HTMLElement,
+  lit: HTMLElement,
+  targets: HTMLElement[],
+  onMove?: (x: number, y: number) => void,
+): void {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
   const target = { x: 0, y: 0 };
@@ -21,6 +26,7 @@ export function followPointer(area: HTMLElement, lit: HTMLElement, targets: HTML
       el.style.setProperty('--x', `${light.x - box.left}px`);
       el.style.setProperty('--y', `${light.y - box.top}px`);
     }
+    onMove?.(light.x, light.y);
   };
 
   const step = (now: number) => {

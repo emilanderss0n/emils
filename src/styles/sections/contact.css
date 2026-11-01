@@ -171,19 +171,38 @@
 		}
 	}
 
-	/* Its dots are lit from the pointer (scripts/wordmark-light.ts). */
+	/* Its dots are lit from the pointer (scripts/wordmark-light.ts): a light --glow wide
+	   brings them up from --dim to full strength. */
 	.wordmark-alias {
 		--fill: -20%;
-		--dim: color-mix(in oklab, var(--heading), transparent 40%);
+		--glow: 16rem;
+		--dim: 0.6;
+		--dimmed: color-mix(in oklab, var(--heading) calc(var(--dim) * 100%), transparent);
 
 		font-weight: 500;
 
 		&::before {
 			opacity: 1;
-			background: radial-gradient(circle 16rem at var(--x, -100rem) var(--y, -100rem), color-mix(in oklab, var(--dim), var(--heading) calc(var(--light) * 100%)), var(--dim));
+			background: radial-gradient(circle var(--glow) at var(--x, -100rem) var(--y, -100rem), color-mix(in oklab, var(--dimmed), var(--heading) calc(var(--light) * 100%)), var(--dimmed));
 			background-clip: text;
 			color: transparent;
 		}
+	}
+
+	/* With a mouse, the script draws the alias's dots on canvases instead, so the pointer
+	   can push them around (scripts/wordmark-dots.ts). It reads --glow and --dim above,
+	   and while it places the dots again after a resize, the filter's dots stand in. */
+	&[data-dots] .wordmark-alias::before {
+		visibility: hidden;
+	}
+
+	&:not([data-dots]) .wordmark-dots {
+		display: none;
+	}
+
+	.wordmark-dots {
+		position: absolute;
+		pointer-events: none;
 	}
 }
 
