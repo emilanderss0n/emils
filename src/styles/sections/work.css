@@ -365,7 +365,7 @@
 
 	/* The rest face rolls away while the row is lit, and also while the script moves it
 	   to the other edge out of sight (data-snap), without a roll. At rest it has no
-	   transform, so its text renders like the rest of the page. */
+	   transform. */
 	@media (prefers-reduced-motion: no-preference) {
 		@media (hover: hover) {
 			&:hover > .more-face-rest {
@@ -401,6 +401,13 @@
 	color: color-mix(in oklab, var(--other-body) calc(var(--lit) * 100%), var(--body));
 	backface-visibility: hidden;
 	transition: transform var(--roll) var(--ease-out), opacity 300ms var(--ease-out);
+
+	/* Chrome draws the text of a face whose transform is moving most of a pixel lower
+	   than a still one's, so the text would drop as each roll began and jump back up as
+	   it ended. will-change has it draw both faces the moving way all the time. */
+	@media (prefers-reduced-motion: no-preference) {
+		will-change: transform;
+	}
 
 	@media (max-width: 47.5rem) {
 		grid-template-areas: "index name meta" ". text text";
