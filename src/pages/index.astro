@@ -26,8 +26,9 @@ const stats = [
   { label: 'Versions shipped on GitHub', figure: String(github.releases), unit: 'releases' },
   { label: 'Open source on GitHub', figure: String(github.repos), unit: 'repos' },
 ];
-// Each row links to its GitHub repo, read from GitHub at build time; `href` here is
-// only a fallback for when GitHub can't be reached.
+// A row with a `repo` links to that GitHub repo, read from GitHub at build time, and its
+// `href` is only a fallback for when GitHub can't be reached. A row without one (a site
+// that isn't on GitHub) links to its `href`.
 const featuredProjects = [
   {
     repo: featured.nhlplay,
@@ -46,19 +47,18 @@ const featuredProjects = [
     href: 'https://github.com/emilanderss0n/MoxoCraft',
   },
   {
-    repo: featured.menuOverhaul,
-    title: 'Menu Overhaul',
-    tags: ['Game mod', 'UI Design'],
-    text: 'A full redesign of the menus in Escape from Tarkov. Every screen gets a new look and feel, from the main menu to the character and trader screens.',
-    specs: [['Stack', 'C#, Unity'], ['Tools', 'Photoshop, Visual Studio']],
-    href: 'https://github.com/emilanderss0n/SPT-Menu-Overhaul',
+    title: 'Skattkistan',
+    tags: ['Online store', 'Web Design'],
+    text: 'A trading card store from Sweden. Pokémon booster packs, accessories and other collectibles, for collectors, tournament players and anyone looking for a gift.',
+    specs: [['Platform', 'Shopify'], ['Market', 'Sweden']],
+    href: 'https://skattkistan.net/',
   },
-] satisfies (Omit<ComponentProps<typeof ProjectRow>, 'index'> & { repo: string })[];
+] satisfies (Omit<ComponentProps<typeof ProjectRow>, 'index'> & { repo?: string })[];
 
 const projects = await Promise.all(
   featuredProjects.map(async ({ repo, ...project }) => {
-    const info = await getRepoInfo(repo);
-    return { ...project, href: info.url ?? project.href };
+    const info = repo ? await getRepoInfo(repo) : undefined;
+    return { ...project, href: info?.url ?? project.href };
   }),
 );
 

@@ -10,7 +10,6 @@ export const githubProfile = 'https://github.com/emilanderss0n';
 export const featured = {
   nhlplay: '1066127097', // nhlplay-feedback
   moxoCraft: '1423751520', // MoxoCraft
-  menuOverhaul: '870966768', // SPT-Menu-Overhaul
 };
 
 /** Minor or inactive repos kept off the site. */
@@ -28,6 +27,12 @@ const hidden = [
   '1247871000', // spt-hideout-shootout
   '805177682', // WarHeads
 ];
+
+/** Names to show instead of a repo's GitHub name. */
+export const renamed: Record<string, string> = {
+  '870966768': 'SPT Menu Overhaul', // SPT-Menu-Overhaul
+  '893597914': 'Tarkynator', // tarkynator
+};
 
 /** All public repos, used for the repo count. */
 export const getRepos = () => getCollection('repos');

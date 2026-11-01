@@ -1,5 +1,5 @@
 // The "More projects" list: GitHub repos and CodePen pens as one kind of row.
-import { getMoreRepos } from '@lib/github';
+import { getMoreRepos, renamed } from '@lib/github';
 import { getPens } from '@lib/codepen';
 
 export interface MoreItem {
@@ -33,8 +33,8 @@ function mix<T>(a: T[], b: T[]): T[] {
 }
 
 export async function getMoreItems(): Promise<MoreItem[]> {
-  const repos = (await getMoreRepos()).map(({ data }) => ({
-    name: data.name,
+  const repos = (await getMoreRepos()).map(({ id, data }) => ({
+    name: renamed[id] ?? data.name,
     text: data.description,
     href: data.url,
     // A repo with no language GitHub can name is filed under "Misc".
