@@ -15,7 +15,7 @@
     "pushedAt": "2026-08-15T07:26:05Z",
     "createdAt": "2024-10-11T02:15:53Z",
     "releases": 17,
-    "downloads": 130864
+    "downloads": 130990
   },
   {
     "name": "tarkynator",
@@ -67,25 +67,7 @@
     "pushedAt": "2025-04-23T03:12:51Z",
     "createdAt": "2024-05-31T13:53:22Z",
     "releases": 10,
-    "downloads": 128913
-  },
-  {
-    "name": "TGC",
-    "fullName": "emilanderss0n/TGC",
-    "description": "Tactical Gear Component mod for SPT",
-    "url": "https://github.com/emilanderss0n/TGC",
-    "homepage": "",
-    "stars": 1,
-    "language": "TypeScript",
-    "topics": [
-      "game-development",
-      "game-mod"
-    ],
-    "category": "game-development",
-    "pushedAt": "2025-12-12T14:11:26Z",
-    "createdAt": "2024-05-27T14:49:32Z",
-    "releases": 21,
-    "downloads": 226418
+    "downloads": 128915
   },
   {
     "name": "nhlplay-feedback",
@@ -106,183 +88,22 @@
     "downloads": 0
   },
   {
-    "name": "emils",
-    "fullName": "emilanderss0n/emils",
-    "description": "Main portfolio website for MoxoPixel / Emil Andersson",
-    "url": "https://github.com/emilanderss0n/emils",
-    "homepage": "https://emilandersson.com/",
-    "stars": 0,
-    "language": "CSS",
-    "topics": [
-      "website"
-    ],
-    "category": "web-development",
-    "pushedAt": "2026-10-08T20:08:25Z",
-    "createdAt": "2025-03-15T02:30:20Z",
-    "releases": 0,
-    "downloads": 0
-  },
-  {
-    "name": "spt-hideout-shootout",
-    "fullName": "emilanderss0n/spt-hideout-shootout",
-    "description": "Mod for SPT to enable player to draw weapon in hideout",
-    "url": "https://github.com/emilanderss0n/spt-hideout-shootout",
+    "name": "TGC",
+    "fullName": "emilanderss0n/TGC",
+    "description": "Tactical Gear Component mod for SPT",
+    "url": "https://github.com/emilanderss0n/TGC",
     "homepage": "",
-    "stars": 0,
-    "language": "C#",
-    "topics": [
-      "game-development",
-      "game-mod"
-    ],
-    "category": "game-development",
-    "pushedAt": "2026-08-15T23:15:01Z",
-    "createdAt": "2026-05-23T22:28:01Z",
-    "releases": 2,
-    "downloads": 4412
-  },
-  {
-    "name": "dashxe-vscode-theme",
-    "fullName": "emilanderss0n/dashxe-vscode-theme",
-    "description": "Visual Studio Code theme with a colorful, dark, balanced contrast",
-    "url": "https://github.com/emilanderss0n/dashxe-vscode-theme",
-    "homepage": "",
-    "stars": 0,
-    "language": "N/A",
-    "topics": [
-      "app-development",
-      "theme"
-    ],
-    "category": "other",
-    "pushedAt": "2022-08-09T18:06:29Z",
-    "createdAt": "2022-08-08T21:03:54Z",
-    "releases": 0,
-    "downloads": 0
-  },
-  {
-    "name": "Actual-Sick-SICC",
-    "fullName": "emilanderss0n/Actual-Sick-SICC",
-    "description": "Mod which adds more items to fit into SICC case in SPT",
-    "url": "https://github.com/emilanderss0n/Actual-Sick-SICC",
-    "homepage": "",
-    "stars": 0,
+    "stars": 1,
     "language": "TypeScript",
     "topics": [
       "game-development",
       "game-mod"
     ],
     "category": "game-development",
-    "pushedAt": "2024-07-13T02:47:00Z",
-    "createdAt": "2024-05-30T23:48:15Z",
-    "releases": 2,
-    "downloads": 10764
-  },
-  {
-    "name": "WarHeads",
-    "fullName": "emilanderss0n/WarHeads",
-    "description": "Mod which adds new head models for SPT",
-    "url": "https://github.com/emilanderss0n/WarHeads",
-    "homepage": "",
-    "stars": 0,
-    "language": "TypeScript",
-    "topics": [
-      "game-development",
-      "game-mod"
-    ],
-    "category": "game-development",
-    "pushedAt": "2024-11-26T19:13:19Z",
-    "createdAt": "2024-05-24T03:24:39Z",
-    "releases": 4,
-    "downloads": 9526
-  },
-  {
-    "name": "SandCore",
-    "fullName": "emilanderss0n/SandCore",
-    "description": "New FDE variants of weapon mods and new weapon variants/skins (SPT Mod)",
-    "url": "https://github.com/emilanderss0n/SandCore",
-    "homepage": "",
-    "stars": 0,
-    "language": "TypeScript",
-    "topics": [
-      "game-development",
-      "game-mod"
-    ],
-    "category": "game-development",
-    "pushedAt": "2025-02-12T18:50:10Z",
-    "createdAt": "2024-07-18T09:53:25Z",
-    "releases": 2,
-    "downloads": 26173
-  },
-  {
-    "name": "GreenCore",
-    "fullName": "emilanderss0n/GreenCore",
-    "description": "New green variants of weapon mods and new green weapon variants/skins (SPT Mod)",
-    "url": "https://github.com/emilanderss0n/GreenCore",
-    "homepage": "",
-    "stars": 0,
-    "language": "TypeScript",
-    "topics": [
-      "game-development",
-      "game-mod"
-    ],
-    "category": "game-development",
-    "pushedAt": "2025-03-14T20:55:30Z",
-    "createdAt": "2024-07-21T20:12:40Z",
-    "releases": 2,
-    "downloads": 17712
-  },
-  {
-    "name": "WhiteCore",
-    "fullName": "emilanderss0n/WhiteCore",
-    "description": "New white variants of weapon mods and new white weapon skins (SPT Mod)",
-    "url": "https://github.com/emilanderss0n/WhiteCore",
-    "homepage": "",
-    "stars": 0,
-    "language": "TypeScript",
-    "topics": [
-      "game-development",
-      "game-mod"
-    ],
-    "category": "game-development",
-    "pushedAt": "2025-03-14T20:57:31Z",
-    "createdAt": "2024-07-21T20:04:20Z",
-    "releases": 2,
-    "downloads": 18896
-  },
-  {
-    "name": "MagTape",
-    "fullName": "emilanderss0n/MagTape",
-    "description": "Add magazines with tape on them for easier tagging and easier to spot on the ground (SPT Mod)",
-    "url": "https://github.com/emilanderss0n/MagTape",
-    "homepage": "",
-    "stars": 0,
-    "language": "TypeScript",
-    "topics": [
-      "game-development",
-      "game-mod"
-    ],
-    "category": "game-development",
-    "pushedAt": "2025-04-18T16:33:10Z",
-    "createdAt": "2024-05-31T13:46:12Z",
-    "releases": 4,
-    "downloads": 69463
-  },
-  {
-    "name": "TMS",
-    "fullName": "emilanderss0n/TMS",
-    "description": "Mod for SPT. This is an AIO with one config file. It extends functions not available in SVM.",
-    "url": "https://github.com/emilanderss0n/TMS",
-    "homepage": "",
-    "stars": 0,
-    "language": "TypeScript",
-    "topics": [
-      "game-development",
-      "game-mod"
-    ],
-    "category": "game-development",
-    "pushedAt": "2025-04-26T16:44:12Z",
-    "createdAt": "2024-07-13T02:49:21Z",
-    "releases": 8,
-    "downloads": 12970
+    "pushedAt": "2025-12-12T14:11:26Z",
+    "createdAt": "2024-05-27T14:49:32Z",
+    "releases": 21,
+    "downloads": 226418
   },
   {
     "name": "AdvancedModdingLights",
@@ -320,6 +141,78 @@
     "downloads": 2
   },
   {
+    "name": "spt-hideout-shootout",
+    "fullName": "emilanderss0n/spt-hideout-shootout",
+    "description": "Mod for SPT to enable player to draw weapon in hideout",
+    "url": "https://github.com/emilanderss0n/spt-hideout-shootout",
+    "homepage": "",
+    "stars": 0,
+    "language": "C#",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2026-08-15T23:15:01Z",
+    "createdAt": "2026-05-23T22:28:01Z",
+    "releases": 2,
+    "downloads": 4425
+  },
+  {
+    "name": "dashxe-vscode-theme",
+    "fullName": "emilanderss0n/dashxe-vscode-theme",
+    "description": "Visual Studio Code theme with a colorful, dark, balanced contrast",
+    "url": "https://github.com/emilanderss0n/dashxe-vscode-theme",
+    "homepage": "",
+    "stars": 0,
+    "language": "N/A",
+    "topics": [
+      "app-development",
+      "theme"
+    ],
+    "category": "other",
+    "pushedAt": "2022-08-09T18:06:29Z",
+    "createdAt": "2022-08-08T21:03:54Z",
+    "releases": 0,
+    "downloads": 0
+  },
+  {
+    "name": "WarHeads",
+    "fullName": "emilanderss0n/WarHeads",
+    "description": "Mod which adds new head models for SPT",
+    "url": "https://github.com/emilanderss0n/WarHeads",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2024-11-26T19:13:19Z",
+    "createdAt": "2024-05-24T03:24:39Z",
+    "releases": 4,
+    "downloads": 9526
+  },
+  {
+    "name": "Actual-Sick-SICC",
+    "fullName": "emilanderss0n/Actual-Sick-SICC",
+    "description": "Mod which adds more items to fit into SICC case in SPT",
+    "url": "https://github.com/emilanderss0n/Actual-Sick-SICC",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2024-07-13T02:47:00Z",
+    "createdAt": "2024-05-30T23:48:15Z",
+    "releases": 2,
+    "downloads": 10764
+  },
+  {
     "name": "Painter",
     "fullName": "emilanderss0n/Painter",
     "description": "Painter is a trader who sells unique weapon mods and painted weapons",
@@ -335,6 +228,113 @@
     "pushedAt": "2025-12-12T14:11:10Z",
     "createdAt": "2024-05-31T13:17:15Z",
     "releases": 15,
-    "downloads": 215615
+    "downloads": 215617
+  },
+  {
+    "name": "MagTape",
+    "fullName": "emilanderss0n/MagTape",
+    "description": "Add magazines with tape on them for easier tagging and easier to spot on the ground (SPT Mod)",
+    "url": "https://github.com/emilanderss0n/MagTape",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-04-18T16:33:10Z",
+    "createdAt": "2024-05-31T13:46:12Z",
+    "releases": 4,
+    "downloads": 69463
+  },
+  {
+    "name": "TMS",
+    "fullName": "emilanderss0n/TMS",
+    "description": "Mod for SPT. This is an AIO with one config file. It extends functions not available in SVM.",
+    "url": "https://github.com/emilanderss0n/TMS",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-04-26T16:44:12Z",
+    "createdAt": "2024-07-13T02:49:21Z",
+    "releases": 8,
+    "downloads": 12972
+  },
+  {
+    "name": "SandCore",
+    "fullName": "emilanderss0n/SandCore",
+    "description": "New FDE variants of weapon mods and new weapon variants/skins (SPT Mod)",
+    "url": "https://github.com/emilanderss0n/SandCore",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-02-12T18:50:10Z",
+    "createdAt": "2024-07-18T09:53:25Z",
+    "releases": 2,
+    "downloads": 26173
+  },
+  {
+    "name": "WhiteCore",
+    "fullName": "emilanderss0n/WhiteCore",
+    "description": "New white variants of weapon mods and new white weapon skins (SPT Mod)",
+    "url": "https://github.com/emilanderss0n/WhiteCore",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-03-14T20:57:31Z",
+    "createdAt": "2024-07-21T20:04:20Z",
+    "releases": 2,
+    "downloads": 18896
+  },
+  {
+    "name": "GreenCore",
+    "fullName": "emilanderss0n/GreenCore",
+    "description": "New green variants of weapon mods and new green weapon variants/skins (SPT Mod)",
+    "url": "https://github.com/emilanderss0n/GreenCore",
+    "homepage": "",
+    "stars": 0,
+    "language": "TypeScript",
+    "topics": [
+      "game-development",
+      "game-mod"
+    ],
+    "category": "game-development",
+    "pushedAt": "2025-03-14T20:55:30Z",
+    "createdAt": "2024-07-21T20:12:40Z",
+    "releases": 2,
+    "downloads": 17712
+  },
+  {
+    "name": "emils",
+    "fullName": "emilanderss0n/emils",
+    "description": "Main portfolio website for MoxoPixel / Emil Andersson",
+    "url": "https://github.com/emilanderss0n/emils",
+    "homepage": "https://emilandersson.com/",
+    "stars": 0,
+    "language": "CSS",
+    "topics": [
+      "website"
+    ],
+    "category": "web-development",
+    "pushedAt": "2026-11-01T02:02:06Z",
+    "createdAt": "2025-03-15T02:30:20Z",
+    "releases": 0,
+    "downloads": 0
   }
 ]
