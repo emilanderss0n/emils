@@ -16,7 +16,7 @@ const github = await getGithubStats();
 const moreItems = await getMoreItems();
 
 // All figures update on each build. Years count from 2009, when I started my first
-// agency; the rest comes from GitHub (see the repos loader in content/config.ts).
+// agency; the rest comes from GitHub (see the repos loader in content.config.ts).
 // Big numbers round down to a stable "870K" instead of changing with every download.
 const roundDown = (n: number) =>
   n >= 10_000 ? `${Math.floor(n / 10_000) * 10}K` : n >= 1_000 ? `${Math.floor(n / 1_000)}K` : String(n);

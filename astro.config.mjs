@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 import sitemap from '@astrojs/sitemap';
+import { unified } from '@astrojs/markdown-remark';
 
 // Links in Markdown posts that point to other sites open in a new tab.
 function externalLinksInNewTab() {
@@ -25,8 +26,9 @@ export default defineConfig({
     defaultStrategy: 'viewport',
   },
 
+  // Astro 7 renders Markdown with Sätteri by default; rehype plugins need the unified processor.
   markdown: {
-    rehypePlugins: [externalLinksInNewTab],
+    processor: unified({ rehypePlugins: [externalLinksInNewTab] }),
   },
 
   // The old /about page now lives as a section on the home page.
