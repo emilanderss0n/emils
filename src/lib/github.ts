@@ -9,7 +9,7 @@ export const githubProfile = 'https://github.com/emilanderss0n';
 /** Repos that already have a featured row above the list. */
 export const featured = {
   nhlplay: '1066127097', // nhlplay-feedback
-  tarkynator: '893597914', // tarkynator
+  moxoCraft: '1423751520', // MoxoCraft
   menuOverhaul: '870966768', // SPT-Menu-Overhaul
 };
 
