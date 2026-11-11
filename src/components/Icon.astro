@@ -1,7 +1,7 @@
 ---
 // Icon.astro — Lucide icons (https://lucide.dev/icons/), sized to the surrounding text (.icon).
 // Add an icon by importing it from @lucide/astro and giving it a name here.
-import { ArrowDown, ArrowRight, ArrowUpRight, Box, Clapperboard, CodeXml, PenTool } from '@lucide/astro';
+import { ArrowDown, ArrowRight, ArrowUpRight, Box, Clapperboard, CodeXml, PenTool, Play } from '@lucide/astro';
 
 const icons = {
   'arrow-right': ArrowRight,
@@ -11,6 +11,7 @@ const icons = {
   code: CodeXml,
   box: Box,
   clapperboard: Clapperboard,
+  play: Play,
 } as const;
 
 export type IconName = keyof typeof icons;

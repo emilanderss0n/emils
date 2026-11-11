@@ -269,6 +269,10 @@
 	color: color-mix(in oklab, var(--bg) calc(var(--on) * 100%), var(--heading));
 	transition: background-color 300ms var(--ease-out), color 300ms var(--ease-out), opacity 300ms var(--ease-out);
 
+	&.project-arrow-play .icon {
+		rotate: none;
+	}
+
 	.icon {
 		rotate: calc(var(--on) * 45deg);
 		transition: rotate 300ms var(--ease-out);

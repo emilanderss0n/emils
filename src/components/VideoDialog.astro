@@ -1,0 +1,16 @@
+---
+// VideoDialog.astro: the one dialog that plays a project's video. A page includes it
+// once; any link with a data-video attribute opens it (scripts/video-dialog.ts), which
+// fills in the title, the project link and the player. The player's frame starts empty,
+// so nothing loads from YouTube until a video is opened.
+import Icon from '@components/Icon.astro';
+---
+
+<dialog class="video-dialog" closedby="any" aria-labelledby="video-dialog-title" data-lenis-prevent>
+  <div class="video-dialog-head">
+    <h2 class="video-dialog-title" id="video-dialog-title"></h2>
+    <a class="link video-dialog-link" target="_blank" rel="noopener">View project<Icon name="external" /></a>
+    <button class="button button-secondary button-small video-dialog-close" type="button" autofocus>Close</button>
+  </div>
+  <div class="video-dialog-frame"></div>
+</dialog>

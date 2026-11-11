@@ -2,6 +2,10 @@
 // ProjectRow.astro — featured project as a large row in the .projects list.
 // The whole row links to the project: its GitHub repo, or its site when it isn't on
 // GitHub. On the right: the tags as the first spec, then the specs.
+// A row with a `video` (a YouTube video id) plays that video in the page's video dialog
+// when clicked (components/VideoDialog.astro), and the dialog carries the project link.
+// The row is still a link to the project, so it opens in a new tab as usual with
+// Ctrl/Cmd-click or a middle click, and when scripts are off.
 import Icon from '@components/Icon.astro';
 
 interface Props {
@@ -11,17 +15,18 @@ interface Props {
   text: string;
   specs: [label: string, value: string][];
   href: string;
+  video?: string;
 }
 
-const { index, title, tags, text, specs, href } = Astro.props;
+const { index, title, tags, text, specs, href, video } = Astro.props;
 ---
 
 <li class="project" data-glow data-reveal="contents">
   <span class="project-index">{index}</span>
   <div class="project-main">
     <h3 class="project-title">
-      <a class="project-link" href={href} target="_blank" rel="noopener">
-        <span class="visually-hidden">{title}</span>
+      <a class="project-link" href={href} target="_blank" rel="noopener" data-video={video} data-video-title={video && title} aria-haspopup={video && 'dialog'}>
+        <span class="visually-hidden">{title}{video && ', watch the video'}</span>
         <span class="project-name scramble" data-scramble-trigger="reveal" aria-hidden="true"><span class="scramble-seg" data-text={title}>{title}</span></span>
       </a>
     </h3>
@@ -33,5 +38,5 @@ const { index, title, tags, text, specs, href } = Astro.props;
       {specs.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
     </dl>
   </div>
-  <span class="project-arrow" aria-hidden="true"><Icon name="external" /></span>
+  <span class:list={['project-arrow', video && 'project-arrow-play']} aria-hidden="true"><Icon name={video ? 'play' : 'external'} /></span>
 </li>

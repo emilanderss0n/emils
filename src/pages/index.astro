@@ -4,6 +4,7 @@ import type { ComponentProps } from 'astro/types';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Icon from '@components/Icon.astro';
 import ProjectRow from '@components/ProjectRow.astro';
+import VideoDialog from '@components/VideoDialog.astro';
 import MoreItem from '@components/MoreItem.astro';
 import ServiceStage, { type StageState } from '@components/ServiceStage.astro';
 import { featured, getGithubStats, getRepoInfo, githubProfile } from '@lib/github';
@@ -28,11 +29,13 @@ const stats = [
 ];
 // A row with a `repo` links to that GitHub repo, read from GitHub at build time, and its
 // `href` is only a fallback for when GitHub can't be reached. A row without one (a site
-// that isn't on GitHub) links to its `href`.
+// that isn't on GitHub) links to its `href`. A row with a `video` (a YouTube video id)
+// plays that video in a dialog when clicked, with the link inside the dialog.
 const featuredProjects = [
   {
     repo: featured.nhlplay,
     title: 'NHLPLAY',
+    video: 'zr6i63PVHe4',
     tags: ['Web app', 'UI Design'],
     text: 'For hockey fans who want more than box scores. Follow games live, dig into player stats, track your favourite players and build your dream lineup with drag and drop.',
     specs: [['Stack', 'PHP, JavaScript, CSS'], ['Data', 'NHL API']],
@@ -119,6 +122,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <ol class="projects frame" role="list">
       {projects.map((project, i) => <ProjectRow index={pad(i + 1)} {...project} />)}
     </ol>
+    {projects.some((project) => project.video) && <VideoDialog />}
 
     {moreItems.length > 0 && (
       <div class="more">
@@ -192,11 +196,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
   import { initPointerGlow } from '@scripts/pointer-glow';
   import { initServicesStage } from '@scripts/services-stage';
   import { initMoreRoll } from '@scripts/more-roll';
+  import { initVideoDialog } from '@scripts/video-dialog';
 
   // The hero's tile field brings in Three.js, so it loads on its own after the page shows.
   void import('@scripts/hero-wave').then(({ initHeroWave }) => initHeroWave());
   initPointerGlow();
   initMoreRoll();
+  initVideoDialog();
   initServicesStage();
   // Wait for web fonts so the reserved space matches the final text. The headline
   // starts the hero's intro; the chip, intro text and labels follow on their delays.
