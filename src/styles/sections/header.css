@@ -8,17 +8,6 @@
 	pointer-events: none;
 	transition: padding-top 300ms var(--ease-out);
 
-	/* Sitting on the light hero: force light colours until the bar condenses, with the
-	   hero's darker text in dark mode, where the hero shows dimmer. */
-	&[data-over-hero]:not([data-condensed]) {
-		color-scheme: light;
-
-		@media (prefers-color-scheme: dark) {
-			--body: var(--hero-dim-body);
-			--muted: var(--hero-dim-muted);
-		}
-	}
-
 	&[data-condensed] {
 		padding-top: 0.75rem;
 

@@ -9,8 +9,6 @@ interface Props {
   description?: string;
   ogImage?: string;
   ogType?: 'website' | 'article';
-  /** True when the page opens with the light hero (the header adapts to it). */
-  overHero?: boolean;
 }
 
 const {
@@ -18,7 +16,6 @@ const {
   description = 'Emil Andersson (Moxo) is a UI designer, web developer, 3D artist and video editor in Tranås, Sweden, making web apps, tools and game mods.',
   ogImage = '/og/default.png',
   ogType = 'website',
-  overHero = false,
 } = Astro.props;
 
 const siteName = 'Emil / Moxo';
@@ -63,7 +60,7 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" />
   </head>
   <body>
-    <SiteHeader overHero={overHero} />
+    <SiteHeader />
     <main id="top">
       <slot />
     </main>

@@ -1,5 +1,6 @@
-// Hero background: a top-down field of light tiles that ripple where the pointer goes,
-// with soft shadows between the steps. Each tile is the top of a tall box that rises and
+// Hero background: a top-down field of tiles that ripple where the pointer goes, with
+// soft shadows between the steps: light tiles in light mode, dark ones in dark mode
+// (LOOKS). Each tile is the top of a tall box that rises and
 // sinks with rings spreading from the pointer's trail; left alone, a soft ring starts
 // now and then. The camera leans a little toward the pointer. Rendering pauses when the
 // hero is off screen or the tab is hidden; reduced motion draws one frame.
@@ -10,9 +11,13 @@ import {
   AmbientLight,
   BoxGeometry,
   Color,
+  DepthTexture,
   DirectionalLight,
+  HalfFloatType,
   InstancedBufferAttribute,
   InstancedMesh,
+  LessEqualCompare,
+  LinearFilter,
   MeshDepthMaterial,
   MeshPhongMaterial,
   Object3D,
@@ -22,8 +27,10 @@ import {
   RGBADepthPacking,
   Raycaster,
   Scene,
+  ShaderChunk,
   Vector2,
   Vector3,
+  WebGLRenderTarget,
   WebGLRenderer,
   type IUniform,
 } from 'three';
@@ -45,8 +52,24 @@ const TRAIL = 64;
 // how high the tiles go, how much each tile's sampling spot is shifted, and how long a
 // ring takes to fade (s).
 const WAVE = { speed: 6, freq: 1.2, width: 3, amp: 0.4, max: 0.4, jitter: 0.2, fade: 2 };
-// Raised tiles take on the accent's teal, a step lighter so it reads on light tiles.
-const CREST = '#00a383';
+// One look per colour scheme: the tiles' colour, the colour raised tiles take on (the
+// accent's hue), how high a tile has to rise before it starts to (0 to 1 of the full
+// height) and how much of that colour it gives off as its own light, the three lights'
+// strengths, how dark the shadows are (0 to 1), the exposure, and how far the edges of the
+// picture darken. On dark tiles
+// the colour shows much sooner than on white ones, so there it starts higher up and
+// only the pointer's own ripples reach it.
+type Look = { tile: string; crest: string; from: number; glow: number; ambient: number; key: number; fill: number; shadow: number; exposure: number; edge: number };
+const LOOKS: { light: Look; dark: Look } = {
+  light: { tile: '#ffffff', crest: '#00a383', from: 0, glow: 0, ambient: 0.5, key: 4, fill: 1, shadow: 1, exposure: 1.95, edge: 0.5 },
+  dark: { tile: '#26272b', crest: '#2d6156', from: 0.45, glow: 0.08, ambient: 0.2, key: 6, fill: 0.3, shadow: 0.5, exposure: 1.95, edge: 0.7 },
+};
+// Shadows: how wide their soft edge is (scene units), and how many texels of the shadow
+// map that edge spans (an even number; phones take the smaller one). The map's size
+// follows from the two, so the edge is as soft on a phone as on a wide screen.
+const SHADOW = { soft: 0.18, texels: 6, texelsSmall: 4 };
+// How many samples per pixel smooth the tiles' edges.
+const SAMPLES = 4;
 
 type Shader = { uniforms: Record<string, IUniform>; vertexShader: string; fragmentShader: string };
 
@@ -57,12 +80,11 @@ export function initHeroWave(): void {
 
   let renderer: WebGLRenderer;
   try {
-    renderer = new WebGLRenderer({ canvas, antialias: true });
+    renderer = new WebGLRenderer({ canvas });
   } catch {
     return; // No WebGL2: the hero keeps its plain background.
   }
   renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.95;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = PCFShadowMap;
 
@@ -70,17 +92,17 @@ export function initHeroWave(): void {
   const small = window.matchMedia('(pointer: coarse)').matches;
 
   const scene = new Scene();
-  scene.background = new Color('#ffffff').multiplyScalar(0.5);
+  const backdrop = new Color();
+  scene.background = backdrop;
   const camera = new PerspectiveCamera(FOV, 1, 0.1, 200);
   camera.up.set(0, 0, -1);
 
   // A low key light from the left casts the soft shadows; a fill light lifts the far sides.
-  scene.add(new AmbientLight(0xffffff, 0.5));
+  const ambient = new AmbientLight(0xffffff, 0.5);
+  scene.add(ambient);
   const key = new DirectionalLight(0xffffff, 4);
   key.position.set(-20, 10, 6);
   key.castShadow = true;
-  key.shadow.mapSize.set(small ? 1024 : 2048, small ? 1024 : 2048);
-  key.shadow.radius = 6;
   key.shadow.bias = 0.0001;
   key.shadow.camera.near = 0.1;
   key.shadow.camera.far = 80;
@@ -96,11 +118,47 @@ export function initHeroWave(): void {
     uTrail: { value: trail },
     uTrailCount: { value: 0 },
     uTime: { value: 0 },
+    uCrest: { value: new Color() },
+    uCrestFrom: { value: 0 },
+    uGlow: { value: 0 },
+  };
+
+  // three.js softens a shadow's edge by testing 17 spread-out points of the shadow map,
+  // which leaves the edge in visible steps. This tests every texel under a box instead,
+  // each counted by how much of it the box covers, so the edge is one even ramp. The
+  // map's depth texture compares and blends four texels per read, so a box of 6 by 6
+  // texels takes 16 reads. If three.js's shader no longer has the part this replaces,
+  // its own filter stays.
+  const texels = small ? SHADOW.texelsSmall : SHADOW.texels;
+  const shadowDepth: IUniform = { value: null };
+  const soften = (chunk: string) => {
+    const from = chunk.indexOf('#if defined( SHADOWMAP_TYPE_PCF )');
+    const to = chunk.indexOf('#elif defined( SHADOWMAP_TYPE_PCF_SOFT )');
+    if (from < 0 || to < from) return chunk;
+    return `uniform sampler2DShadow uShadowDepth;
+      ${chunk.slice(0, from)}#if defined( SHADOWMAP_TYPE_PCF )
+        vec2 spot = shadowCoord.xy * shadowMapSize;
+        vec2 part = fract( spot );
+        vec2 first = floor( spot ) - ${(texels / 2).toFixed(1)} + 0.5;
+        float sum = 0.0;
+        for ( int i = 0; i <= ${texels / 2}; i ++ ) {
+          // Texels are read in pairs: the first pair starts with the partly covered texel,
+          // and the last read is the partly covered texel at the far end, on its own.
+          float wx = i == 0 ? 2.0 - part.x : i == ${texels / 2} ? part.x : 2.0;
+          float x = first.x + float( 2 * i ) + ( i == ${texels / 2} ? 0.0 : 1.0 / wx );
+          for ( int j = 0; j <= ${texels / 2}; j ++ ) {
+            float wy = j == 0 ? 2.0 - part.y : j == ${texels / 2} ? part.y : 2.0;
+            float y = first.y + float( 2 * j ) + ( j == ${texels / 2} ? 0.0 : 1.0 / wy );
+            sum += wx * wy * texture( uShadowDepth, vec3( vec2( x, y ) / shadowMapSize, shadowCoord.z ) );
+          }
+        }
+        shadow = sum / ${(texels * texels).toFixed(1)};
+      ${chunk.slice(to)}`;
   };
 
   // Moves the tops of the boxes, in both the colour pass and the shadow pass.
   const lift = (shader: Shader) => {
-    Object.assign(shader.uniforms, shared, { uCrest: { value: new Color(CREST) } });
+    Object.assign(shader.uniforms, shared);
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', `#include <common>
         attribute vec2 aOffset;
@@ -136,16 +194,23 @@ export function initHeroWave(): void {
           vLift = d;
         }`);
     if (shader.fragmentShader.includes('#include <color_fragment>')) {
+      shader.uniforms.uShadowDepth = shadowDepth;
       shader.fragmentShader = shader.fragmentShader
+        .replace('#include <shadowmap_pars_fragment>', soften(ShaderChunk.shadowmap_pars_fragment))
         .replace('#include <common>', `#include <common>
           varying float vLift;
-          uniform vec3 uCrest;`)
+          uniform vec3 uCrest;
+          uniform float uCrestFrom;
+          uniform float uGlow;`)
         .replace('#include <color_fragment>', `#include <color_fragment>
-          diffuseColor.rgb = mix(diffuseColor.rgb, uCrest, smoothstep(0.0, 1.0, vLift / ${WAVE.max.toFixed(2)}));`);
+          float crest = smoothstep(uCrestFrom, 1.0, vLift / ${WAVE.max.toFixed(2)});
+          diffuseColor.rgb = mix(diffuseColor.rgb, uCrest, crest);`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+          totalEmissiveRadiance += uCrest * crest * uGlow;`);
     }
   };
 
-  const material = new MeshPhongMaterial({ color: 0xffffff });
+  const material = new MeshPhongMaterial();
   material.onBeforeCompile = lift;
   // Shadow maps store depth packed into RGBA; a custom depth material has to match.
   const depth = new MeshDepthMaterial({ depthPacking: RGBADepthPacking });
@@ -188,24 +253,54 @@ export function initHeroWave(): void {
     const reach = (Math.max(cols, rows) * PITCH) / 2 + 2;
     Object.assign(key.shadow.camera, { left: -reach, right: reach, top: reach, bottom: -reach });
     key.shadow.camera.updateProjectionMatrix();
+    // The shadow map, made here instead of by three.js so its depth texture can be read
+    // with the compare-and-blend the soft edge uses.
+    const size = Math.min(2048, Math.round((2 * reach * texels) / SHADOW.soft));
+    const depthTexture = new DepthTexture(size, size);
+    depthTexture.compareFunction = LessEqualCompare;
+    depthTexture.minFilter = LinearFilter;
+    depthTexture.magFilter = LinearFilter;
+    key.shadow.map?.dispose();
+    key.shadow.mapSize.set(size, size);
+    key.shadow.map = new WebGLRenderTarget(size, size, { depthTexture });
+    shadowDepth.value = depthTexture;
   };
 
   // A slight colour split and darkening toward the edges.
   const edges = new ShaderPass({
-    uniforms: { tDiffuse: { value: null } },
+    uniforms: { tDiffuse: { value: null }, uEdge: { value: 0 } },
     vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-    fragmentShader: `uniform sampler2D tDiffuse; varying vec2 vUv;
+    fragmentShader: `uniform sampler2D tDiffuse; uniform float uEdge; varying vec2 vUv;
       void main() {
         float edge = smoothstep(0.3, 0.6, distance(vUv, vec2(0.5)));
         vec2 shift = sign(vUv - 0.5) * 0.005 * edge;
         vec3 c = vec3(texture2D(tDiffuse, vUv + shift).r, texture2D(tDiffuse, vUv).g, texture2D(tDiffuse, vUv - shift).b);
-        gl_FragColor = vec4(c * (1.0 - edge * 0.5), 1.0);
+        gl_FragColor = vec4(c * (1.0 - edge * uEdge), 1.0);
       }`,
   });
-  const composer = new EffectComposer(renderer);
+  // The scene is drawn into the composer's own buffers, not straight onto the canvas, so
+  // antialiasing has to be asked for on those buffers. resize() gives them their size.
+  const composer = new EffectComposer(renderer, new WebGLRenderTarget(1, 1, { type: HalfFloatType, samples: SAMPLES }));
   composer.addPass(new RenderPass(scene, camera));
   composer.addPass(edges);
   composer.addPass(new OutputPass());
+
+  // The look follows the colour scheme, and changes with it while the page is open.
+  const scheme = window.matchMedia('(prefers-color-scheme: dark)');
+  const dress = (look: Look) => {
+    material.color.set(look.tile);
+    backdrop.set(look.tile).multiplyScalar(0.5);
+    shared.uCrest.value.set(look.crest);
+    shared.uCrestFrom.value = look.from;
+    shared.uGlow.value = look.glow;
+    ambient.intensity = look.ambient;
+    key.intensity = look.key;
+    key.shadow.intensity = look.shadow;
+    fill.intensity = look.fill;
+    renderer.toneMappingExposure = look.exposure;
+    edges.uniforms.uEdge.value = look.edge;
+  };
+  dress(scheme.matches ? LOOKS.dark : LOOKS.light);
 
   // The camera sits high enough that a tile is about TILE_PX across, and leans with the pointer.
   let height = 12;
@@ -262,6 +357,10 @@ export function initHeroWave(): void {
   resize();
   render(0);
   canvas.classList.add('is-ready');
+  scheme.addEventListener('change', () => {
+    dress(scheme.matches ? LOOKS.dark : LOOKS.light);
+    render(performance.now() / 1000);
+  });
   new ResizeObserver(() => {
     resize();
     render(performance.now() / 1000);

@@ -1,13 +1,9 @@
-/* The hero is light in both colour schemes: a field of light tiles (scripts/hero-wave.ts)
-   under the page's light-mode colours. Its background is the field's own grey, shown
-   until the field fades in (--fade-in). In dark mode the field shows at --field strength
-   over the dark page, so the hero sits back a little; until the field is in, the grey
-   is mixed with the page the same way, and once it is, the hero's own background turns
-   to the page colour under it. */
+/* The hero's background is a field of tiles (scripts/hero-wave.ts), light in light mode
+   and dark in dark mode. Until the field fades in (--fade-in) the hero shows the
+   field's own resting colour (--hero-bg). */
 .hero {
 	--inset: 0.75rem;
 	--fade-in: 1800ms;
-	--field: 1;
 
 	position: relative;
 	isolation: isolate;
@@ -18,26 +14,11 @@
 	border-radius: var(--radius-xl);
 	background: var(--hero-bg);
 	color: var(--body);
-	color-scheme: light;
-	transition: background-color var(--fade-in) var(--ease-out);
 
 	@media (max-width: 37.5rem) {
 		--inset: 0rem;
 
 		border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-	}
-
-	@media (prefers-color-scheme: dark) {
-		--field: 0.85;
-		--body: var(--hero-dim-body);
-		--muted: var(--hero-dim-muted);
-		--accent: var(--hero-dim-accent);
-
-		background: color-mix(in srgb, var(--hero-bg) calc(var(--field) * 100%), var(--bg-d));
-
-		&:has(.hero-canvas.is-ready) {
-			background: var(--bg-d);
-		}
 	}
 }
 
@@ -51,7 +32,7 @@
 	transition: opacity var(--fade-in) var(--ease-out);
 
 	&.is-ready {
-		opacity: var(--field);
+		opacity: 1;
 	}
 }
 
