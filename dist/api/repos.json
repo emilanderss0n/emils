@@ -1,5 +1,20 @@
 [
   {
+    "name": "MoxoCraft",
+    "fullName": "emilanderss0n/MoxoCraft",
+    "description": "My own suite of plugins for PhotoCraft. Chromatic Aberration, LUTs, Overlay Effects, etc.",
+    "url": "https://github.com/emilanderss0n/MoxoCraft",
+    "homepage": "https://moxopixel.com/",
+    "stars": 7,
+    "language": "Rust",
+    "topics": [],
+    "category": "other",
+    "pushedAt": "2026-11-04T08:08:54Z",
+    "createdAt": "2026-10-17T21:18:47Z",
+    "releases": 7,
+    "downloads": 197
+  },
+  {
     "name": "SPT-Menu-Overhaul",
     "fullName": "emilanderss0n/SPT-Menu-Overhaul",
     "description": "Client mod for SPT (EFT) that overhauls the main menu in the game",
@@ -15,7 +30,7 @@
     "pushedAt": "2026-08-15T07:26:05Z",
     "createdAt": "2024-10-11T02:15:53Z",
     "releases": 17,
-    "downloads": 130990
+    "downloads": 132725
   },
   {
     "name": "tarkynator",
@@ -37,21 +52,6 @@
     "downloads": 0
   },
   {
-    "name": "MoxoCraft",
-    "fullName": "emilanderss0n/MoxoCraft",
-    "description": "My own suite of plugins for PhotoCraft. Chromatic Aberration, LUTs, Overlay Effects, etc.",
-    "url": "https://github.com/emilanderss0n/MoxoCraft",
-    "homepage": "https://moxopixel.com/",
-    "stars": 2,
-    "language": "Rust",
-    "topics": [],
-    "category": "other",
-    "pushedAt": "2026-10-19T15:01:42Z",
-    "createdAt": "2026-10-17T21:18:47Z",
-    "releases": 6,
-    "downloads": 93
-  },
-  {
     "name": "BlackCore",
     "fullName": "emilanderss0n/BlackCore",
     "description": "New variants of weapon mods and new weapon variants/skins (SPT Mod)",
@@ -67,7 +67,7 @@
     "pushedAt": "2025-04-23T03:12:51Z",
     "createdAt": "2024-05-31T13:53:22Z",
     "releases": 10,
-    "downloads": 128915
+    "downloads": 128956
   },
   {
     "name": "nhlplay-feedback",
@@ -82,7 +82,7 @@
       "website"
     ],
     "category": "web-development",
-    "pushedAt": "2025-11-28T21:21:33Z",
+    "pushedAt": "2026-11-11T01:24:02Z",
     "createdAt": "2025-09-29T04:07:48Z",
     "releases": 0,
     "downloads": 0
@@ -103,7 +103,7 @@
     "pushedAt": "2025-12-12T14:11:26Z",
     "createdAt": "2024-05-27T14:49:32Z",
     "releases": 21,
-    "downloads": 226418
+    "downloads": 226467
   },
   {
     "name": "AdvancedModdingLights",
@@ -121,7 +121,7 @@
     "pushedAt": "2025-06-27T19:03:37Z",
     "createdAt": "2025-06-27T18:48:30Z",
     "releases": 1,
-    "downloads": 6765
+    "downloads": 6785
   },
   {
     "name": "MoxoCode",
@@ -156,7 +156,7 @@
     "pushedAt": "2026-08-15T23:15:01Z",
     "createdAt": "2026-05-23T22:28:01Z",
     "releases": 2,
-    "downloads": 4425
+    "downloads": 4561
   },
   {
     "name": "dashxe-vscode-theme",
@@ -192,7 +192,7 @@
     "pushedAt": "2024-11-26T19:13:19Z",
     "createdAt": "2024-05-24T03:24:39Z",
     "releases": 4,
-    "downloads": 9526
+    "downloads": 9532
   },
   {
     "name": "Actual-Sick-SICC",
@@ -210,7 +210,7 @@
     "pushedAt": "2024-07-13T02:47:00Z",
     "createdAt": "2024-05-30T23:48:15Z",
     "releases": 2,
-    "downloads": 10764
+    "downloads": 10766
   },
   {
     "name": "Painter",
@@ -228,7 +228,7 @@
     "pushedAt": "2025-12-12T14:11:10Z",
     "createdAt": "2024-05-31T13:17:15Z",
     "releases": 15,
-    "downloads": 215617
+    "downloads": 215659
   },
   {
     "name": "MagTape",
@@ -246,7 +246,7 @@
     "pushedAt": "2025-04-18T16:33:10Z",
     "createdAt": "2024-05-31T13:46:12Z",
     "releases": 4,
-    "downloads": 69463
+    "downloads": 69481
   },
   {
     "name": "TMS",
@@ -264,7 +264,7 @@
     "pushedAt": "2025-04-26T16:44:12Z",
     "createdAt": "2024-07-13T02:49:21Z",
     "releases": 8,
-    "downloads": 12972
+    "downloads": 12980
   },
   {
     "name": "SandCore",
@@ -282,7 +282,7 @@
     "pushedAt": "2025-02-12T18:50:10Z",
     "createdAt": "2024-07-18T09:53:25Z",
     "releases": 2,
-    "downloads": 26173
+    "downloads": 26188
   },
   {
     "name": "WhiteCore",
@@ -300,7 +300,7 @@
     "pushedAt": "2025-03-14T20:57:31Z",
     "createdAt": "2024-07-21T20:04:20Z",
     "releases": 2,
-    "downloads": 18896
+    "downloads": 18907
   },
   {
     "name": "GreenCore",
@@ -318,7 +318,7 @@
     "pushedAt": "2025-03-14T20:55:30Z",
     "createdAt": "2024-07-21T20:12:40Z",
     "releases": 2,
-    "downloads": 17712
+    "downloads": 17719
   },
   {
     "name": "emils",
@@ -332,7 +332,7 @@
       "website"
     ],
     "category": "web-development",
-    "pushedAt": "2026-11-01T02:02:06Z",
+    "pushedAt": "2026-11-11T01:52:16Z",
     "createdAt": "2025-03-15T02:30:20Z",
     "releases": 0,
     "downloads": 0
