@@ -4,21 +4,16 @@
 // through each craft's own tool: selected and resized on a design canvas (ui), typed into
 // a browser window from its code (web), exploded into a dot-matrix mesh in a 3D viewport
 // (3d) and, as the footage alone, titled on a program monitor over a timeline (video).
-// The monitor holds its own copy of the clip so it always fills the frame. The live copy
-// changes state as the services scroll past (scripts/services-stage.ts, which also plays
-// whichever clip is showing, only while the stage is on screen); the others hold one
-// state each, for phones. Purely decorative, so hidden from assistive tech.
+// The monitor holds its own copy of the clip so it always fills the frame. The page has
+// one stage, and scripts/services-stage.ts changes its state: as the services scroll past
+// on wide screens, on a tap or a swipe on narrower ones. The script also plays whichever
+// clip is showing, only while the stage is on screen. Purely decorative, so hidden from
+// assistive tech.
 import { stageCode } from '@lib/stage-code';
 import { arrowCursor, grabCursor, resizeCursor } from '@lib/pixel-cursor';
 
 export type StageState = 'ui' | 'web' | '3d' | 'video';
 
-interface Props {
-  state?: StageState;
-  live?: boolean;
-}
-
-const { state = 'ui', live = false } = Astro.props;
 const files: [StageState, string][] = [
   ['ui', 'nhlplay.fig'],
   ['web', 'card.html'],
@@ -60,7 +55,7 @@ const ruler = ['00:00', '00:01', '00:02', '00:03'];
 const wave = Array.from({ length: 72 }, (_, i) => 0.2 + 0.8 * Math.abs(Math.sin(i * 0.7) * Math.cos(i * 0.23 + 1)));
 ---
 
-<div class="stage" data-state={state} data-live={live || undefined} style={`--done: ${done}ms`} aria-hidden="true">
+<div class="stage" data-state="ui" style={`--done: ${done}ms`} aria-hidden="true">
   <span class="stage-light"></span>
   <span class="stage-hover"></span>
   <p class="stage-file">{files.map(([key, name], i) => <span data-for={key} style={`--n: ${i}`}>{name}</span>)}</p>

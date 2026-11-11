@@ -1,13 +1,15 @@
-/* Services: "one idea, four crafts". On wide screens the services are a list beside a
-   sticky stage (components/ServiceStage.astro) that shows one small card in the craft of
-   the service crossing the middle of the screen (scripts/services-stage.ts), on the same
-   two columns as the heading and intro above. On smaller screens each service shows its
-   own still of the stage under its text. */
+/* Services: "one idea, four crafts". One stage (components/ServiceStage.astro) shows one
+   small card in the craft of the active service (scripts/services-stage.ts). On wide
+   screens the services are a list beside the sticky stage, on the same two columns as the
+   heading and intro above, and the service crossing the middle of the screen is the active
+   one. On smaller screens the stage sits above the list, a tap on a service makes it the
+   active one, and only the active one shows its text. */
 .services {
+	display: grid;
+	row-gap: clamp(1rem, 4vw, 2rem);
 	margin-top: clamp(3.5rem, 7vw, 6rem);
 
 	@media (min-width: 56.25rem) {
-		display: grid;
 		grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
 		column-gap: clamp(2rem, 6vw, 6rem);
 	}
@@ -15,69 +17,58 @@
 
 .services-list {
 	display: grid;
-	gap: clamp(3rem, 8vw, 4.5rem);
-
-	@media (min-width: 56.25rem) {
-		gap: 0;
-	}
 }
 
 .service {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 0.75rem;
+	position: relative;
+	display: grid;
+	grid-template-columns: 2.25rem minmax(0, 1fr);
+	grid-template-rows: auto 1fr;
+	align-items: baseline;
+	padding-block: 1rem;
+	transition: grid-template-rows 250ms var(--ease-out);
 
 	/* Each service holds the stage for a stretch of scrolling; the ones not active
 	   step back. */
 	@media (min-width: 56.25rem) {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
 		justify-content: center;
+		gap: 0.75rem;
 		min-height: 42svh;
+		padding-block: 0;
 		transition: opacity 400ms var(--ease-out);
+	}
 
-		.services-list[data-live] &:not([data-active]) {
+	& + & {
+		border-top: 1px solid var(--hairline);
+
+		@media (min-width: 56.25rem) {
+			border-top: 0;
+		}
+	}
+
+	.services-list[data-live] &:not([data-active]) {
+		grid-template-rows: auto 0fr;
+
+		@media (min-width: 56.25rem) {
 			opacity: 0.28;
 		}
-
-		.stage {
-			display: none;
-		}
-	}
-
-	/* The stills are taller than the live stage, but capped so a wide phone's still does not
-	   turn into a tower; the card grows with the still past the narrowest phones, and the
-	   resize stays inside at 320px. */
-	.stage {
-		--obj-w: clamp(10rem, 48cqi, 14rem);
-		--grow: 1.22;
-		--w-max: 51;
-		--mon-w: 82cqi;
-		--lift: -2.5rem;
-
-		width: min(100%, 30rem);
-		max-height: 26rem;
-		margin-top: 1rem;
-		aspect-ratio: 4 / 5;
-	}
-
-	.stage-code {
-		inset: auto auto 5% 6%;
-	}
-
-	/* On the smaller stills the selected layer sits higher; keep the hand on it. */
-	.stage-hand {
-		top: 21%;
 	}
 }
 
 /* Numbered like the project rows and the eyebrow's count; the active one's number
    takes the heading colour, as a lit project row's does. */
 .service-index {
-	margin-bottom: clamp(0.25rem, 1vw, 0.75rem);
 	color: var(--muted);
 	font-family: var(--mono);
 	font-size: 0.8125rem;
 	transition: color 400ms var(--ease-out);
+
+	@media (min-width: 56.25rem) {
+		margin-bottom: clamp(0.25rem, 1vw, 0.75rem);
+	}
 
 	.service[data-active] & {
 		color: var(--heading);
@@ -88,18 +79,59 @@
 	font-size: clamp(1.5rem, 2.6vw, 2.5rem);
 	line-height: 1.1;
 	letter-spacing: -0.03em;
+	transition: color 250ms var(--ease-out);
+
+	@media (max-width: 56.1875rem) {
+		.services-list[data-live] .service:not([data-active]) & {
+			color: var(--muted);
+		}
+	}
+}
+
+/* The whole row picks its service where the list is compact. */
+.service-pick {
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	letter-spacing: inherit;
+	text-align: start;
+	cursor: pointer;
+
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+
+		@media (min-width: 56.25rem) {
+			content: none;
+		}
+	}
+}
+
+.service-body {
+	grid-column: 2;
+	align-self: stretch;
+	min-height: 0;
+	overflow: hidden;
 }
 
 .service-text {
 	max-width: calc(40 * var(--ch));
+	padding-top: 0.5rem;
 	font-size: 1rem;
+
+	@media (min-width: 56.25rem) {
+		padding-top: 0;
+	}
 }
 
 .services-stage {
-	display: none;
+	order: -1;
 
 	@media (min-width: 56.25rem) {
-		display: block;
+		order: 0;
 
 		.stage {
 			--stage-h: min(34rem, 70svh);
@@ -127,18 +159,18 @@
 	--hairline: oklch(100% 0 0 / 0.08);
 	--shade: oklch(0% 0 0 / 0.5);
 	--highlight: oklch(100% 0 0 / 0.06);
-	--obj-w: clamp(10rem, 42cqi, 18rem);
-	--grow: 1.3;
-	--w-max: 55;
+	--obj-w: clamp(10rem, 48cqi, 14rem);
+	--grow: 1.22;
+	--w-max: 51;
 	--move: 800ms var(--ease-out);
 	--fade: 400ms var(--ease-out);
 	--dots: radial-gradient(circle, var(--heading) 1.1px, transparent 1.7px) 0 0 / 7px 7px;
 	--win-pad: 0.75rem;
 	--win-bar: 1.625rem;
-	--mon-w: 72cqi;
+	--mon-w: 82cqi;
 	--mon-h: calc(var(--mon-w) * 9 / 16);
 	--mon-r: 0.75rem;
-	--lift: -5cqi;
+	--lift: -2.5rem;
 	--lx: 50%;
 	--ly: 46%;
 	--light: 0;
@@ -147,8 +179,11 @@
 	position: relative;
 	display: grid;
 	place-items: center;
-	aspect-ratio: 1;
+	width: min(100%, 30rem);
+	max-height: 26rem;
+	aspect-ratio: 4 / 5;
 	overflow: hidden;
+	touch-action: pan-y;
 	container-type: inline-size;
 	border: 1px solid var(--hairline);
 	border-radius: var(--radius-xl);
@@ -164,9 +199,15 @@
 	}
 
 	@media (min-width: 56.25rem) {
-		.services-stage & {
-			aspect-ratio: auto;
-		}
+		--obj-w: clamp(10rem, 42cqi, 18rem);
+		--grow: 1.3;
+		--w-max: 55;
+		--mon-w: 72cqi;
+		--lift: -5cqi;
+
+		width: auto;
+		max-height: none;
+		aspect-ratio: auto;
 	}
 
 	&::before {
@@ -709,8 +750,12 @@
 }
 
 .stage-hand {
-	top: 31%;
+	top: 21%;
 	left: 46%;
+
+	@media (min-width: 56.25rem) {
+		top: 31%;
+	}
 
 	@media (prefers-reduced-motion: no-preference) {
 		animation: stage-drag 7s ease-in-out infinite alternate paused;
@@ -721,7 +766,7 @@
    steps over --type, starting at --start), and cleared once the panel is gone. */
 .stage-code {
 	position: absolute;
-	inset: auto auto 8% 6%;
+	inset: auto auto 5% 6%;
 	margin: 0;
 	padding: 0.875rem 1rem;
 	border-radius: var(--radius-md);
@@ -735,6 +780,10 @@
 	transition: opacity var(--fade), translate var(--move);
 
 	counter-reset: line;
+
+	@media (min-width: 56.25rem) {
+		inset: auto auto 8% 6%;
+	}
 
 	.code-line {
 		display: block;
@@ -1097,28 +1146,25 @@
 /* Web Development: built. The code types on beside the card, and the card fills in part
    by part as the line that makes each one lands. */
 .stage[data-state="web"] {
+	/* The phone stage has no room for the window beside the code: the card sits top right
+	   above the code's bottom left, shrunk a little on the narrowest phones. */
 	.stage-object {
-		transform: translate(19cqi, -6cqi);
+		transform: translate(18cqi, -18.5cqi) scale(0.85);
+
+		@container (min-width: 22rem) {
+			transform: translate(22cqi, -18.5cqi);
+		}
+
+		@media (min-width: 56.25rem) {
+			transform: translate(19cqi, -6cqi);
+		}
 	}
 
 	.stage-window {
-		opacity: 1;
 		transition-delay: 200ms;
-	}
 
-	/* The phone still has no room for the window beside the code: the card sits top right
-	   above the code's bottom left, shrunk a little on the narrowest stills. */
-	.service & {
-		.stage-object {
-			transform: translate(18cqi, -18.5cqi) scale(0.85);
-
-			@container (min-width: 22rem) {
-				transform: translate(22cqi, -18.5cqi);
-			}
-		}
-
-		.stage-window {
-			opacity: 0;
+		@media (min-width: 56.25rem) {
+			opacity: 1;
 		}
 	}
 

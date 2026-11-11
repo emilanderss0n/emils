@@ -149,14 +149,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
         {services.map((service, i) => (
           <li class="service" data-reveal data-state={service.state}>
             <span class="service-index">{pad(i + 1)}</span>
-            <h3 class="service-name">{service.name}</h3>
-            <p class="service-text">{service.text}</p>
-            <ServiceStage state={service.state} />
+            <h3 class="service-name"><button class="service-pick" type="button">{service.name}</button></h3>
+            <div class="service-body"><p class="service-text">{service.text}</p></div>
           </li>
         ))}
       </ol>
       <div class="services-stage" data-reveal>
-        <ServiceStage live />
+        <ServiceStage />
       </div>
     </div>
   </section>
